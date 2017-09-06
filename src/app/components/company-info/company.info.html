@@ -1,0 +1,279 @@
+<div class="admin-wrapper">
+	<div class=" main-container flex-container flex-between">
+		<div class="admin-set-block">
+			<label>Администратор</label>
+			<input type="text" class="mm-input admin-name-input"
+				[(ngModel)]="adminFullName" placeholder="Введите ФИО"
+				maxlength="300">
+			<i class="fa fa-info-circle" aria-hidden="true"
+					tooltip="Администратор обладает полным доступом ко всем настройкам, разделам и документам, может добавлять и приглашать новых сотрудников"
+					tooltipPlacement="right"></i>
+		</div>
+		<button
+				[routerLink]="['/delegate']"
+				class="mm-btn mm-btn-primary"
+				[disabled]="!isAdmin">Передать полномочия</button>
+	</div>
+</div>
+
+<div class="main-container home-container">
+	<div>
+		<h3 class="text-center">Профиль</h3>
+		<div class="profile-block">
+			<div class="backlined-text"><span>Заполните или измените данные о компании</span></div>
+			<div class="row">
+				<div class="col-xs-8 col-xs-offset-2">
+					<table class="first-r-table">
+						<tr>
+							<td>
+								<label>Полное наименование *</label>
+							</td>
+							<td>
+								<input
+									type="text" maxlength="300"
+									class="mm-input company-name-input"
+									[(ngModel)]="companyProfile.name" />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Сокращенное наименование *</label>
+							</td>
+							<td>
+								<input type="text" class="mm-input company-name-input"
+								[(ngModel)]="companyProfile.short_name"
+								maxlength="300" />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>БИН *</label>
+							</td>
+							<td>
+								<input type="text"
+											class="mm-input company-name-input"
+											[(ngModel)]="companyProfile.tin"
+											maxlength="12"
+											[disabled]="true"/>
+								<span class="help-block">Нельзя изменять БИН. Если у вас изменились регистрационные данные, обратитесь в техподдержку</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Описание </label>
+							</td>
+							<td>
+								<textarea class="form-control vresize" rows='4'
+									[(ngModel)]="companyProfile.additional_info" maxlength="1000">
+								</textarea>
+								<span class="help-block">Информация об описании компании не должна превышать 1000 символов</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Фото </label>
+							</td>
+							<td>
+								<div class="flex-vertical">
+					    		<label class="mm-btn-link btn-file">
+								    Выберите фото на вашем компьютере
+								    <input type="file" style="display: none;" (change)="onSelectPhoto($event)">
+									</label>
+								</div>
+								<div *ngIf="companyPreview !== undefined && companyPreview !== null">
+									<img [src]="companyPreview" class="company-photo"/>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<div class="address-block">
+			<div class="backlined-text"><span>АДРЕС</span></div>
+			<div class="row">
+				<div class="col-xs-8 col-xs-offset-2">
+					<table class="first-r-table">
+						<tr>
+							<td>
+								<label>Область</label>
+							</td>
+							<td>
+								<div class="mm-select">
+									<select [(ngModel)]="companyProfile.region" (ngModelChange)="onSelectRegion($event)" class="select-elem">
+										<option
+												*ngFor="let region of regions"
+												[ngValue]="region.id"
+												>
+									    <span class="badge">{{region.name}}</span>
+									  </option>
+									</select>
+									<div class="select__arrow"></div>
+								</div>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label>Город/район</label>
+							</td>
+							<td>
+								<div class="mm-select">
+									<select [(ngModel)]="companyProfile.district" (ngModelChange)="onSelectDistrict($event)" class="select-elem">
+										<option *ngFor="let district of districts" [ngValue]="district.id">
+									    <span class="badge">{{district.name}}</span>
+									  </option>
+									</select>
+									<div class="select__arrow"></div>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Улица</label>
+							</td>
+							<td>
+								<input type="text" class="mm-input" maxlength="300"
+									[(ngModel)]="companyProfile.official_address"/>
+							</td>
+						</tr>
+					</table>
+
+				</div>
+			</div>
+		</div>
+
+
+		<div class="address-block">
+			<div class="backlined-text"><span>КОНТАКТЫ</span></div>
+			<div class="row">
+				<div class="col-xs-8 col-xs-offset-2">
+					<table class="first-r-table">
+						<tr>
+							<td>
+								<label>Email</label>
+							</td>
+							<td>
+								<input type="email" class="mm-input"
+									[(ngModel)]="companyProfile.email"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Мобильный телефон</label>
+							</td>
+							<td>
+								<input type="text" class="mm-input"
+									maxlength="15"
+									[(ngModel)]="companyProfile.mobile_phone"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Рабочий телефон</label>
+							</td>
+							<td>
+								<input type="text" class="mm-input"
+									maxlength="15"
+									[(ngModel)]="companyProfile.work_phone" />
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+
+	<!-- <div>
+		<h3 class="text-center">Профиль компании</h3>
+		<div class="profile-block">
+			<div class="backlined-text"><span>Заполните или измените настройки вашего профиля</span></div>
+			<div class="row">
+				<div class="col-xs-6 col-xs-offset-1">
+					<p>
+						<label>Наименование</label>
+						<input type="text" class="mm-input company-name-input" [(ngModel)]="companyProfile.name" /></p>
+					<p>
+						<label>Сокращенное наименование </label>
+						<input type="text" class="mm-input" [(ngModel)]="companyProfile.short_name" /></p>
+				</div>
+				<div class="col-xs-5 text-right">
+					<label>БИН</label>
+					<input type="text" class="mm-input" [(ngModel)]="companyProfile.tin"/>
+				</div>
+			</div>
+		</div>
+
+		<div class="address-block">
+			<div class="backlined-text"><span>АДРЕС И КОНТАКТЫ КОМПАНИИ</span></div>
+
+			<div class="row">
+				<div class="col-xs-4">
+					<div class="form-block">
+						<label class="col-xs-2">Область</label>
+						<div class="col-xs-8">
+							<div class="mm-select">
+								<select [(ngModel)]="companyProfile.region" (ngModelChange)="onSelectRegion($event)" class="select-elem">
+									<option
+											*ngFor="let region of regions"
+											[ngValue]="region.id"
+											>
+								    <span class="badge">{{region.name}}</span>
+								  </option>
+								</select>
+								<div class="select__arrow"></div>
+	    				</div>
+						</div>
+					</div>
+					<div class="form-block">
+						<label class="col-xs-2">Email</label>
+						<div class="col-xs-8">
+							<input type="text" class="mm-input" [(ngModel)]="companyProfile.email"/>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-4">
+					<div class="form-block">
+						<label class="col-xs-2">Город</label>
+						<div class="col-xs-8">
+							<div class="mm-select">
+								<select [(ngModel)]="companyProfile.district" (ngModelChange)="onSelectDistrict($event)" class="select-elem">
+									<option *ngFor="let district of districts" [ngValue]="district.id">
+								    <span class="badge">{{district.name}}</span>
+								  </option>
+								</select>
+								<div class="select__arrow"></div>
+	    				</div>
+						</div>
+					</div>
+					<div class="form-block">
+						<label class="col-xs-2">Сотовый</label>
+						<div class="col-xs-8">
+							<input type="text" class="mm-input" [(ngModel)]="companyProfile.mobile_phone"/>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-4">
+					<div class="form-block">
+						<label class="col-xs-2">Улица</label>
+						<div class="col-xs-8">
+							<input type="text" class="mm-input" [(ngModel)]="companyProfile.official_address"/>
+						</div>
+					</div>
+					<div class="form-block">
+						<label class="col-xs-2">Раб.</label>
+						<div class="col-xs-8">
+							<input type="text" class="mm-input" [(ngModel)]="companyProfile.work_phone"/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div> -->
+
+		<div class="flex-container flex-center">
+			<button class="mm-btn mm-btn-primary" (click)="updateCompanyProfile()">Сохранить</button>
+		</div>
+	</div>
+
+
+</div>

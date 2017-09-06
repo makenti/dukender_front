@@ -1,0 +1,133 @@
+.complaints-container{
+	margin: 20px 0 30px;
+}
+.complaints-container p{
+	font-size: 13px;
+	margin-bottom: 0px;
+}
+.complaints-container button{
+	margin-top: 8px;
+}
+
+.customers-table {
+    width: 100%;
+    border-spacing: 0;
+}
+
+.customers-table thead, 
+.customers-table tbody, 
+.customers-table tr, 
+.customers-table th, 
+.customers-table td { display: block; }
+
+.customers-table thead tr {
+    width: 97%;
+    width: -webkit-calc(100% - 16px);
+    width:    -moz-calc(100% - 16px);
+    width:         calc(100% - 16px);
+}
+
+.customers-table tr:after { 
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+.customers-table tbody {
+    height: 270px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.customers-table tbody td, 
+.customers-table thead th {
+    width: 16%;
+    float: left;
+}
+
+/* relationship */
+.customer-info-header {
+	width: 100%;
+	font-size: 13px;
+	margin: 23px 0;
+}
+.relationship-table {
+    width: 100%;
+    border-spacing: 0;
+}
+
+.relationship-table thead, 
+.relationship-table tbody, 
+.relationship-table tr, 
+.relationship-table th, 
+.relationship-table td { display: block; }
+
+.relationship-table thead tr {
+    width: 97%;
+    width: -webkit-calc(100% - 16px);
+    width:    -moz-calc(100% - 16px);
+    width:         calc(100% - 16px);
+}
+
+.relationship-table tr:after { 
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+.relationship-table tbody {
+    height: 270px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.relationship-table tbody td, 
+.relationship-table thead th {
+    width: 40%;
+    float: left;
+}
+
+.relationship-table thead th:first-child,
+.relationship-table tbody td:first-child{
+    width: 20%;
+}
+
+/* banned */
+.banned-table {
+    width: 100%;
+    border-spacing: 0;
+}
+
+.banned-table thead, 
+.banned-table tbody, 
+.banned-table tr, 
+.banned-table th, 
+.banned-table td { display: block; }
+
+.banned-table thead tr {
+    width: 97%;
+    width: -webkit-calc(100% - 16px);
+    width:    -moz-calc(100% - 16px);
+    width:         calc(100% - 16px);
+}
+
+.banned-table tr:after { 
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+.banned-table tbody {
+    height: 270px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.banned-table tbody td, 
+.banned-table thead th {
+    width: 20%;
+    float: left;
+}

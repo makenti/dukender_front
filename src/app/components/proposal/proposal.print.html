@@ -1,0 +1,77 @@
+<div class="main-container home-container">
+
+	<button class="mm-btn mm-btn-default btn-space-right" 
+		(click)="onPrintProposal()">Печать</button>
+
+	<div id="proposalPrintContent">
+		<h3 class="text-center">Заявка 
+			<span *ngIf="proposal !== null">№{{proposal.request_id}}</span> от {{proposalDate}}</h3>
+
+		<div class="proposal-print-field">
+			<b>Заказчик:</b> 
+			<span *ngIf="proposal !== null">{{proposal.customer.name}}</span>
+		</div>
+		<div class="proposal-print-field">
+			<b>Адрес:</b> 
+			<span *ngIf="proposal !== null">
+				{{proposal.customer.district.region.name}}, 
+				{{proposal.customer.district.name}}, 
+				{{proposal.customer.address}}
+			</span>
+		</div>
+		<div class="proposal-print-field">
+			<b>Телефон:</b> 
+			<span *ngIf="proposal !== null">{{proposal.customer.mobile_phone}}</span>
+		</div>
+		<div class="proposal-print-field">
+			<b>Контактное лицо:</b> 
+			<span *ngIf="proposal !== null">{{proposal.customer.contact_person}}</span>
+		</div>
+		<div class="proposal-print-field">
+			<b>Дата поставки:</b>
+			<span *ngIf="proposal !== null">{{deliveryDateText}}</span>
+		</div>
+		<div class="proposal-print-field"><b>Статус заявки:</b>
+			<span *ngIf="proposal !== null">{{proposal.status_display}}</span>
+		</div>
+
+		<table class="table table-striped print-proposal-table"> 
+			<thead> 
+				<tr> 
+					<th>№</th> 
+					<th>ТОВАР</th> 
+					<th>ЕД.ИЗМ</th> 
+					<th>КОЛ-ВО</th> 
+					<th>ЦЕНА</th> 
+					<th>СУММА</th> 
+				</tr> 
+			</thead> 
+			<tbody *ngIf="proposalItems !== null"> 
+				<tr *ngFor="let item of proposalItems; let i = index;"> 
+					<td>{{i+1}}</td>
+					<td>{{item.name}}</td>
+					<td>{{item.nomenclature}}</td> 
+					<td>{{item.count}}</td> 
+					<td>{{item.price}}</td> 
+					<td>{{item.count * item.price}}</td> 
+				</tr> 
+			</tbody> 
+		</table>
+	</div>
+
+	<div class="proposal-map" *ngIf="proposal !== null">
+		<p>Адрес доставки на карте</p>
+		<div class="map">
+			<ya-map [latitude]="proposal.customer.latitude" 
+							[longitude]="proposal.customer.longitude" 
+							[zoom]="12">
+	      <ya-marker 	[latitude]="proposal.customer.latitude" 
+	      						[longitude]="proposal.customer.longitude"
+	      						[balloonContentHeader]="proposal.customer.name"
+                    [balloonContentBody]="customerAddress"
+                    [balloonContentFooter]="proposal.customer.mobile_phone">
+			  </ya-marker>
+	    </ya-map>
+	  </div>
+	</div>
+</div>

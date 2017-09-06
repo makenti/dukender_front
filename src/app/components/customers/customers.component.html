@@ -1,0 +1,52 @@
+<div class="main-container home-container">
+
+<!-- 	<h3 class="text-center">Жалобы заказчиков</h3>
+
+	<div class="complaints-container">
+		<p>Не доставлен товар по заявке № 32958371, <b>ИП «Кайрат»</b> </p>
+		<p>Просрочен товар по заявке № 32958371, <b>Магазин «Гаухар»</b></p>
+		<button class="mm-btn-mini mm-btn-primary">••• Еще 5 жалоб</button>
+	</div> -->
+
+	<h3 class="text-center">Мои заказчики</h3>
+
+	<table class="table table-striped customers-table"> 
+		<thead> 
+			<tr> 
+				<th>НАЗВАНИЕ МАГАЗИНА</th> 
+				<th>АДРЕС</th> 
+				<th>КАТЕГОРИЯ</th>
+				<th>РЕЙТИНГ</th>
+				<th>СТАТУС</th> 				
+				<th>ОТМЕТКА</th> 
+			</tr> 
+		</thead> 
+		<tbody> 
+			<tr *ngFor="let item of customers"> 
+				<td>{{item.name}}</td> 
+				<td>{{item.district.name}}, {{item.address}}</td> 
+				<td>{{item.category}}</td> 
+				<td>{{item.rating}}</td> 
+				<td></td> 
+				<td>
+					<div class="abc-checkbox abc-checkbox-primary">	
+	          <input class="styled" type="checkbox">
+	        </div>
+				</td>
+			</tr> 
+		</tbody> 
+	</table>
+
+	<div class="btns-container">
+		<!-- <div class="pull-left">
+			<button class="mm-btn mm-btn-default"
+						[routerLink]="['/blacklist']" 
+			>Черный список заказчиков</button>
+		</div> -->
+		<div class="pull-right">
+			<button class="mm-btn mm-btn-default">Забанить</button>
+			<button class="mm-btn mm-btn-danger">Удалить</button>
+		</div>
+	</div>
+</div>
+

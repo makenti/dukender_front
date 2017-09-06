@@ -1,0 +1,240 @@
+<div class="main-container home-container">
+
+	<h3 class="text-center header-text">Справочник сотрудников компании</h3>
+
+	<table class="table table-striped employees-table table-employee"
+		[class.loading]='loading'>
+		<thead>
+			<tr>
+				<th>№</th>
+				<th>ФИО</th>
+				<th>РОЛЬ</th>
+				<th>СТАТУС</th>
+				<th>УВЕДОМЛЕНИЕ</th>
+				<th>ПОЧТА</th>
+				<th class="text-center">ОТМЕТКА</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let item of staff; let k = index;" >
+				<td (click)="onEditUser(item)"><span>{{k+1}}</span></td>
+				<td (click)="onEditUser(item)">{{item.user.second_name}} {{item.user.first_name}}</td>
+				<td (click)="onEditUser(item)">
+					<span *ngFor="let type of profileTypes">
+						{{item.profile_type == type.id ? type.name : ''}}
+					</span>
+				</td>
+				<td (click)="onEditUser(item)">
+					{{item.user.is_active == true ? 'активен' : 'не активен'}}
+				</td>
+				<td>
+					<button
+						class="mm-btn mm-btn-default mm-btn-mini"
+						[hidden]="item.user.is_active == true"
+						(click)="inviteEmployee(item)">Напомнить</button>
+				</td>
+				<td (click)="onEditUser(item)">{{item.user.username}}</td>
+				<td class="text-center">
+					<label class="mm-control mm-control--checkbox text-center">
+		      	<input type="checkbox"
+		      		(click)="onSelectUser(item)"/>
+			      <div class="mm-control__indicator"></div>
+			    </label>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div class="btns-container">
+		<div class="pull-left">
+			<button class="mm-btn mm-btn-primary btn-space-right" (click)="modalAddUser.show()">Добавить</button>
+		</div>
+		<div class="pull-right">
+			<button class="mm-btn mm-btn-danger btn-space-right" (click)="clickDeleteBtn()">Удалить</button>
+		</div>
+	</div>
+</div>
+
+<div bsModal #modalDeleteUser="bs-modal"
+	class="modal fade modal-small modal-delete-user">
+	<div class="modal-dialog modal-sm">
+    <div class="modal-content">
+		  <div class="modal-body">
+		  	<div class="modal-wrapper">
+		    	<p class="text-center">Вы уверены, что хотите удалить сотрудника?</p>
+		    </div>
+				<div class="modal-btns flex-container flex-center">
+					<button class="mm-btn mm-btn-default" (click)="modalDeleteUser.hide()">Отмена</button>
+					<button class="mm-btn mm-btn-danger" (click)="deleteEmployee()">Удалить</button>
+				</div>
+		  </div>
+		</div>
+  </div>
+</div>
+
+
+<div bsModal #modalAddUser="bs-modal" class="modal fade modal-add-user"
+	tabindex="-1" role="dialog" aria-labelledby="modalAddUser" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+		  <div class="modal-body">
+		  	<span class="modal-close"
+		  				(click)="modalAddUser.hide()">
+		  		<i class="fa fa-times" aria-hidden="true"></i>
+		  	</span>
+		  	<h3 class="modal-title text-center header-text">Добавьте нового пользователя </h3>
+		    <div class="row add-user-block">
+					<div class="col-xs-6">
+						<p class="form-field" >
+							<label>Имя</label>
+							<input type="text" class="mm-input"
+								[ngClass]="{danger: newEmployee.first_name === ''}"
+								[(ngModel)]="newEmployee.first_name"
+								maxlength="300"/>
+						</p>
+						<p class="form-field">
+							<label>Фамилия</label>
+							<input type="text" class="mm-input" maxlength="300"
+								[ngClass]="{danger: newEmployee.second_name === ''}"
+								[(ngModel)]="newEmployee.second_name" />
+						</p>
+						<p class="form-field">
+							<label>Отчество</label>
+							<input type="text" class="mm-input" maxlength="300"
+								[ngClass]="{danger: newEmployee.middle_name === ''}"
+								[(ngModel)]="newEmployee.middle_name" />
+						</p>
+					</div>
+
+					<div class="col-xs-6">
+						<p class="form-field">
+							<label>Почта</label>
+							<input type="text" class="mm-input" maxlength="300"
+								[ngClass]="{danger: newEmployee.email === '' }"
+								[(ngModel)]="newEmployee.email" />
+						</p>
+						<div class="form-field">
+							<label>Роль</label>
+							<div class="mm-select">
+								<select [(ngModel)]="selectedProfileType"
+												(ngModelChange)="onSelectProfileType($event)"
+												class="select-elem">
+									<option
+											*ngFor="let type of profileTypes"
+											[ngValue]="type">
+								    <span class="badge">{{type.name}}</span>
+								  </option>
+								</select>
+								<div class="select__arrow"></div>
+		  				</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="backlined-text"><span>ИЛИ ОТМЕТЬТЕ ДОСТУП К НУЖНЫМ РАЗДЕЛАМ </span></div>
+
+				<div class="flex-container flex-start permissions-list">
+					<div class="mm-checkbox-group"
+							*ngFor="let perm of permissionsList">
+						<label class="mm-control mm-control--checkbox">{{perm.name}}
+				      <input type="checkbox"
+						      name="permissions"
+				      		[(ngModel)]="perm.selected"/>
+				      <div class="mm-control__indicator"></div>
+				    </label>
+			    </div>
+				</div>
+
+				<div class="flex-container flex-center">
+					<button class="mm-btn mm-btn-primary"
+						(click)="addEmployee()"
+						>Добавить</button>
+				</div>
+			</div>
+		</div>
+  </div>
+</div>
+
+<div bsModal #modalEditUser="bs-modal" class="modal fade modal-edit-user"
+	tabindex="-1" role="dialog" aria-labelledby="modalEditUser" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+		  <div class="modal-body">
+		  	<span class="modal-close"
+		  				(click)="modalEditUser.hide()">
+		  		<i class="fa fa-times" aria-hidden="true"></i>
+		  	</span>
+		  	<h3 class="modal-title text-center header-text">Изменение данных пользователя</h3>
+		    <div class="row add-user-block">
+					<div class="col-xs-6">
+						<p class="form-field">
+							<label>Имя</label>
+							<input type="text" class="mm-input" maxlength="300"
+								[ngClass]="{danger: selectedEmployee.first_name === ''}"
+								[(ngModel)]="selectedEmployee.first_name"
+								/>
+						</p>
+						<p class="form-field">
+							<label>Фамилия</label>
+							<input type="text" class="mm-input" maxlength="300"
+								[ngClass]="{danger: selectedEmployee.second_name === ''}"
+								[(ngModel)]="selectedEmployee.second_name" />
+						</p>
+						<p class="form-field">
+							<label>Отчество</label>
+							<input type="text" class="mm-input" maxlength="300"
+								[ngClass]="{danger: selectedEmployee.middle_name === ''}"
+								[(ngModel)]="selectedEmployee.middle_name" />
+						</p>
+					</div>
+
+					<div class="col-xs-6">
+						<p class="form-field">
+							<label>Почта</label>
+							<input type="text" class="mm-input" maxlength="300"
+								[ngClass]="{danger: selectedEmployee.email === '' }"
+								[(ngModel)]="selectedEmployee.email" disabled="disabled" />
+						</p>
+						<div class="form-field">
+							<label>Роль</label>
+							<div class="mm-select">
+								<select [(ngModel)]="selectedProfileType"
+												(ngModelChange)="onSelectProfileType($event)"
+												class="select-elem">
+									<option
+											*ngFor="let type of profileTypes"
+											[ngValue]="type">
+								    <span class="badge">{{type.name}}</span>
+								  </option>
+								</select>
+								<div class="select__arrow"></div>
+		  				</div>
+						</div>
+
+					</div>
+
+				</div>
+
+				<div class="backlined-text"><span>ИЛИ ОТМЕТЬТЕ ДОСТУП К РАЗДЕЛАМ ДЛЯ ДАННОГО СОТРУДНИКА</span></div>
+
+				<div class="flex-container flex-start permissions-list">
+					<div class="mm-checkbox-group"
+						*ngFor="let perm of permissionsList">
+						<label class="mm-control mm-control--checkbox">{{perm.name}}
+				      	<input type="checkbox"
+							      name="permissions"
+					      		[(ngModel)]="perm.selected"/>
+					      <div class="mm-control__indicator"></div>
+					    </label>
+				    </div>
+				</div>
+
+				<div class="flex-container flex-center">
+					<button class="mm-btn mm-btn-primary"
+						(click)="saveEmployee()"
+						>Сохранить</button>
+				</div>
+		  </div>
+		</div>
+	</div>
+</div>

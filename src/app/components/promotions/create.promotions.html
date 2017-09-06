@@ -1,0 +1,100 @@
+<div class="main-container home-container">
+
+	<h3 class="text-center">Настройки акции {{promotion_name}}</h3>
+
+	<table class="table table-striped create-promotion-table">
+		<thead>
+			<tr>
+				<th>АРТИКУЛ</th>
+				<th>ТОВАР</th>
+				<th>ПРОИЗВОДИТЕЛЬ</th>
+				<th>ЕД. ИЗМЕР.</th>
+				<th>ЦЕНА</th>
+				<th *ngIf="promotionType === 1">ЦЕНа со скидкой</th>
+				<th *ngIf="promotionType === 2">При покупке партии (кол-во товара)</th>
+				<th *ngIf="promotionType === 2">Бонус (кол-во товара)</th>
+				<th *ngIf="promotionType === 3">Сумма бонуса</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let product of promotionProducts">
+				<td>{{product.article}}</td>
+				<td>
+					<span class="removed-item" *ngIf="promotionsData[product.id].removed"> {{product.name}}</span>
+					<span *ngIf="!promotionsData[product.id].removed"> {{product.name}}</span>
+				</td>
+				<td>{{product.made_in}}</td>
+				<td>{{product.nomenclature}}</td>
+				<td>{{product.price|number: '1.2-2'}}</td>
+				<td *ngIf="promotionType === 1">
+					<input type="number" min='1'
+								class="mm-input input-mini"
+								[disabled]="promotionsData[product.id].removed"
+								[(ngModel)]="promotionsData[product.id].new_price"
+								(keypress)="checkForInteger($event)"
+								(ngModelChange)="onChangePrice($event, promotionsData[product.id])" />
+				</td>
+				<td *ngIf="promotionType === 2">
+					<input type="number"
+								class="mm-input input-mini"
+								[disabled]="promotionsData[product.id].removed"
+								(keypress)="checkForInteger($event)"
+								[(ngModel)]="promotionsData[product.id].for_count" />
+				</td>
+				<td *ngIf="promotionType === 2">
+					<input type="number"
+								class="mm-input input-mini"
+								(keypress)="checkForInteger($event)"
+								[disabled]="promotionsData[product.id].removed"
+								[(ngModel)]="promotionsData[product.id].bonus_count" />
+				</td>
+				<td *ngIf="promotionType === 3">
+					<input type="number"
+								class="mm-input input-mini"
+								[disabled]="promotionsData[product.id].removed"
+								(change)="onChangeBonus($event, product)"
+								[(ngModel)]="promotionsData[product.id].bonus_amount" />
+				</td>
+				<td>
+					<span class="remove-prom-span"
+								*ngIf="!promotionsData[product.id].removed"
+								(click)="promotionsData[product.id].removed = true">Удалить</span>
+					<span class="return-prom-span"
+								*ngIf="promotionsData[product.id].removed"
+								(click)="promotionsData[product.id].removed = false">Восстановить</span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<!-- <div class="date-picker-container pull-left">
+		<label>Установить сроки акции:</label>
+		<input type="text" name="daterangeInput"
+			class="form-control"
+			daterangepicker [options]="daterangepickerOptions"
+			(selected)="onDateRangeChanged($event)" />
+	</div> -->
+
+	<div class="btns-container pull-right">
+		<button class="mm-btn mm-btn-primary btn-space-right" (click)="createPromotion()">Создать акцию</button>
+		<button class="mm-btn mm-btn-default" routerLink='/promotion-products'>Отменить</button>
+	</div>
+</div>
+
+<div bsModal #modalShowInfo="bs-modal"
+	class="modal fade modal-small modal-changes">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="modal-wrapper">
+		  		<p class="text-center">Внимание! Создавая акцию, вы платите небольшую комиссию за каждую закрытую сделку. Она составляет {{promotion_percent}} % от стоимости товара. </p>
+		    </div>
+				<div class="modal-btns flex-container flex-center">
+					<button class="mm-btn mm-btn-default" (click)="discardCreate()">Отмена</button>
+					<button class="mm-btn mm-btn-primary" (click)="modalShowInfo.hide()">Подтвердить</button>
+				</div>
+      </div>
+    </div>
+  </div>
+</div>

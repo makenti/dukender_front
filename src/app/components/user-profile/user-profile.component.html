@@ -1,0 +1,42 @@
+<div class="main-container home-container">
+
+	<h3 class="text-center">Ваш профиль</h3>
+
+	<div class="row">
+		<div class="col-xs-6">
+			<dl class="dl-horizontal mm-dl-list user-profile-dl">
+			  <dt>Ваш ID:</dt><dd>{{profile.id}}</dd>
+			  <dt>ФИО:</dt><dd>{{profile.second_name}} {{profile.first_name}} {{profile.middle_name}}</dd>
+			  <dt>Роль сотрудника:</dt><dd>{{getProfileName(profile.entry.profile_type)}}</dd>
+			  <dt>Email:</dt><dd>{{profile.username}}</dd>
+			</dl>
+		</div>
+
+		<div class="col-xs-5">
+			<p class="text-center"><label>Изменить пароль</label></p>
+			<p class="flex-container flex-between">
+				<label>Старый пароль</label>
+				<input type="password" class="mm-input"
+					maxlength="300"
+					[(ngModel)]="password.oldPassword"/>
+			</p>
+			<p class="flex-container flex-between">
+				<label>Новый пароль</label>
+				<input type="password" class="mm-input"
+					maxlength="300"
+					[(ngModel)]="password.newPassword"/>
+			</p>
+			<p class="flex-container flex-between">
+				<label>Новый еще раз</label>
+				<input type="password" class="mm-input"
+					maxlength="300"
+					[(ngModel)]="password.retryPassword"/>
+			</p>
+		</div>
+	</div>
+
+	<div class="flex-container flex-center">
+		<button class="mm-btn mm-btn-primary" (click)="saveNewPassword()">Сохранить</button>
+	</div>
+
+</div>

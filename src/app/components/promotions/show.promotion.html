@@ -1,0 +1,54 @@
+<div class="main-container home-container" *ngIf="promotion !== null"> 
+	<div id="promotionPrintContent">
+		<h3 class="text-center">Акция {{promTitle}}</h3>
+		<p>
+			<label>Период проведения:</label>
+			<span>{{promotion.date_start}}-{{promotion.date_end}}</span>
+		</p>
+
+		<table class="table table-striped create-promotion-table"> 
+			<thead> 
+				<tr> 
+					<th>Артикул</th> 
+					<th>Товар</th> 
+					<th>Производитель</th> 
+					<th>Ед. измер.</th> 
+					<th>Цена</th> 
+					<th *ngIf="promotionType === 1">Цена со скидкой</th> 
+					<th *ngIf="promotionType === 2">При покупке партии (кол-во товара)</th> 
+					<th *ngIf="promotionType === 2">Бонус (кол-во товара)</th> 
+					<th *ngIf="promotionType === 3">Сумма бонуса</th> 
+				</tr> 
+			</thead> 
+			<tbody> 
+				<tr> 
+					<td>{{promotion.item.article}}</td> 
+					<td>{{promotion.item.name}}</td> 
+					<td>{{promotion.item.made_in}}</td> 
+					<td>{{promotion.item.nomenclature}}</td> 
+					<td>{{promotion.item.price | number: '1.2-2'}}</td> 
+					<td *ngIf="promotionType === 1">
+						{{promotion.item.new_price | number: '1.2-2'}}
+					</td>
+					<td *ngIf="promotionType === 2">
+						{{promotion.item.for_count}}
+					</td>
+					<td *ngIf="promotionType === 2">
+						{{promotion.item.bonus_count}}
+					</td>
+					<td *ngIf="promotionType === 3">
+						{{promotion.item.bonus_amount}}
+					</td>
+				</tr> 
+			</tbody> 
+		</table>
+	</div>
+
+	<div class="btns-container">
+		<div class="pull-right">
+			<button class="mm-btn mm-btn-default btn-space-right" (click)="onPrintPromotion()">Печать</button>
+			<button class="mm-btn mm-btn-primary" routerLink='/promotions'>Закрыть</button>
+		</div>
+	</div>
+</div>
+

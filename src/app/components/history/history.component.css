@@ -1,0 +1,117 @@
+.requests-table {
+    width: 100%;
+    border-spacing: 0;
+}
+
+.requests-table thead, 
+.requests-table tbody, 
+.requests-table tr, 
+.requests-table th, 
+.requests-table td { display: block; }
+
+.requests-table thead tr {
+    width: 97%;
+    width: -webkit-calc(100% - 16px);
+    width:    -moz-calc(100% - 16px);
+    width:         calc(100% - 16px);
+}
+
+.requests-table tr:after { 
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+.requests-table tbody {
+    height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.requests-table tbody td, 
+.requests-table thead th {
+    width: 12%;
+    float: left;
+}
+.requests-table tbody td:first-child, 
+.requests-table thead th:first-child {
+	width: 10%;
+}
+
+.promotions-table {
+    width: 100%;
+    border-spacing: 0;
+}
+
+.promotions-table thead, 
+.promotions-table tbody, 
+.promotions-table tr, 
+.promotions-table th, 
+.promotions-table td { display: block; }
+
+.promotions-table thead tr {
+    width: 97%;
+    width: -webkit-calc(100% - 16px);
+    width:    -moz-calc(100% - 16px);
+    width:         calc(100% - 16px);
+}
+
+.promotions-table tr:after { 
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+.promotions-table tbody {
+    height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.promotions-table tbody td, 
+.promotions-table thead th {
+    width: 14%;
+    float: left;
+}
+
+
+.products-table {
+    width: 100%;
+    border-spacing: 0;
+}
+
+.products-table thead, 
+.products-table tbody, 
+.products-table tr, 
+.products-table th, 
+.products-table td { display: block; }
+
+.products-table thead tr {
+    width: 97%;
+    width: -webkit-calc(100% - 16px);
+    width:    -moz-calc(100% - 16px);
+    width:         calc(100% - 16px);
+}
+
+.products-table tr:after { 
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+.products-table tbody {
+    height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.products-table tbody td, 
+.products-table thead th {
+    width: 16%;
+    float: left;
+}
+
+

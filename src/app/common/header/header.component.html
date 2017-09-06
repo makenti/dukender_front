@@ -1,0 +1,57 @@
+<!-- <header class="flex-vertical" *ngIf="!this.auth.checkAuth()">
+	<div class="header-inner main-container">
+		<img [routerLink]="['/']" src="./assets/images/logo.png" class="header-logo">
+		<div class="header-text text-center">{{this.toolbarService.getToolbarTitle()}} </div>
+	</div>
+</header> -->
+
+<header class="flex-vertical" *ngIf="this.auth.checkAuth()">
+	<div class="header-inner main-container">
+		<div>
+			<img [routerLink]="['/']" src="./assets/images/logo.png" class="header-logo">
+			<div class="header-text text-center" *ngIf="this.auth.getUserCompany() !== null">{{this.auth.getUserCompany().short_name}} </div>
+		</div>
+
+		<!-- <div class="header-lang-container flex-vertical">
+			<span i18n>lang</span>
+			<div class="lang-wrapper">
+				<div class="custom-drow-d">
+					<div class="drop-selected" (click)="dropds === true ">
+						<div [ngClass]="{hide: lang !== 'kz'}">
+							<img src="./assets/images/lang/kz.png" />Қаз <i _ngcontent-rib-2="" aria-hidden="true" class="fa fa-caret-down"></i>
+						</div>
+						<div [ngClass]="{hide: lang !== 'ru'}">
+							<img src="./assets/images/lang/ru.png" />Рус <i _ngcontent-rib-2="" aria-hidden="true" class="fa fa-caret-down"></i>
+						</div>
+						<div [ngClass]="{hide: lang !== 'en'}">
+							<img src="./assets/images/lang/en.png" />Eng <i _ngcontent-rib-2="" aria-hidden="true" class="fa fa-caret-down"></i>
+						</div>
+					</div>
+					<div class="drop-down-content">
+						<a (click)="selectLanguage('kz')" [ngClass]="{hide: lang === 'kz'}">
+							<img src="./assets/images/lang/kz.png" />Қаз
+						</a>
+						<a (click)="selectLanguage('ru')" [ngClass]="{hide: lang === 'ru'}">
+							<img src="./assets/images/lang/ru.png" />Рус
+						</a>
+						<a (click)="selectLanguage('en')" [ngClass]="{hide: lang === 'en'}">
+							<img src="./assets/images/lang/en.png" />Eng
+						</a>
+					</div>
+				</div>
+			</div>
+		</div> -->
+
+		<div class="header-right">
+			<div class="header-profile flex-vertical">
+				<span i18n>your_profile:</span>
+				<a [routerLink]="['/user-profile']">{{this.auth.getUser().username}}</a>
+				<i class="fa fa-user" aria-hidden="true"></i>
+			</div>
+			<button class="logout-btn" (click)="logout()">
+				<span i18n>logout_link</span>
+				<i class="fa fa-sign-out" aria-hidden="true"></i>
+			</button>
+		</div>
+	</div>
+</header>

@@ -1,0 +1,28 @@
+<div class="main-container home-container">
+
+	<h3 class="text-center">История изменения цен в прайс-листе</h3>
+
+	<table class="table table-striped products-table"
+		[class.loading]="loading"> 
+		<thead> 
+			<tr> 
+				<th>ДАТА И ВРЕМЯ</th> 
+				<th>ФИО</th> 
+				<th>АРТИКУЛ</th> 
+				<th>ТОВАР</th> 
+				<th>СТАРАЯ ЦЕНА</th> 
+				<th>НОВАЯ ЦЕНА</th> 
+			</tr> 
+		</thead> 
+		<tbody> 
+			<tr *ngFor="let item of history"> 
+				<td>{{ ((item.timestamp/1000000) | amFromUnix) | amDateFormat:'DD-MM-YYYY HH:mm' }}</td> 
+				<td>{{item.fio}}</td> 
+				<td>{{item.data.article}}</td> 
+				<td>{{item.data.name}}</td> 
+				<td>{{item.data.old_price| number: '1.2-2'}}</td> 
+				<td>{{item.data.new_price| number: '1.2-2'}}</td> 
+			</tr> 
+		</tbody> 
+	</table>
+</div>

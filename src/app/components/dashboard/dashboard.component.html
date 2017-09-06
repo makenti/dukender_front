@@ -1,0 +1,36 @@
+<div class="main-container home-container">
+
+	<h3 class="text-center">Журнал заявок</h3>
+
+	<!-- <div>
+		Filter by name: <input class="form-control" [(ngModel)]="filterQuery"/>
+	</div> -->
+
+	<table class="table table-striped proposals-table"
+		[class.loading]="loading">
+		<thead>
+			<tr>
+				<th>№</th>
+				<th>ДАТА ЗАЯВКИ</th>
+				<th>ПОКУПАТЕЛЬ</th>
+				<th>РАЙОН ПОКУПАТЕЛЯ</th>
+				<th>ДАТА ПОСТАВКИ</th>
+				<th>СУММА ЗАЯВКИ</th>
+				<th>СТАТУС ЗАЯВКИ</th>
+				<th>ИСПОЛНИТЕЛЬ</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let item of proposals" (click)="showProposal()">
+				<td>{{item.request_id}}</td>
+				<td>{{ ((item.create_time/1000000) | amFromUnix) | amDateFormat:'DD-MM-YYYY' }}</td>
+				<td>{{item.customer.name}}</td>
+				<td>{{item.customer.district.name}}</td>
+				<td>{{ (item.delivery_time | amFromUnix)/1000 | amDateFormat:'DD-MM-YYYY'}}</td>
+				<td>{{item.total_price | number:'3.2-2'}}</td>
+				<td>{{item.status_display}}</td>
+				<td>{{item.editor}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

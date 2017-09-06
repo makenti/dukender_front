@@ -1,0 +1,32 @@
+<div class="main-container home-container">
+
+	<h3 class="text-center">История изменения в заявках</h3>
+
+	<table class="table table-striped requests-table"
+		[class.loading]="loading"> 
+		<thead> 
+			<tr> 
+				<th>ДАТА И ВРЕМЯ</th> 
+				<th>ФИО</th> 
+				<th>№ ЗАЯВКИ</th> 
+				<th>ДАТА ПОСТАВКИ БЫЛА</th> 
+				<th>ДАТА ПОСТАВКИ СТАЛА</th> 
+				<th>ЦЕНА БЫЛА</th> 
+				<th>ЦЕНА СТАЛА</th> 
+				<th>СТАТУС</th> 
+			</tr> 
+		</thead> 
+		<tbody> 
+			<tr *ngFor="let item of history"> 
+				<td>{{((item.timestamp/1000000) | amFromUnix) | amDateFormat:'DD-MM-YYYY HH:mm'}}</td> 
+				<td>{{item.fio}}</td> 
+				<td>{{item.data.request_id}}</td> 
+				<td>{{ ((item.data.old_delivery_time/1000) | amFromUnix) | amDateFormat:'DD-MM-YYYY HH:mm'}}</td> 
+				<td><b>{{ ((item.data.new_delivery_time/1000) | amFromUnix) | amDateFormat:'DD-MM-YYYY HH:mm'}}</b></td> 
+				<td>{{item.data.old_total_price| number: '1.2-2'}}</td> 
+				<td><b>{{item.data.new_total_price| number: '1.2-2'}}</b></td> 
+				<td><b>{{item.data.new_status}}</b></td> 
+			</tr> 
+		</tbody> 
+	</table>
+</div>

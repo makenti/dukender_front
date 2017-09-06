@@ -1,0 +1,99 @@
+<div class="main-container home-container">
+
+	<h3 class="text-center">Создай свою акцию!</h3>
+
+	<div class="category-select flex-container flex-between">
+    <div class="mm-select">
+			<select [(ngModel)]="selectedCategory" (ngModelChange)="onSelectCategory($event)">
+				<option [ngValue]="null" selected>Все категории</option>
+				<option *ngFor="let cat of companyCategories" [ngValue]="cat.category.id">
+			    <span class="badge">{{cat.category.name}}</span>
+			  </option>
+			</select>
+			<div class="select__arrow"></div>
+  	</div>
+
+    <div class="mm-input-with-btn">
+      <input type="text" class="mm-input" placeholder="поиск товара" [(ngModel)]="searchQuery" />
+      <!-- <span class="waves-effect waves-light btn" (click)="onSearchProduct($event)">
+      	<i class="fa fa-search" aria-hidden="true"></i>
+      </span> -->
+    </div>
+	</div>
+
+	<table class="table table-striped new-promotions-table"
+		[class.loading]='loading'>
+		<thead>
+			<tr>
+				<th>АРТИКУЛ</th>
+				<th>ТОВАР</th>
+				<th>ПРОИЗВОДИТЕЛЬ</th>
+				<th>ЕД.ИЗМЕРЕНИЯ</th>
+				<th>ЦЕНА</th>
+				<th>Действующие акции</th>
+				<th>в наличии</th>
+				<th class="text-center">ОТМЕТКА</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let product of products"> 
+				<td>{{product.article}}</td>
+				<td>{{product.name}}</td>
+				<td>{{product.made_in}}</td>
+				<td>{{product.nomenclature}}</td>
+				<td>{{product.price | number: '1.2-2'}}</td>
+				<td>
+					<i class="prom-icon"
+						title="скидка"
+						*ngIf="product.action_discount_active"
+						aria-hidden="true">%</i>
+					<i class="prom-icon"
+						title="денежный бонус"
+						*ngIf="product.action_bonus_money_active"
+						aria-hidden="true">ДБ</i>
+					<i class="prom-icon"
+						title="товарный бонус"
+						*ngIf="product.action_bonus_item_active"
+						aria-hidden="true">ТБ</i>
+					<i class="prom-icon"
+						title="новая акция"
+						*ngIf="product.action_news_active"
+						aria-hidden="true">Н</i>
+				</td>
+				<td>{{(product.in_sale)?'есть':'нет'}}</td>
+				<td class="text-center">
+					<label class="mm-control mm-control--checkbox">
+			      <input type="checkbox"
+			      		[(ngModel)]="product.checked"
+			      		[disabled]="!product.in_sale"/>
+			      <div class="mm-control__indicator"></div>
+			    </label>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div class="btns-container">
+		<button class="mm-btn mm-btn-default prom-btn"
+			(click)="createPromotion(0)">
+			<i class="prom-icon" tooltip="Ваш товар появится в списке акций. Расскажите о новом ассортименте и новых услугах!" tooltipPlacement="top" aria-hidden="true">Н</i>Новинка</button>
+		<button class="mm-btn mm-btn-default prom-btn"
+			(click)="createPromotion(1)">
+			<i class="prom-icon" tooltip="Привлеките покупателей выгодной ценой на товар или услугу!" aria-hidden="true" tooltipPlacement="top">%</i> Скидка</button>
+		<button class="mm-btn mm-btn-default prom-btn"
+			(click)="createPromotion(2)">
+			<i class="prom-icon" tooltip="Подарите заказчику за покупку дополнительный товар или услугу!" aria-hidden="true" tooltipPlacement="top">ТБ</i>Товарный бонус</button>
+		<button class="mm-btn mm-btn-default prom-btn"
+			(click)="createPromotion(3)">
+			<i class="prom-icon" tooltip="Заинтересуйте покупателей, предоставляя им кэш бэк с приобретенной партии товара" aria-hidden="true" tooltipPlacement="top">ДБ</i>Денежный бонус</button>
+		<button
+			*ngIf="!allSelected"
+			class="mm-btn mm-btn-default pull-right"
+			(click)="selectAllProducts()">Выделить все</button>
+		<button
+			*ngIf="allSelected"
+			class="mm-btn mm-btn-default pull-right"
+			(click)="unSelectAllProducts()">Снять все</button>
+	</div>
+
+</div>

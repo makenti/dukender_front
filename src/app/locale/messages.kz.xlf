@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="kz" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="431510f88cf91f50e1d3578520f8693b04e0d4d0" datatype="html">
+        <source>lang</source>
+        <target>Тіл</target>
+      </trans-unit>
+      <trans-unit id="4d0392327effd2acab68595961981c661a2d255b" datatype="html">
+        <source>proposals_link</source>
+        <target>Ұсыныстар</target>
+      </trans-unit>
+      <trans-unit id="f679f3b9f12447eee40d4d5f1d06f61c2fbf97ce" datatype="html">
+        <source>promotions_link</source>
+        <target>Акциялар</target>
+      </trans-unit>
+      <trans-unit id="3e225bc813701740ba2791ab0bee60df31089c15" datatype="html">
+        <source>prices_link</source>
+        <target>Өнімдер</target>
+      </trans-unit>
+      <trans-unit id="1ad0a13a8f2cde9d2c84a08b0dcf636bd16f544c" datatype="html">
+        <source>employees_link</source>
+        <target>Қызметкерлер</target>
+      </trans-unit>
+      <trans-unit id="3a7147d4d6ead57adec716b349f0ed32622b2fe9" datatype="html">
+        <source>customers_link</source>
+        <target>Тұтынушылар</target>
+      </trans-unit>
+      <trans-unit id="bd97090bd142f10132e858225565b160d9bd4762" datatype="html">
+        <source>personal_link</source>
+        <target>Жеке кабинет</target>
+      </trans-unit>
+      <trans-unit id="b1deed116498c49a7216e5e7b90156aa1e331429" datatype="html">
+        <source>settings_link</source>
+        <target>Параметрлер</target>
+      </trans-unit>
+      <trans-unit id="b0cdc86d649353f220a34c2fea538c80e1848603" datatype="html">
+        <source>your_profile:</source>
+        <target>Сіздің профиль:</target>
+      </trans-unit>
+      <trans-unit id="bdca068e24aea85bc7fd21b4030092375b1113f1" datatype="html">
+        <source>logout_link</source>
+        <target>Шығу</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

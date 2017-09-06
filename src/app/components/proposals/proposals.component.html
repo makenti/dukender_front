@@ -1,0 +1,153 @@
+<div class="main-container home-container">
+
+	<h3 class="text-center">Журнал заявок</h3>
+
+	<p>
+		<button
+				class="mm-btn mm-btn-default btn-space-right select-districts-btn"
+				(click)="modalCheckDistricts.show()">
+				<span>Фильтр по районам</span>
+				<i class="fa fa-caret-down" aria-hidden="true"></i>
+			</button>
+	</p>
+	<div class="flex-container flex-between proposal-filters-container">
+
+		<button
+				class="mm-btn mm-btn-filter mm-btn-filter-1"
+				(click)="getProposals('')"
+				[class.selected]="selectedFilter == ''"
+				[disabled]="loading">Все заявки</button>
+		<button
+				class="mm-btn mm-btn-filter mm-btn-filter-2"
+				(click)="getProposals('0')"
+				[class.selected]="selectedFilter == '0'"
+				[disabled]="loading">Входящие <i>{{proposalStats.inbound}}</i></button>
+		<button
+				class="mm-btn mm-btn-filter mm-btn-filter-3"
+				(click)="getProposals('1')"
+				[class.selected]="selectedFilter == '1'"
+				[disabled]="loading">В работе <i>{{proposalStats.processing}}</i></button>
+		<button
+				class="mm-btn mm-btn-filter mm-btn-filter-4"
+				(click)="getProposals('5')"
+				[class.selected]="selectedFilter == '5'"
+				[disabled]="loading">Согласование с поставщиком <i>{{proposalStats.approving}}</i></button>
+		<button
+				class="mm-btn mm-btn-filter mm-btn-filter-5"
+				(click)="getProposals('4')"
+				[class.selected]="selectedFilter == '4'"
+				[disabled]="loading">Согласование с магазином <i>{{proposalStats.approving_c}}</i></button>
+		<button
+				class="mm-btn mm-btn-filter mm-btn-filter-6"
+				(click)="getProposals('2')"
+				[class.selected]="selectedFilter == '2'"
+				[disabled]="loading">В доставке <i>{{proposalStats.delivery}}</i></button>
+		<button
+				class="mm-btn mm-btn-filter mm-btn-filter-7"
+				(click)="getProposals('3')"
+				[class.selected]="selectedFilter == '3'"
+				[disabled]="loading">Исполненные <i>{{proposalStats.closed}}</i></button>
+		<button
+				class="mm-btn mm-btn-filter mm-btn-filter-8"
+				(click)="getProposals('6')"
+				[class.selected]="selectedFilter == '6'"
+				[disabled]="loading">Отмененные <i>{{proposalStats.cancelled}}</i></button>
+	</div>
+
+	<table class="table table-striped proposals-table"
+		[class.loading]="loading">
+		<thead>
+			<tr>
+				<th>№</th>
+				<th>ДАТА ЗАЯВКИ</th>
+				<th></th>
+				<th>ПОКУПАТЕЛЬ</th>
+				<th>РАЙОН ПОКУПАТЕЛЯ</th>
+				<th>ДАТА ПОСТАВКИ</th>
+				<th>СУММА ЗАЯВКИ</th>
+				<th>СТАТУС ЗАЯВКИ</th>
+				<th>ИСПОЛНИТЕЛЬ</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngIf="!loading && proposals.length === 0" class="empty-table">
+				<span>У Вас еще нет заявок</span>
+			</tr>
+			<tr *ngFor="let item of proposals" (click)="showProposal(item)">
+				<td>{{item.request_id}}</td>
+				<td>{{ ((item.create_time/1000000) | amFromUnix) | amDateFormat:'DD-MM-YYYY' }}</td>
+				<td><i class="approved-icon" title="проверен Dukender"
+					*ngIf="item.customer.approved" aria-hidden="true"></i></td>
+				<td>{{item.customer.name}}</td>
+				<td>{{item.customer.district.name}}</td>
+				<td>{{ (item.delivery_time | amFromUnix)/1000 | amDateFormat:'DD-MM-YYYY'}}</td>
+				<td>{{item.total_price | number:'3.2-2'}}</td>
+				<td>{{item.status_display}}</td>
+				<td>{{item.editor}}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div class="flex-container flex-end btns-container">
+		<button class="mm-btn mm-btn-default" (click)="updateProposals()">Обновить</button>
+	</div>
+</div>
+
+
+<div bsModal #modalCheckDistricts="bs-modal"
+	class="modal fade modal-small modal-check-districts">
+	<div class="modal-dialog modal-sm">
+    <div class="modal-content">
+		  <div class="modal-body">
+
+		  	<span class="modal-close"
+						(click)="modalCheckDistricts.hide()">
+				<i class="fa fa-times" aria-hidden="true"></i>
+		  	</span>
+		  	<h3 class="modal-title text-center">Выберите нужный город/район</h3>
+		  	<div class="modal-wrapper proposal-districts-container">
+
+					<div class="region-container">
+						<div class="region-select-block">
+							<label class="text-center">Если вы ничего не выбрали, то в журнале отобразятся все районы, в которых работает ваша компания</label>
+						</div>
+					</div>
+
+		  		<div  *ngFor="let region of companyRegions">
+						<div class="region-container">
+							<div class="region-select-block">
+								<label>Область <b>{{region.name}}</b></label>
+							</div>
+						</div>
+
+						<div class="districts-container">
+
+			    		<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>ВЫБРАТЬ РАЙОНЫ</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr *ngFor="let item of region.districts">
+										<td>
+											<div class="category-block">
+												<label class="mm-control mm-control--checkbox"> {{item.district.name}}
+										      <input type="checkbox" (click)="onSelectDistrict(item.district)"/>
+										      <div class="mm-control__indicator"></div>
+										    </label>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+		    </div>
+				<div class="modal-btns flex-container flex-center">
+					<button class="mm-btn mm-btn-primary" (click)="selectCheckedDistricts()">Выбрать</button>
+				</div>
+			</div>
+		</div>
+  </div>
+</div>

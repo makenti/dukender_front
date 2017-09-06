@@ -1,0 +1,284 @@
+<!-- <div id="menu" class="blue-menu">
+  <ul id="menu-ul">
+      <li data-menuanchor="s0" class="active"><a>Вход в систему</a></li>
+      <li data-menuanchor="s1"><a>Как это работает</a></li>
+      <li data-menuanchor="s2"><a>О сервисе</a></li>
+      <li data-menuanchor="s3"><a>Преимущества</a></li>
+      <li data-menuanchor="s3"><a>Контакты</a></li>
+      <li><a class="custom-btn">Зарегистрироваться</a></li>
+  </ul>
+</div> -->
+
+<div id="fullpage">
+  <div class="section fp-section fp-table fp-completely" id="section0">
+    <div class="fp-tableCell" style="height:662px;">
+      <div class="intro">
+        <div class="main-left">
+          <img src="./assets/images/logo-tr.png" alt="">
+          <p>Загрузите прайс-лист одним кликом и расскажите торговым точкам вашего города или региона об акциях, скидках и новинках!</p>
+          <div class="main-left-bottom" *ngIf="showLogin">
+            <span>Еще не зарегистрированы?</span>
+            <a class="custom-btn" (click)="toggle()">Зарегистрироваться</a>
+          </div>
+          <div class="main-left-bottom" *ngIf="showRegister">
+            <span>Уже есть аккаунт?</span>
+            <a class="custom-btn" (click)="toggle()">Войти на сайт</a>
+          </div>
+        </div>
+        <div class="main-right">
+          <h4>Начните прямо сейчас!</h4>
+
+          <div class="auth-block" *ngIf="showLogin">
+            <input type="text"
+              #user_name
+              [(ngModel)]="localUser.username"
+              class="inputs validate"
+              placeholder="электронная почта"
+              required />
+            <input id="password" type="password" class="inputs validate"
+              placeholder="пароль" [(ngModel)]="localUser.password"
+              (keydown)="onLoginEnter($event)" required/>
+            <a class="pass-linkg" [routerLink]="['/reset']">Забыли пароль?</a>
+            <button class="ghost-btn" (click)="onLoginForm()">Войти</button>
+            <div class="mm-checkbox mm-checkbox-primary">
+              <label class="mm-control mm-control--checkbox login-checkbox">Запомнить меня
+                <input type="checkbox"
+                    [(ngModel)]="rememberMe"/>
+                <div class="mm-control__indicator"></div>
+              </label>
+            </div>
+            <div class="error-wrapper">
+              <p *ngFor="let error of loginErrorMessage">
+                <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{error}}</p>
+            </div>
+          </div>
+
+          <div class="auth-block" *ngIf="showRegister">
+            <input type="text" class="inputs validate" maxlength="300"
+              placeholder="электронная почта" id="user_name"
+              [(ngModel)]="newUser.email" required>
+            <input id="password" type="password" class="inputs validate"
+              placeholder="пароль" maxlength="300"
+            [(ngModel)]="newUser.password" (keydown)="onRegisterEnter($event)" required/>
+            <label class="mm-control mm-control--checkbox login-checkbox">
+                Согласен с <a href="https://api.dukender.kz/offer/" target="_blank">Договором оферты</a>
+              <input type="checkbox"
+                  [(ngModel)]="newUser.checkOffer"/>
+              <div class="mm-control__indicator"></div>
+            </label>
+            <p><button class="ghost-btn" (click)="onRegisterForm()">Регистрация</button></p>
+
+            <div class="error-wrapper">
+              <p *ngFor="let error of registerErrorMessage">
+                <i class="fa fa-exclamation-circle" aria-hidden="true"></i>{{error}}</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section fp-section fp-table fp-completely" id="section1">
+    <div class="fp-tableCell" style="height:662px;">
+    <div class="intro">
+      <div class="how-works">
+        <h1>Как это работает?</h1>
+        <p>Организуйте вашу работу в 3 простых шага:</p>
+        <ul>
+          <li>
+            <img src="./assets/images/ico-1.png" alt="">
+            <span>1</span>
+            <p>Зарегистрируйтесь<br>и загрузите прайс-лист</p>
+          </li>
+
+          <li>
+            <img src="./assets/images/ico-2.png" alt="">
+            <span>2</span>
+            <p>Разместите информацию<br>освоих акциях и скидках</p>
+          </li>
+
+          <li>
+            <img src="./assets/images/ico-3.png" alt="">
+            <span>3</span>
+            <p>Получайте и<br>обрабатывайте заказы</p>
+          </li>
+        </ul>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section fp-section fp-table fp-completely" id="section3">
+    <div class="fp-tableCell" style="height:662px;">
+      <div class="intro">
+        <div class="about">
+          <div class="abut-left">
+            <img src="./assets/images/logo.png" alt="">
+            <p>Это платформа для продажи и покупки товаров между поставщиками и торговыми точками в вашем городе.</p>
+            <p>Если вы производитель или поставщик - зарегистрируйтесь  и начинайте работать прямо сейчас! </p>
+            <p>Если вы владелец или сотрудник магазина, скачивайте мобильное приложение и заказывайте товары, не  дожидаясь торгового представителя!</p>
+            <div class="about-btns">
+              <a href=""><img src="./assets/images/app-store-2-x.png" alt=""></a>
+              <a href=""><img src="./assets/images/google-play-2-x.png" alt=""></a>
+            </div>
+          </div>
+        </div>
+       <!--  <img src="img/mac-book-pro.png"
+          srcset="img/mac-book-pro@2x.png 2x,
+                   img/mac-book-pro@3x.png 3x"
+          class="mac-book-img">
+        <img src="img/iphone.png"
+          srcset="img/iphone@2x.png 2x,
+                   img/iphone@3x.png 3x"
+          class="iphone-img"> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="section fp-section fp-table fp-completely" id="section4">
+    <div class="fp-tableCell" style="height:662px;">
+    <div class="intro">
+      <div class="adv">
+        <h1>Преимущества Dukender</h1>
+        <ul>
+          <li>
+            <table>
+              <tr>
+                <td>
+                  <img src="./assets/images/ico-4.png" alt="">
+                </td>
+                <td>
+                  <h4>Выгодно</h4>
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>
+                  <p>Работа в системе не требует капитальных вложений</p>
+                  <p>Экономия расходов на маркетинг и продвижение</p>
+                </td>
+              </tr>
+            </table>
+          </li>
+
+          <li>
+            <table>
+              <tr>
+                <td>
+                  <img src="./assets/images/ico-5.png" alt="">
+                </td>
+                <td>
+                  <h4>Быстро</h4>
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>
+                  <p>Моментальное информирование об акциях и новинках</p>
+                  <p>Рост товарооборота</p>
+                </td>
+              </tr>
+            </table>
+          </li>
+
+          <li>
+            <table>
+              <tr>
+                <td>
+                  <img src="./assets/images/ico-6.png" alt="">
+                </td>
+                <td>
+                  <h4>Безопасно</h4>
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>
+                  <p>Самые современные технологии защиты и шифрования</p>
+                  <p>История заявок хранится не более месяца</p>
+                </td>
+              </tr>
+            </table>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <img src="./assets/images/logo.png" alt="">
+  <ul>
+    <li>
+      <a href="https://api.dukender.kz/offer/" target="_blank">Публичная оферта</a>
+      <a href="">Реквизиты</a>
+    </li>
+    <li>
+      info@dukender.kz   |   +7 708 046 04 41
+    </li>
+    <li>
+      Dukender © 2017
+    </li>
+  </ul>
+</div>
+
+
+<!-- <div class="main-container">
+
+        <div class="auth-block" *ngIf="showRegister">
+          <div class="header-text">
+            <h3>Зарегистрироваться</h3>
+            <p><small>или <a class="toggle-link" (click)="toggle()">войти на сайт</a></small></p>
+          </div>
+          <p>
+            <input type="text"
+              class="mm-input"
+              placeholder="электронная почта"
+              [(ngModel)]="newUser.email">
+          </p>
+          <div class="mm-input-with-btn">
+            <input type="password"
+              class="mm-input"
+              placeholder="пароль"
+              [(ngModel)]="newUser.password"
+              (keydown)="onRegisterEnter($event)" >
+            <span class="waves-effect waves-light btn" (click)="onRegisterForm()">
+              <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+            </span>
+          </div>
+          <div class="mm-checkbox mm-checkbox-primary">
+            <label class="mm-control mm-control--checkbox login-checkbox">Согласен с <a href="">договором-оферты</a>
+              <input type="checkbox"
+                  [(ngModel)]="newUser.checkOffer"/>
+              <div class="mm-control__indicator"></div>
+            </label>
+
+          </div>
+          <div class="error-wrapper">
+            <p *ngFor="let error of registerErrorMessage">{{error}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+-->
+
+
+<!-- <div bsModal #modalRegister='bs-modal' class="modal fade modal-small modal-register">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-body" >
+        <div class="modal-wrapper">
+          <p class="text-center">Мы отправили вам письмо со ссылкой активации. <br>Пожалуйста, проверьте почту.</p>
+        </div>
+        <div class="modal-btns flex-container flex-center">
+          <button class="mm-btn mm-btn-primary" (click)="onRegisterComplete()">Ок</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

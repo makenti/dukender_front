@@ -1,0 +1,39 @@
+<div class="main-container home-container">
+
+	<h3 class="text-center">Черный список заказчиков</h3>
+
+	<table class="table table-striped banned-table"
+		[class.loading]="loading"> 
+		<thead> 
+			<tr> 
+				<th>НАЗВАНИЕ МАГАЗИНА	</th> 
+				<th>КАТЕГОРИЯ</th> 
+				<th>EMAIL магазина</th> 
+				<th>Кто внес</th> 
+				<th>ОТМЕТКА</th> 
+			</tr> 
+		</thead> 
+		<tbody> 
+			<tr *ngFor="let item of bannedCustomers"> 
+				<td>{{item.shop.name}}</td> 
+				<td>{{getCategory(item.shop.category)}}</td> 
+				<td>{{item.shop.email}}</td> 
+				<td>{{item.sellers_author.username}}</td> 
+				<td>
+					<label class="mm-control mm-control--checkbox">
+			      <input type="checkbox" 
+					      (click)="onSelectCustomer(item)"/>
+			      <div class="mm-control__indicator"></div>
+			    </label>
+				</td>
+			</tr> 
+		</tbody> 
+	</table>
+
+	<div class="btns-container">
+		<div class="pull-right">
+			<button class="mm-btn mm-btn-primary" (click)="unBanCustomer()">Убрать из черного списка</button>
+		</div>
+	</div>
+</div>
+

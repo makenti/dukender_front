@@ -1,0 +1,43 @@
+<div class="main-container home-container">
+
+	<h3 class="text-center">История взаимоотношения с заказчиком</h3>
+
+	<div class="customer-info-header flex-vertical flex-between">
+		<div>
+			<b>Название:</b>
+			<span>«Хороший магазинчик»</span>
+		</div>
+		<div>
+			<b>Категория:</b>
+			<span>A</span>
+		</div>
+		<div>
+			<b>Рейтинг:</b>
+			<span>15</span>
+		</div>
+	</div>
+
+	<table class="table table-striped relationship-table"> 
+		<thead> 
+			<tr> 
+				<th>ДАТА ОБРАЩЕНИЯ</th> 
+				<th>ОБРАЩЕНИЕ</th> 
+				<th>ПРИМЕЧАНИЕ</th> 
+			</tr> 
+		</thead> 
+		<tbody> 
+			<tr *ngFor="let item of history"> 
+				<td>{{item.date}}</td> 
+				<td>{{item.desc}}</td> 
+				<td>{{item.note}}</td> 
+			</tr> 
+		</tbody> 
+	</table>
+
+	<div class="btns-container">
+		<div class="pull-left">
+			<button class="mm-btn mm-btn-default" [routerLink]="['/customers']">Все заказчики	</button>
+		</div>
+	</div>
+</div>
+

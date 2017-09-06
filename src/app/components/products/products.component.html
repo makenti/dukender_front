@@ -1,0 +1,431 @@
+<div class="main-container home-container">
+
+	<h3 class="text-center">Прайс-лист</h3>
+	<p class="text-center">
+		Загрузите прайс-лист в систему одним кликом!<br>
+		Шаблон для заполнения можно скачать  <a href="./assets/price_list.xlsx">отсюда</a>
+	</p>
+	<div class="search-container">
+		<label>Введите название товара или артикул, чтобы найти нужный товар</label>
+		<input
+			type="text"
+			class="mm-input"
+			placeholder="поиск товара"
+			[(ngModel)]="searchQuery" />
+		<!-- <button
+			class="mm-btn mm-btn-default"
+	  	(click)="onSearchProduct($event)">Поиск</button> -->
+	</div>
+	<div class="row" id="productsPrintContent">
+		<div class="col-xs-2">
+			<div>
+				<p class="block-header">ТОВАРНАЯ ГРУППА</p>
+				<div class="list-group product-category-list no-print">
+				  <button type="button" class="list-group-item"
+				  	[class.active]="selectedCategory === null"
+				  	(click)="onSelectCategory(null, $event)"
+				  	>Все продукты</button>
+				  <button type="button" class="list-group-item"
+				  	*ngFor="let cat of companyCategories"
+				  	[class.active]="selectedCategory !== null && selectedCategory.category.id === cat.category.id"
+		      	name="categories"
+			      (click)="onSelectCategory(cat, $event)">{{cat.category.name}}</button>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-10">
+
+			<!-- <table class="table table-striped products-table price-l-table" [class.loading]="loading"
+				[mfData]="products | dataFilter: 'name': searchQuery" #mf="mfDataTable"
+    		[(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+				<thead>
+					<tr>
+						<th><mfDefaultSorter by="article">АРТИКУЛ</mfDefaultSorter></th>
+						<th><mfDefaultSorter by="name">ТОВАР</mfDefaultSorter></th>
+						<th>ПРОИЗВОДИТЕЛЬ</th>
+						<th>ЕД.ИЗМЕРЕНИЯ</th>
+						<th>ЦЕНА</th>
+						<th><mfDefaultSorter by="category">КАТЕГОРИЯ</mfDefaultSorter></th>
+						<th class="text-center">Наличие товара</th>
+						<th class="text-center no-print">ОТМЕТКА</th>
+					</tr>
+				</thead>
+				<tbody (scroll)="onScroll($event)">
+					<tr *ngIf="!loading && products.length === 0" class="empty-table">
+						<span>У Вас нет товаров в прайс-листе</span>
+					</tr>
+					<tr *ngFor="let product of mf.data">
+						<td (click)="onClickProduct(product)">{{product.article }}</td>
+						<td (click)="onClickProduct(product)">{{product.name}}</td>
+						<td (click)="onClickProduct(product)">{{product.made_in}}</td>
+						<td (click)="onClickProduct(product)">{{product.nomenclature}}</td>
+						<td (click)="onClickProduct(product)">
+							{{product.price|number: '1.2-2'}}
+						</td>
+						<td (click)="onClickProduct(product)">{{product.category}}</td>
+						<td class="text-center">
+							<label class="switch no-print">
+							  <input type="checkbox"
+							  	[(ngModel)]="product.in_sale"
+				      		(change)="changeProductSale(product)" />
+							  <div class="slider round"></div>
+							</label>
+							<label class="show-print">
+								{{(product.in_sale)?'есть':'нет'}}
+							</label>
+						</td>
+						<td class="text-center no-print">
+							<label class="mm-control mm-control--checkbox text-center">
+					      <input type="checkbox"
+					      		[(ngModel)]="product.checked" />
+					      <div class="mm-control__indicator"></div>
+					    </label>
+						</td>
+					</tr>
+				</tbody>
+			</table> -->
+
+			<div class="flex-container flex-between price-btns-container no-print">
+				<button class="mm-btn mm-btn-primary" (click)="modalAddProduct.show();this.processMode = 'add';">Добавить товар</button>
+				<button class="mm-btn mm-btn-default" (click)="onOpenImportModal()">Импорт из Excell</button>
+				<button class="mm-btn mm-btn-default" (click)="printProducts()">Печать</button>
+				<button
+					*ngIf="!allSelected"
+					class="mm-btn mm-btn-default"
+					(click)="selectAllProducts()">Выделить все</button>
+				<button
+					*ngIf="allSelected"
+					class="mm-btn mm-btn-default"
+					(click)="unSelectAllProducts()">Снять все</button>
+				<button class="mm-btn mm-btn-danger" (click)="clickDeleteBtn()">Удалить</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div bsModal #modalImportPrice="bs-modal"
+	class="modal fade modal-small modal-import-price">
+	<div class="modal-dialog modal-sm">
+    <div class="modal-content">
+  		<div class="modal-body">
+		  	<span class="modal-close"
+		  				(click)="onCloseImportModal()">
+		  		<i class="fa fa-times" aria-hidden="true"></i>
+		  	</span>
+		  	<h3 class="modal-title text-center">Импорт прайс-листа</h3>
+		  	<div class="modal-wrapper text-center">
+		    	<div class="select-cat-block">
+			    	<label>Категория</label>
+			    	<div class="mm-select">
+							<select [(ngModel)]="uploadCategory" (ngModelChange)="onSelectFileCategory($event)">
+								<option *ngFor="let cat of companyCategories" [ngValue]="cat.category.id">
+							    <span class="badge">{{cat.category.name}}</span>
+							  </option>
+							</select>
+							<div class="select__arrow"></div>
+			    	</div>
+		    	</div>
+		    	<p></p>
+		    	<p class="text-center">Если у вас еще нет формы прайс-листа, то <a href="./assets/price_list.xlsx">скачайте ее</a></p>
+		    	<div class="flex-vertical" *ngIf="fileChooserInit">
+		    		<label class="mm-btn-link btn-file">
+					    Выберите прайс-лист на вашем компьютере
+					    <input type="file" style="display: none;" (change)="onSelectFile($event)">
+						</label>
+						<i *ngIf="fileSelected" class="fa fa-check" aria-hidden="true"
+							tooltip="файл выбран"
+							tooltipPlacement="right"></i>
+					</div>
+		    </div>
+				<div class="modal-btns flex-container flex-center">
+					<button class="mm-btn mm-btn-primary" (click)="uploadPriceList()">Загрузить </button>
+				</div>
+			</div>
+		</div>
+  </div>
+</div>
+
+<div bsModal #modalAddProduct="bs-modal"
+	class="modal fade modal-add-product">
+	<div class="modal-dialog">
+    <div class="modal-content">
+    	<div *ngIf="addLoading" class="modal-body">
+    		<div class="loader-component">
+    			<div class="loader"></div>
+    		</div>
+    	</div>
+  		<div class="modal-body" *ngIf="!addLoading">
+		  	<span class="modal-close"
+		  				(click)="onCloseAddProduct()">
+		  		<i class="fa fa-times" aria-hidden="true"></i>
+		  	</span>
+		  	<h3 class="modal-title text-center">Добавление товара</h3>
+		    <div class="add-product-form">
+					<div class="side">
+						<div class="form-field">
+							<label>Название*</label>
+							<input type="text" class="mm-input" maxlength="300"
+								[(ngModel)]="newProduct.name" required />
+						</div>
+						<div class="form-field">
+							<label>Артикул</label>
+							<input type="text" class="mm-input" maxlength="300"
+								[(ngModel)]="newProduct.article" />
+						</div>
+						<div class="form-field">
+				    	<label>Категория*</label>
+				    	<div class="mm-select">
+								<select [(ngModel)]="newProduct.category_id" >
+									<option *ngFor="let cat of companyCategories" [ngValue]="cat.category.id">
+								    <span class="badge">{{cat.category.name}}</span>
+								  </option>
+								</select>
+								<div class="select__arrow"></div>
+				    	</div>
+						</div>
+						<div class="form-field">
+			    		<label>Фото</label>
+			    		<label class="mm-btn mm-btn-link btn-file">
+						    <span>{{productImageText}}</span>
+					        <input id="custom-input" type="file" (change)="onSelectImage($event)">
+						</label>
+						</div>
+					</div>
+
+					<div class="side">
+						<div class="form-field">
+							<label>Цена*</label>
+							<input type="number" class="mm-input" maxlength="300" min="0"
+								[(ngModel)]="newProduct.price" />
+						</div>
+						<div class="form-field">
+							<label>Ед. измер.*</label>
+							<input type="text" class="mm-input" maxlength="300"
+								[(ngModel)]="newProduct.nomenclature" required/>
+						</div>
+						<div class="form-field">
+							<label>Производ.</label>
+							<input type="text" class="mm-input" maxlength="300"
+								[(ngModel)]="newProduct.made_in" />
+						</div>
+						<div class="form-field">
+							<label>Описание</label>
+							<button class="mm-btn mm-btn-link" (click)="modalAddProductDesc.show()">добавить описание</button>
+						</div>
+					</div>
+				</div>
+				<div *ngIf="loadingImage" class="loader-component">
+					<div class="loader"></div>
+				</div>
+				<div class="product-preview-container" *ngIf="imageSelected">
+					<span *ngIf="imageSelected">
+						<!-- <img-cropper #cropper [image]="nProductImage" [settings]="cropperSettings"
+						(onCrop)="cropped($event)"></img-cropper> -->
+					</span>
+					<span class="result rounded" *ngIf="nProductImage.image">
+				    <!-- <img style="position: absolute; top: 10px;" [src]="nProductImage.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight"> -->
+					</span>
+					<span class="delete-img-btn"
+						(click)="deleteProductImage()"
+						*ngIf="imageSelected">
+						<i class="fa fa-times"
+							aria-hidden="true"></i>
+					</span>
+				</div>
+				<div class="flex-container flex-center">
+					<button class="mm-btn mm-btn-primary"
+						(click)="onAddProduct()"
+						[disabled]="addLoading">Добавить</button>
+				</div>
+			</div>
+		</div>
+  </div>
+</div>
+
+<div bsModal #modalEditProduct="bs-modal"
+	class="modal fade modal-add-product">
+	<div class="modal-dialog">
+    <div class="modal-content">
+    	<div *ngIf="addLoading" class="modal-body">
+    		<div class="loader-component">
+    			<div class="loader"></div>
+    		</div>
+    	</div>
+  		<div class="modal-body" *ngIf="!addLoading">
+		  	<span class="modal-close"
+		  				(click)="onCloseEditProduct()">
+		  		<i class="fa fa-times" aria-hidden="true"></i>
+		  	</span>
+		  	<h3 class="modal-title text-center">Редактирование товара</h3>
+		    <div class="add-product-form">
+					<div class="side">
+						<div class="form-field">
+							<label>Название</label>
+							<input type="text" class="mm-input" maxlength="300"
+								[(ngModel)]="selectedProduct.name" [disabled]="true"/>
+						</div>
+						<div class="form-field">
+							<label>Артикул</label>
+							<input type="text" class="mm-input" maxlength="300"
+								[(ngModel)]="selectedProduct.article" />
+						</div>
+						<div class="form-field">
+				    	<label>Категория</label>
+				    	<div class="mm-select">
+								<select [(ngModel)]="selectedProduct.category_id" (ngModelChange)="onSelectNewCategory($event)" [disabled]="true">
+									<option *ngFor="let cat of companyCategories" [ngValue]="cat.category.id" >
+								    <span class="badge">{{cat.category.name}}</span>
+								  </option>
+								</select>
+								<div class="select__arrow"></div>
+				    	</div>
+						</div>
+						<div class="form-field">
+			    		<label>Рисунок</label>
+			    		<label class="mm-btn mm-btn-link">
+						    <span>{{productImageText}}</span>
+						    <input id = "custom-input" type="file" style="display: none;"
+						    (change)="onSelectImage($event)">
+						</label>
+						</div>
+					</div>
+
+					<div class="side">
+						<div class="form-field">
+							<label>Цена</label>
+							<input type="number" class="mm-input" maxlength="300" min="0"
+								[(ngModel)]="selectedProduct.price" />
+						</div>
+						<div class="form-field">
+							<label>Ед. измер.</label>
+							<input type="text" class="mm-input" maxlength="300"
+								[(ngModel)]="selectedProduct.nomenclature" [disabled]="true"/>
+						</div>
+						<div class="form-field">
+							<label>Производ.</label>
+							<input type="text" class="mm-input" maxlength="300"
+								[(ngModel)]="selectedProduct.made_in" />
+						</div>
+						<div class="form-field">
+							<label>Описание</label>
+							<button class="mm-btn mm-btn-link" (click)="modalEditProductDesc.show()">изменить описание</button>
+							<!-- <div [froalaEditor]>Hello, Froala!</div> -->
+						</div>
+
+					</div>
+				</div>
+				<div class="product-preview-container" *ngIf="(selectedImage !== null)&&!imageSelected">
+					<img *ngIf="selectedImage !== null"
+						[src]="selectedImage"
+						class="product-preview">
+					<span class="delete-img-btn"
+						(click)="deleteProductImage()"
+						*ngIf="selectedImage !== null && selectedImage !== ''">
+						<i class="fa fa-times"
+							aria-hidden="true"></i>
+					</span>
+				</div>
+				<div class="product-preview-container" *ngIf="imageSelected">
+					<span>
+						<!-- <img-cropper #cropper2 [image]="sProductImage" [settings]="cropperSettings"
+						(onCrop)="cropped($event)"></img-cropper> -->
+					</span>
+					<span class="result rounded" *ngIf="sProductImage.image">
+				    <!-- <img style="position: absolute; top: 10px;" [src]="sProductImage.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight"> -->
+					</span>
+					<span class="delete-img-btn"
+						(click)="deleteProductImage()"
+						*ngIf="imageSelected">
+						<i class="fa fa-times"
+							aria-hidden="true"></i>
+					</span>
+				</div>
+				<div class="flex-container flex-center">
+					<button class="mm-btn mm-btn-primary" (click)="onUpdateProduct()">Сохранить товар</button>
+				</div>
+
+			</div>
+		</div>
+  </div>
+</div>
+
+<div bsModal #modalAddProductDesc="bs-modal"
+	class="modal fade modal-add-product-desc">
+	<div class="modal-dialog">
+    <div class="modal-content">
+  		<div class="modal-body">
+
+		  	<h3 class="modal-title text-center">Описание товара</h3>
+		  	<div class="modal-wrapper">
+		    	<textarea maxlength="1000"
+		    		style='height: 200px;'
+		    		[(ngModel)]="newProduct.description" class="form-control">
+		    	</textarea>
+		    </div>
+				<div class="modal-btns flex-container flex-center">
+					<button class="mm-btn mm-btn-default" (click)="modalAddProductDesc.hide()">Отмена</button>
+					<button class="mm-btn mm-btn-primary" (click)="modalAddProductDesc.hide()">Добавить</button>
+				</div>
+			</div>
+		</div>
+  </div>
+</div>
+
+<div bsModal #modalEditProductDesc="bs-modal"
+	class="modal fade modal-edit-product-desc">
+	<div class="modal-dialog">
+    <div class="modal-content">
+  		<div class="modal-body">
+
+		  	<h3 class="modal-title text-center">Описание товара</h3>
+		  	<div class="modal-wrapper">
+		    	<textarea
+		    		style='height: 200px;' maxlength = "999"
+		    		[(ngModel)]="selectedProduct.description" class="form-control">
+		    	</textarea>
+		    </div>
+				<div class="modal-btns flex-container flex-center">
+					<button class="mm-btn mm-btn-default" (click)="modalEditProductDesc.hide()">Отмена</button>
+					<button class="mm-btn mm-btn-primary" (click)="modalEditProductDesc.hide()">Добавить</button>
+				</div>
+			</div>
+		</div>
+  </div>
+</div>
+
+<div bsModal #modalProductAdded="bs-modal"
+	class="modal fade modal-small modal-product-added">
+	<div class="modal-dialog modal-sm">
+    <div class="modal-content">
+  		<div class="modal-body">
+
+		  	<h3 class="modal-title text-center">Товар успешно добавлен.</h3>
+		  	<div class="modal-wrapper">
+		    	<p class="text-center">Хотите добавить еще?</p>
+		    </div>
+				<div class="modal-btns flex-container flex-center">
+					<button class="mm-btn mm-btn-default" (click)="modalProductAdded.hide()">Нет, спасибо</button>
+					<button class="mm-btn mm-btn-primary" (click)="modalProductAdded.hide(); modalAddProduct.show()">Добавить</button>
+				</div>
+			</div>
+		</div>
+  </div>
+</div>
+
+<div bsModal #modalDeleteProduct="bs-modal"
+	class="modal fade modal-small modal-delete-product">
+	<div class="modal-dialog modal-sm">
+    <div class="modal-content">
+  		<div class="modal-body">
+
+		  	<h3 class="modal-title text-center">Вы уверены, что хотите удалить выбранные товары?</h3>
+		  	<div class="modal-wrapper">
+		    </div>
+				<div class="modal-btns flex-container flex-center">
+					<button class="mm-btn mm-btn-default" (click)="modalDeleteProduct.hide()">Отмена</button>
+					<button class="mm-btn mm-btn-danger" (click)="removeProducts()">Удалить</button>
+				</div>
+			</div>
+		</div>
+  </div>
+</div>

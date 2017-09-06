@@ -1,0 +1,118 @@
+<div class="main-container home-container">
+
+	<h3 class="text-center">Мои акции и скидки</h3>
+
+	<div class="search-container">
+		<label>Введите название товара или артикул, чтобы найти нужный товар</label>
+		<input
+			type="text"
+			class="mm-input"
+			placeholder="поиск товара"
+			[(ngModel)]="searchQuery" />
+		<!-- <button
+			class="mm-btn mm-btn-default"
+	  	(click)="onSearchPromotion($event)">Поиск</button> -->
+	</div>
+
+	<div class="flex-container flex-between promotion-filters-container">
+
+		<button
+				class="mm-btn mm-btn-filter"
+				(click)="getPromotions('')"
+				[class.selected]="selectedFilter === ''">Все акции</button>
+		<button
+				class="mm-btn mm-btn-filter"
+				(click)="getPromotions('0')"
+				[class.selected]="selectedFilter === '0'">Действующие акции</button>
+		<button
+				class="mm-btn mm-btn-filter"
+				(click)="getPromotions('1')"
+				[class.selected]="selectedFilter === '1'">Будущие акции</button>
+		<button
+				class="mm-btn mm-btn-filter"
+				(click)="getPromotions('2')"
+				[class.selected]="selectedFilter === '2'">Законченные акции</button>
+		<button
+				class="mm-btn mm-btn-filter"
+				(click)="getPromotions('3')"
+				[class.selected]="selectedFilter === '3'">Удаленные акции</button>
+	</div>
+
+	<!-- <table class="table table-striped promotions-table"
+		[class.loading]="loading"
+		[mfData]="promotions" #mf="mfDataTable"
+		[(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+		<thead>
+			<tr>
+				<th><mfDefaultSorter by="id">№</mfDefaultSorter></th>
+				<th>ВИД АКЦИИ</th>
+				<th>ДАТА НАЧАЛА</th>
+				<th>ДАТА ЗАВЕРШЕНИЯ</th>
+				<th>ТОВАР</th>
+				<th>СТАТУС</th>
+				<th *ngIf="selectedFilter !== '3'" class="text-center">ОТМЕТКА</th>
+				<th *ngIf="selectedFilter === '3'" class="text-center">Дата удаления</th>
+			</tr>
+		</thead>
+		<tbody (scroll)="onScroll($event)">
+			<tr *ngIf="!loading && promotions.length === 0" class="empty-table">
+				<span>У Вас нет активных акции</span>
+			</tr>
+			<tr *ngFor="let item of mf.data">
+				<td (click)="onClickPromotion(item)">{{item.id}}</td>
+				<td (click)="onClickPromotion(item)">{{promotionTypes[item.action_type].name}}</td>
+				<td (click)="onClickPromotion(item)">{{item.date_start }}</td>
+				<td (click)="onClickPromotion(item)">{{item.date_end}}</td>
+				<td (click)="onClickPromotion(item)">{{item.item.name}}</td>
+				<td (click)="onClickPromotion(item)">{{getStatus(item.status)}}</td>
+				<td *ngIf="selectedFilter !== '3'" class="text-center">
+					<label class="mm-control mm-control--checkbox">
+			      <input type="checkbox"
+			      		(click)="onSelectPromotion(item)"
+			      		[disabled]="item.status === 3" />
+			      <div class="mm-control__indicator"></div>
+			    </label>
+				</td>
+				<td *ngIf="selectedFilter === '3'"
+					class="text-center">{{((item.timestamp/1000000) | amFromUnix) | amDateFormat:'DD-MM-YYYY'}}</td>
+			</tr>
+			<tr *ngIf="promotions.length === 0">
+				<td>
+					<p>У вас пока нет акций…</p>
+					<p>Создайте первую!</p>
+				</td>
+			</tr>
+		</tbody>
+	</table> -->
+
+	<div class="btns-container">
+		<button class="mm-btn mm-btn-primary"
+						[routerLink]="['/promotion-products']">Добавить акцию</button>
+		<button class="mm-btn mm-btn-danger pull-right"
+						(click)="clickDeleteBtn()">Удалить</button>
+	</div>
+
+</div>
+
+<div class="modal fade modal-small modal-delete-promotions"
+		bsModal #modalDeletePromotions="bs-modal" [config]="{backdrop: 'static'}"
+   	tabindex="-1" role="dialog" aria-labelledby="modalDeletePromotions" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalDeletePromotions.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-wrapper">
+		  		<p class="text-center">Вы действительно хотите удалить акцию?</p>
+		    </div>
+				<div class="modal-btns flex-container flex-center">
+					<button class="mm-btn mm-btn-default" (click)="modalDeletePromotions.hide()">Отмена</button>
+					<button class="mm-btn mm-btn-danger" (click)="deletePromotions()">Удалить</button>
+				</div>
+      </div>
+    </div>
+  </div>
+</div>

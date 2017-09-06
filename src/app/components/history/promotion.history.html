@@ -1,0 +1,30 @@
+<div class="main-container home-container">
+
+	<h3 class="text-center">История изменения цен в акциях</h3>
+
+	<table class="table table-striped promotions-table"
+		[class.loading]="loading"> 
+		<thead> 
+			<tr> 
+				<th>ДАТА И ВРЕМЯ</th> 
+				<th>ФИО</th> 
+				<th>№ АКЦИИ</th> 
+				<th>СРОК АКЦИИ БЫЛ</th> 
+				<th>СРОК АКЦИИ СТАЛ</th> 
+				<th>% БЫЛИ</th> 
+				<th>% СТАЛИ</th> 
+			</tr> 
+		</thead> 
+		<tbody> 
+			<tr *ngFor="let item of history"> 
+				<td>{{ ((item.timestamp / 1000000) | amFromUnix) | amDateFormat:'DD-MM-YYYY HH:mm' }}</td> 
+				<td>{{item.fio}}</td> 
+				<td>{{item.data.action_id}}</td> 
+				<td>{{ ((item.data.old_end_date / 1000000) | amFromUnix) | amDateFormat:'DD-MM-YYYY HH:mm' }}</td> 
+				<td><b>{{ ((item.data.new_end_date / 1000000) | amFromUnix) | amDateFormat:'DD-MM-YYYY HH:mm' }}</b></td> 
+				<td>{{item.data.old_discount}}</td> 
+				<td><b>{{item.data.new_discount}}</b></td> 
+			</tr> 
+		</tbody> 
+	</table>
+</div>

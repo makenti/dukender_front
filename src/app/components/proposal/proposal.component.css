@@ -1,0 +1,160 @@
+.proposal-info-block{
+	margin: 23px 0;
+}
+.proposal-info-block span{
+	margin-right: 25px;
+}
+.delivery-date-text{
+    font-size: 13px;
+    display: block;
+    margin-left: 5px;
+    padding-bottom: 3px;
+}
+
+.proposal-table {
+    width: 100%;
+    border-spacing: 0;
+}
+
+.proposal-table thead, 
+.proposal-table tbody, 
+.proposal-table tr, 
+.proposal-table th, 
+.proposal-table td { display: block; }
+
+.proposal-table thead tr {
+    width: 97%;
+    width: -webkit-calc(100% - 16px);
+    width:    -moz-calc(100% - 16px);
+    width:         calc(100% - 16px);
+}
+
+.proposal-table tr:after { 
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+.proposal-table tbody {
+    height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.proposal-table tbody td, 
+.proposal-table thead th {
+    width: 10%;
+    float: left;
+}
+
+.proposal-table tbody td:first-child, 
+.proposal-table thead th:first-child {
+	width: 25%;
+}
+.proposal-table tbody td:nth-child(2), 
+.proposal-table thead th:nth-child(2),
+.proposal-table tbody td:nth-child(4), 
+.proposal-table thead th:nth-child(4),
+.proposal-table tbody td:nth-child(5), 
+.proposal-table thead th:nth-child(5) {
+    width: 15%;
+}
+.proposal-table tbody td:nth-child(3), 
+.proposal-table thead th:nth-child(3) {
+    text-align: center;
+}
+.proposal-table tbody td:nth-child(4), 
+.proposal-table thead th:nth-child(4),
+.proposal-table tbody td:nth-child(5), 
+.proposal-table thead th:nth-child(5),
+.proposal-table tbody td:nth-child(6), 
+.proposal-table thead th:nth-child(6) {
+    text-align: right;
+}
+
+.proposal-table tbody td:last-child, 
+.proposal-table thead th:last-child {
+    width: 10%;
+}
+.remove-proposal-span{
+    color: #e44d59;
+    text-decoration: underline;
+}
+.removed-item {
+    text-decoration: line-through;
+}
+.total-price{ margin-right: 100px}
+
+
+/* date time picker */
+.datetime-container{
+    display: inline-block;
+}
+.datetime-container .mm-input{
+    width: 100px;
+    height: 28px;
+}
+.proposal-info-field{
+    height: 28px;
+    font-size: 13px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.proposal-info-field b{margin-right: 7px;}
+.approved-text{ color: #337ab7}
+
+.comments-block{
+    align-items: flex-start;
+}
+.comments-wrapper{margin-bottom: 10px;}
+.comment-label{font-size: 13px; color: #4a4a4a; font-weight: 600; width: 160px;margin-top: 15px;}
+.comment-block{font-size: 12px; color: #4a4a4a; margin-bottom: 5px;}
+.comment-author{ font-weight: 600}
+.comment-form{margin: 0 0 30px;display: inline-flex; align-items: center;}
+.comment-form .mm-input-with-btn,
+.comment-form .mm-input{width: 380px;}
+.comment-form .update-btn{
+    margin-left: 10px;
+}
+
+.proposal-info-field .datetime-container{
+    vertical-align: middle;
+}
+
+a.ban-customer-link{
+    font-size: 13px;
+    color: #e44d59;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.prom-icon{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAU9JREFUSA3dVbFOAkEQfSiVsQQTSysT7LWho6Kyk7/AhoYOGj/AH6DnA/QDoMHGSozxBwyUWJrge8fNZfeE407WRN1kMzs3s+/Nzc7sAr9pvAD1KXA3Aw6DxyXwJ2DBueQc5SUp5YlE4B/APX3dyMdVoHkEvGdhfCF4BrpL4MLdRL2RAjfzlACvpkjuAzenwIN9K9vCpMA5L03fImv0rbk+/NOBq++5yk+s/xmBqoU51YHuMjpuCSdVtKEUv0uUlHBEEBjcgopIIgK1P1PTNEtA2YqqqAJcEXQcEFhQ12fAMDkDHcx8dR3UAxAJ/FY4CYGUmGTCpdedshUYfYL3zN9rNF1cZPTuFnMsIB9dX4/ANYRa/30C75CVFjbdOa/c41SKOtTXVVef372cHwCTE+AttT9bVXXpmYyfSz2Zmu3sXQWtKZKw4BZLTKKuzz0+Ad8iUINe2TNsAAAAAElFTkSuQmCC);
+    background-position: center;
+    background-repeat: no-repeat;
+    font-size: 11px;
+    color: #fff;
+    font-style: normal;
+}
+
+.set-status-btn{
+    text-decoration: underline;
+    color: #337ab7; 
+    cursor: pointer;
+}
+.customer-new-status {
+    color: #161eff;
+}
+.customer-trust-status {
+    color: #04a71e;
+    font-weight: 600;
+}
+
+.print-only {display: none}
