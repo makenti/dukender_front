@@ -54,8 +54,8 @@ export class ProductsComponent implements OnInit {
   // cropper2:ImageCropperComponent;
 
   public searchQuery: string = '';
-  public sortBy = 'article';
-  public sortOrder = 'asc';
+  private sortField:string = "";
+  private sortOrder:string = "asc";
   private limit: number = 10;
   private timestamp: any = '';
 
@@ -85,6 +85,7 @@ export class ProductsComponent implements OnInit {
   private croppedHeight:number;
   private croppedLeft:number;
   private croppedTop:number;
+
   currentImage: any = {
     height: 0,
     width: 0
@@ -233,6 +234,15 @@ export class ProductsComponent implements OnInit {
     this.getCategoryProducts();
   }
 
+  handleSortField(field: string){
+    if(field === this.sortField){
+      this.sortOrder = this.sortOrder === "asc"?"desc":"asc";
+    }
+    else{
+      this.sortField = field;
+      this.sortOrder = "asc";
+    }
+  }
   getCategoryProducts() {
     this.limit = 10;
     this.loading = true;
