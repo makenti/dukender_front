@@ -29,8 +29,8 @@ export class PromotionsComponent implements OnInit {
   loading: boolean = false;
 
   public searchQuery: string = '';
-  public sortBy = 'id';
-  public sortOrder = 'asc';
+  private sortField:string = "id";
+  private sortOrder:string = "asc";
 
   private selectedFilter = '';
   private timestamp: any = '';
@@ -49,6 +49,15 @@ export class PromotionsComponent implements OnInit {
 
   onSearchPromotion() {
     this.getPromotions(globalVars.selected_promotion);
+  }
+  handleSortField(field: string){
+    if(field === this.sortField){
+      this.sortOrder = this.sortOrder === "asc"?"desc":"asc";
+    }
+    else{
+      this.sortField = field;
+      this.sortOrder = "asc";
+    }
   }
   onScroll (e: any) {
     if(e.target.scrollHeight <= e.target.scrollTop + e.srcElement.clientHeight){

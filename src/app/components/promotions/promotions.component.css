@@ -34,6 +34,13 @@
     width: 16%;
     float: left;
 }
+table thead th.sortable-field{
+  cursor: pointer;
+  color: #337ab7;
+}
+table thead th.sortable-field:hover{
+  text-decoration: underline;
+}
 
 .promotions-table thead th:first-child,
 .promotions-table tbody td:first-child,
