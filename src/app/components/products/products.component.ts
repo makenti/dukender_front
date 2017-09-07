@@ -85,6 +85,9 @@ export class ProductsComponent implements OnInit {
   private croppedHeight:number;
   private croppedLeft:number;
   private croppedTop:number;
+
+  private sortField:string = "";
+
   currentImage: any = {
     height: 0,
     width: 0

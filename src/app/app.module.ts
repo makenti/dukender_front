@@ -39,6 +39,9 @@ import { CustomersComponent } from './components/customers/customers.component';
 import { BlackListComponent } from './components/customers/black_list.component';
 import { RelationshipComponent } from './components/customers/relationship.component';
 
+import { SearchPipe } from './pipes/search.pipe';
+import { SortPipe } from './pipes/sort.pipe';
+
 const appRoutes: Routes = [
   { path: 'landing', component: LandingComponent },
   { path: 'reset', component: ResetPasswordComponent },
@@ -97,7 +100,9 @@ const appRoutes: Routes = [
     ResetPasswordComponent,
     UserProfileComponent,
     CompanyInfoComponent,
-    ProposalComponent
+    ProposalComponent,
+    SearchPipe,
+    SortPipe,
   ],
   imports: [
     BrowserModule,
