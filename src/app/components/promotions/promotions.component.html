@@ -38,13 +38,14 @@
 				[class.selected]="selectedFilter === '3'">Удаленные акции</button>
 	</div>
 
-	<!-- <table class="table table-striped promotions-table"
-		[class.loading]="loading"
-		[mfData]="promotions" #mf="mfDataTable"
-		[(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+	<table class="table table-striped promotions-table"
+		[class.loading]="loading">
 		<thead>
 			<tr>
-				<th><mfDefaultSorter by="id">№</mfDefaultSorter></th>
+				<th (click)="handleSortField('id')"
+				class="sortable-field">№
+					<i class="fa fa-sort" aria-hidden="true"></i>
+				</th>
 				<th>ВИД АКЦИИ</th>
 				<th>ДАТА НАЧАЛА</th>
 				<th>ДАТА ЗАВЕРШЕНИЯ</th>
@@ -58,7 +59,7 @@
 			<tr *ngIf="!loading && promotions.length === 0" class="empty-table">
 				<span>У Вас нет активных акции</span>
 			</tr>
-			<tr *ngFor="let item of mf.data">
+			<tr *ngFor="let item of promotions | searchPromotion: 'name': searchQuery | sortBy: sortField : sortOrder">
 				<td (click)="onClickPromotion(item)">{{item.id}}</td>
 				<td (click)="onClickPromotion(item)">{{promotionTypes[item.action_type].name}}</td>
 				<td (click)="onClickPromotion(item)">{{item.date_start }}</td>
@@ -83,7 +84,7 @@
 				</td>
 			</tr>
 		</tbody>
-	</table> -->
+	</table>
 
 	<div class="btns-container">
 		<button class="mm-btn mm-btn-primary"
