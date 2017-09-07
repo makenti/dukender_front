@@ -4,12 +4,18 @@ import { Pipe } from "@angular/core";
   name: "sortBy"
 })
 export class SortPipe {
-  transform(array: any[], field: string): any[] {
+  transform(array: any[], field: string, order: string): any[] {
     array.sort((a: any, b: any) => {
       if (a[field] < b[field]) {
-        return -1;
+        if(order === "asc")
+          return -1;
+        else 
+          return 1;
       } else if (a[field] > b[field]) {
-        return 1;
+        if(order === "asc")
+          return 1;
+        else 
+          return -1;
       } else {
         return 0;
       }

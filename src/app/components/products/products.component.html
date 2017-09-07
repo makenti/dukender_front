@@ -38,17 +38,24 @@
 			<table class="table table-striped products-table price-l-table" [class.loading]="loading">
 				<thead>
 					<tr>
-						<th>АРТИКУЛ&nbsp;
-							<i class="fa fa-sort" aria-hidden="true" (click)="handleSortField("article")"></i>
+						<th class="sortable-field" 
+						(click)="handleSortField('article')">АРТИКУЛ&nbsp;
+							<i class="fa fa-sort" aria-hidden="true" 
+							*ngIf="sortField==='article'"></i>
 						</th>
-						<th>ТОВАР&nbsp;
-							<i class="fa fa-sort" aria-hidden="true" (click)="handleSortField("name")"></i>
+						<th class="sortable-field" 
+						(click)="handleSortField('name')">ТОВАР&nbsp;
+							<i class="fa fa-sort" aria-hidden="true" 
+							*ngIf="sortField==='name'">
+							</i>
 						</th>
 						<th>ПРОИЗВОДИТЕЛЬ</th>
 						<th>ЕД.ИЗМЕРЕНИЯ</th>
 						<th>ЦЕНА</th>
-						<th>КАТЕГОРИЯ&nbsp;
-							<i class="fa fa-sort" aria-hidden="true" (click)="handleSortField("category")"></i>
+						<th class="sortable-field" 
+						(click)="handleSortField('category')">КАТЕГОРИЯ&nbsp;
+							<i class="fa fa-sort" aria-hidden="true"  
+							*ngIf="sortField==='category'"></i>
 						</th>
 						<th class="text-center">Наличие товара</th>
 						<th class="text-center no-print">ОТМЕТКА</th>
@@ -58,7 +65,7 @@
 					<tr *ngIf="!loading && products.length === 0" class="empty-table">
 						<span>У Вас нет товаров в прайс-листе</span>
 					</tr>
-					<tr *ngFor="let product of products | searchPipe: 'name': searchQuery | sortBy: sortField">
+					<tr *ngFor="let product of products | searchPipe: 'name': searchQuery | sortBy: sortField : sortOrder">
 						<td (click)="onClickProduct(product)">{{product.article }}</td>
 						<td (click)="onClickProduct(product)">{{product.name}}</td>
 						<td (click)="onClickProduct(product)">{{product.made_in}}</td>
