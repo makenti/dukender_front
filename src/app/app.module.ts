@@ -20,6 +20,7 @@ import { NotFoundComponent } from './common/not-found/not-found.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { AccountComponent } from './components/account/account.component';
 import { EmployeesComponent } from './components/employees/employees.component';
+import { DelegateComponent } from './components/delegate/delegate.component';
 import { ProductsComponent } from './components/products/products.component';
 import { PromotionsComponent } from './components/promotions/promotions.component';
 import { PromotionProductsComponent } from './components/promotions/new.promotions';
@@ -64,6 +65,7 @@ const appRoutes: Routes = [
   { path: 'promotion_history', component: PromotionHistoryComponent },
   { path: 'request_history', component: RequestHistoryComponent },
   { path: 'employees', component: EmployeesComponent },
+  { path: 'delegate', component: DelegateComponent },
   { path: 'customers', component: CustomersComponent },
   { path: 'blacklist', component: BlackListComponent },
   { path: 'relationship', component: RelationshipComponent },
@@ -88,6 +90,7 @@ const appRoutes: Routes = [
     BlackListComponent,
     RelationshipComponent,
     EmployeesComponent,
+    DelegateComponent,
     PriceHistoryComponent,
     PromotionHistoryComponent,
     RequestHistoryComponent,

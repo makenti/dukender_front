@@ -1,0 +1,40 @@
+<div class="main-container home-container">
+
+	<h3 class="text-center">Передача полномочий администратора</h3>
+
+	<table class="table table-striped delegate-table"> 
+		<thead> 
+			<tr> 
+				<th>№</th> 
+				<th>ФИО</th> 
+				<th>РОЛЬ</th> 
+				<th>ТЕЛЕФОН</th> 
+				<th>ПОЧТА</th> 
+				<th>ОТМЕТКА</th> 
+			</tr> 
+		</thead> 
+		<tbody> 
+			<tr *ngFor="let item of staff"> 
+				<td>{{item.entry_id}}</td> 
+				<td>{{item.user.second_name}} {{item.user.first_name}}</td> 
+				<td>
+					<span *ngFor="let type of profileTypes; let i=index">
+						{{item.profile_type == type.id ? type.name : ''}}
+					</span>
+				</td> 
+				<td>{{item.user.phone}}</td> 
+				<td>{{item.user.username}}</td> 
+				<td>
+					<div class="abc-radio abc-radio-primary" *ngIf="item.profile_type !== 1">
+	          <input class="styled" type="radio" (click)="onSelectUser(item)" name="delegated">
+	        </div>
+				</td> 
+			</tr> 
+		</tbody> 
+	</table>
+
+	<div class="flex-container flex-center btns-container">
+		<button class="mm-btn mm-btn-default btn-space-right" [routerLink]="['/company_profile']">Отмена</button>
+		<button class="mm-btn mm-btn-primary" (click)="delegateAuthority()">Передать</button>
+	</div>
+</div>
