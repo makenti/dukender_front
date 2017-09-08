@@ -79,10 +79,8 @@ h2 {
   width: 17%;
   float: left;
   height: 43px;
-  line-height: 43px;
   word-wrap: break-word;
   overflow: hidden;
-
 }
 .employees-table tbody td:first-child,
 .employees-table thead th:first-child{
