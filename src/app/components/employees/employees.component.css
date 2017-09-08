@@ -70,9 +70,6 @@ h2 {
     overflow-y: auto;
     overflow-x: hidden;
 }
-.employees-table tbody td *{
-  vertical-align: sub;
-}
 
 .employees-table tbody td,
 .employees-table thead th {
