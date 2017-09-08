@@ -21,6 +21,9 @@ export class EmployeesComponent implements OnInit {
   @ViewChild('modalDeleteUser')
   modalDeleteUser: ModalDirective;
 
+  @ViewChild('modalDelegateUser')
+  modalDelegateUser: ModalDirective;
+
   private errorMessage: string;
   private staff: any[];
   private formChecked: boolean = false;
@@ -65,6 +68,8 @@ export class EmployeesComponent implements OnInit {
 	  // { id: 3, name: 'Взаимоотношения с заказчиками', selected: false },
   ];
 
+  private delegatedEmployee:any = null;
+
   constructor(
     private employeeService: EmployeeService,
     private auth: AuthService,
@@ -75,6 +80,7 @@ export class EmployeesComponent implements OnInit {
   ngOnInit() {
     this.auth.updateUserInfo().subscribe(null, null);
     this.getStaff();
+    console.log(this.auth.isAdmin());
   }
 
   getStaff() {
@@ -269,6 +275,29 @@ export class EmployeesComponent implements OnInit {
             }
           },
           error =>  this.errorMessage = <any>error
+        );
+  }
+
+  handleDelegateEmployee(employee){
+    console.log(employee);
+    this.delegatedEmployee = employee;
+    this.modalDelegateUser.show();
+  }
+
+  delegateAuthority() {
+    let data = {
+      entry_id: this.delegatedEmployee.entry_id
+    };
+    this.employeeService.delegateAuthority(data)
+        .subscribe(
+          res => {
+            if(res) {
+              this.toastyService.success('Успешно переданы полномочия');
+              this.getStaff();
+              this.modalDelegateUser.hide();
+            }
+          },
+          error => this.errorMessage = <any>error
         );
   }
 

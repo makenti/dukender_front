@@ -3,7 +3,8 @@
 	<h3 class="text-center header-text">Справочник сотрудников компании</h3>
 
 	<table class="table table-striped employees-table table-employee"
-		[class.loading]='loading'>
+		[class.loading]='loading'
+		[class.table-admin]='auth.isAdmin()'>
 		<thead>
 			<tr>
 				<th>№</th>
@@ -11,8 +12,9 @@
 				<th>РОЛЬ</th>
 				<th>СТАТУС</th>
 				<th>УВЕДОМЛЕНИЕ</th>
+				<th *ngIf='auth.isAdmin()'>ПОЛНОМОЧИЕ АДМИНИСТРАТОРА</th>
 				<th>ПОЧТА</th>
-				<th class="text-center">ОТМЕТКА</th>
+				<th>ОТМЕТКА</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -29,9 +31,14 @@
 				</td>
 				<td>
 					<button
-						class="mm-btn mm-btn-default mm-btn-mini"
+						class="mm-btn mm-btn-primary mm-btn-mini"
 						[hidden]="item.user.is_active == true"
 						(click)="inviteEmployee(item)">Напомнить</button>
+				</td>
+				<td *ngIf="auth.isAdmin()">
+					<button class="mm-btn mm-btn-default mm-btn-mini" 
+					 (click)="handleDelegateEmployee(item)"
+					 *ngIf="auth.isAdmin()">Передать</button>
 				</td>
 				<td (click)="onEditUser(item)">{{item.user.username}}</td>
 				<td class="text-center">
@@ -72,6 +79,22 @@
   </div>
 </div>
 
+<div bsModal #modalDelegateUser="bs-modal"
+	class="modal fade modal-small modal-delegate-user">
+	<div class="modal-dialog modal-sm" *ngIf="delegatedEmployee!==null">
+    <div class="modal-content">
+		  <div class="modal-body">
+		  	<div class="modal-wrapper">
+		    	<p class="text-center">Вы уверены, что хотите передать полномочие сотруднику {{delegatedEmployee.user.second_name}} {{delegatedEmployee.user.first_name}}</p>
+		    </div>
+				<div class="modal-btns flex-container flex-center">
+					<button class="mm-btn mm-btn-default" (click)="modalDelegateUser.hide()">Нет</button>
+					<button class="mm-btn mm-btn-danger" (click)="delegateAuthority()">Да</button>
+				</div>
+		  </div>
+		</div>
+  </div>
+</div>
 
 <div bsModal #modalAddUser="bs-modal" class="modal fade modal-add-user"
 	tabindex="-1" role="dialog" aria-labelledby="modalAddUser" aria-hidden="true">

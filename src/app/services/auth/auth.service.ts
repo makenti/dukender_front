@@ -167,6 +167,17 @@ export class AuthService {
     }
     return null;
   }
+  isAdmin(){
+    let parsedUser = JSON.parse(window.localStorage.getItem('user'));
+    
+    if(parsedUser !== null) {
+      if(parsedUser.entry !== null && 
+        parsedUser.entry.profile_type === 1) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   getUserCompany() {
     let parsedUserCompany = JSON.parse(window.localStorage.getItem('user_company'));
