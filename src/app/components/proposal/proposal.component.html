@@ -93,7 +93,7 @@
 				</tr>
 			</thead>
 			<tbody *ngIf="proposalItems !== null">
-				<tr *ngFor="let item of proposalItems">
+				<tr *ngFor="let item of proposalItems | searchPipe: 'name': searchQuery">
 					<td (click)="onShowItemOldData(item)">
 						<span class="removed-item" *ngIf="item.removed">{{item.removed}} {{item.name}}</span>
 						<span *ngIf="!item.removed"> {{item.name}}</span>

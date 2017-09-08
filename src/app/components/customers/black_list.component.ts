@@ -36,6 +36,7 @@ export class BlackListComponent implements OnInit {
           resp => {
             if(resp.length === 0) {
               this.toastyService.warning('черный список пуст');
+              this.bannedCustomers = [];
             }else {
           		this.bannedCustomers = resp;
             }
