@@ -70,28 +70,43 @@ h2 {
     overflow-y: auto;
     overflow-x: hidden;
 }
+.employees-table tbody td *{
+  vertical-align: sub;
+}
 
 .employees-table tbody td,
 .employees-table thead th {
-    width: 16%;
-    float: left;
-    height: 38px;
+  width: 17%;
+  float: left;
+  height: 43px;
+  word-wrap: break-word;
+  overflow: hidden;
 }
 .employees-table tbody td:first-child,
-.employees-table thead th:first-child,
+.employees-table thead th:first-child{
+  width: 5%;
+}
 .employees-table tbody td:last-child,
 .employees-table thead th:last-child {
   width: 10%;
+  text-align: right;
 }
 
-.table-emplaoyee tr:hover td{
+.table-admin tbody td,
+.table-admin thead th{
+  width: 15%;
+}
+.table-admin tbody td:first-child,
+.table-admin thead th:first-child{
+  width: 3%;
+}
+.table-admin tbody td:last-child,
+.table-admin thead th:last-child {
+  width: 7%;
+}
+
+.table-employee tr:hover td{
   background: #ececec;
-}
-
-.table-emplaoyee td{
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .table-emplaoyee .mm-control {
