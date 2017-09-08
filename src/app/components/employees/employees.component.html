@@ -81,11 +81,11 @@
 
 <div bsModal #modalDelegateUser="bs-modal"
 	class="modal fade modal-small modal-delegate-user">
-	<div class="modal-dialog modal-sm" *ngIf="delegatedEmployee!==null">
+	<div class="modal-dialog modal-sm" *ngIf="employeeToDelegate!==null">
     <div class="modal-content">
 		  <div class="modal-body">
 		  	<div class="modal-wrapper">
-		    	<p class="text-center">Вы уверены, что хотите передать полномочие сотруднику {{delegatedEmployee.user.second_name}} {{delegatedEmployee.user.first_name}}</p>
+		    	<p class="text-center">Вы уверены, что хотите передать полномочие сотруднику {{employeeToDelegate.user.second_name}} {{employeeToDelegate.user.first_name}}</p>
 		    </div>
 				<div class="modal-btns flex-container flex-center">
 					<button class="mm-btn mm-btn-default" (click)="modalDelegateUser.hide()">Нет</button>

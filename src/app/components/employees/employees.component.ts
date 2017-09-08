@@ -68,7 +68,7 @@ export class EmployeesComponent implements OnInit {
 	  // { id: 3, name: 'Взаимоотношения с заказчиками', selected: false },
   ];
 
-  private delegatedEmployee:any = null;
+  private employeeToDelegate:any = null;
 
   constructor(
     private employeeService: EmployeeService,
@@ -80,7 +80,6 @@ export class EmployeesComponent implements OnInit {
   ngOnInit() {
     this.auth.updateUserInfo().subscribe(null, null);
     this.getStaff();
-    console.log(this.auth.isAdmin());
   }
 
   getStaff() {
@@ -279,14 +278,13 @@ export class EmployeesComponent implements OnInit {
   }
 
   handleDelegateEmployee(employee){
-    console.log(employee);
-    this.delegatedEmployee = employee;
+    this.employeeToDelegate = employee;
     this.modalDelegateUser.show();
   }
 
   delegateAuthority() {
     let data = {
-      entry_id: this.delegatedEmployee.entry_id
+      entry_id: this.employeeToDelegate.entry_id
     };
     this.employeeService.delegateAuthority(data)
         .subscribe(
