@@ -219,11 +219,11 @@ export class AuthService {
           }else if(p.permission_type === 1) {
             this.perms.discounts = true;
           }else if(p.permission_type === 2) {
-            this.perms.pricelist = true;
-          }else if(p.permission_type === 3) {
-            this.perms.staff = true;
-          }else if(p.permission_type === 4) {
             this.perms.company = true;
+          }else if(p.permission_type === 3) {
+            this.perms.pricelist = true;
+          }else if(p.permission_type === 4) {
+            this.perms.staff = true;
           }else if(p.permission_type === 5) {
             this.perms.settings = true;
           }

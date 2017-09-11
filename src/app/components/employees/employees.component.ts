@@ -59,13 +59,13 @@ export class EmployeesComponent implements OnInit {
   ];
 
   private permissionsList = [
-	  { id: 0, name: 'Заявки', selected: false },
-	  { id: 1, name: 'Акции и скидки', selected: false },
-    { id: 2, name: 'Прайс-листы', selected: false },
-    { id: 3, name: 'Сотрудники', selected: false },
-	  { id: 4, name: 'Компания', selected: false },
+    { id: 0, name: 'Заявки', selected: false },
+    { id: 1, name: 'Акции и скидки', selected: false },
+    { id: 2, name: 'Компания', selected: false },
+    { id: 3, name: 'Прайс-листы', selected: false },
+    { id: 4, name: 'Сотрудники', selected: false },
     { id: 5, name: 'Настройки', selected: false }
-	  // { id: 3, name: 'Взаимоотношения с заказчиками', selected: false },
+    // { id: 3, name: 'Взаимоотношения с заказчиками', selected: false },
   ];
 
   private employeeToDelegate:any = null;
@@ -226,7 +226,6 @@ export class EmployeesComponent implements OnInit {
   saveEmployee() {
     // this.checkForm();
     this.updatePermissions();
-    console.log(this.selectedEmployee);
 
     this.employeeService.updateEmployee(this.selectedEmployee)
         .subscribe(
@@ -250,7 +249,6 @@ export class EmployeesComponent implements OnInit {
   }
 
   clickDeleteBtn() {
-    console.log(this.selectedUsers);
     if(this.selectedUsers.length > 0) {
       this.modalDeleteUser.show();
     }else {
@@ -291,8 +289,8 @@ export class EmployeesComponent implements OnInit {
           res => {
             if(res) {
               this.toastyService.success('Успешно переданы полномочия');
-              this.getStaff();
-              this.modalDelegateUser.hide();
+              
+              this.auth.logout();
             }
           },
           error => this.errorMessage = <any>error
@@ -301,7 +299,6 @@ export class EmployeesComponent implements OnInit {
 
   inviteEmployee(employee: any) {
     // this.updateEmployees();
-    console.log(employee);
     let data = {
       entry_id: employee.entry_id
     };
@@ -322,12 +319,14 @@ export class EmployeesComponent implements OnInit {
 
 	updatePermissions() {
 		let newPermissions: any[] = [];
+
   	this.permissionsList.map((perm)=> {
   		if(perm.selected) {
   			newPermissions.push(perm.id);
+
   		}
+      console.log(perm.id, perm.name, perm.selected);
   	});
-    console.log(newPermissions);
     this.newEmployee.permissions = newPermissions;
   	this.selectedEmployee.permissions = newPermissions;
 	}
