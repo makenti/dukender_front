@@ -102,9 +102,9 @@ h2 {
   width: 7%;
 }
 
-.table-employee tr:hover td{
+/*.table-employee tr:hover td{
   background: #ececec;
-}
+}*/
 
 .table-emplaoyee .mm-control {
     margin: 0;
