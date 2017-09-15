@@ -78,7 +78,7 @@ body {
   padding-bottom: 40px;
 }
 
-@media (min-device-width: 320px)
+@media (min-device-width: 480px)
   and (max-device-width: 1000px) {
   body {
     width: 1000px;
@@ -817,4 +817,9 @@ input:checked + .slider:before {
 
 .change-date-picker .mydp .selectorarrow:after{
   border-bottom-color: #fff;
+}
+@media only screen and (max-device-width: 480px) {
+  .loading-block .loading {
+    margin: -100px 0 0 -100px;
+  }
 }
