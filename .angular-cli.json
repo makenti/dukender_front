@@ -20,6 +20,8 @@
       "prefix": "app",
       "styles": [
         "../node_modules/bootstrap/dist/css/bootstrap.min.css",
+        "../node_modules/ng2-toasty/style.css",
+        "../node_modules/ng2-toasty/style-material.css",
         "styles.css"
       ],
       "scripts": [],
