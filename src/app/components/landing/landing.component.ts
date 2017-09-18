@@ -41,9 +41,13 @@ export class LandingComponent implements OnInit {
 
   ngOnInit() {
     this.toolbarSrv.setToolbarTitle('Добро пожаловать в Dukender.');
+    var metaTag = document.getElementById('viewport');
+    metaTag.parentNode.removeChild(metaTag);
+
     var meta = document.createElement('meta');
     meta.name = "viewport";
-    meta.content = "width=device-width";
+    meta.id = "viewport";
+    meta.content = "width=device-width, initial-scale=1.0";
     document.getElementsByTagName('head')[0].appendChild(meta);
   }
 

@@ -21,7 +21,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr *ngFor="let item of proposals" (click)="showProposal()">
+			<tr *ngFor="let item of proposals" (click)="showProposal(item)">
 				<td>{{item.request_id}}</td>
 				<td>{{ ((item.create_time/1000000) | amFromUnix) | amDateFormat:'DD-MM-YYYY' }}</td>
 				<td>{{item.customer.name}}</td>
