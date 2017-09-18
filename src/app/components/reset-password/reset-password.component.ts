@@ -29,6 +29,16 @@ export class ResetPasswordComponent implements OnInit {
 
   ngOnInit() {
     this.toolbarService.setToolbarTitle('Восстановление пароля.');
+    
+
+    var metaTag = document.getElementById('viewport');
+    metaTag.parentNode.removeChild(metaTag);
+    
+    var meta = document.createElement('meta');
+    meta.name = "viewport";
+    meta.id = "viewport";
+    meta.content = "width=device-width, initial-scale=1.0";
+    document.getElementsByTagName('head')[0].appendChild(meta);
   }
 
   onResetEnter(event:any) {

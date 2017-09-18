@@ -20,6 +20,8 @@ export class DashboardComponent implements OnInit {
   private loading: boolean = false;
   private errorMessage: any[] = [];
 
+  private currUser: any;
+  
   constructor(
     private auth: AuthService,
   	private router: Router,
@@ -28,6 +30,15 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    var metaTag = document.getElementById('viewport');
+    metaTag.parentNode.removeChild(metaTag);
+
+    var meta = document.createElement('meta');
+    meta.id = "viewport";
+    meta.name = "viewport";
+    meta.content = "width=1024";
+    document.getElementsByTagName('head')[0].appendChild(meta);
+    
     this.auth.updateUserInfo().subscribe(null, null);
   	this.getProposals();
   }
@@ -55,8 +66,22 @@ export class DashboardComponent implements OnInit {
         );
   }
 
-  showProposal() {
-  	this.router.navigate(['/proposal']);
+  showProposal(item: any) {
+    this.currUser = this.auth.getUser();
+    let curUserEntry = (this.currUser.entry !== undefined && this.currUser.entry !== null)?this.currUser.entry: null;
+    let operatorPermission = false; 
+    for(var i=0; i < this.currUser.permissions.length; i++){
+      if(this.currUser.permissions[i].permission_type === 0)
+        operatorPermission = true; //TODO: eshe nuzhno uchest' kompaniu i sotrudnika?
+    }
+    if((curUserEntry !== null && (curUserEntry.profile_type === 1 || curUserEntry.profile_type === 3 || operatorPermission)) || 
+        item.editor === this.currUser.username && item.status !== 0 || 
+        item.status === 0) {
+      this.router.navigate(['/proposal', item.request_id]);
+    }else {
+      this.toastyService.warning('Вы не можете обработать эту заявку');
+    }
+    // this.router.navigate(['/proposal', item.request_id]);
   }
 
 }

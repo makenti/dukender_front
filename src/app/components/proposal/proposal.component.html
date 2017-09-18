@@ -8,6 +8,14 @@
 					<b>Заказчик:</b>
 					<span>{{proposal.customer.name}}</span>
 				</div>
+				<div class="proposal-info-field">
+					<b>Юридическое лицо:</b> 
+					<span>{{proposal.customer.official_name}}</span>
+				</div>
+				<div class="proposal-info-field">
+					<b>БИН:</b> 
+					<span>{{proposal.customer.tin}}</span>
+				</div>
 				<div class="proposal-info-field"><b>Адрес:</b>
 					<span>
 						{{proposal.customer.district.region.name}},

@@ -395,7 +395,7 @@ ul#menu-ul {
  #fullpage {
   height: 100%;
   position: relative;
-  touch-action: none;
+  /*touch-action: none;*/
   transform: translate3d(0px, 0px, 0px);
   transition: all 700ms ease;
  }
@@ -413,10 +413,10 @@ html.fp-enabled,
   position: relative;
 
   /* Touch detection for Windows 8 */
-  -ms-touch-action: none;
+  /*-ms-touch-action: none;*/
 
   /* IE 11 on Windows Phone 8.1*/
-  touch-action: none;
+  /*touch-action: none;*/
 }
 .fp-section {
   position: relative;
