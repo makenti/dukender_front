@@ -59,7 +59,7 @@
 			<tr *ngIf="!loading && promotions.length === 0" class="empty-table">
 				<span>У Вас нет активных акции</span>
 			</tr>
-			<tr *ngFor="let item of promotions | searchPromotion: 'name': searchQuery | sortBy: sortField : sortOrder">
+			<tr *ngFor="let item of promotions | searchDeep: 'name': searchQuery | sortBy: sortField : sortOrder">
 				<td (click)="onClickPromotion(item)">{{item.id}}</td>
 				<td (click)="onClickPromotion(item)">{{promotionTypes[item.action_type].name}}</td>
 				<td (click)="onClickPromotion(item)">{{item.date_start }}</td>

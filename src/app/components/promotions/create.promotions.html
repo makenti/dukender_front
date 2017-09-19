@@ -42,12 +42,13 @@
 								(keypress)="checkForInteger($event)"
 								[(ngModel)]="promotionsData[product.id].for_count" />
 				</td>
-				<td *ngIf="promotionType === 2">
-					<input type="number"
-								class="mm-input input-mini"
-								(keypress)="checkForInteger($event)"
-								[disabled]="promotionsData[product.id].removed"
-								[(ngModel)]="promotionsData[product.id].bonus_count" />
+				<td class="text-center" *ngIf="promotionType === 2">
+					<i *ngIf="!product.bonus_item_id" class="fa fa-plus-square" aria-hidden="true" (click)="openModalBonusItem(product)"></i>
+					<span *ngIf="product.bonus_item_id">
+						{{product.bonus_item_name}}({{product.bonus_count}})
+						<i class="fa fa-pencil" aria-hidden="true"
+						(click)="openModalBonusItem(product)"></i>
+					</span>
 				</td>
 				<td *ngIf="promotionType === 3">
 					<input type="number"
@@ -93,6 +94,104 @@
 				<div class="modal-btns flex-container flex-center">
 					<button class="mm-btn mm-btn-default" (click)="discardCreate()">Отмена</button>
 					<button class="mm-btn mm-btn-primary" (click)="modalShowInfo.hide()">Подтвердить</button>
+				</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div bsModal #modalAddBonusItem="bs-modal" 
+	class="modal fade modal-large modal-changes">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="modal-wrapper">
+	    		<div class="category-select flex-container flex-between">
+	    	    <div class="mm-select">
+	    				<select [(ngModel)]="selectedCategory" (change)="getCategoryProducts()">
+	    					<option [ngValue]="null" selected>Все категории</option>
+	    					<option *ngFor="let cat of companyCategories" [ngValue]="cat.category.id">
+	    				    <span class="badge">{{cat.category.name}}</span>
+	    				  </option>
+	    				</select>
+	    				<div class="select__arrow"></div>
+	    	  	</div>
+
+	    	    <div class="mm-input-with-btn">
+	    	      <input type="text" class="mm-input" placeholder="поиск товара" [(ngModel)]="searchQuery" />
+	    	      <!-- <span class="waves-effect waves-light btn" (click)="onSearchProduct($event)">
+	    	      	<i class="fa fa-search" aria-hidden="true"></i>
+	    	      </span> -->
+	    	    </div>
+	    		</div>
+	    		<table class="table table-striped new-promotions-table"
+	    			[class.loading]='loading'> 
+	    			<thead> 
+	    				<tr> 
+	    					<th>АРТИКУЛ</th> 
+	    					<th>ТОВАР</th> 
+	    					<th>ПРОИЗВОДИТЕЛЬ</th> 
+	    					<th>ЕД.ИЗМЕРЕНИЯ</th> 
+	    					<th>ЦЕНА</th>
+	    					<th>Действующие акции</th> 
+	    					<th>в наличии</th> 
+	    					<th class="text-center">ОТМЕТКА</th> 
+	    				</tr> 
+	    			</thead> 
+	    			<tbody> 
+	    				<tr *ngFor="let product of products | searchDeep: 'name': searchQuery"> 
+	    					<td>{{product.article}}</td> 
+	    					<td>{{product.name}}</td> 
+	    					<td>{{product.made_in}}</td> 
+	    					<td>{{product.nomenclature}}</td> 
+	    					<td>{{product.price | number: '1.2-2'}}</td>
+	    					<td>
+	    						<i class="prom-icon" 
+	    							title="скидка"
+	    							*ngIf="product.action_discount_active"
+	    							aria-hidden="true">%</i>
+	    						<i class="prom-icon" 
+	    							title="денежный бонус"
+	    							*ngIf="product.action_bonus_money_active"
+	    							aria-hidden="true">ДБ</i>
+	    						<i class="prom-icon" 
+	    							title="товарный бонус"
+	    							*ngIf="product.action_bonus_item_active"
+	    							aria-hidden="true">ТБ</i>
+	    						<i class="prom-icon" 
+	    							title="новая акция"
+	    							*ngIf="product.action_news_active"
+	    							aria-hidden="true">Н</i>
+	    					</td>
+	    					<td>{{(product.in_sale)?'есть':'нет'}}</td> 
+	    					<td class="text-center">
+	    						<label class="mm-control mm-control--radio">
+	    				      <input type="radio" name="selectedItem"
+	    				      	[disabled]="!product.in_sale"
+	    				      	(change)="handleSelectItem(product)"
+	    				      	[checked]="isSelected(product)"/>
+	    				      <div class="mm-control__indicator"></div>
+	    				    </label>
+	    					</td> 
+	    				</tr> 
+	    			</tbody> 
+	    		</table>
+		    </div>
+        <div class="modal-wrapper" *ngIf="selectedBonusItem">
+		    	<div class="flex-container flex-between">
+						<label for="name">Товар:</label>
+						<div>{{selectedBonusItem.name}}</div>
+						<label for="number">Количество:</label>
+						<input type="number"
+							class="mm-input input-mini"
+							(keypress)="checkForInteger($event)"
+							[disabled]="currentProduct.removed"
+							[(ngModel)]="currentProduct.bonus_count" />
+					</div>
+				</div>
+				<div class="modal-btns flex-container flex-center">
+					<button class="mm-btn mm-btn-default" (click)="modalAddBonusItem.hide()">Отмена</button>
+					<button class="mm-btn mm-btn-primary" (click)="addItem()">Подтвердить</button>
 				</div>
       </div>
     </div>

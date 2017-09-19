@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap';
 
-import { AuthService, PromotionService } from '../../services/index';
+import { AuthService, PromotionService, ProductService, CompanyProfileService } from '../../services/index';
 
 import * as moment from 'moment';
 import 'moment/min/locales';
@@ -38,15 +38,29 @@ export class CreatePromotionsComponent implements OnInit {
   companyProfile: any = null;
   daterange: any = {};
 
+  private companyCategories: any[] = [];
+  private loading:boolean = false;
+  private searchQuery:string = '';
+  private selectedCategory:any = null;
+  private products:any[] = [];
+
+  private selectedBonusItem:any = null;
+  private currentProduct:any = null;
+
   @ViewChild('modalShowInfo')
   modalShowInfo:ModalDirective;
 
+  @ViewChild('modalAddBonusItem')
+  modalAddBonusItem:ModalDirective;
+  
   constructor(
   	private auth: AuthService,
   	private router: Router,
   	private route: ActivatedRoute,
   	private promotionService: PromotionService,
     private toastyService: ToastyService,
+    private companyService: CompanyProfileService,
+    private productService: ProductService,
     // private daterangepickerOptions: DaterangepickerConfig
     ) {
     // this.daterangepickerOptions.settings = {
@@ -105,8 +119,48 @@ export class CreatePromotionsComponent implements OnInit {
     if(this.promotionProducts !== undefined) {
       this.checkPromotion();
     }
+    this.getCompanyCategories();
+    this.getCategoryProducts();
   }
 
+  getCompanyCategories() {
+  this.companyService.getCompanyCategories()
+      .subscribe(
+        data => {
+          // console.log(data);
+          this.companyCategories = data;
+        },
+        error =>  this.errorMessage = <any>error
+      );
+  }
+  getCategoryProducts() {
+  // console.log(this.selectedCategory);
+  this.loading = true;
+  let data = {
+    category_id: (this.selectedCategory !== null) ? this.selectedCategory : '',
+    limit: 500,
+    search_word: this.searchQuery
+  };
+  this.productService.getCategoryProducts(data)
+      .subscribe(
+        resp => {
+          // console.log(resp); 
+          this.loading = false;
+          if(resp === null) {
+            this.toastyService.warning('По Вашему запросу ничего не найдено');
+          }else {
+            if(resp.code === 0) {
+              this.products = resp.price_list;
+              this.products.map(p => {
+                p.checked = false;
+                return p;
+              });
+            }
+          }
+        },
+        error =>  this.errorMessage = <any>error
+      );
+  }
   // "request_percent":1,
   // "action_news_percent":3,
   // "left_balance":188321.05,
@@ -115,7 +169,7 @@ export class CreatePromotionsComponent implements OnInit {
   // "action_bonus_money_percent":2
 
   checkPromotion() {
-    console.log(this.promotionPercents);
+    // console.log(this.promotionPercents);
     if(this.promotionPercents !== undefined && this.promotionPercents !== null) {
       let settings: any = this.promotionPercents;
       if(this.promotionType === 0) {
@@ -145,7 +199,7 @@ export class CreatePromotionsComponent implements OnInit {
   }
 
   onChangePrice(e: any, item: any) {
-    console.log(e, item);
+    // console.log(e, item);
     if(parseInt(e, 10) < 0) {
       item.count = 1;
     }
@@ -198,7 +252,7 @@ export class CreatePromotionsComponent implements OnInit {
     this.checkPromotionsData();
     this.newPromotion.news = [];
     this.promotionsData.map((item, index) => {
-      console.log(item);
+      // console.log(item);
       if(!item.removed) {
         this.newPromotion.news.push(item);
       }
@@ -222,8 +276,41 @@ export class CreatePromotionsComponent implements OnInit {
   }
 
   selectedDate(value: any) {
-    console.log(value);
+    // console.log(value);
     this.daterange.start = value.start;
     this.daterange.end = value.end;
+  }
+  addItem(){
+    console.log(this.promotionsData, this.currentProduct, this.selectedBonusItem);
+    this.promotionsData[this.currentProduct.id].bonus_item_id = this.currentProduct.bonus_item_id;
+    this.promotionsData[this.currentProduct.id].bonus_count = this.currentProduct.bonus_count;
+    
+    this.modalAddBonusItem.hide();
+  }
+  openModalBonusItem(product: any){
+    this.currentProduct = product;
+    this.selectedBonusItem = null;
+    // console.log(product)
+    if(product.bonus_item_id)
+      for(let i = 0; i < this.products.length; i++){
+        if(this.products[i].id === product.bonus_item_id){
+          // console.log(this.products[i].id);
+          this.selectedBonusItem = this.products[i];
+        }
+      }
+    // console.log(this.selectedBonusItem)
+    
+    this.modalAddBonusItem.show();
+  }
+  handleSelectItem(item: any){
+    this.currentProduct.bonus_item_id = item.id;
+    this.currentProduct.bonus_item_name = item.name;
+    this.selectedBonusItem = item;
+    // console.log(item);
+  }
+  isSelected(product: any){
+    if(this.selectedBonusItem && product.id===this.selectedBonusItem.id)
+      return true;
+    return false;
   }
 }
