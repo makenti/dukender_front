@@ -9,7 +9,6 @@ import { AuthService, AccountService } from '../../services/index';
   selector: 'app-account',
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css'],
-  providers: [ AuthService, AccountService ]
 })
 export class AccountComponent implements OnInit {
 

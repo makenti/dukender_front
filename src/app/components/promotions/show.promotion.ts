@@ -14,7 +14,6 @@ moment.locale('ru-ru');
   selector: 'app-promshow',
   templateUrl: 'show.promotion.html',
   styleUrls: ['promotions.component.css'],
-  providers: [AuthService, PromotionService]
 })
 export class ShowPromotionComponent implements OnInit {
 
@@ -23,6 +22,8 @@ export class ShowPromotionComponent implements OnInit {
   promID: any = null;
   promTitle: string = '';
   promotionType: any = null;
+
+  private bonusItem: any = null;
 
   constructor(
   	private auth: AuthService,
@@ -48,6 +49,12 @@ export class ShowPromotionComponent implements OnInit {
             if(resp.code === 0) {
               this.promotion = resp.news;
               this.composePromotion();
+              
+              if(this.promotion.action_type === 2){
+                this.bonusItem = this.promotion.item;
+                if(this.promotion.bonus_item !== null)
+                  this.bonusItem = this.promotion.bonus_item;
+              }            
             }
           },
           error =>  this.errorMessage = <any>error

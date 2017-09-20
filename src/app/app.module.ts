@@ -43,6 +43,16 @@ import { SearchPipe } from './pipes/search.pipe';
 import { SearchDeepPipe } from './pipes/searchDeep.pipe';
 import { SortPipe } from './pipes/sort.pipe';
 
+import {
+  AuthService,
+  CategoryService,
+  CompanyProfileService,
+  ProductService,
+  PromotionService,
+  AccountService,
+  ProposalService,
+   } from './services/index';
+
 const appRoutes: Routes = [
   { path: 'landing', component: LandingComponent },
   { path: 'reset', component: ResetPasswordComponent },
@@ -119,7 +129,15 @@ const appRoutes: Routes = [
     BsDropdownModule.forRoot(),
     ModalModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    AuthService,
+    CategoryService,
+    CompanyProfileService,
+    ProductService,
+    PromotionService,
+    AccountService,
+    ProposalService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

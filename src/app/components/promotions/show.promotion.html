@@ -42,8 +42,8 @@
 				</tr> 
 			</tbody> 
 		</table>
-		<div *ngIf="promotionType === 2">
-			<h5>Бонусный товар</h5>
+		<div *ngIf="promotionType === 2 && bonusItem">
+			<h5>Бонусный товар:</h5>
 			<table class="table table-striped create-promotion-table"> 
 				<thead> 
 					<tr> 
@@ -56,11 +56,11 @@
 				</thead> 
 				<tbody> 
 					<tr> 
-						<td>{{promotion.bonus_item.article}}</td> 
-						<td>{{promotion.bonus_item.name}}</td> 
-						<td>{{promotion.bonus_item.made_in}}</td> 
-						<td>{{promotion.bonus_item.nomenclature}}</td> 
-						<td>{{promotion.bonus_item.price | number: '1.2-2'}}</td> 
+						<td>{{bonusItem.article}}</td> 
+						<td>{{bonusItem.name}}</td> 
+						<td>{{bonusItem.made_in}}</td> 
+						<td>{{bonusItem.nomenclature}}</td> 
+						<td>{{bonusItem.price | number: '1.2-2'}}</td> 
 					</tr> 
 				</tbody> 
 			</table>

@@ -17,12 +17,7 @@ import { ToastyService } from 'ng2-toasty';
 @Component({
   selector: 'app-promcreate',
   templateUrl: 'create.promotions.html',
-  styleUrls: ['promotions.component.css'],
-  providers: [
-    AuthService, 
-    PromotionService, 
-    CompanyProfileService, 
-    ProductService]
+  styleUrls: ['promotions.component.css']
 })
 export class CreatePromotionsComponent implements OnInit {
 
@@ -82,9 +77,11 @@ export class CreatePromotionsComponent implements OnInit {
   	this.newPromotion.action_type = +this.route.snapshot.params['type'];
     this.promotionType = +this.route.snapshot.params['type'];
   	this.promotionProducts = this.promotionService.selectedProducts;
+    // console.log(this.promotionService.selectedProducts);
     this.promotionPercents = this.promotionService.getPromotionPercents();
     this.companyProfile = this.auth.getUserCompany();
     if(this.promotionProducts === undefined) {
+      this.toastyService.warning('Вы не можете добваить акцию.');
       this.router.navigate(['/promotion-products']);
     }
 

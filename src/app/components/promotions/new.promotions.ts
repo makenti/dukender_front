@@ -13,14 +13,7 @@ import { ToastyService } from 'ng2-toasty';
 @Component({
   selector: 'app-promnew',
   templateUrl: 'new.promotions.html',
-  styleUrls: ['promotions.component.css'],
-  providers: [
-    AuthService,
-    CategoryService,
-    CompanyProfileService,
-    ProductService,
-  	PromotionService
-  ]
+  styleUrls: ['promotions.component.css']
 })
 export class PromotionProductsComponent implements OnInit {
 
@@ -127,6 +120,7 @@ export class PromotionProductsComponent implements OnInit {
       this.promotionService.selectedProducts = this.selectedProducts;
       this.router.navigate(['/promotion-create', type]);
     }
+
   }
 
   selectAllProducts() {
