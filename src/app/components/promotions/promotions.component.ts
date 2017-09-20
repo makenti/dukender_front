@@ -4,13 +4,10 @@ import { ModalDirective } from 'ngx-bootstrap';
 import { ToastyService } from 'ng2-toasty';
 import { AuthService, PromotionService } from '../../services/index';
 
-import * as globalVars from '../../common/config/globalVars';
-
 @Component({
   selector: 'app-promotions',
   templateUrl: 'promotions.component.html',
-  styleUrls: ['promotions.component.css'],
-  providers: [AuthService, PromotionService]
+  styleUrls: ['promotions.component.css']
 })
 export class PromotionsComponent implements OnInit {
 
@@ -34,7 +31,7 @@ export class PromotionsComponent implements OnInit {
 
   private selectedFilter = '';
   private timestamp: any = '';
-  private limit: number = 10;
+  private limit: number = 500;
 
   constructor(
   	private auth: AuthService,
@@ -43,13 +40,13 @@ export class PromotionsComponent implements OnInit {
     private toastyService: ToastyService) {}
 
   ngOnInit() {
+    var id = window.localStorage.getItem('selectedPromotionType');
+    if(id!==null){
+      this.getPromotions(id);
+    }
     this.auth.updateUserInfo().subscribe(null, null);
-  	this.getPromotions(globalVars.selected_promotion); // for getting selected promotion
   }
 
-  onSearchPromotion() {
-    this.getPromotions(globalVars.selected_promotion);
-  }
   handleSortField(field: string){
     if(field === this.sortField){
       this.sortOrder = this.sortOrder === "asc"?"desc":"asc";
@@ -60,13 +57,12 @@ export class PromotionsComponent implements OnInit {
     }
   }
   onScroll (e: any) {
-    if(e.target.scrollHeight <= e.target.scrollTop + e.srcElement.clientHeight){
-      console.log("scrolled");
-      this.getPromotionsMore(globalVars.selected_promotion);
-    }
+    // if(e.target.scrollHeight <= e.target.scrollTop + e.srcElement.clientHeight){
+    //   this.getPromotionsMore(globalVars.selected_promotion);
+    // }
   }
   getPromotions(filter: any) {
-    this.limit = 10;
+    this.limit = 500;
     this.selectedFilter = filter;
     this.promotions = [];
     this.loading = true;
@@ -85,13 +81,11 @@ export class PromotionsComponent implements OnInit {
             }else {
           		this.promotions = resp;
               this.timestamp = resp[0].timestamp; //there some problem, back give it in desc order
-              console.log(this.timestamp);
-
             }
           },
           error =>  this.errorMessage = <any>error
         );
-        // globalVars.selected_promotion = filter; // saves selected promotion
+    window.localStorage.setItem('selectedPromotionType', filter);
   }
   getPromotionsMore(filter: any) {
     if(this.limit === 0)
@@ -123,9 +117,7 @@ export class PromotionsComponent implements OnInit {
   }
 
   onSelectPromotion(prom: any) {
-    console.log(prom);
     let ind = this.selectedPromotions.map((x: any) => {
-      console.log(x);
       return x;
     }).indexOf(prom.id);
     if(ind > -1) {
@@ -136,7 +128,6 @@ export class PromotionsComponent implements OnInit {
   }
 
   clickDeleteBtn() {
-    // console.log(this.selectedPromotions, this.selectedPromotions == []);
     if(this.selectedPromotions.length > 0) {
       this.modalDeletePromotions.show();
     }else {

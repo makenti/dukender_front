@@ -40,8 +40,18 @@ import { BlackListComponent } from './components/customers/black_list.component'
 import { RelationshipComponent } from './components/customers/relationship.component';
 
 import { SearchPipe } from './pipes/search.pipe';
-import { SearchPromotionPipe } from './pipes/searchPromotion.pipe';
+import { SearchDeepPipe } from './pipes/searchDeep.pipe';
 import { SortPipe } from './pipes/sort.pipe';
+
+import {
+  AuthService,
+  CategoryService,
+  CompanyProfileService,
+  ProductService,
+  PromotionService,
+  AccountService,
+  ProposalService,
+   } from './services/index';
 
 const appRoutes: Routes = [
   { path: 'landing', component: LandingComponent },
@@ -104,7 +114,7 @@ const appRoutes: Routes = [
     ProposalComponent,
     SearchPipe,
     SortPipe,
-    SearchPromotionPipe,
+    SearchDeepPipe,
   ],
   imports: [
     BrowserModule,
@@ -119,7 +129,15 @@ const appRoutes: Routes = [
     BsDropdownModule.forRoot(),
     ModalModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    AuthService,
+    CategoryService,
+    CompanyProfileService,
+    ProductService,
+    PromotionService,
+    AccountService,
+    ProposalService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

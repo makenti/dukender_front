@@ -7,13 +7,10 @@ import {
 		  ProposalService,
       CompanyProfileService } from '../../services/index';
 
-import * as globalVars from '../../common/config/globalVars';
-
 @Component({
   selector: 'app-proposals',
   templateUrl: './proposals.component.html',
   styleUrls: ['./proposals.component.css'],
-  providers: [ AuthService, ProposalService, CompanyProfileService]
 })
 export class ProposalsComponent implements OnInit {
 
@@ -38,11 +35,14 @@ export class ProposalsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    var id = window.localStorage.getItem('selectedProposalType');
+    if(id!==null){
+      this.getProposals(id);
+    }
     this.auth.updateUserInfo().subscribe(
       resp => {
         if(resp) {
           this.currUser = this.auth.getUser();
-          this.getProposals(globalVars.selected_proposal);
           this.getCompanyRegions();
         }
       }, null);
@@ -75,7 +75,7 @@ export class ProposalsComponent implements OnInit {
           },
           error =>  this.errorMessage = <any>error
         );
-    // globalVars.selected_proposal = filter; //
+    window.localStorage.setItem('selectedProposalType', filter);
   }
 
   getCompanyRegions() {
@@ -107,7 +107,6 @@ export class ProposalsComponent implements OnInit {
   }
 
   onSelectDistrict(district: any) {
-    // console.log(this.selectedDistricts);
     if(district === '') {
       this.selectedDistricts = [];
     }else {
@@ -125,13 +124,11 @@ export class ProposalsComponent implements OnInit {
   }
 
   selectCheckedDistricts() {
-    // console.log(this.selectedDistricts);
     this.getProposals('');
     // window.localStorage.setItem('user_districts', this.selectedDistricts);
   }
 
   showProposal(item: any) {
-    console.log(this.currUser);
     let curUserEntry = (this.currUser.entry !== undefined && this.currUser.entry !== null)?this.currUser.entry: null;
     if((curUserEntry !== null && curUserEntry.profile_type === 1) ||
         item.editor === this.currUser.username && item.status !== 0 ||
@@ -140,7 +137,6 @@ export class ProposalsComponent implements OnInit {
     }else {
       this.toastyService.warning('Вы не можете обработать эту заявку');
     }
-    // this.router.navigate(['/proposal', item.request_id]);
   }
 
 }

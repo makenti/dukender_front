@@ -162,3 +162,13 @@ table thead th.sortable-field:hover{
     color: #fff;
     font-style: normal;
 }
+
+/*for radio*/
+.mm-control--radio .mm-control__indicator:after {
+  left: 4px;
+  top: 4px;
+  height: 6px;
+  width: 6px;
+  border-radius: 50%;
+  background: #fff;
+}

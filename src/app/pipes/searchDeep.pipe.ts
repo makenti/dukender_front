@@ -1,10 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'searchPromotion'
+  name: 'searchDeep'
 })
 
-export class SearchPromotionPipe implements PipeTransform {
+export class SearchDeepPipe implements PipeTransform {
   transform(items: any[], key: any, filter: string): any {
     let filteredItems = items;
     if(filter !== '' && items.length > 0) {
