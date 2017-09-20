@@ -41,11 +41,9 @@ export class EmployeeService {
 
     let options = new RequestOptions({ headers: headers });
     let bodyString = transformRequest(body);
-    console.log(bodyString);
     return this.http.post(serverURL + '/sellers/staff/add/', bodyString, options)
                     .map((res: Response) => {
                       let resp = res.json();
-                      console.log(resp);
                       return resp;
                     })
                     .catch(handleError);
@@ -59,11 +57,9 @@ export class EmployeeService {
 
     let options = new RequestOptions({ headers: headers });
     let bodyString = transformRequest(body);
-    console.log(bodyString);
     return this.http.post(serverURL + '/sellers/staff/update/', bodyString, options)
                     .map((res: Response) => {
                       let resp = res.json();
-                      console.log(resp);
                       return resp;
                     })
                     .catch(handleError);
@@ -115,11 +111,9 @@ export class EmployeeService {
 
     let options = new RequestOptions({ headers: headers });
     let bodyString = transformRequest(body);
-    // console.log(bodyString);
     return this.http.post(serverURL + '/sellers/staff/invite/v2/', bodyString, options)
                     .map((res: Response) => {
                       let resp = res.json();
-                      // console.log(resp);
                       if (resp.code === 0) {
                         return true;
                       }else {

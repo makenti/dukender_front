@@ -28,7 +28,6 @@ export class ProposalService {
 
     return this.http.post(serverURL + '/sellers/requests/get_requests/', bodyString, options)
                     .map((res: Response) => {
-                      // console.log(res);
                       let resp = res.json();
                       if (resp.code === 0) {
                         return resp;
@@ -50,7 +49,6 @@ export class ProposalService {
 
     return this.http.post(serverURL + '/sellers/requests/get/', bodyString, options)
                     .map((res: Response) => {
-                      // console.log(res);
                       let resp = res.json();
                       if (resp.code === 0) {
                         return resp.result;
@@ -71,7 +69,6 @@ export class ProposalService {
     let bodyString = {};
     return this.http.post(serverURL + '/sellers/requests/get/' + data.key + '/', bodyString, options)
                     .map((res: Response) => {
-                      // console.log(res);
                       let resp = res.json();
                       if (resp.code === 0) {
                         return resp.request;
@@ -95,7 +92,6 @@ export class ProposalService {
     return this.http.post(serverURL + '/sellers/requests/edit_request/', bodyString, options)
                     .map((res: Response) => {
                       let resp = res.json();
-                      console.log(resp);
                       if (resp.code === 0) {
                         return resp;
                       }else {
@@ -116,7 +112,6 @@ export class ProposalService {
 
     return this.http.post(serverURL + '/products/create_request_comment/', bodyString, options)
                     .map((res: Response) => {
-                      // console.log(res);
                       let resp = res.json();
                       if (resp.code === 0) {
                         return resp.item;
@@ -159,7 +154,6 @@ export class ProposalService {
 
     return this.http.post(serverURL + '/sellers/requests/set_status/', bodyString, options)
                     .map((res: Response) => {
-                      // console.log(res);
                       let resp = res.json();
                       if (resp.code === 0) {
                         return resp;
@@ -181,7 +175,6 @@ export class ProposalService {
 
     return this.http.post(serverURL + '/sellers/requests/send_request_by_email_v2/', bodyString, options)
                     .map((res: Response) => {
-                      // console.log(res);
                       let resp = res.json();
                       if (resp.code === 0) {
                         return true;
@@ -211,7 +204,6 @@ export class ProposalService {
 
                         // let blob: Blob = res.blob();
                         // saveAs(blob, 'test.xls');
-                      // console.log(res);
                       // let resp = res.json();
                       // if (resp.code === 0) {
                       //   return true;
@@ -233,7 +225,6 @@ export class ProposalService {
 
     return this.http.post(serverURL + '/sellers/requests/cancel/', bodyString, options)
                     .map((res: Response) => {
-                      // console.log(res);
                       let resp = res.json();
                       if (resp.code === 0) {
                         return true;

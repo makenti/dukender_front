@@ -47,7 +47,7 @@ export class BlackListComponent implements OnInit {
   }
 
   onSelectCustomer(item: any) {
-    let ind = this.selectedCustomers.map(function(e) { console.log(e); return e; }).indexOf(item.shop.id);
+    let ind = this.selectedCustomers.map(function(e) { return e; }).indexOf(item.shop.id);
     if(ind > -1) {
       this.selectedCustomers.splice(ind, 1);
     }else {

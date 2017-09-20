@@ -27,7 +27,6 @@ export class ProductService {
 
     let options = new RequestOptions({ headers: headers });
     let bodyString = transformRequest(product);
-    // console.log(bodyString);
     return this.http.post(serverURL + '/products/create_edit_item_v2/', bodyString, options)
                     .map((res: Response) => {
                       let resp = res.json();
@@ -37,7 +36,6 @@ export class ProductService {
   }
 
   updateProduct(product: any): Observable<any> {
-      // console.log("<<<"+this.auth.getToken()+">>>");
 
     return Observable.create((observer: any) => {
 
@@ -62,7 +60,6 @@ export class ProductService {
       formData.append('left', product.left);
       formData.append('width', product.width);
       formData.append('height', product.height);
-      console.log(product);
       xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
@@ -74,11 +71,9 @@ export class ProductService {
               observer.next(resp);
               observer.complete();
             }
-            // console.log(JSON.parse(xhr.response));
             // observer.complete();
           } else {
             observer.error(xhr.response);
-            // console.log(xhr.response);
           }
         }
       };
@@ -108,7 +103,6 @@ export class ProductService {
     return this.http.post(serverURL + '/products/delete_items/', bodyString, options)
                     .map((res: Response) => {
                       let resp = res.json();
-                      // console.log(resp);
                       if (resp.code === 0) {
                         return true;
                       }else {

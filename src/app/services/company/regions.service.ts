@@ -25,7 +25,6 @@ export class CompanyRegionsService {
     return this.http.get(serverURL + '/sellers/countries/', options)
                     .map((res: Response) => {
                       let resp = res.json();
-                      // console.log(resp);
                       if (resp.code === 0) {
                         return resp.countries;
                       }else {
@@ -46,7 +45,6 @@ export class CompanyRegionsService {
     return this.http.post(serverURL + '/sellers/regions_by_country/', bodyString, options)
                     .map((res: Response) => {
                       let resp = res.json();
-                      // console.log(resp);
                       if (resp.code === 0) {
                         return resp.regions;
                       }else {

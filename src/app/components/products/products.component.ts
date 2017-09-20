@@ -162,7 +162,6 @@ export class ProductsComponent implements OnInit {
   //   this.croppedWidth = bounds.width;
   //   this.croppedLeft = bounds.left;
   //   this.croppedTop = bounds.top;
-  //   // console.log(bounds);
   // }
 
   onSelectImage(event:any) {
@@ -187,7 +186,6 @@ export class ProductsComponent implements OnInit {
       };
       this.selectedProduct.image = event.srcElement.files;
       image.addEventListener('load',function(){
-        // console.log(image.height);
         that.currentImage.height = image.height;
         that.currentImage.width = image.width;
         that.loadingImage = false;
@@ -220,7 +218,6 @@ export class ProductsComponent implements OnInit {
     }
   }
   onSelectCategory(newCategory: any) {
-    // console.log(newCategory);
     this.selectedCategory = newCategory;
     this.getCategoryProducts();
   }
@@ -254,7 +251,6 @@ export class ProductsComponent implements OnInit {
     this.productService.getCategoryProducts(data)
         .subscribe(
           resp => {
-            // console.log(resp);
             this.loading = false;
             if(resp === null) {
               this.toastyService.warning('У Вас нет товаров');
@@ -266,7 +262,6 @@ export class ProductsComponent implements OnInit {
                   p.checked = false;
                   return p;
                 });
-                // console.log(this.products);
               }
             }
           },
@@ -304,7 +299,6 @@ export class ProductsComponent implements OnInit {
   }
 
   onSelectProduct(product: any) {
-    // console.log(product);
     let ind = this.selectedProducts.map(function(e) {return e.id;}).indexOf(product.id);
     if(ind > -1) {
       this.selectedProducts.splice(ind, 1);
@@ -314,7 +308,6 @@ export class ProductsComponent implements OnInit {
   }
 
   getSelectedProducts() {
-    // console.log(product);
     this.selectedProducts = [];
     this.products.map(p => {
       if(p.checked) {
@@ -324,7 +317,6 @@ export class ProductsComponent implements OnInit {
   }
 
   changeProductSale(prod: any) {
-    // console.log(prod);
     let data = {
       item_id: prod.id,
       in_sale: !!prod.in_sale
@@ -332,7 +324,6 @@ export class ProductsComponent implements OnInit {
     this.productService.changeProductSale(data)
         .subscribe(
           res => {
-            // console.log(res);
           },
           error =>  this.errorMessage = <any>error
         );
@@ -422,7 +413,6 @@ export class ProductsComponent implements OnInit {
       this.processMode = 'edit';
       this.modalEditProduct.show();
     }else {
-      console.log('product not selected');
     }
   }
 
@@ -456,7 +446,6 @@ export class ProductsComponent implements OnInit {
   }
 
   showProductImage(product: any) {
-    // console.log(product);
   }
 
   onEditProduct() {
@@ -511,7 +500,6 @@ export class ProductsComponent implements OnInit {
     this.selectedProduct.width = this.croppedWidth;
     this.selectedProduct.height = this.croppedHeight;
     this.selectedProduct.resize = 'true';
-    // console.log(this.selectedProduct);
     this.productService.updateProduct(this.selectedProduct)
         .subscribe(
           res => {
@@ -540,7 +528,6 @@ export class ProductsComponent implements OnInit {
       this.uploadService.importProductFile(data)
           .subscribe(
             res => {
-              // console.log(res);
               if(res) {
                 this.toastyService.success('Прайс-лист успешно загружен');
                 this.getCategoryProducts();
@@ -561,7 +548,6 @@ export class ProductsComponent implements OnInit {
   }
 
   onCloseImportModal() {
-    console.log('on close import');
     this.uploadCategory = '';
     this.fileChooserInit = false;
     this.selectedFile = null;
@@ -570,8 +556,6 @@ export class ProductsComponent implements OnInit {
   }
 
   checkUploadForm() {
-    console.log(this.selectedFile);
-    // console.log(this.uploadCategory);
     if(this.selectedFile === undefined || this.selectedFile === null) {
       this.toastyService.warning('Вы не выбрали файл');
       return false;
@@ -594,7 +578,6 @@ export class ProductsComponent implements OnInit {
 
   removeProducts() {
     let productsToRemove = this.getProductIds();
-    // console.log(productsToRemove);
     this.productService.removeProducts(productsToRemove)
         .subscribe(
           res => {

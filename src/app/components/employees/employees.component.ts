@@ -95,7 +95,6 @@ export class EmployeesComponent implements OnInit {
   }
 
   onSelectUser(user: any) {
-    console.log(user);
     let ind = this.selectedUsers.map(function(e) { return e.entry_id; }).indexOf(user.entry_id);
     if(ind > -1) {
       this.selectedUsers.splice(ind, 1);
@@ -105,7 +104,6 @@ export class EmployeesComponent implements OnInit {
   }
 
   onEditUser(user: any) {
-    console.log(user);
     // let user = item.user;
     // if(user.entry !== null ) {
       this.matchUser(user);
@@ -113,13 +111,11 @@ export class EmployeesComponent implements OnInit {
       this.composeEditUserPerms(type);
       this.modalEditUser.show();
     // }else {
-    //   console.log('Emty user Entry');
     // }
     // this.selectedEmployee = user;
   }
 
   matchUser(item: any) {
-    // console.log(user);
     let user = item.user;
     this.selectedEmployee = {
       first_name: user.first_name,
@@ -154,7 +150,6 @@ export class EmployeesComponent implements OnInit {
   }
 
   onSelectProfileType(newType: any) {
-    console.log(newType);
     this.selectedProfileType = newType;
     this.newEmployee.profile_type = newType.id;
     this.selectedRoleName = newType.name;
@@ -199,11 +194,9 @@ export class EmployeesComponent implements OnInit {
     this.checkForm();
   	this.updatePermissions();
 
-    console.log(this.newEmployee);
     this.employeeService.addEmployee(this.newEmployee)
         .subscribe(
           resp => {
-            console.log(resp);
             if(resp.code === 0) {
               this.getStaff();
               this.toastyService.success('Поздравляем! Вы успешно добавили сотрудника. На указанную вами почту придет приглашение.');
@@ -325,7 +318,6 @@ export class EmployeesComponent implements OnInit {
   			newPermissions.push(perm.id);
 
   		}
-      console.log(perm.id, perm.name, perm.selected);
   	});
     this.newEmployee.permissions = newPermissions;
   	this.selectedEmployee.permissions = newPermissions;

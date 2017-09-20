@@ -44,9 +44,6 @@ export class CompanyProfileService {
   updateCompanyRegions(body: Object): Observable<Object> {
     let bodyString = 'sell_regions=' + JSON.stringify(body);
 
-    // console.log(JSON.stringify(body));
-    // console.log(bodyString);
-
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -66,7 +63,6 @@ export class CompanyProfileService {
 
   updateCompanyCategories(body: Object): Observable<Object> {
     let bodyString = transformRequest(body);
-    // console.log(bodyString);
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -107,7 +103,6 @@ export class CompanyProfileService {
     return this.http.get(serverURL + '/sellers/company/profile/sell_regions/get/', options)
                     .map((res: Response) => {
                       let resp = res.json();
-                      // console.log(resp);
                       if (resp.code === 0) {
                         return resp.sell_regions;
                       }else {
@@ -188,7 +183,6 @@ export class CompanyProfileService {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
             let resp = JSON.parse(xhr.response);
-            console.log(resp);
             if(resp.code === 0) {
               observer.next(resp);
               observer.complete();
@@ -202,7 +196,6 @@ export class CompanyProfileService {
       };
 
       xhr.onload = () => {
-        // console.log('uploaded');
         return true;
       };
 

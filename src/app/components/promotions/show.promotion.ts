@@ -31,7 +31,6 @@ export class ShowPromotionComponent implements OnInit {
   	private route: ActivatedRoute,
   	private promotionService: PromotionService
     ) {
-    // console.log("init show promotion");
   }
 
   ngOnInit() {

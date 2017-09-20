@@ -35,9 +35,8 @@ export class CustomersComponent implements OnInit {
   	this.customerService.getCustomers()
         .subscribe(
           resp => {
-          	console.log(resp);
             if(resp === null) {
-              console.log('no customers');
+
             }else {
             	if(resp.code === 0) {
             		this.customers = resp.shops;
