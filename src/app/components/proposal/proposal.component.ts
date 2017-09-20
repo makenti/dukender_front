@@ -263,7 +263,6 @@ export class ProposalComponent implements OnInit  {
       if(!pr.removed)
         this.itemsTotalSum += parseInt(pr.count, 10) * parseInt(pr.price, 10);
     }
-    // console.log(this.proposalBefore, newProposalStr);
     if(this.proposalBefore !== newProposalStr) {
       return false;
     }
@@ -316,7 +315,6 @@ export class ProposalComponent implements OnInit  {
         delivery_time: moment(date).valueOf(),
         items: this.proposalItemsToSend
       };
-      // console.log(data);
       this.proposalService.editProposal(data)
           .subscribe(
             resp => {
@@ -416,7 +414,6 @@ export class ProposalComponent implements OnInit  {
       this.proposalService.setProposalStatus(data)
           .subscribe(
             resp => {
-              console.log(resp);
               if(resp !== null && resp.code === 0) {
                 this.toastyService.success('Заявка отправлена в доставку');
                 this.proposal = resp.result;
@@ -442,7 +439,6 @@ export class ProposalComponent implements OnInit  {
   	this.proposalService.sendProposalToEmail(data)
         .subscribe(
           resp => {
-          	// console.log(resp);
           	if(resp) {
               this.toastyService.success('Заявка успешно отправлена на емайл');
           	}else {
@@ -478,7 +474,6 @@ export class ProposalComponent implements OnInit  {
     this.proposalService.revokeProposals(data)
         .subscribe(
           resp => {
-            // console.log(resp);
             if(resp) {
               this.toastyService.info('Ваша заявка удалена');
               this.router.navigate(['/proposals']);
@@ -505,7 +500,6 @@ export class ProposalComponent implements OnInit  {
       this.proposalService.addProposalComment(data)
           .subscribe(
             resp => {
-              // console.log(resp);
               if(resp !== null) {
                 this.proposal.comments.push(resp);
                 this.newComment = '';
@@ -525,7 +519,6 @@ export class ProposalComponent implements OnInit  {
     this.proposalService.updateComments(data)
         .subscribe(
           resp => {
-            // console.log(resp);
             if(resp !== null) {
               this.proposal.comments = resp;
             }else {
@@ -565,7 +558,6 @@ export class ProposalComponent implements OnInit  {
     this.customerService.banCustomer(data)
         .subscribe(
           resp => {
-            // console.log(resp);
             if(resp) {
               this.toastyService.warning('Поставщик '+ this.proposal.customer.name +
                 ' добавлен в черный список, для восстановления из чёрного '+
@@ -578,7 +570,6 @@ export class ProposalComponent implements OnInit  {
   }
 
   onShowItemOldData(item: any) {
-    console.log(item);
     if(item.item_info.count !== item.item_info.prev_count) {
       this.countChanged = true;
     }
@@ -597,7 +588,6 @@ export class ProposalComponent implements OnInit  {
     this.customerService.setCustomerStatus(data)
         .subscribe(
           resp => {
-            console.log(resp);
             if (resp.code === 0)
               this.proposal.relation = (parseInt(this.proposal.relation, 10) + 1) % 2;
           },

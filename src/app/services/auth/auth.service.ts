@@ -213,7 +213,6 @@ export class AuthService {
         this.perms.settings = true;
       }else {
         user.permissions.map((p: any) => {
-          // console.log(p.permission_type);
           if(p.permission_type === 0) {
             this.perms.requests = true;
           }else if(p.permission_type === 1) {

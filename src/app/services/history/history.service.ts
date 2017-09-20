@@ -30,7 +30,6 @@ export class HistoryService {
     return this.http.post(serverURL + '/sellers/history/', bodyString, options)
                     .map((res: Response) => {
                       let resp = res.json();
-                      // console.log(resp);
                       if (resp.code === 0) {
                         return resp.result;
                       }else {

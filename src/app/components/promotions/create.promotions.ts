@@ -77,7 +77,6 @@ export class CreatePromotionsComponent implements OnInit {
   	this.newPromotion.action_type = +this.route.snapshot.params['type'];
     this.promotionType = +this.route.snapshot.params['type'];
   	this.promotionProducts = this.promotionService.selectedProducts;
-    // console.log(this.promotionService.selectedProducts);
     this.promotionPercents = this.promotionService.getPromotionPercents();
     this.companyProfile = this.auth.getUserCompany();
     if(this.promotionProducts === undefined) {
@@ -89,7 +88,6 @@ export class CreatePromotionsComponent implements OnInit {
     this.promotionsData = [];
     for(let item in this.promotionProducts) {
       let prod = this.promotionProducts[item];
-      console.log(prod);
       let prom = {
         item_id: prod.id,
         new_price: 0,
@@ -102,7 +100,6 @@ export class CreatePromotionsComponent implements OnInit {
 
       this.promotionsData[prod.id] = prom;
     }
-    // console.log(this.promotionsData);
 
     if(this.promotionType === 0) {
       this.promotion_name = '«Новинка»';
@@ -128,14 +125,12 @@ export class CreatePromotionsComponent implements OnInit {
   this.companyService.getCompanyCategories()
       .subscribe(
         data => {
-          // console.log(data);
           this.companyCategories = data;
         },
         error =>  this.errorMessage = <any>error
       );
   }
   getCategoryProducts() {
-  // console.log(this.selectedCategory);
   this.loading = true;
   let data = {
     category_id: (this.selectedCategory !== null) ? this.selectedCategory : '',
@@ -145,7 +140,6 @@ export class CreatePromotionsComponent implements OnInit {
   this.productService.getCategoryProducts(data)
       .subscribe(
         resp => {
-          // console.log(resp); 
           this.loading = false;
           if(resp === null) {
             this.toastyService.warning('По Вашему запросу ничего не найдено');
@@ -170,7 +164,6 @@ export class CreatePromotionsComponent implements OnInit {
   // "action_bonus_money_percent":2
 
   checkPromotion() {
-    // console.log(this.promotionPercents);
     if(this.promotionPercents !== undefined && this.promotionPercents !== null) {
       let settings: any = this.promotionPercents;
       if(this.promotionType === 0) {
@@ -200,7 +193,6 @@ export class CreatePromotionsComponent implements OnInit {
   }
 
   onChangePrice(e: any, item: any) {
-    // console.log(e, item);
     if(parseInt(e, 10) < 0) {
       item.count = 1;
     }
@@ -253,13 +245,10 @@ export class CreatePromotionsComponent implements OnInit {
     this.checkPromotionsData();
     this.newPromotion.news = [];
     this.promotionsData.map((item, index) => {
-      // console.log(item);
       if(!item.removed) {
         this.newPromotion.news.push(item);
       }
     });
-
-    // console.log(this.newPromotion);
 
     this.promotionService.createPromotion(this.newPromotion)
         .subscribe(
@@ -277,12 +266,10 @@ export class CreatePromotionsComponent implements OnInit {
   }
 
   selectedDate(value: any) {
-    // console.log(value);
     this.daterange.start = value.start;
     this.daterange.end = value.end;
   }
   addItem(){
-    console.log(this.promotionsData, this.currentProduct, this.selectedBonusItem);
     this.promotionsData[this.currentProduct.id].bonus_item_id = this.currentProduct.bonus_item_id;
     this.promotionsData[this.currentProduct.id].bonus_count = this.currentProduct.bonus_count;
     
@@ -291,15 +278,12 @@ export class CreatePromotionsComponent implements OnInit {
   openModalBonusItem(product: any){
     this.currentProduct = product;
     this.selectedBonusItem = null;
-    // console.log(product)
     if(product.bonus_item_id)
       for(let i = 0; i < this.products.length; i++){
         if(this.products[i].id === product.bonus_item_id){
-          // console.log(this.products[i].id);
           this.selectedBonusItem = this.products[i];
         }
       }
-    // console.log(this.selectedBonusItem)
     
     this.modalAddBonusItem.show();
   }
@@ -307,7 +291,6 @@ export class CreatePromotionsComponent implements OnInit {
     this.currentProduct.bonus_item_id = item.id;
     this.currentProduct.bonus_item_name = item.name;
     this.selectedBonusItem = item;
-    // console.log(item);
   }
   isSelected(product: any){
     if(this.selectedBonusItem && product.id===this.selectedBonusItem.id)

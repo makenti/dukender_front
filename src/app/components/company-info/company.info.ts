@@ -120,7 +120,6 @@ export class CompanyInfoComponent implements OnInit {
     this.companyService.uploadCompanyPhoto(data)
         .subscribe(
           res => {
-            // console.log(res);
             if(res) {
               this.toastyService.success('Фото успешно загружено');
             }
@@ -160,7 +159,6 @@ export class CompanyInfoComponent implements OnInit {
 
     let EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
 
-    console.log(EMAIL_REGEXP.test(this.companyProfile.email));
     if (!EMAIL_REGEXP.test(this.companyProfile.email)) {
       this.toastyService.warning('Вы ввели некорректный email. Проверьте и повторите попытку');
       return false;

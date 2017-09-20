@@ -19,7 +19,6 @@ export function getTranslationProviders(): Promise<Object[]> {
 
   return getTranslationsWithSystemJs(translationFile)
     .then( (translations: string ) => {
-      console.log("translations");
       return [
         { provide: TRANSLATIONS, useValue: translations },
         { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },

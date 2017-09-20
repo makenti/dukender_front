@@ -75,7 +75,6 @@ export class PromotionService {
     return this.http.post(serverURL + '/sellers/news/create/v2/', bodyString, options)
                     .map((res: Response) => {
                       let resp = res.json();
-                      // console.log(resp);
                       if (resp.code === 0) {
                         return resp;
                       }else {
@@ -97,7 +96,6 @@ export class PromotionService {
     return this.http.post(serverURL + '/sellers/news/delete/', bodyString, options)
                     .map((res: Response) => {
                       let resp = res.json();
-                      // console.log(resp);
                       if (resp.code === 0) {
                         return true;
                       }else {

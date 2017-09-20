@@ -24,7 +24,6 @@ export class CustomersService {
     return this.http.get(serverURL + '/sellers/requests/matching_shops/', options)
                     .map((res: Response) => {
                       let resp = res.json();
-                      // console.log(resp);
                       if (resp.code === 0) {
                         return resp;
                       }else {
@@ -41,7 +40,6 @@ export class CustomersService {
     return this.http.get(serverURL + '/sellers/ban/get_banned_shops/', options)
                     .map((res: Response) => {
                       let resp = res.json();
-                      // console.log(resp);
                       if (resp.code === 0) {
                         return resp.banned_shops;
                       }else {

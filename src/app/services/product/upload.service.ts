@@ -41,7 +41,6 @@ export class UploadService {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
             let resp = JSON.parse(xhr.response);
-            console.log(resp);
             if(resp.code === 0) {
               observer.next(resp);
               observer.complete();
@@ -55,7 +54,6 @@ export class UploadService {
       };
 
       xhr.onload = () => {
-        // console.log('uploaded');
         return true;
       };
 

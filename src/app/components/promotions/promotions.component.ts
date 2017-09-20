@@ -57,9 +57,9 @@ export class PromotionsComponent implements OnInit {
     }
   }
   onScroll (e: any) {
-    // if(e.target.scrollHeight <= e.target.scrollTop + e.srcElement.clientHeight){
-    //   this.getPromotionsMore(globalVars.selected_promotion);
-    // }
+    if(e.target.scrollHeight <= e.target.scrollTop + e.srcElement.clientHeight){
+      // this.getPromotionsMore(this.selectedFilter);
+    }
   }
   getPromotions(filter: any) {
     this.limit = 500;

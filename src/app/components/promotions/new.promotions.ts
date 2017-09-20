@@ -56,7 +56,6 @@ export class PromotionProductsComponent implements OnInit {
     this.companyService.getCompanyCategories()
         .subscribe(
           data => {
-            // console.log(data);
             this.companyCategories = data;
           },
           error =>  this.errorMessage = <any>error
@@ -64,7 +63,6 @@ export class PromotionProductsComponent implements OnInit {
   }
 
   onSelectCategory(newCategory: any) {
-    // console.log(newCategory);
     this.selectedCategory = newCategory;
     this.getCategoryProducts();
   }
@@ -74,7 +72,6 @@ export class PromotionProductsComponent implements OnInit {
   }
 
   getCategoryProducts() {
-    // console.log(this.selectedCategory);
     this.loading = true;
   	let data = {
   		category_id: (this.selectedCategory !== null) ? this.selectedCategory : '',
@@ -84,7 +81,6 @@ export class PromotionProductsComponent implements OnInit {
   	this.productService.getCategoryProducts(data)
         .subscribe(
         	resp => {
-          	// console.log(resp);
             this.loading = false;
             if(resp === null) {
               this.toastyService.warning('По Вашему запросу ничего не найдено');
@@ -103,7 +99,6 @@ export class PromotionProductsComponent implements OnInit {
   }
 
   getSelectedProducts() {
-    // console.log(product);
     this.selectedProducts = [];
     this.products.map(p => {
       if(p.checked) {
