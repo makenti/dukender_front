@@ -124,8 +124,8 @@ export class PromotionProductsComponent implements OnInit {
     if(this.selectedProducts.length === 0) {
       this.toastyService.warning('Вы не выбрали товар');
     }else {
-    	this.router.navigate(['/promotion-create', type]);
       this.promotionService.selectedProducts = this.selectedProducts;
+      this.router.navigate(['/promotion-create', type]);
     }
   }
 

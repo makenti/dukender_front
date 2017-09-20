@@ -34,7 +34,7 @@ export class PromotionsComponent implements OnInit {
 
   private selectedFilter = '';
   private timestamp: any = '';
-  private limit: number = 10;
+  private limit: number = 500;
 
   constructor(
   	private auth: AuthService,
@@ -66,7 +66,7 @@ export class PromotionsComponent implements OnInit {
     }
   }
   getPromotions(filter: any) {
-    this.limit = 10;
+    this.limit = 500;
     this.selectedFilter = filter;
     this.promotions = [];
     this.loading = true;

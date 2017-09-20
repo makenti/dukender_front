@@ -18,7 +18,11 @@ import { ToastyService } from 'ng2-toasty';
   selector: 'app-promcreate',
   templateUrl: 'create.promotions.html',
   styleUrls: ['promotions.component.css'],
-  providers: [AuthService, PromotionService]
+  providers: [
+    AuthService, 
+    PromotionService, 
+    CompanyProfileService, 
+    ProductService]
 })
 export class CreatePromotionsComponent implements OnInit {
 
