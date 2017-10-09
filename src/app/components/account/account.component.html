@@ -6,8 +6,8 @@
 		<div>
 			<b>Задать период:</b>
 
-			<select
-				[(ngModel)]="selectedMonth"
+			<select 
+				[(ngModel)]="selectedMonth" 
 				(ngModelChange)="onChangeDate($event)" >
 				<option [ngValue]="1">Январь</option>
 				<option [ngValue]="2">Февраль</option>
@@ -23,16 +23,16 @@
 				<option [ngValue]="12">Декабрь</option>
 			</select>
 
-			<select
+			<select 
 				[(ngModel)]="selectedYear"
 				(ngModelChange)="onChangeDate($event)">
-				<option
-						*ngFor="let year of years"
+				<option 
+						*ngFor="let year of years" 
 						[ngValue]="year">
 			    <span class="badge">{{year}}</span>
 			  </option>
 			</select>
-
+		
 		</div>
 		<div class="no-print">
 			<button class="mm-btn mm-btn-default"
@@ -49,38 +49,38 @@
 		<p class="account-info-text show-print">На период: <span>{{selectedMonth}}/{{ selectedYear }}</span></p>
 		<p class="account-info-text">Сальдо на начало: <span>{{ startSaldo|number: '1.2-2' }}</span> тенге</p>
 		<p class="account-info-text">Сальдо на конец: <span>{{ endSaldo|number: '1.2-2' }}</span> тенге</p>
-		<p class="account-info-text">Оборот: <span>{{ turnover|number: '1.2-2' }}</span> тенге</p>
+		<p class="account-info-text">Оборот: <span>{{ allCredits|number: '1.2-2' }}</span> тенге</p>
 
 		<table class="table table-striped account-table"
-			[class.loading]="loading">
-			<thead>
-				<tr>
-					<th rowspan="2">Дата</th>
-					<th rowspan="2">Основание</th>
-					<th rowspan="2">Платеж</th>
-					<th colspan="4">Комиссия по акциям</th>
+			[class.loading]="loading"> 
+			<thead> 
+				<tr> 
+					<th rowspan="2">Дата</th> 
+					<th rowspan="2">Основание</th> 
+					<th rowspan="2">Платеж</th> 
+					<th colspan="4">Комиссия по акциям</th> 
 					<th rowspan="2">Комисия по заявке</th>
 					<th rowspan="2">ДБ покупателя</th>
-					<th rowspan="2">Итого расходы</th>
-					<th rowspan="2">Сальдо</th>
-				</tr>
+					<th rowspan="2">Итого расходы</th> 
+					<th rowspan="2">Сальдо</th> 
+				</tr> 
 				<tr>
 					<th>новые</th>
 		     	<th>скидка</th>
 		     	<th>ден. бонус</th>
 		     	<th>тов. бонус</th>
 		    </tr>
-			</thead>
-			<tbody>
-				<tr *ngFor="let item of accountsData">
-					<td>{{item.date}}</td>
-					<td>
+			</thead> 
+			<tbody> 
+				<tr *ngFor="let item of accountsData"> 
+					<td>{{item.date}}</td> 
+					<td> 
 						<span *ngIf="item.debet !== '' && item.debet !== 0">платеж</span>
 						<span *ngIf="item.debet === '' || item.debet === 0">
 							по заявке {{item.requestID}} на сумму {{item.totalPrice|number: '1.2-2'}} тенге
 						</span>
-					</td>
-					<td>{{item.debet| number: '1.2-2'}}</td>
+					</td> 
+					<td>{{item.debet| number: '1.2-2'}}</td> 
 					<td>{{item.news| number: '1.2-2'}}</td>
 					<td>{{item.discount| number: '1.2-2'}}</td>
 					<td>{{item.bonusMoney| number: '1.2-2'}}</td>
@@ -88,9 +88,9 @@
 					<td>{{item.reqMoney| number: '1.2-2'}}</td>
 					<td>{{item.customerBonus| number: '1.2-2'}}</td>
 					<td>{{item.credit| number: '1.2-2'}}</td>
-					<td>{{item.saldo| number: '1.2-2'}}</td>
-				</tr>
-			</tbody>
+					<td>{{item.saldo| number: '1.2-2'}}</td> 
+				</tr> 
+			</tbody> 
 		</table>
 	</div>
 
