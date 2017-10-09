@@ -6,9 +6,10 @@ import { ToastyService } from 'ng2-toasty';
 import { AuthService, AccountService } from '../../services/index';
 
 @Component({
+  moduleId: module.id,
   selector: 'app-account',
-  templateUrl: './account.component.html',
-  styleUrls: ['./account.component.css'],
+  templateUrl: 'account.component.html',
+  styleUrls: ['account.component.css']
 })
 export class AccountComponent implements OnInit {
 
@@ -25,6 +26,8 @@ export class AccountComponent implements OnInit {
   private loading: boolean = false;
   private currentDate: any = moment().format('DD MMMM YYYY');
 
+  private allCredits: number = 0;
+
   private selectedDates = {
     month: moment().month(),
     year: moment().year()
@@ -32,15 +35,16 @@ export class AccountComponent implements OnInit {
 
   constructor(
     private auth: AuthService,
-  	private router: Router,
+    private router: Router,
     private toastyService: ToastyService,
-  	private accountService: AccountService
-  ) { }
+    private accountsService: AccountService) {
+    this.years = [2016, 2017, 2018];
+    console.log(moment().month() + 1);
+  }
 
   ngOnInit() {
-    this.years = [2016, 2017, 2018];
     this.auth.updateUserInfo().subscribe(null, null);
-  	this.getAccounts();
+    this.getAccounts();
     this.userCompany = this.auth.getUserCompany();
   }
 
@@ -56,21 +60,22 @@ export class AccountComponent implements OnInit {
   }
 
   getAccounts() {
-  	let data = {
-			month: this.selectedMonth,
-			year: this.selectedYear
-  	};
+    let data = {
+      month: this.selectedMonth,
+      year: this.selectedYear
+    };
     this.loading = true;
-  	this.accountService.getAccounts(data)
+    this.accountsService.getAccounts(data)
         .subscribe(
           resp => {
             this.accountsData = [];
             this.startSaldo = 0;
-          	if(resp === null || resp === undefined) {
+            if(resp === null || resp === undefined) {
               this.toastyService.warning('нет данных по данному периоду');
             }else {
               this.startSaldo = resp.start_saldo;
               let s = resp.start_saldo;
+              this.allCredits = 0;
               resp.accounts.map((item: any) => {
                 let credit = 0;
                 let debet = 0;
@@ -81,6 +86,7 @@ export class AccountComponent implements OnInit {
                   s = s + parseFloat(item.debet);
                   debet = item.debet;
                 }
+                this.allCredits += credit;
                 let data = {
                   date: moment(item.timestamp / 1000).format('DD-MM-YYYY'),
                   requestID: (item.request !== null) ? item.request.request_id: '',
@@ -175,5 +181,4 @@ export class AccountComponent implements OnInit {
     );
     popupWin.document.close();
   }
-
 }

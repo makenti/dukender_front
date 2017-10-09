@@ -77,12 +77,12 @@
 				<td *ngIf="selectedFilter === '3'"
 					class="text-center">{{((item.timestamp/1000000) | amFromUnix) | amDateFormat:'DD-MM-YYYY'}}</td>
 			</tr>
-			<tr *ngIf="promotions.length === 0">
+			<!-- <tr *ngIf="promotions.length === 0">
 				<td>
 					<p>У вас пока нет акций…</p>
 					<p>Создайте первую!</p>
 				</td>
-			</tr>
+			</tr> -->
 		</tbody>
 	</table>
 
