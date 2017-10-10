@@ -10,11 +10,14 @@ import {
 		  ProposalService,
       CustomersService } from '../../services/index';
 
+/**
+ * This class represents the lazy loaded HomeComponent.
+ */
 @Component({
   selector: 'app-proposal',
   templateUrl: 'proposal.component.html',
-  styleUrls: ['proposal.component.css'],
-	providers: [AuthService, ProposalService, CustomersService]
+  styleUrls: ['proposal.component.css']
+
 })
 
 export class ProposalComponent implements OnInit  {
@@ -50,6 +53,9 @@ export class ProposalComponent implements OnInit  {
 
   @ViewChild('modalChanges')
   modalChanges: ModalDirective;
+
+  @ViewChild('modalDeleteProposal')
+  modalDeleteProposal: ModalDirective;
 
   private searchQuery: string = '';
 	private errorMessage = new Array();
@@ -98,69 +104,75 @@ export class ProposalComponent implements OnInit  {
   }
 
   getProposal() {
-  	let data = {
-  		request_id: this.id
-  	};
-  	this.proposalService.getProposal(data)
-        .subscribe(
-          resp => {
-            if(resp === null) {
-              console.log('no request');
-            }else {
-          		this.proposal = resp;
-          		this.proposalItems = [];
+    let data = {
+     request_id: this.id
+    };
+    this.proposalService.getProposal(data)
+       .subscribe(
+         resp => {
+           if(resp === null) {
+             console.log('no request');
+           }else {
+             this.proposal = resp;
+             this.proposalItems = [];
+             if((this.proposal.status === 1 || this.proposal.status === 5) && 
+                 this.proposal.editor === this.currUser.username) {
+               this.mode = 'edit';
+             }
+             for(var i=0; i < this.currUser.permissions.length; i++){
+               if(this.currUser.permissions[i].permission_type === 0)
+                 this.mode = 'edit'; //TODO: eshe nuzhno uchest' kompaniu i sotrudnika?
+             }
+             if(this.proposal.status === 2){
+               this.editMode = false;
+             }
+             if(resp.create_time !== '')
+               this.proposalDate = moment(parseInt(resp.create_time, 10)/1000).format('DD.MM.YYYY');
 
-              if((this.proposal.status === 1 || this.proposal.status === 5) &&
-                  this.proposal.editor === this.currUser.username) {
-                this.mode = 'edit';
-              }
-              if(resp.create_time !== '')
-                this.proposalDate = moment(parseInt(resp.create_time, 10)/1000).format('DD.MM.YYYY');
+             if(resp.customer !== '')
+               this.customerAddress =  resp.customer.district.region.name + ' ' +
+                                       resp.customer.district.name + ' ' +
+                                       resp.customer.address;
 
-              if(resp.customer !== '')
-                this.customerAddress =  resp.customer.district.region.name + ' ' +
-                                        resp.customer.district.name + ' ' +
-                                        resp.customer.address;
+             if(resp.delivery_time !== '') {
+               this.deliveryDate = moment(parseInt(resp.delivery_time, 10)).toDate();
+               this.selDate = {year: this.deliveryDate.getFullYear(),
+                               month: this.deliveryDate.getMonth() + 1,
+                               day: this.deliveryDate.getDate()};
 
-              if(resp.delivery_time !== '') {
-                this.deliveryDate = moment(parseInt(resp.delivery_time, 10)).toDate();
-                this.selDate = {year: this.deliveryDate.getFullYear(),
-                                month: this.deliveryDate.getMonth() + 1,
-                                day: this.deliveryDate.getDate()};
+               this.deliveryDateText = moment(this.deliveryDate).format('DD.MM.YYYY');
+               this.deliveryBefore = moment(parseInt(resp.delivery_time, 10)).format('DD.MM.YYYY');
+             }
 
-                this.deliveryDateText = moment(this.deliveryDate).format('DD.MM.YYYY');
-                this.deliveryBefore = moment(parseInt(resp.delivery_time, 10)).format('DD.MM.YYYY');
-              }
-
-              for( let item of resp.items) {
-                let pr = parseInt((item.action_discount_active)?item.new_price:item.price, 10);
-                let p = {
-                  item_id: item.id,
-                  count: item.count,
-                  price: pr,
-                  name: item.name,
-                  nomenclature: item.nomenclature,
-                  action_news_active: item.action_news_active,
-                  action_discount_active: item.action_discount_active,
-                  action_bonus_item_active: item.action_bonus_item_active,
-                  action_bonus_money_active: item.action_bonus_money_active,
-                  removed: item.deleted,
-                  item_info: item
-                };
-                if(!(p.removed && this.proposal.status !== 1 && this.proposal.status !== 5)) {
-                  this.proposalItems.push(p);
-                  this.proposalBefore += p.item_id+':'+p.count+',' +p.removed+',';
-                }
-              }
-              this.itemsTotalSum = resp.total_price;
-              if(this.proposal.status !== 2 && this.proposal.status !== 3 && this.proposal.status !== 6)
-                this.checkChangesInPriceList();
-            }
-          },
-          error =>  this.errorMessage = <any>error
-        );
-  }
-
+             for( let item of resp.items) {
+               let pr = parseInt((item.action_discount_active)?item.new_price:item.price, 10);
+               let p = {
+                 item_id: item.id,
+                 count: item.count,
+                 price: pr,
+                 name: item.name,
+                 nomenclature: item.nomenclature,
+                 action_news_active: item.action_news_active,
+                 action_discount_active: item.action_discount_active,
+                 action_bonus_item_active: item.action_bonus_item_active,
+                 action_bonus_money_active: item.action_bonus_money_active,
+                 removed: item.deleted,
+                 item_info: item
+               };
+               if(!(p.removed && this.proposal.status !== 1 && this.proposal.status !== 5)) {
+                 this.proposalItems.push(p);
+                 this.proposalBefore += p.item_id+':'+p.count+',' +p.removed+',';
+               }
+             }
+             this.itemsTotalSum = resp.total_price;
+             if(this.proposal.status !== 2 && this.proposal.status !== 3 && this.proposal.status !== 6)
+               this.checkChangesInPriceList();
+           }
+         },
+         error =>  this.errorMessage = <any>error
+       );
+   }
+  
   checkChangesFromClient() {
     this.proposal.items.map((p: any) => {
       let changedObj = {
@@ -263,6 +275,7 @@ export class ProposalComponent implements OnInit  {
       if(!pr.removed)
         this.itemsTotalSum += parseInt(pr.count, 10) * parseInt(pr.price, 10);
     }
+    // console.log(this.proposalBefore, newProposalStr);
     if(this.proposalBefore !== newProposalStr) {
       return false;
     }
@@ -278,7 +291,7 @@ export class ProposalComponent implements OnInit  {
       this.toastyService.warning('Не указана дата доставки');
       return false;
     }
-    if(!moment(this.deliveryDate).isAfter(moment(), 'day')) {
+    if(moment().diff(moment(this.deliveryDate), 'days') > 0){
       this.toastyService.warning('Время доставки должно быть после сегодняшней даты');
       return false;
     }
@@ -315,6 +328,7 @@ export class ProposalComponent implements OnInit  {
         delivery_time: moment(date).valueOf(),
         items: this.proposalItemsToSend
       };
+
       this.proposalService.editProposal(data)
           .subscribe(
             resp => {
@@ -409,11 +423,15 @@ export class ProposalComponent implements OnInit  {
       console.log('exec proposal');
       let data = {
         request_id: this.proposal.request_id,
-        status: 2
+        status: 2,
+        delivery_time: moment(this.deliveryDate).valueOf(),
       };
+
+
       this.proposalService.setProposalStatus(data)
           .subscribe(
             resp => {
+              console.log(resp);
               if(resp !== null && resp.code === 0) {
                 this.toastyService.success('Заявка отправлена в доставку');
                 this.proposal = resp.result;
@@ -428,23 +446,24 @@ export class ProposalComponent implements OnInit  {
   }
 
   openSendModal() {
-  	this.modalEnterEmail.show();
+    this.modalEnterEmail.show();
   }
 
   onSendToEmail() {
-  	let data = {
-  		request_id: this.id,
+    let data = {
+      request_id: this.id,
       email: this.emailToSend
-  	};
-  	this.proposalService.sendProposalToEmail(data)
+    };
+    this.proposalService.sendProposalToEmail(data)
         .subscribe(
           resp => {
-          	if(resp) {
+
+            if(resp) {
               this.toastyService.success('Заявка успешно отправлена на емайл');
-          	}else {
-          		this.toastyService.error('Ошибка при отправке');
+            }else {
+              this.toastyService.error('Ошибка при отправке');
             }
-        		this.modalEnterEmail.hide();
+            this.modalEnterEmail.hide();
           },
           error =>  this.errorMessage = <any>error
         );
@@ -474,6 +493,7 @@ export class ProposalComponent implements OnInit  {
     this.proposalService.revokeProposals(data)
         .subscribe(
           resp => {
+
             if(resp) {
               this.toastyService.info('Ваша заявка удалена');
               this.router.navigate(['/proposals']);
@@ -500,6 +520,7 @@ export class ProposalComponent implements OnInit  {
       this.proposalService.addProposalComment(data)
           .subscribe(
             resp => {
+
               if(resp !== null) {
                 this.proposal.comments.push(resp);
                 this.newComment = '';
@@ -519,6 +540,7 @@ export class ProposalComponent implements OnInit  {
     this.proposalService.updateComments(data)
         .subscribe(
           resp => {
+
             if(resp !== null) {
               this.proposal.comments = resp;
             }else {
@@ -530,8 +552,7 @@ export class ProposalComponent implements OnInit  {
   }
 
   onDateChanged(event: any) {
-
-    if(!moment(event.jsdate).isAfter(moment(), 'day')) {
+    if(moment().diff(event.jsdate, 'days') > 0){
       this.toastyService.warning('Время доставки должно быть после сегодняшней даты');
       // this.deliveryDate = moment();
     }else if(moment().diff(event.jsdate, 'days') + 15 < 0) {
@@ -542,10 +563,15 @@ export class ProposalComponent implements OnInit  {
       this.deliveryDateText = moment(this.deliveryDate).format('DD.MM.YYYY');
     }
 
-    if(!this.checkEditted()) {
-      this.editMode = false;
-      this.accessToExec = true;
-    }else {
+    // if(!this.checkEditted()) {
+      // this.editMode = false;
+      // this.accessToExec = true;
+      
+    // }else {
+      // this.editMode = true;
+      // this.accessToExec = false;
+    // }
+    if(this.checkEditted()){
       this.editMode = true;
       this.accessToExec = false;
     }
@@ -558,6 +584,7 @@ export class ProposalComponent implements OnInit  {
     this.customerService.banCustomer(data)
         .subscribe(
           resp => {
+
             if(resp) {
               this.toastyService.warning('Поставщик '+ this.proposal.customer.name +
                 ' добавлен в черный список, для восстановления из чёрного '+
@@ -570,6 +597,7 @@ export class ProposalComponent implements OnInit  {
   }
 
   onShowItemOldData(item: any) {
+
     if(item.item_info.count !== item.item_info.prev_count) {
       this.countChanged = true;
     }
@@ -588,6 +616,7 @@ export class ProposalComponent implements OnInit  {
     this.customerService.setCustomerStatus(data)
         .subscribe(
           resp => {
+            
             if (resp.code === 0)
               this.proposal.relation = (parseInt(this.proposal.relation, 10) + 1) % 2;
           },
