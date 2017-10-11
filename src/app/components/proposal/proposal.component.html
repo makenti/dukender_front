@@ -51,14 +51,13 @@
 					<div class="datetime-container">
 						<span *ngIf="mode === 'read'" class="delivery-date-text no-print">{{deliveryDateText}}</span>
 						<span class="delivery-date-text print-only">{{deliveryDateText}}</span>
-				    <!-- <my-date-picker 
+				    <my-date-picker 
 				    	*ngIf="mode === 'edit'"
 				    	class="change-date-picker no-print" 
 				    	[options]="myDatePickerOptions"
 				     	(dateChanged)="onDateChanged($event)" 
 				     	[locale]="locale"
-				     	[selDate]="selDate" ></my-date-picker> -->
-
+				     	[selDate]="selDate" ></my-date-picker>
 					</div> 
 				</div>
 				<div class="proposal-info-field"><b>Статус:</b> {{proposal.status_display}}</div>

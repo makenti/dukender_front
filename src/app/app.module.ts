@@ -10,6 +10,7 @@ import { MomentModule } from 'angular2-moment';
 // import { AlertModule } from 'ngx-bootstrap';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { MyDatePickerModule } from 'mydatepicker';
 
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -130,7 +131,8 @@ const appRoutes: Routes = [
       { enableTracing: true }
     ),
     BsDropdownModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    MyDatePickerModule
   ],
   providers: [
     AuthService,
