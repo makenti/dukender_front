@@ -5,22 +5,22 @@
 				<li *ngIf="this.auth.perms.requests"><a [routerLink]="['/proposals']"
             [routerLinkActive]="['is-active']"
             [routerLinkActiveOptions]="{exact:true}"
-            class="menu-item"><span i18n>proposals_link</span> <!-- <span class="circle">14</span> --></a>
+            class="menu-item">Заявки<!--span i18n>proposals_link</span--> <!-- <span class="circle">14</span> --></a>
         </li>
 		    <li *ngIf="this.auth.perms.discounts"><a [routerLink]="['/promotions']"
             [routerLinkActive]="['is-active']"
             [routerLinkActiveOptions]="{exact:true}"
-            class="menu-item"><span i18n>promotions_link</span> <!-- <span class="circle">11</span> --></a>
+            class="menu-item">Акций и скидки<!--span i18n>promotions_link</span--> <!-- <span class="circle">11</span> --></a>
         </li>
 		    <li *ngIf="this.auth.perms.pricelist"><a [routerLink]="['/products']"
             [routerLinkActive]="['is-active']"
             [routerLinkActiveOptions]="{exact:true}"
-            class="menu-item"><span i18n>prices_link</span></a>
+            class="menu-item">Прайс-лист<!--span i18n>prices_link</span--></a>
         </li>
         <li *ngIf="this.auth.perms.staff"><a [routerLink]="['/employees']"
             [routerLinkActive]="['is-active']"
             [routerLinkActiveOptions]="{exact:true}"
-            class="menu-item"><span i18n>employees_link</span></a>
+            class="menu-item">Сотрудники<!--span i18n>employees_link</span--></a>
         </li>
 		    <!-- <li><a [routerLink]="['/customers']"
             [routerLinkActive]="['is-active']"

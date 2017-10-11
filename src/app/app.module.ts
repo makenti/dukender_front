@@ -51,6 +51,7 @@ import {
   PromotionService,
   AccountService,
   ProposalService,
+  CustomersService,
    } from './services/index';
 
 const appRoutes: Routes = [
@@ -136,7 +137,8 @@ const appRoutes: Routes = [
     ProductService,
     PromotionService,
     AccountService,
-    ProposalService
+    ProposalService,
+    CustomersService
   ],
   bootstrap: [AppComponent]
 })

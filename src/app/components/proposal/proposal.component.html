@@ -5,7 +5,7 @@
 		<div class="row proposal-info-block" *ngIf="proposal !== null">
 			<div class="col-xs-6">
 				<div class="proposal-info-field">
-					<b>Заказчик:</b>
+					<b>Заказчик:</b> 
 					<span>{{proposal.customer.name}}</span>
 				</div>
 				<div class="proposal-info-field">
@@ -16,23 +16,23 @@
 					<b>БИН:</b> 
 					<span>{{proposal.customer.tin}}</span>
 				</div>
-				<div class="proposal-info-field"><b>Адрес:</b>
+				<div class="proposal-info-field"><b>Адрес:</b> 
 					<span>
-						{{proposal.customer.district.region.name}},
-						{{proposal.customer.district.name}},
+						{{proposal.customer.district.region.name}}, 
+						{{proposal.customer.district.name}}, 
 						{{proposal.customer.address}}
 					</span>
 				</div>
 				<div class="proposal-info-field">
-					<b>Телефон:</b>
+					<b>Телефон:</b> 
 					<span>{{proposal.customer.mobile_phone}}</span>
 				</div>
 				<div class="proposal-info-field">
-					<b>Контактное лицо:</b>
+					<b>Контактное лицо:</b> 
 					<span>{{proposal.customer.contact_person}}</span>
 				</div>
 				<div class="proposal-info-field no-print">
-					<b>Статус:</b>
+					<b>Статус:</b> 
 					<span
 						[class.customer-trust-status]="proposal.relation === 1"
 						[class.customer-new-status]="proposal.relation === 0"
@@ -51,25 +51,25 @@
 					<div class="datetime-container">
 						<span *ngIf="mode === 'read'" class="delivery-date-text no-print">{{deliveryDateText}}</span>
 						<span class="delivery-date-text print-only">{{deliveryDateText}}</span>
-				    <!-- <my-date-picker
+				    <!-- <my-date-picker 
 				    	*ngIf="mode === 'edit'"
-				    	class="change-date-picker no-print"
+				    	class="change-date-picker no-print" 
 				    	[options]="myDatePickerOptions"
-				     	(dateChanged)="onDateChanged($event)"
+				     	(dateChanged)="onDateChanged($event)" 
 				     	[locale]="locale"
 				     	[selDate]="selDate" ></my-date-picker> -->
 
-					</div>
+					</div> 
 				</div>
 				<div class="proposal-info-field"><b>Статус:</b> {{proposal.status_display}}</div>
 				<div class="proposal-info-field">
-					<b>Код:</b>
+					<b>Код:</b> 
 					<span *ngIf="proposal !== null && proposal.key !== undefined && proposal.status === 2">
 						{{proposal.key}}
 					</span>
 				</div>
 				<div class="proposal-info-field no-print">
-					<a class="ban-customer-link"
+					<a class="ban-customer-link" 
 						(click)="modalBanCustomer.show()">Внести покупателя в чёрный список</a>
 				</div>
 				<div class="proposal-info-field no-print">
@@ -81,55 +81,55 @@
 			</div>
 		</div>
 		<div class="search-container no-print">
-			<input
+			<input 
 				type="text"
 				class="mm-input"
 				placeholder="поиск товара"
 				[(ngModel)]="searchQuery" />
 		</div>
 
-		<table class="table table-striped proposal-table">
-			<thead>
-				<tr>
-					<th>ТОВАР</th>
-					<th>Акции</th>
-					<th>ЕД.ИЗМ</th>
-					<th>КОЛ-ВО</th>
-					<th>ЦЕНА</th>
-					<th>СУММА</th>
-					<th *ngIf="mode === 'edit'" class="no-print"></th>
-				</tr>
-			</thead>
-			<tbody *ngIf="proposalItems !== null">
-				<tr *ngFor="let item of proposalItems | searchPipe: 'name': searchQuery">
+		<table class="table table-striped proposal-table"> 
+			<thead> 
+				<tr> 
+					<th>ТОВАР</th> 
+					<th>Акции</th> 
+					<th>ЕД.ИЗМ</th> 
+					<th>КОЛ-ВО</th> 
+					<th>ЦЕНА</th> 
+					<th>СУММА</th> 
+					<th *ngIf="mode === 'edit'" class="no-print"></th> 
+				</tr> 
+			</thead> 
+			<tbody *ngIf="proposalItems !== null"> 
+				<tr *ngFor="let item of proposalItems | searchPipe: 'name': searchQuery"> 
 					<td (click)="onShowItemOldData(item)">
 						<span class="removed-item" *ngIf="item.removed">{{item.removed}} {{item.name}}</span>
 						<span *ngIf="!item.removed"> {{item.name}}</span>
-					</td>
+					</td> 
 					<td>
-						<i class="prom-icon"
+						<i class="prom-icon" 
 							title="скидка"
 							*ngIf="item.action_discount_active"
 							aria-hidden="true">%</i>
-						<i class="prom-icon"
+						<i class="prom-icon" 
 							title="денежный бонус"
 							*ngIf="item.action_bonus_money_active"
 							aria-hidden="true">ДБ</i>
-						<i class="prom-icon"
+						<i class="prom-icon" 
 							title="товарный бонус"
 							*ngIf="item.action_bonus_item_active"
 							aria-hidden="true">ТБ</i>
-						<i class="prom-icon"
+						<i class="prom-icon" 
 							title="новая акция"
 							*ngIf="item.action_news_active"
 							aria-hidden="true">Н</i>
 					</td>
-					<td>{{item.nomenclature}}</td>
+					<td>{{item.nomenclature}}</td> 
 					<td>
 						<span *ngIf="mode === 'read'" class="no-print">{{item.count}}</span>
 						<span class="print-only">{{item.count}}</span>
-						<input 	type="number"
-										value="{{item.count}}"
+						<input 	type="number" 
+										value="{{item.count}}" 
 										min='1'
 										class="mm-input-number input-mini no-print"
 										[(ngModel)]="item.count"
@@ -140,14 +140,14 @@
 							class="label label-primary">
 							+{{this.Math.trunc(item.count / item.item_info.for_count * item.item_info.bonus_count)}}
 						</span>
-					</td>
+					</td> 
 					<td>
 						<span >{{item.price | number: '1.2-2'}}</span>
 						<!-- <span *ngIf="!item.item_info.action_discount_active">{{item.price}} / {{item.item_info.item_info.price}}</span> -->
-					</td>
+					</td> 
 					<td>
 						<span>{{item.count * item.price | number: '1.2-2'}}</span>
-					</td>
+					</td> 
 					<td *ngIf="mode === 'edit'" class="no-print">
 						<span class="remove-proposal-span"
 									*ngIf="!item.removed"
@@ -155,14 +155,14 @@
 						<span class="return-proposal-span"
 									*ngIf="item.removed"
 									(click)="returnProposalItem(item)">Восстановить</span>
-					</td>
-				</tr>
+					</td> 
+				</tr> 
 			</tbody>
 			<tfoot>
 				<tr>
 				  <td><b>Итого:</b> <span class="total-price pull-right"><b>{{itemsTotalSum | number: '1.2-2'}}</b></span></td>
 				</tr>
-			</tfoot>
+			</tfoot> 
 		</table>
 	</div>
 
@@ -170,7 +170,7 @@
 		<div class="comment-label">Комментарии:</div>
 		<div class="comments-container" *ngIf="proposal !== null && proposal.comments !== []">
 			<div class="comments-wrapper">
-				<div class="flex-container flex-start comment-block"
+				<div class="flex-container flex-start comment-block" 
 						*ngFor="let item of proposal.comments">
 					<div class="comment-author">{{item.user}}: &nbsp;</div>
 					<div class="comment-text">{{item.comment}}</div>
@@ -178,15 +178,15 @@
 			</div>
 			<div class="comment-form">
 				<div class="mm-input-with-btn">
-	        <input type="text" class="mm-input"
+	        <input type="text" class="mm-input" 
 	        	placeholder="оставить коммент"
-	        	[(ngModel)]="newComment"
+	        	[(ngModel)]="newComment" 
 	          (keydown)="onCommentEnter($event)"/>
 	        <span class="waves-effect waves-light btn" (click)="addComment()">
 	        	<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
 	        </span>
 	      </div>
-	      <button class="btn btn-default btn-circle update-btn"
+	      <button class="btn btn-default btn-circle update-btn" 
 	      				(click)="updateComments()" title="Обновить комментарии">
 	      	<i class="fa fa-refresh" aria-hidden="true"></i>
 	      </button>
@@ -196,10 +196,10 @@
 
 	<div class="btns-container flex-container flex-between">
 		<div *ngIf="proposal !== null">
-			<button class="mm-btn mm-btn-primary btn-space-right"
+			<button class="mm-btn mm-btn-primary btn-space-right" 
 							(click)="onChangeProposal()"
 							*ngIf="proposal.status === 0">Принять в работу</button>
-			<button class="mm-btn mm-btn-default btn-space-right"
+			<button class="mm-btn mm-btn-default btn-space-right" 
 							(click)="onSaveProposal(true)"
 							*ngIf="mode === 'edit'"
 							[disabled]="editMode">На согласование</button>
@@ -207,39 +207,39 @@
 							(click)="onExecuteProposal()"
 							*ngIf="mode === 'edit'"
 							[disabled]="!editMode">Исполнить</button>
-			<button class="mm-btn mm-btn-default "
-							(click)="onRevokeProposal()"
+			<button class="mm-btn mm-btn-default " 
+							(click)="modalDeleteProposal.show()"
 							*ngIf="mode === 'edit'">Удалить заявку</button>
 		</div>
 		<div *ngIf="proposal !== null">
-			<button class="mm-btn mm-btn-default btn-space-right"
+			<button class="mm-btn mm-btn-default btn-space-right" 
 							(click)="onPrintProposal()">Печать</button>
-			<button class="mm-btn mm-btn-default btn-space-right"
+			<button class="mm-btn mm-btn-default btn-space-right" 
 							(click)="openSendModal()"
-							*ngIf="proposal.status === 2">На email</button>
-			<button class="mm-btn mm-btn-default"
+							*ngIf="proposal.status === 2">На email</button>							
+			<button class="mm-btn mm-btn-default" 
 							[routerLink]="['/proposals']">Закрыть</button>
 		</div>
 
-		<!-- <button class="mm-btn mm-btn-default btn-space-right"
+		<!-- <button class="mm-btn mm-btn-default btn-space-right" 
 							(click)="onPrintProposal()"
 							*ngIf="proposal.status === 2 || proposal.status === 3">Печать</button> -->
 
-<!-- 			<button class="mm-btn mm-btn-default btn-space-right"
+<!-- 			<button class="mm-btn mm-btn-default btn-space-right" 
 							(click)="onSaveProposal(false)"
 							[disabled]="editMode">Сохранить</button> -->
-<!-- 			<button class="mm-btn mm-btn-default"
+<!-- 			<button class="mm-btn mm-btn-default" 
 							(click)="onExecuteProposal()"
 							[disabled]="!executeMode && proposal.status === 4">Исполнить</button> -->
 		<!-- <div *ngIf="mode === 'read'">
-			<button class="mm-btn mm-btn-default btn-space-right"
+			<button class="mm-btn mm-btn-default btn-space-right" 
 							(click)="onExportProposal()">Экспорт</button>
 		</div> -->
-
+		
 	</div>
 </div>
 
-<div bsModal #modalBanCustomer="bs-modal"
+<div bsModal #modalBanCustomer="bs-modal" 
 	class="modal fade modal-small modal-ban-customer">
 	<div class="modal-dialog modal-sm">
     <div class="modal-content">
@@ -256,7 +256,7 @@
   </div>
 </div>
 
-<div bsModal #modalEnterEmail="bs-modal"
+<div bsModal #modalEnterEmail="bs-modal" 
 	class="modal fade modal-small modal-enter-email">
 	<div class="modal-dialog modal-sm">
     <div class="modal-content">
@@ -270,7 +270,7 @@
 		  	<div class="modal-wrapper">
 		    	<div class="text-center">
 		    		<input type="text" [(ngModel)]="emailToSend" class="mm-input"/>
-		    	</div>
+		    	</div> 
 		    </div>
 				<div class="modal-btns flex-container flex-center">
 					<button class="mm-btn mm-btn-primary" (click)="onSendToEmail()">Отправить</button>
@@ -280,7 +280,7 @@
   </div>
 </div>
 
-<div bsModal #modalPrevData="bs-modal"
+<div bsModal #modalPrevData="bs-modal" 
 	class="modal fade modal-small modal-prev-customer">
 	<div class="modal-dialog">
     <div class="modal-content">
@@ -304,7 +304,7 @@
 			  	</div>
 		    </div>
 				<div class="modal-btns flex-container flex-center">
-					<button class="mm-btn mm-btn-default"
+					<button class="mm-btn mm-btn-default" 
 						(click)="modalPrevData.hide();itemToShow=null">Закрыть</button>
 				</div>
 			</div>
@@ -312,7 +312,7 @@
   </div>
 </div>
 
-<div bsModal #modalChanges="bs-modal"
+<div bsModal #modalChanges="bs-modal" 
 	class="modal fade modal-small modal-changes">
 	<div class="modal-dialog">
     <div class="modal-content">
@@ -332,10 +332,27 @@
 		  		</div>
 		    </div>
 				<div class="modal-btns flex-container flex-center">
-					<button class="mm-btn mm-btn-default"
+					<button class="mm-btn mm-btn-default" 
 						(click)="modalChanges.hide()">Закрыть</button>
 				</div>
 			</div>
+		</div>
+  </div>
+</div>
+
+ <div bsModal #modalDeleteProposal="bs-modal" 
+	class="modal fade modal-small modal-delete-user">
+	<div class="modal-dialog modal-sm">
+    <div class="modal-content">
+		  <div class="modal-body">
+		  	<div class="modal-wrapper">
+		    	<p class="text-center">Вы уверены, что хотите удалить заявку?</p>
+		    </div>
+				<div class="modal-btns flex-container flex-center">
+					<button class="mm-btn mm-btn-default" (click)="modalDeleteProposal.hide()">Отмена</button>
+					<button class="mm-btn mm-btn-danger" (click)="onRevokeProposal()">Удалить</button>
+				</div>
+		  </div>
 		</div>
   </div>
 </div>
