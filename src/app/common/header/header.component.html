@@ -44,12 +44,14 @@
 
 		<div class="header-right">
 			<div class="header-profile flex-vertical">
-				<span i18n>your_profile:</span>
+				<!-- <span i18n>your_profile:</span> -->
+				<span>Ваш профиль:</span>
 				<a [routerLink]="['/user-profile']">{{this.auth.getUser().username}}</a>
 				<i class="fa fa-user" aria-hidden="true"></i>
 			</div>
 			<button class="logout-btn" (click)="logout()">
-				<span i18n>logout_link</span>
+				<!-- <span i18n>logout_link</span> -->
+				<span>Выход</span>
 				<i class="fa fa-sign-out" aria-hidden="true"></i>
 			</button>
 		</div>
