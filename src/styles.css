@@ -736,6 +736,7 @@ input:checked + .slider:before {
     box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.2);
     padding: 8px;
     background: #fff;
+    height: auto !important;
 }
 
 .change-date-picker .mydp .header {
@@ -810,7 +811,10 @@ input:checked + .slider:before {
 .change-date-picker  .selectiongroup   .selection {
     border-radius: 30px;
 }
-
+.change-date-picker  .selectiongroup .btnpicker {
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
 .change-date-picker  button.btnpicker.btnpickerenabled.btnleftborder {
     border-radius: 0 30px 30px 0;
 }
