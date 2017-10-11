@@ -16,14 +16,9 @@ export class AuthManager implements CanActivate {
     private auth: AuthService) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    // console.log("can activate");
     let authKey = window.localStorage.getItem('auth_key');
-    // console.log("1");
     if(authKey !== null) {
-      // console.log("2");
       if(this.checkRegisterStep()) {
-        // console.log("2.5");
-        // this.router.navigate(['/home']);
         if(next.url[0].path === 'landing' && authKey !== null) {
           this.router.navigate(['/home']);
           return true;
@@ -31,12 +26,13 @@ export class AuthManager implements CanActivate {
         return true;
       }
       return true;
-    }else {
-      // console.log("4");
+    }
+    else if(next.url[0].path !== 'landing'){
       this.router.navigate(['/landing']);
       return true;
+    }else{
+      return true;
     }
-    // this.router.navigate(['/home']);
   }
 
   checkRegisterStep() {
