@@ -39,6 +39,8 @@ import { RequestHistoryComponent } from './components/history/request.history';
 import { CustomersComponent } from './components/customers/customers.component';
 import { BlackListComponent } from './components/customers/black_list.component';
 import { RelationshipComponent } from './components/customers/relationship.component';
+import { CategoryComponent } from './components/settings/category.component';
+import { CompanyRegionComponent } from './components/settings/company.region';
 
 import { SearchPipe } from './pipes/search.pipe';
 import { SearchDeepPipe } from './pipes/searchDeep.pipe';
@@ -53,7 +55,8 @@ import {
   AccountService,
   ProposalService,
   CustomersService,
-  AuthManager
+  AuthManager,
+  CompanyRegionsService
    } from './services/index';
 
 const appRoutes: Routes = [
@@ -61,8 +64,8 @@ const appRoutes: Routes = [
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
   { path: 'reset', component: ResetPasswordComponent },
   // { path: 'reset_success', component: ResetSuccessComponent, canActivate: [AuthManager] },
-  { path: 'register-1', component: RegisterComponent, canActivate: [AuthManager] },
-  // { path: 'register-2', component: RegisterThirdComponent, canActivate: [AuthManager] },
+  { path: 'register-1', component: RegisterComponent },
+  { path: 'register-2', component: CategoryComponent },
   // { path: 'activated', component: ActivateComponent, canActivate: [AuthManager] },
   { path: 'user-profile', component: UserProfileComponent, canActivate: [AuthManager] },
   { path: 'home', component: DashboardComponent, canActivate: [AuthManager] },
@@ -82,8 +85,8 @@ const appRoutes: Routes = [
   { path: 'blacklist', component: BlackListComponent, canActivate: [AuthManager] },
   { path: 'relationship', component: RelationshipComponent, canActivate: [AuthManager] },
   { path: 'company_info', component: CompanyInfoComponent, canActivate: [AuthManager] },
-  // { path: 'company_region', component: CompanyRegionComponent, canActivate: [AuthManager] },
-  // { path: 'company_category', component: CompanyCategoryComponent, canActivate: [AuthManager] },
+  { path: 'company_category', component: CategoryComponent, canActivate: [AuthManager] },
+  { path: 'company_region', component: CompanyRegionComponent, canActivate: [AuthManager] },
   { path: 'account', component: AccountComponent, canActivate: [AuthManager] },
   { path: '**', component: NotFoundComponent }
 ];
@@ -116,6 +119,8 @@ const appRoutes: Routes = [
     UserProfileComponent,
     CompanyInfoComponent,
     ProposalComponent,
+    CategoryComponent,
+    CompanyRegionComponent,
     SearchPipe,
     SortPipe,
     SearchDeepPipe,
@@ -143,7 +148,8 @@ const appRoutes: Routes = [
     AccountService,
     ProposalService,
     CustomersService,
-    AuthManager
+    AuthManager,
+    CompanyRegionsService
   ],
   bootstrap: [AppComponent]
 })

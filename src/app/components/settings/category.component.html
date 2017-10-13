@@ -1,0 +1,39 @@
+<div *ngIf="register" class="steps-wrapper">
+	<div class="main-container flex-container flex-around">
+		<div class="flex-vertical">
+			<div class="register-step">Шаг <span class="step-circle">1</span></div>
+			<div class="register-step step-active">Шаг <span class="step-circle">2</span></div>
+		</div>
+	</div>
+</div>
+
+<div class="main-container home-container">
+
+	<div>
+		<h3 class="text-center" *ngIf="!register">Выберите тип товара</h3>
+		<p class="text-center" *ngIf="!register">Поставьте галочку возле пунктов, которые соответствуют вашему бизнесу </p>
+		
+		<h3 class="text-center" *ngIf="register">Определите продаваемые товары</h3>
+		<p class="text-center" *ngIf="register">В целях формирования максимально точной клиентской базы, пожалуйста, выберите типы товара</p>
+
+		<div class="flex-container flex-center reg-cat-wrapper"
+			[class.loading]="loading" *ngIf="categories.length > 0">
+			<div class="mm-checkbox-group" 
+				*ngFor="let cat of categories">
+				<label class="mm-control mm-control--checkbox">{{cat.name}}
+		      <input type="checkbox"
+		      		name="categories" 
+				      (change)="onSelectCategory(cat, $event)"
+				      [checked]="existCategory(cat)"/>
+		      <div class="mm-control__indicator"></div>
+		    </label>
+	    </div>
+		</div>
+
+		<!-- <p class="text-center">Ваша информация будет размещена в <b>100</b> точек категории A, <b>1000</b> точек категории B, <b>2100</b> точек категории C</p> -->
+
+		<div class="flex-container flex-center">
+			<button class="mm-btn mm-btn-primary" (click)="onSave()">Сохранить</button>
+		</div>
+	</div>
+</div>

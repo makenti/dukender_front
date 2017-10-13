@@ -1,3 +1,231 @@
-<p>
-  register works!
-</p>
+<div class="steps-wrapper">
+	<div class="main-container flex-container flex-around">
+		<div class="flex-vertical">
+			<div class="register-step step-active">Шаг <span class="step-circle">1</span></div>
+			<div class="register-step">Шаг <span class="step-circle">2</span></div>
+		</div>
+	</div>
+</div>
+
+<!-- <div class="admin-wrapper">
+	<div class=" main-container flex-container flex-between">
+		<div class="admin-set-block">
+			<label>Администратор</label>
+			<input type="text" class="mm-input admin-name-input" [(ngModel)]="adminFullName" placeholder="Введите ФИО">
+			<i class="fa fa-info-circle" aria-hidden="true" tooltip="Содрудник, отвечающий за настройку интерфейса"></i>
+		</div>
+		<button class="mm-btn mm-btn-primary mm-btn-disabled">Передать полномочия</button>
+	</div>
+</div> -->
+
+<div class="main-container home-container">
+
+	<div>
+		<h3 class="text-center">Профиль</h3>
+		<div class="profile-block">
+			<div class="backlined-text"><span>Заполните данные о компании</span></div>
+			<div class="row">
+				<div class="col-xs-8 col-xs-offset-2">
+					<table class="first-r-table">
+						<tr>
+							<td>
+								<label>Полное наименование</label> 
+							</td>
+							<td>
+								<input type="text" class="mm-input company-name-input" 
+											[ngClass]="{danger: newCompany.name === '' }"
+											[(ngModel)]="newCompany.name" maxlength="300" />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Сокращенное наименование </label> 
+							</td>
+							<td>
+								<input type="text" class="mm-input company-name-input" 
+											[ngClass]="{danger: newCompany.short_name === '' }"
+											[(ngModel)]="newCompany.short_name" maxlength="300" />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>БИН</label> 
+							</td>
+							<td>
+								<input type="text"
+											pattern="\d*" 
+											class="mm-input company-bin-input" 
+											[(ngModel)]="newCompany.tin" maxlength="12"
+											[ngClass]="{danger: newCompany.tin === '' }"
+											onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>ФИО администратора</label>
+							</td>
+							<td>
+								<input type="text" class="mm-input admin-name-input" 
+											[ngClass]="{danger: adminFullName === '' }"
+											[(ngModel)]="adminFullName" placeholder="Введите ФИО">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Описание </label> 
+							</td>
+							<td>
+								<textarea class="form-control vresize" rows='4' 
+									[(ngModel)]="newCompany.additional_info" 
+									maxlength="1000"></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Фото </label> 
+							</td>
+							<td>
+								<div class="flex-vertical">
+					    		<label class="mm-btn-link btn-file">
+								    Выберите фото на вашем компьютере
+								    <input type="file" style="display: none;" (change)="onSelectPhoto($event)">
+									</label>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<div class="address-block">
+			<div class="backlined-text"><span>АДРЕС</span></div>
+			<div class="row">
+				<div class="col-xs-8 col-xs-offset-2">
+					<table class="first-r-table">
+
+						<tr>
+							<td>
+								<label>Страна <br />(в будущем не подлежит изменению)</label>
+							</td>
+							<td>
+								<div class="mm-select">
+									<select [(ngModel)]="newCompany.country" 
+													(ngModelChange)="onSelectCountry($event)" 
+													class="select-elem">
+										<option 
+												*ngFor="let country of countries" 
+												[ngValue]="country.id"
+												>
+									    <span class="badge">{{country.name}}</span>
+									  </option>
+									</select>
+									<div class="select__arrow"></div>
+								</div>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label>Область</label>
+							</td>
+							<td>
+								<div class="mm-select">
+									<select [(ngModel)]="newCompany.region" 
+													(ngModelChange)="onSelectRegion($event)" 
+													class="select-elem">
+										<option 
+												*ngFor="let region of regions" 
+												[ngValue]="region.id"
+												>
+									    <span class="badge">{{region.name}}</span>
+									  </option>
+									</select>
+									<div class="select__arrow"></div>
+								</div>
+							</td>
+						</tr>
+						
+						<tr>
+							<td>
+								<label>Город/район</label>
+							</td>
+							<td>
+								<div class="mm-select">
+									<select [(ngModel)]="newCompany.district" 
+													(ngModelChange)="onSelectDistrict($event)" 
+													class="select-elem">
+										<option *ngFor="let district of districts" [ngValue]="district.id">
+									    <span class="badge">{{district.name}}</span>
+									  </option>
+									</select>
+									<div class="select__arrow"></div>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Улица, дом, офис</label>
+							</td>
+							<td>
+								<input type="text" class="mm-input" 
+											[ngClass]="{danger: newCompany.official_address === '' }"
+											[(ngModel)]="newCompany.official_address"/>
+							</td>
+						</tr>
+					</table>
+
+				</div>
+			</div>
+		</div>
+
+
+		<div class="address-block">
+			<div class="backlined-text"><span>КОНТАКТЫ</span></div>
+			<div class="row">
+				<div class="col-xs-8 col-xs-offset-2">
+					<table class="first-r-table">
+						<tr>
+							<td>
+								<label>Email</label>
+							</td>
+							<td>
+								<input type="text" class="mm-input" 
+											[ngClass]="{danger: newCompany.email === '' }"
+											[(ngModel)]="newCompany.email"/>	
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Мобильный телефон</label>
+							</td>
+							<td>
+								<input type="text" class="mm-input" maxlength="15"
+											[ngClass]="{danger: newCompany.mobile_phone === '' }"
+											[(ngModel)]="newCompany.mobile_phone"/>		
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Рабочий телефон</label>
+							</td>
+							<td>
+								<input type="text" class="mm-input" maxlength="15"
+											[ngClass]="{danger: newCompany.work_phone === '' }"
+											[(ngModel)]="newCompany.work_phone"/>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<div class="flex-container flex-center">
+			<button class="mm-btn mm-btn-primary" (click)="onClickNextBtn()">Далее</button>
+		</div>
+		<br>
+	</div>
+
+	
+</div>
+
