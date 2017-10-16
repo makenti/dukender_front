@@ -14,7 +14,7 @@
     <div class="fp-tableCell" style="height:662px;">
       <div class="intro">
         <div class="main-left">
-          <img src="./assets/images/logo-tr.png" alt="">
+          <img src="./assets/images/logo-tr.png" alt="dukender">
           <p>Загрузите прайс-лист одним кликом и расскажите торговым точкам вашего города или региона об акциях, скидках и новинках!</p>
           <div class="main-left-bottom" *ngIf="showLogin">
             <span>Еще не зарегистрированы?</span>
@@ -87,19 +87,19 @@
         <p>Организуйте вашу работу в 3 простых шага:</p>
         <ul>
           <li>
-            <img src="./assets/images/ico-1.png" alt="">
+            <img src="./assets/images/ico-1.png" alt="dukender">
             <span>1</span>
             <p>Зарегистрируйтесь<br>и загрузите прайс-лист</p>
           </li>
 
           <li>
-            <img src="./assets/images/ico-2.png" alt="">
+            <img src="./assets/images/ico-2.png" alt="dukender">
             <span>2</span>
             <p>Разместите информацию<br>освоих акциях и скидках</p>
           </li>
 
           <li>
-            <img src="./assets/images/ico-3.png" alt="">
+            <img src="./assets/images/ico-3.png" alt="dukender">
             <span>3</span>
             <p>Получайте и<br>обрабатывайте заказы</p>
           </li>
@@ -114,13 +114,17 @@
       <div class="intro">
         <div class="about">
           <div class="abut-left">
-            <img src="./assets/images/logo.png" alt="">
+            <img src="./assets/images/logo.png" alt="dukender">
             <p>Это платформа для продажи и покупки товаров между поставщиками и торговыми точками в вашем городе.</p>
             <p>Если вы производитель или поставщик - зарегистрируйтесь  и начинайте работать прямо сейчас! </p>
             <p>Если вы владелец или сотрудник магазина, скачивайте мобильное приложение и заказывайте товары, не  дожидаясь торгового представителя!</p>
             <div class="about-btns">
-              <a href="https://itunes.apple.com/ru/app/dukender/id1233980393?mt=8"><img src="./assets/images/app-store-2-x.png" alt=""></a>
-              <a href="https://play.google.com/store/apps/details?id=com.odaxy.android.dukender&hl=ru"><img src="./assets/images/google-play-2-x.png" alt=""></a>
+              <a href="https://itunes.apple.com/ru/app/dukender/id1233980393?mt=8" target="_blank">
+                <img src="./assets/images/app-store-2-x.png" alt="dukender">
+              </a>
+              <a href="https://play.google.com/store/apps/details?id=com.odaxy.android.dukender&hl=ru" target="_blank">
+                <img src="./assets/images/google-play-2-x.png" alt="dukender">
+              </a>
             </div>
           </div>
         </div>
@@ -146,7 +150,7 @@
             <table>
               <tr>
                 <td>
-                  <img src="./assets/images/ico-4.png" alt="">
+                  <img src="./assets/images/ico-4.png" alt="dukender">
                 </td>
                 <td>
                   <h4>Выгодно</h4>
@@ -166,7 +170,7 @@
             <table>
               <tr>
                 <td>
-                  <img src="./assets/images/ico-5.png" alt="">
+                  <img src="./assets/images/ico-5.png" alt="dukender">
                 </td>
                 <td>
                   <h4>Быстро</h4>
@@ -186,7 +190,7 @@
             <table>
               <tr>
                 <td>
-                  <img src="./assets/images/ico-6.png" alt="">
+                  <img src="./assets/images/ico-6.png" alt="dukender">
                 </td>
                 <td>
                   <h4>Безопасно</h4>
@@ -209,15 +213,32 @@
   </div>
 </div>
 
+<div bsModal #modalRegister="bs-modal" 
+  class="modal fade modal-small modal-delete-user">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="modal-wrapper">
+          <p class="text-center">Мы отправили вам письмо со ссылкой активации. <br>Пожалуйста, проверьте почту.</p>
+        </div>
+        <div class="modal-btns flex-container flex-center">
+          <button class="mm-btn mm-btn-primary" (click)="onRegisterComplete()">Ок</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div class="footer">
-  <img src="./assets/images/logo.png" alt="">
+  <img src="./assets/images/logo.png" alt="dukender">
   <ul>
     <li>
       <a href="https://api.dukender.kz/offer/" target="_blank">Публичная оферта</a>
       <a href="">Реквизиты</a>
     </li>
     <li>
-      info@dukender.kz   |   +7 708 046 04 41
+      <a href="mailto:info@dukender.kz" data-rel="external">info@dukender.kz</a> | <a href="tel:+77080460441" data-rel="external">+7 708 046 04 41</a>
     </li>
     <li>
       Dukender © 2017
@@ -266,19 +287,3 @@
   </div>
 </div>
 -->
-
-
-<!-- <div bsModal #modalRegister='bs-modal' class="modal fade modal-small modal-register">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-      <div class="modal-body" >
-        <div class="modal-wrapper">
-          <p class="text-center">Мы отправили вам письмо со ссылкой активации. <br>Пожалуйста, проверьте почту.</p>
-        </div>
-        <div class="modal-btns flex-container flex-center">
-          <button class="mm-btn mm-btn-primary" (click)="onRegisterComplete()">Ок</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->

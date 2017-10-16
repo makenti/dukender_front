@@ -635,7 +635,12 @@ html.fp-enabled,
   font-size: 11px;
 }
 
-
+.modal-dialog{
+  margin: 90px auto;
+}
+.modal-body, .modal-wrapper{
+  padding: 20px;
+}
 /*.landing-img{
   margin: 20px 40px 40px auto;
   display: block;

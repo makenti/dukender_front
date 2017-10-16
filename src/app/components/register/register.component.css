@@ -1,0 +1,175 @@
+:host {
+  display: block;
+}
+.steps-wrapper{
+	height: 65px;
+  background-color: #ffffff;
+}
+.register-step{
+	font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  color: #4a4a4a;
+  margin: 0 43px;
+  opacity: 0.3;
+}
+.register-step.step-active{
+	opacity: 1;
+}
+.step-circle{
+	width: 24px;
+  height: 24px;
+
+	display: inline-flex;
+	align-items: center;
+  flex-direction: row;
+  justify-content: center;
+ 	
+ 	font-size: 15px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  color: #ffffff;
+	margin-left: 13px;
+	
+	white-space: nowrap;
+	background-color: #e44d59;
+	border-radius: 24px;
+}
+/* step 1 */
+.steps-wrapper{
+	height: 65px;
+  background-color: #ffffff;
+}
+.register-step{
+	font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  color: #4a4a4a;
+  margin: 0 43px;
+  opacity: 0.3;
+}
+.register-step.step-active{
+	opacity: 1;
+}
+.step-circle{
+	width: 24px;
+  height: 24px;
+
+	display: inline-flex;
+	align-items: center;
+  flex-direction: row;
+  justify-content: center;
+ 	
+ 	font-size: 15px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  color: #ffffff;
+	margin-left: 13px;
+	
+	white-space: nowrap;
+	background-color: #e44d59;
+	border-radius: 24px;
+}
+/* step 1 */
+.admin-wrapper{
+ 	height: 74px;
+  background-color: #dddddd;
+}
+.admin-set-block{
+	/*margin-left: 50px;*/
+}
+.admin-set-block i{
+	font-size: 20px;
+	margin-left: 5px;
+}
+.admin-name-input{width: 300px;}
+
+
+
+.company-name-input{width: 300px;}
+.company-bin-input {width: 120px;}
+.address-block{
+	margin-bottom: 20px;
+}
+.address-block .col-xs-4,
+.address-block .col-xs-2,
+.address-block .col-xs-8{
+	padding: 0;
+}
+.form-block{
+	width: 100%;
+	margin-bottom: 9px;
+	display: inline-flex;
+	align-items: center;
+  flex-direction: row;
+  justify-content: center;
+}
+
+/* step 3 */
+.reg-cat-wrapper{
+	min-height: 180px;
+	padding: 0 50px;
+	text-align: center;
+}
+.reg-cat-wrapper .mm-checkbox-group{
+	width: 270px;
+	text-align: left;
+	margin-bottom: 5px;
+}
+
+/* step 2 */
+.region-select-block{
+	width: 210px;
+}
+.region-select-block .mm-btn{
+	display: flex;
+	align-items: center;
+}
+.districts-container{
+	/*height: 160px;*/
+	overflow-x: hidden;
+	overflow-y: auto; 
+	margin-bottom: 21px;
+}
+.category-district{
+	display: block;
+	width: 130px;
+}
+.category-block{
+	width: 125px;
+	display: inline-flex;
+	align-items: center;
+  flex-direction: row;
+  justify-content: center;
+}
+.category-block.long{
+	width: 220px;
+}
+.category-block .mm-control{
+	margin-bottom: 0;
+  padding-left: 20px;
+  margin-right: 10px;
+}
+.category-block .input-sm{
+	width: 75px;
+	padding: 4px 10px;
+}
+
+.first-r-table{
+	width: 100%;
+}
+.first-r-table td{
+	padding: 5px;
+	width: 50%;
+}
+.first-r-table td:first-child{
+	text-align: right;
+}
+
+.first-r-table input.company-name-input{
+	min-width: 300px;
+}
