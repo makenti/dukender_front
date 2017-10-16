@@ -30,6 +30,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { CompanyInfoComponent } from './components/company-info/company.info';
+import { CompanyCategoryComponent } from './components/company-info/company.category';
+import { CompanyRegionsComponent } from './components/company-info/company.regions';
 import { ProposalsComponent } from './components/proposals/proposals.component';
 import { ProposalComponent } from './components/proposal/proposal.component';
 // import { ProposalPrintComponent } from './components/proposal/proposal.print';
@@ -39,8 +41,6 @@ import { RequestHistoryComponent } from './components/history/request.history';
 import { CustomersComponent } from './components/customers/customers.component';
 import { BlackListComponent } from './components/customers/black_list.component';
 import { RelationshipComponent } from './components/customers/relationship.component';
-import { CategoryComponent } from './components/settings/category.component';
-import { CompanyRegionComponent } from './components/settings/company.region';
 
 import { SearchPipe } from './pipes/search.pipe';
 import { SearchDeepPipe } from './pipes/searchDeep.pipe';
@@ -65,7 +65,7 @@ const appRoutes: Routes = [
   { path: 'reset', component: ResetPasswordComponent },
   // { path: 'reset_success', component: ResetSuccessComponent, canActivate: [AuthManager] },
   { path: 'register-1', component: RegisterComponent },
-  { path: 'register-2', component: CategoryComponent },
+  { path: 'register-2', component: CompanyCategoryComponent },
   // { path: 'activated', component: ActivateComponent, canActivate: [AuthManager] },
   { path: 'user-profile', component: UserProfileComponent, canActivate: [AuthManager] },
   { path: 'home', component: DashboardComponent, canActivate: [AuthManager] },
@@ -85,8 +85,8 @@ const appRoutes: Routes = [
   { path: 'blacklist', component: BlackListComponent, canActivate: [AuthManager] },
   { path: 'relationship', component: RelationshipComponent, canActivate: [AuthManager] },
   { path: 'company_info', component: CompanyInfoComponent, canActivate: [AuthManager] },
-  { path: 'company_category', component: CategoryComponent, canActivate: [AuthManager] },
-  { path: 'company_region', component: CompanyRegionComponent, canActivate: [AuthManager] },
+  { path: 'company_category', component: CompanyCategoryComponent, canActivate: [AuthManager] },
+  { path: 'company_region', component: CompanyRegionsComponent, canActivate: [AuthManager] },
   { path: 'account', component: AccountComponent, canActivate: [AuthManager] },
   { path: '**', component: NotFoundComponent }
 ];
@@ -118,9 +118,9 @@ const appRoutes: Routes = [
     ResetPasswordComponent,
     UserProfileComponent,
     CompanyInfoComponent,
+    CompanyCategoryComponent,
     ProposalComponent,
-    CategoryComponent,
-    CompanyRegionComponent,
+    CompanyRegionsComponent,
     SearchPipe,
     SortPipe,
     SearchDeepPipe,

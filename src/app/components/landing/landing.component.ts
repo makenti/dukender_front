@@ -1,7 +1,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-// import { ModalDirective } from 'ng2-bootstrap';
+import { ModalDirective } from 'ngx-bootstrap';
 
 import { AuthService, ErrorService, ToolbarService } from '../../services/index';
 
@@ -13,8 +13,8 @@ import { AuthService, ErrorService, ToolbarService } from '../../services/index'
 })
 export class LandingComponent implements OnInit {
 
-  // @ViewChild('modalRegister')
-  // modal: ModalDirective;
+  @ViewChild('modalRegister')
+  modal: ModalDirective;
 
   private localUser = {
     username: '',
@@ -151,7 +151,7 @@ export class LandingComponent implements OnInit {
 
   onRegisterComplete() {
     this.toggle();
-    // this.modal.hide();
+    this.modal.hide();
   }
 
   register() {
@@ -159,7 +159,7 @@ export class LandingComponent implements OnInit {
         .subscribe(
           res => {
             if(res.code === 0) {
-              // this.modal.show();
+              this.modal.show();
               this.connectPushService();
             } else {
               let errorMessage = this.errorSrv.getCodeMessage(res.code);

@@ -1,8 +1,18 @@
+<div *ngIf="register" class="steps-wrapper">
+	<div class="main-container flex-container flex-around">
+		<div class="flex-vertical">
+			<div class="register-step">Шаг <span class="step-circle">1</span></div>
+			<div class="register-step step-active">Шаг <span class="step-circle">2</span></div>
+			<div class="register-step">Шаг <span class="step-circle">3</span></div>
+		</div>
+	</div>
+</div>
+
 <div class="main-container home-container">
 
 	<div>
-		<h3 class="text-center">Регион продаж, категория магазина и минимальная сумма заявки</h3>
-
+		<h3 class="text-center">Регион продаж, категория магазина и минимальная сумма заявки</h3>	
+		
 		<div class="shop-desc-list">
 			<ul class="list-unstyled">
 				<li><label>А - Крупный супермаркет, свыше 150м2</label></li>
@@ -28,18 +38,18 @@
 			<!-- <div class="backlined-text"><span>РАЙОНЫ ОБЛАСТИ</span></div> -->
 
 			<div class="districts-container">
-				<table class="table table-striped" [class.loading]="loading">
-					<thead>
-						<tr>
-							<th>РАЙОН</th>
-							<th class="text-center">Укажите регионы продаж, категории магазинов, с которыми вы сотрудничаете и минимальную сумму заявки</th>
-						</tr>
-					</thead>
+				<table class="table table-striped" [class.loading]="loading"> 
+					<thead> 
+						<tr> 
+							<th>РАЙОН</th> 
+							<th class="text-center">Укажите регионы продаж, категории магазинов, с которыми вы сотрудничаете и минимальную сумму заявки</th> 
+						</tr> 
+					</thead> 
 					<tbody>
 
-						<!-- <tr class="first-select-row">
+						<!-- <tr class="first-select-row"> 
 							<td>
-							</td>
+							</td> 
 							<td>
 								<div class="category-block">
 									<label class="mm-control mm-control--checkbox"> A
@@ -49,15 +59,15 @@
 							    <input type="number" class="mm-input input-sm" />
 								</div>
 
-							</td>
+							</td> 
 						</tr> -->
 
-						<tr *ngFor="let district of region.districts">
+						<tr *ngFor="let district of region.districts"> 
 							<td>
 								<span class="category-district">
 									{{district.district.name}}
 								</span>
-							</td>
+							</td> 
 							<td>
 								<div class="category-block">
 									<label class="mm-control mm-control--checkbox"> A
@@ -65,7 +75,7 @@
 							      		[(ngModel)]="district.category_A"/>
 							      <div class="mm-control__indicator"></div>
 							    </label>
-							    <input type="number" class="mm-input input-sm"
+							    <input type="number" class="mm-input input-sm" 
 							    				[(ngModel)]="district.a_amount"
 							    				maxlength="300" />
 								</div>
@@ -76,8 +86,8 @@
 							      		[(ngModel)]="district.category_B"/>
 							      <div class="mm-control__indicator"></div>
 							    </label>
-							    <input type="number" class="mm-input input-sm"
-							    				[(ngModel)]="district.b_amount"
+							    <input type="number" class="mm-input input-sm" 
+							    				[(ngModel)]="district.b_amount" 
 							    				maxlength="300"/>
 								</div>
 
@@ -87,7 +97,7 @@
 							      		[(ngModel)]="district.category_C"/>
 							      <div class="mm-control__indicator"></div>
 							    </label>
-							    <input type="number" class="mm-input input-sm"
+							    <input type="number" class="mm-input input-sm" 
 							    				[(ngModel)]="district.c_amount"
 							    				maxlength="300" />
 								</div>
@@ -98,7 +108,7 @@
 							      		[(ngModel)]="district.category_W"/>
 							      <div class="mm-control__indicator"></div>
 							    </label>
-							    <input type="number" class="mm-input input-sm"
+							    <input type="number" class="mm-input input-sm" 
 							    				[(ngModel)]="district.w_amount"
 							    				maxlength="300" />
 								</div>
@@ -109,7 +119,7 @@
 							      		[(ngModel)]="district.category_H"/>
 							      <div class="mm-control__indicator"></div>
 							    </label>
-							    <input type="number" class="mm-input input-sm"
+							    <input type="number" class="mm-input input-sm" 
 							    				[(ngModel)]="district.h_amount"
 							    				maxlength="300" />
 								</div>
@@ -120,13 +130,13 @@
 							      		[(ngModel)]="district.category_P"/>
 							      <div class="mm-control__indicator"></div>
 							    </label>
-							    <input type="number" class="mm-input input-sm"
+							    <input type="number" class="mm-input input-sm" 
 							    				[(ngModel)]="district.p_amount"
 							    				maxlength="300" />
 								</div>
-							</td>
-						</tr>
-					</tbody>
+							</td> 
+						</tr> 
+					</tbody> 
 				</table>
 			</div>
 		</div>
@@ -137,8 +147,8 @@
 			<label>+ Добавить область</label>
 			<div class="mm-select">
 				<select [(ngModel)]="selectedRegion" (ngModelChange)="onSelectRegion($event)" class="select-elem">
-					<option
-							*ngFor="let region of regions"
+					<option 
+							*ngFor="let region of regions" 
 							[ngValue]="region"
 							>
 				    <span class="badge">{{region.name}}</span>
@@ -152,5 +162,6 @@
 			<button class="mm-btn mm-btn-primary" (click)="updateCompanyRegions()">Сохранить</button>
 		</div>
 	</div>
-  
+
+	
 </div>

@@ -1,4 +1,13 @@
-<div class="admin-wrapper">
+<div class="steps-wrapper" *ngIf="register">
+	<div class="main-container flex-container flex-around">
+		<div class="flex-vertical">
+			<div class="register-step step-active">Шаг <span class="step-circle">1</span></div>
+			<div class="register-step">Шаг <span class="step-circle">2</span></div>
+		</div>
+	</div>
+</div>
+
+<div class="admin-wrapper" *ngIf="!register">
 	<div class=" main-container flex-container flex-between">
 		<div class="admin-set-block">
 			<label>Администратор</label>
@@ -49,13 +58,21 @@
 							<td>
 								<label>БИН *</label>
 							</td>
-							<td>
+							<td *ngIf="!register">
 								<input type="text"
 											class="mm-input company-name-input"
 											[(ngModel)]="companyProfile.tin"
 											maxlength="12"
 											[disabled]="true"/>
 								<span class="help-block">Нельзя изменять БИН. Если у вас изменились регистрационные данные, обратитесь в техподдержку</span>
+							</td>
+							<td *ngIf="register">
+								<input type="text"
+									pattern="\d*" 
+									class="mm-input company-bin-input" 
+									[(ngModel)]="newCompany.tin" maxlength="12"
+									[ngClass]="{danger: newCompany.tin === '' }"
+									onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"/>
 							</td>
 						</tr>
 						<tr>
@@ -271,7 +288,12 @@
 		</div> -->
 
 		<div class="flex-container flex-center">
-			<button class="mm-btn mm-btn-primary" (click)="updateCompanyProfile()">Сохранить</button>
+			<button class="mm-btn mm-btn-primary" 
+				*ngIf="!register"
+				(click)="updateCompanyProfile()">Сохранить</button>
+			<button class="mm-btn mm-btn-primary" 
+				*ngIf="register"
+				(click)="onClickNextBtn()">Далее</button>
 		</div>
 	</div>
 
