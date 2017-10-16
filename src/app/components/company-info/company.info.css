@@ -155,3 +155,41 @@
 .shop-desc-list{display: inline-flex;justify-content: flex-end; text-align: left;}
 .shop-desc-list ul li {line-height: 15px;}
 .shop-desc-list label{margin-bottom: 0;}
+
+/*tooltip*/
+.admin-wrapper .admin-set-block{
+  position: relative;
+}
+.admin-wrapper .admin-set-block .info-msg{
+  visibility: hidden;
+  width: 320px;
+  background-color: #000;
+  color: #fff;
+  padding: 12px;
+  border-radius: 4px;
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1000;
+  top: 30px;
+  left: 90%;
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 1s;
+}
+.admin-wrapper .admin-set-block .info-msg:after{
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 30px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #000 transparent transparent transparent;
+  transform: rotate(180deg);
+}
+.admin-wrapper .admin-set-block .info{
+  cursor: pointer;
+}
+.admin-wrapper .admin-set-block .info:hover + .info-msg{
+  visibility: visible;
+  opacity: 1;
+}

@@ -49,8 +49,6 @@ export class CompanyInfoComponent implements OnInit {
   private adminFullName = '';
   private isAdmin = false;
 
-  private register: boolean = true;
-
   constructor(
     private auth: AuthService,
     private router: Router,
@@ -64,9 +62,6 @@ export class CompanyInfoComponent implements OnInit {
     this.getRegions();
     this.getCompanyProfile();
     this.getAdmin();
-    if(window.location.pathname === "/company_info"){
-      this.register = false;
-    }
   }
 
   getRegions() {
