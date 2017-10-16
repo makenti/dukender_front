@@ -5,6 +5,7 @@ import { ToastyModule } from 'ng2-toasty';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MomentModule } from 'angular2-moment';
+import { TooltipModule } from 'ngx-tooltip';
 
 // bootstrap modules
 // import { AlertModule } from 'ngx-bootstrap';
@@ -56,7 +57,8 @@ import {
   ProposalService,
   CustomersService,
   AuthManager,
-  CompanyRegionsService
+  CompanyRegionsService,
+  ErrorService
    } from './services/index';
 
 const appRoutes: Routes = [
@@ -137,7 +139,8 @@ const appRoutes: Routes = [
     ),
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
-    MyDatePickerModule
+    MyDatePickerModule,
+    TooltipModule
   ],
   providers: [
     AuthService,
@@ -149,7 +152,8 @@ const appRoutes: Routes = [
     ProposalService,
     CustomersService,
     AuthManager,
-    CompanyRegionsService
+    CompanyRegionsService,
+    ErrorService
   ],
   bootstrap: [AppComponent]
 })
