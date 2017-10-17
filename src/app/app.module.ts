@@ -63,7 +63,8 @@ import {
   CustomersService,
   AuthManager,
   CompanyRegionsService,
-  ErrorService
+  ErrorService,
+  ToolbarService
    } from './services/index';
 
 const appRoutes: Routes = [
@@ -161,7 +162,8 @@ const appRoutes: Routes = [
     CustomersService,
     AuthManager,
     CompanyRegionsService,
-    ErrorService
+    ErrorService,
+    ToolbarService
   ],
   bootstrap: [AppComponent]
 })
