@@ -63,17 +63,18 @@ import {
   CustomersService,
   AuthManager,
   CompanyRegionsService,
-  ErrorService
+  ErrorService,
+  ToolbarService
    } from './services/index';
 
 const appRoutes: Routes = [
   { path: 'landing', component: LandingComponent, canActivate: [AuthManager] },
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
   { path: 'reset', component: ResetPasswordComponent },
-  { path: 'reset_success', component: ResetSuccessComponent, canActivate: [AuthManager] },
+  { path: 'reset_success', component: ResetSuccessComponent },
   { path: 'register-1', component: RegisterComponent },
   { path: 'register-2', component: CompanyCategoryComponent },
-  { path: 'activated', component: ActivateComponent, canActivate: [AuthManager] },
+  { path: 'activated', component: ActivateComponent },
   
   { path: 'user-profile', component: UserProfileComponent, canActivate: [AuthManager] },
   { path: 'home', component: DashboardComponent, canActivate: [AuthManager] },
@@ -161,7 +162,8 @@ const appRoutes: Routes = [
     CustomersService,
     AuthManager,
     CompanyRegionsService,
-    ErrorService
+    ErrorService,
+    ToolbarService
   ],
   bootstrap: [AppComponent]
 })
