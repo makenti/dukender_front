@@ -241,7 +241,7 @@ export class CreatePromotionsComponent implements OnInit {
   }
 
   createPromotion() {
-
+    this.loading = true;
     this.checkPromotionsData();
     this.newPromotion.news = [];
     this.promotionsData.map((item, index) => {
@@ -249,10 +249,13 @@ export class CreatePromotionsComponent implements OnInit {
         this.newPromotion.news.push(item);
       }
     });
-
+    if(this.newPromotion.news.length === 0){
+      this.toastyService.warning('Восстановите минимум один товар');
+    }
     this.promotionService.createPromotion(this.newPromotion)
         .subscribe(
           resp => {
+            this.loading = false;
             if(resp.code === 0) {
               this.toastyService.success('Акция успешно создана!');
               this.router.navigate(['/promotions']);
