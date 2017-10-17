@@ -19,8 +19,13 @@ import { HeaderComponent } from './common/header/header.component';
 import { FooterComponent } from './common/footer/footer.component';
 import { NavbarComponent } from './common/navbar/navbar.component';
 import { NotFoundComponent } from './common/not-found/not-found.component';
+
 import { LandingComponent } from './components/landing/landing.component';
+
 import { AccountComponent } from './components/account/account.component';
+import { ResetSuccessComponent } from './components/auth/reset_success';
+import { ActivateComponent } from './components/auth/activate.component';
+
 import { EmployeesComponent } from './components/employees/employees.component';
 import { ProductsComponent } from './components/products/products.component';
 import { PromotionsComponent } from './components/promotions/promotions.component';
@@ -65,10 +70,11 @@ const appRoutes: Routes = [
   { path: 'landing', component: LandingComponent, canActivate: [AuthManager] },
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
   { path: 'reset', component: ResetPasswordComponent },
-  // { path: 'reset_success', component: ResetSuccessComponent, canActivate: [AuthManager] },
+  { path: 'reset_success', component: ResetSuccessComponent, canActivate: [AuthManager] },
   { path: 'register-1', component: RegisterComponent },
   { path: 'register-2', component: CompanyCategoryComponent },
-  // { path: 'activated', component: ActivateComponent, canActivate: [AuthManager] },
+  { path: 'activated', component: ActivateComponent, canActivate: [AuthManager] },
+  
   { path: 'user-profile', component: UserProfileComponent, canActivate: [AuthManager] },
   { path: 'home', component: DashboardComponent, canActivate: [AuthManager] },
   { path: 'proposals', component: ProposalsComponent, canActivate: [AuthManager] },
@@ -103,6 +109,8 @@ const appRoutes: Routes = [
     NotFoundComponent,
     LandingComponent,
     AccountComponent,
+    ResetSuccessComponent,
+    ActivateComponent,
     CustomersComponent,
     BlackListComponent,
     RelationshipComponent,
