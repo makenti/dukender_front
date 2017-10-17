@@ -13,7 +13,7 @@ import { AuthService, ToolbarService } from '../../services/index';
 })
 export class ResetPasswordComponent implements OnInit {
 
-  @ViewChild('childModal')
+  @ViewChild('modalReset')
   modal:ModalDirective;
 
   resetUser = {
