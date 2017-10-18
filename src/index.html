@@ -19,6 +19,64 @@
   <!-- smart app banner -->
   <meta name="apple-itunes-app" content="app-id=1233980393">
   <!-- smart app banner -->
+  <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async='async'></script>
+  <script>
+    var useragentid = null;
+    var OneSignal = window.OneSignal || [];
+    OneSignal.push(["init", {
+      appId: "bbce45ee-feac-47b0-9a48-43d07a960da8",
+      autoRegister: true, /* Set to true to automatically prompt visitors */
+      subdomainName: 'dukender-web',
+      safari_web_id: 'web.onesignal.auto.477dedc8-8bcf-40fd-b64c-238033111672',
+      httpPermissionRequest: {
+        enable: true
+      },
+      notifyButton: {
+        enable: false /* Set to false to hide */
+      }
+    }]);
+
+    OneSignal.push(function() {
+      OneSignal.getUserId().then(function(userId) {                
+        if(userId == null){
+          console.log('user id not found');
+        }
+        else{
+          useragentid = userId;
+          OneSignal.push(["getNotificationPermission", function(permission){
+          }]);
+          OneSignal.isPushNotificationsEnabled(function(isEnabled) {
+            if (isEnabled){
+              window.localStorage.setItem('push_token', useragentid);
+            }
+            else{
+              console.log('disabled');
+            }
+          });
+        }
+      });
+    });
+    //Secondly this will check when subscription changed
+    OneSignal.push(function() {
+      OneSignal.on('subscriptionChange', function (isSubscribed) {
+        if(isSubscribed==true){
+          OneSignal.getUserId().then(function(userId) {
+            useragentid = userId;
+            window.localStorage.setItem('push_token', useragentid);
+          });
+        }
+        else if(isSubscribed==false){
+          OneSignal.getUserId().then(function(userId) {
+            useragentid = userId;
+            window.localStorage.removeItem('push_token');
+          });
+        }
+        else{
+          console.log('Unable to process the request');
+        }
+      });
+    });
+  </script>
 </head>
 <body>
   
