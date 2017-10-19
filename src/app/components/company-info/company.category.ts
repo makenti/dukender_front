@@ -134,7 +134,6 @@ export class CompanyCategoryComponent implements OnInit {
       let index = this.selectedCategories.indexOf(newCategory.id);
       this.selectedCategories.splice(index, 1);
     }
-    console.log(this.selectedCategories);
   }
 
   updateCompanyCategories() {
@@ -154,7 +153,6 @@ export class CompanyCategoryComponent implements OnInit {
   }
   // for register:
   registerThirdStep() {
-    console.log(this.selectedCategories);
     let data = {
       categories: this.selectedCategories
     };
