@@ -30,7 +30,26 @@
 					<label>Область</label>
 					<div class="flex-container flex-start">
 						<div class="mm-btn mm-btn-primary btn-space-right">{{region.name}}</div>
-						<div class="mm-btn mm-btn-default" (click)="onRemoveRegion(region)">Удалить</div>
+						
+						<div class="mm-btn mm-btn-default btn-space-right" (click)="onRemoveRegion(region)">Удалить</div>
+
+						<div>
+							<label class="mm-control mm-control--checkbox"> 
+								Выделить все
+					      <input type="checkbox"
+					      	(change)="selectAll(region, $event)"/>
+					      <div class="mm-control__indicator"></div>
+					    </label>
+						</div>
+
+						<div class="min_amount">
+							<span class="btn-space-right">Минимальная сумма</span>
+							<input type="number" class="mm-input input-sm btn-space-right" 
+								[(ngModel)]="amount"
+								maxlength="300" />
+							<div class="mm-btn mm-btn-default" (click) = "setForAll(region)">указать для всех</div>
+						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -66,7 +85,12 @@
 							<td>
 								<span class="category-district">
 									{{district.district.name}}
-								</span>
+									<label class="mm-control mm-control--checkbox">
+							      <input type="checkbox"
+										(change)="selectAllDistrict(region, district, $event)"/>
+							      <div class="mm-control__indicator"></div>
+							    </label>
+							  </span>
 							</td> 
 							<td>
 								<div class="category-block">

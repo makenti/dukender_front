@@ -29,6 +29,7 @@ export class CompanyRegionsComponent implements OnInit {
   private loading: boolean = false;
   private register: boolean = true;
   // private checked
+  private amount: any = null;
 
   constructor (
     private regionService: CompanyRegionsService,
@@ -123,7 +124,6 @@ export class CompanyRegionsComponent implements OnInit {
     this.companyService.getCompanyRegions()
         .subscribe(
           data => {
-            // console.log(data);
             if(Object.keys(data).length === 0 && data.constructor === Object) {
               this.getUserCompanyRegion();
             }else {
@@ -190,5 +190,35 @@ export class CompanyRegionsComponent implements OnInit {
           },
           error =>  this.errorMessage = <any>error
         );
+  }
+  selectAll(region, e){
+    console.log(region.districts, e.target.checked);
+    for(let i = 0; i < region.districts.length; i++){
+      region.districts[i].category_A = e.target.checked;
+      region.districts[i].category_B = e.target.checked;
+      region.districts[i].category_C = e.target.checked;
+      region.districts[i].category_H = e.target.checked;
+      region.districts[i].category_P = e.target.checked;
+      region.districts[i].category_W = e.target.checked;
+    }
+  }
+  selectAllDistrict(region, district, e){
+    district.category_A = e.target.checked;
+    district.category_B = e.target.checked;
+    district.category_C = e.target.checked;
+    district.category_H = e.target.checked;
+    district.category_P = e.target.checked;
+    district.category_W = e.target.checked;
+  }
+  setForAll(region){
+    console.log("f");
+    for(let i = 0; i < region.districts.length; i++){
+      region.districts[i].a_amount = this.amount;
+      region.districts[i].b_amount = this.amount;
+      region.districts[i].c_amount = this.amount;
+      region.districts[i].h_amount = this.amount;
+      region.districts[i].p_amount = this.amount;
+      region.districts[i].w_amount = this.amount;
+    }
   }
 }
