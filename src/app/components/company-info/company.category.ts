@@ -17,6 +17,7 @@ export class CompanyCategoryComponent implements OnInit {
 	private categories: any[] = [];
   private companyCategories: any[] = [];
 	private selectedCategories: any[] = [];
+  private staticCategories: any[] = [];
   private loading: boolean = false;
   private register: boolean = true;
 
@@ -32,7 +33,6 @@ export class CompanyCategoryComponent implements OnInit {
   ngOnInit() {
     this.auth.updateUserInfo().subscribe(null, null);
     this.getCategories();
-    this.getCompanyCategories();
     if(window.location.pathname === "/company_category"){
     	this.register = false;
     }
@@ -52,18 +52,56 @@ export class CompanyCategoryComponent implements OnInit {
         .subscribe(
           data => {
             this.companyCategories = data;
+            for(let i = 0; i < this.categories.length; i++){
+                this.categories[i].selected = false;
+            }    
             if(this.companyCategories !== null)
-              this.companyCategories.map((x:any) => this.selectedCategories.push(x.category.id));
+              this.companyCategories.map((x:any) => {
+                this.selectedCategories.push(x.category.id);
+                for(let i = 0; i < this.categories.length; i++){
+                  if(x.category.id === this.categories[i].id){
+                    this.categories[i].selected = true;
+                  }
+                }    
+              });
             this.loading = false;
+            this.getStaticCategories();
           },
           error =>  this.errorMessage = <any>error
         );
   }
-
+  getStaticCategories(){
+    for(let i = 0; i < this.categories.length; i++){
+      this.loading = true;
+      let index = this.categories[i];
+      let data = {
+        category_id: this.categories[i].id
+      };
+      this.companyService.checkCompanyCategory(data)
+        .subscribe(
+          resp => {
+            if(resp !== null) {
+              if(resp) {  
+                this.categories[i].selected = true;
+                this.categories[i].disabled = true;
+                this.staticCategories.push(this.categories[i]);
+              }
+            }else {
+              this.toastyService.error('Error');
+            }
+            this.loading = false;
+          },
+          error =>  this.errorMessage = <any>error
+        );
+    }
+  }
   getCategories() {
     this.categoryService.getCategories()
         .subscribe(
-          categories => this.categories = categories,
+          categories => {
+            this.categories = categories;
+            this.getCompanyCategories();
+          },
           error =>  this.errorMessage = <any>error
         );
   }
@@ -77,32 +115,26 @@ export class CompanyCategoryComponent implements OnInit {
   }
 
   onSelectCategory(newCategory: any, event:any) {
-    if(event.target.checked) {
-      this.selectedCategories.push(newCategory.id);
-    }else {
-      let index = this.selectedCategories.indexOf(newCategory.id);
-      if(index !== -1) {
-        let data = {
-          category_id: newCategory.id
-        };
-        this.companyService.checkCompanyCategory(data)
-            .subscribe(
-              resp => {
-                if(resp !== null) {
-                  if(resp) {
-                    event.target.checked = true;
-                    this.toastyService.warning('вы не можете убрать');
-                  }else {
-                    this.selectedCategories.splice(index, 1);
-                  }
-                }else {
-                  this.toastyService.error('Error');
-                }
-              },
-              error =>  this.errorMessage = <any>error
-            );
+    if(newCategory === 0){
+      this.selectedCategories = [];
+      for(let i = 0; i < this.categories.length; i++){
+        this.categories[i].selected = event.target.checked;
+        if(event.target.checked){
+          this.selectedCategories.push(this.categories[i].id);
+        }
       }
+      if(!event.target.checked){
+        for(let i = 0; i < this.staticCategories.length; i++){
+          this.selectedCategories.push(this.staticCategories[i].id);
+        }
+      }
+    }else if(event.target.checked) {
+      this.selectedCategories.push(newCategory.id);
+    }else if(!event.target.checked) {
+      let index = this.selectedCategories.indexOf(newCategory.id);
+      this.selectedCategories.splice(index, 1);
     }
+    console.log(this.selectedCategories);
   }
 
   updateCompanyCategories() {

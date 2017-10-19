@@ -18,13 +18,24 @@
 
 		<div class="flex-container flex-center reg-cat-wrapper"
 			[class.loading]="loading" *ngIf="categories.length > 0">
+			<div class="mm-checkbox-group">
+				<label class="mm-control mm-control--checkbox">
+					<strong>Выбрать все</strong>
+		      <input type="checkbox"
+	      		name="categories" 
+			      (change)="onSelectCategory(0, $event)"
+			      />
+		      <div class="mm-control__indicator"></div>
+		    </label>
+	    </div>
 			<div class="mm-checkbox-group" 
 				*ngFor="let cat of categories">
 				<label class="mm-control mm-control--checkbox">{{cat.name}}
 		      <input type="checkbox"
 		      		name="categories" 
 				      (change)="onSelectCategory(cat, $event)"
-				      [checked]="existCategory(cat)"/>
+				      [(ngModel)]="cat.disabled?'true':cat.selected"
+				      [disabled]="cat.disabled"/>
 		      <div class="mm-control__indicator"></div>
 		    </label>
 	    </div>
