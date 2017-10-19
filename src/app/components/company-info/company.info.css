@@ -100,9 +100,8 @@
 
 /* step 2 */
 .region-select-block{
-	width: 400px;
 }
-.region-select-block .mm-btn{
+.mm-btn{
 	display: flex;
 	align-items: center;
 	text-align: center;
@@ -155,3 +154,13 @@
 .shop-desc-list{display: inline-flex;justify-content: flex-end; text-align: left;}
 .shop-desc-list ul li {line-height: 15px;}
 .shop-desc-list label{margin-bottom: 0;}
+
+.flex{
+  display: flex;
+}
+.min_amount{
+  display: inline-flex;
+}
+.min_amount .mm-btn{
+  cursor: default;
+}
