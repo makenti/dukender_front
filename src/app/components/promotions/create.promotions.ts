@@ -134,7 +134,7 @@ export class CreatePromotionsComponent implements OnInit {
   this.loading = true;
   let data = {
     category_id: (this.selectedCategory !== null) ? this.selectedCategory : '',
-    limit: 500,
+    limit: 2000,
     search_word: this.searchQuery
   };
   this.productService.getCategoryProducts(data)
