@@ -185,7 +185,7 @@ export class ProposalService {
                     .catch(handleError);
   }
 
-  exportProposal(data: any): Observable<any> {
+  exportProposal(data: any) {
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -195,23 +195,19 @@ export class ProposalService {
     let options = new RequestOptions({ headers: headers, responseType: ResponseContentType.Blob });
     let bodyString = transformRequest(data);
 
-    return this.http.post(serverURL + '/sellers/requests/export_to_excel/', bodyString, options)
-                    .map((res: Response) => {
-        //               var mediaType = 'application/pdf';
-        // var blob = new Blob([response._body], {type: mediaType});
-        // var filename = 'test.pdf';
-        // saveAs(blob, filename);
+    return this.http.post(serverURL + '/sellers/requests/export_to_excel/', bodyString,{
+        headers: headers,
+        responseType: ResponseContentType.Blob
+    }).map(res => new Blob([res],{ type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }));
 
-                        // let blob: Blob = res.blob();
-                        // saveAs(blob, 'test.xls');
-                      // let resp = res.json();
-                      // if (resp.code === 0) {
-                      //   return true;
-                      // }else {
-                      //   return false;
-                      // }
-                    })
-                    .catch(handleError);
+    // this.http.post(serverURL + '/sellers/requests/export_to_excel/', bodyString, options)
+    //           .map((res: Response) => {
+    //             console.log(res);
+    //             var blob = new Blob([data], { type: 'application/vnd.ms-excel' });
+    //             var url= window.URL.createObjectURL(blob);
+    //             window.open(url);
+    //           })
+    //           .catch(handleError);
   }
 
   revokeProposals(data: any): Observable<any> {

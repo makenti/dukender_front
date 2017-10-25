@@ -115,7 +115,7 @@ export class ProposalComponent implements OnInit  {
            }else {
              this.proposal = resp;
              this.proposalItems = [];
-             if((this.proposal.status === 1 || this.proposal.status === 5) && 
+             if((this.proposal.status === 1 || this.proposal.status === 5) &&
                  this.proposal.editor === this.currUser.username) {
                this.mode = 'edit';
              }
@@ -172,7 +172,7 @@ export class ProposalComponent implements OnInit  {
          error =>  this.errorMessage = <any>error
        );
    }
-  
+
   checkChangesFromClient() {
     this.proposal.items.map((p: any) => {
       let changedObj = {
@@ -476,11 +476,15 @@ export class ProposalComponent implements OnInit  {
   	this.proposalService.exportProposal(data)
         .subscribe(
           resp => {
-          	if(resp) {
-          		this.toastyService.success('Успешно экспортирован');
-          	}else {
-          		this.toastyService.error('Ошибка на сервере');
-            }
+						var link=document.createElement('a');
+                link.href=window.URL.createObjectURL(resp);
+                link.download="Report.xlsx";
+                link.click();
+          	// if(resp) {
+          	// 	this.toastyService.success('Успешно экспортирован');
+          	// }else {
+          	// 	this.toastyService.error('Ошибка на сервере');
+            // }
           },
           error =>  this.errorMessage = <any>error
         );
@@ -566,7 +570,7 @@ export class ProposalComponent implements OnInit  {
     // if(!this.checkEditted()) {
       // this.editMode = false;
       // this.accessToExec = true;
-      
+
     // }else {
       // this.editMode = true;
       // this.accessToExec = false;
@@ -616,7 +620,7 @@ export class ProposalComponent implements OnInit  {
     this.customerService.setCustomerStatus(data)
         .subscribe(
           resp => {
-            
+
             if (resp.code === 0)
               this.proposal.relation = (parseInt(this.proposal.relation, 10) + 1) % 2;
           },

@@ -100,6 +100,8 @@ export class ProductsComponent implements OnInit {
     made_in: '',
     price: 0,
     description: '',
+    id_1c: '',
+    part_1c: 0,
     active: true,
     image: '',
     resize: 'false',
@@ -117,6 +119,8 @@ export class ProductsComponent implements OnInit {
     made_in: '',
     price: 0,
     description: '',
+    id_1c: '',
+    part_1c: 0,
     active: true,
     image: '',
     resize: 'false',
@@ -257,7 +261,10 @@ export class ProductsComponent implements OnInit {
             }else {
               if(resp.code === 0) {
                 this.products = resp.price_list;
-                this.timestamp = resp.price_list[this.limit-1].timestamp;
+                if(this.limit < resp.price_list.length)
+                  this.timestamp = resp.price_list[this.limit-1].timestamp;
+                else
+                  this.timestamp = resp.price_list[resp.price_list.length-1].timestamp;
                 this.products.map(p => {
                   p.checked = false;
                   return p;
@@ -392,6 +399,8 @@ export class ProductsComponent implements OnInit {
       made_in: '',
       price: 0,
       description: '',
+      id_1c: '',
+      part_1c: 0,
       active: true,
       image: '',
       resize: 'false',
@@ -432,6 +441,8 @@ export class ProductsComponent implements OnInit {
       made_in: '',
       price: 0,
       description: '',
+      id_1c: '',
+      part_1c: 0,
       active: true,
       image: '',
       resize: 'false',

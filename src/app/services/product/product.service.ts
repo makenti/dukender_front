@@ -54,6 +54,8 @@ export class ProductService {
       formData.append('article', product.article);
       formData.append('made_in', product.made_in);
       formData.append('description', product.description);
+      formData.append('id_1c', product.id_1c);
+      formData.append('part_1c', product.part_1c);
       formData.append('image', (product.image !== undefined && product.image !== null) ? product.image[0]:'');
       formData.append('resize', product.resize);
       formData.append('top', product.top);

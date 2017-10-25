@@ -38,23 +38,23 @@
 			<table class="table table-striped products-table price-l-table" [class.loading]="loading">
 				<thead>
 					<tr>
-						<th class="sortable-field" 
+						<th class="sortable-field"
 						(click)="handleSortField('article')">АРТИКУЛ&nbsp;
-							<i class="fa fa-sort" aria-hidden="true" 
+							<i class="fa fa-sort" aria-hidden="true"
 							*ngIf="sortField==='article'"></i>
 						</th>
-						<th class="sortable-field" 
+						<th class="sortable-field"
 						(click)="handleSortField('name')">ТОВАР&nbsp;
-							<i class="fa fa-sort" aria-hidden="true" 
+							<i class="fa fa-sort" aria-hidden="true"
 							*ngIf="sortField==='name'">
 							</i>
 						</th>
 						<th>ПРОИЗВОДИТЕЛЬ</th>
 						<th>ЕД.ИЗМЕРЕНИЯ</th>
 						<th>ЦЕНА</th>
-						<th class="sortable-field" 
+						<th class="sortable-field"
 						(click)="handleSortField('category')">КАТЕГОРИЯ&nbsp;
-							<i class="fa fa-sort" aria-hidden="true"  
+							<i class="fa fa-sort" aria-hidden="true"
 							*ngIf="sortField==='category'"></i>
 						</th>
 						<th class="text-center">Наличие товара</th>
@@ -195,6 +195,11 @@
 				    	</div>
 						</div>
 						<div class="form-field">
+							<label>1C </label>
+							<input type="text" class="mm-input" maxlength="300"
+								[(ngModel)]="newProduct.id_1c" />
+						</div>
+						<div class="form-field">
 			    		<label>Фото</label>
 			    		<label class="mm-btn mm-btn-link btn-file">
 						    <span>{{productImageText}}</span>
@@ -290,6 +295,11 @@
 								</select>
 								<div class="select__arrow"></div>
 				    	</div>
+						</div>
+						<div class="form-field">
+							<label>1C </label>
+							<input type="text" class="mm-input" maxlength="300"
+								[(ngModel)]="selectedProduct.id_1c" />
 						</div>
 						<div class="form-field">
 			    		<label>Рисунок</label>
