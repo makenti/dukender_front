@@ -120,7 +120,7 @@ export class ProposalComponent implements OnInit  {
                this.mode = 'edit';
              }
              for(var i=0; i < this.currUser.permissions.length; i++){
-               if(this.currUser.permissions[i].permission_type === 0)
+               if(this.currUser.permissions[i].permission_type === 0 && this.proposal.status !== 3)
                  this.mode = 'edit'; //TODO: eshe nuzhno uchest' kompaniu i sotrudnika?
              }
              if(this.proposal.status === 2){
@@ -656,7 +656,12 @@ export class ProposalComponent implements OnInit  {
             }
           </style>
         </head>
-        <body onload='window.print();window.close()'>${printContents}</body>
+        <body onload='window.print();window.close()'>
+          <div style="display:flex; width: 100%; justify-content: center;">
+            <img src="../../assets/images/logo.png" alt="dukender.kz"/>
+          </div>
+          ${printContents}
+        </body>
       </html>`
     );
     popupWin.document.close();

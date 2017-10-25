@@ -56,7 +56,7 @@ export class ProductsComponent implements OnInit {
   public searchQuery: string = '';
   private sortField:string = "";
   private sortOrder:string = "asc";
-  private limit: number = 10;
+  private limit: number = 2000;
   private timestamp: any = '';
 
   private errorMessage: string;
@@ -241,7 +241,7 @@ export class ProductsComponent implements OnInit {
     }
   }
   getCategoryProducts() {
-    this.limit = 10;
+    this.limit = 2000;
     this.loading = true;
     let data = {
       category_id: (this.selectedCategory !== null) ? this.selectedCategory.category.id : '',
