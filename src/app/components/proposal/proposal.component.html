@@ -217,7 +217,6 @@
 							(click)="openSendModal()"
 							*ngIf="proposal.status === 2">На email</button>
 			<button class="mm-btn mm-btn-default btn-space-right"
-							*ngIf="mode === 'read'"
 							(click)="onExportProposal()">Экспорт</button>
 			<button class="mm-btn mm-btn-default"
 							[routerLink]="['/proposals']">Закрыть</button>

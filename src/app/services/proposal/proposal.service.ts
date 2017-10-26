@@ -204,8 +204,7 @@ export class ProposalService {
       let blob = new Blob([res._body], {
               type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-16le"
           });
-      let filename = "proposal"+data.request_id;
-      FileSaver.saveAs(blob, filename);
+      FileSaver.saveAs(blob, "proposal.xls");
       return true;
     });
   }
