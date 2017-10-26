@@ -24,7 +24,9 @@
         "../node_modules/ng2-toasty/style-material.css",
         "styles.css"
       ],
-      "scripts": [],
+      "scripts": [
+        "../node_modules/file-saver/FileSaver.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",

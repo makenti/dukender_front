@@ -216,6 +216,9 @@
 			<button class="mm-btn mm-btn-default btn-space-right"
 							(click)="openSendModal()"
 							*ngIf="proposal.status === 2">На email</button>
+			<button class="mm-btn mm-btn-default btn-space-right"
+							*ngIf="mode === 'read'"
+							(click)="onExportProposal()">Экспорт</button>
 			<button class="mm-btn mm-btn-default"
 							[routerLink]="['/proposals']">Закрыть</button>
 		</div>
@@ -230,11 +233,6 @@
 <!-- 			<button class="mm-btn mm-btn-default"
 							(click)="onExecuteProposal()"
 							[disabled]="!executeMode && proposal.status === 4">Исполнить</button> -->
-		<div *ngIf="mode === 'read'">
-			<button class="mm-btn mm-btn-default btn-space-right"
-							(click)="onExportProposal()">Экспорт</button>
-		</div>
-
 	</div>
 </div>
 

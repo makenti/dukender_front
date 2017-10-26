@@ -6,8 +6,10 @@ import 'rxjs/add/operator/catch';
 import { serverURL } from '../../common/config/server';
 import { transformRequest } from '../../common/config/transformRequest';
 import { handleError } from '../../common/config/errorHandler';
+import * as FileSaver from 'file-saver';
 
 import { AuthService } from '../auth/index';
+declare var saveAs:any;
 
 @Injectable()
 export class ProposalService {
@@ -198,16 +200,14 @@ export class ProposalService {
     return this.http.post(serverURL + '/sellers/requests/export_to_excel/', bodyString,{
         headers: headers,
         responseType: ResponseContentType.Blob
-    }).map(res => new Blob([res],{ type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }));
-
-    // this.http.post(serverURL + '/sellers/requests/export_to_excel/', bodyString, options)
-    //           .map((res: Response) => {
-    //             console.log(res);
-    //             var blob = new Blob([data], { type: 'application/vnd.ms-excel' });
-    //             var url= window.URL.createObjectURL(blob);
-    //             window.open(url);
-    //           })
-    //           .catch(handleError);
+    }).map((res: any) => {
+      let blob = new Blob([res._body], {
+              type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-16le"
+          });
+      let filename = "proposal"+data.request_id;
+      FileSaver.saveAs(blob, filename);
+      return true;
+    });
   }
 
   revokeProposals(data: any): Observable<any> {

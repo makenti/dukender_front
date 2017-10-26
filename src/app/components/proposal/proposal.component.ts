@@ -476,15 +476,15 @@ export class ProposalComponent implements OnInit  {
   	this.proposalService.exportProposal(data)
         .subscribe(
           resp => {
-						var link=document.createElement('a');
-                link.href=window.URL.createObjectURL(resp);
-                link.download="Report.xlsx";
-                link.click();
-          	// if(resp) {
-          	// 	this.toastyService.success('Успешно экспортирован');
-          	// }else {
-          	// 	this.toastyService.error('Ошибка на сервере');
-            // }
+						// var link=document.createElement('a');
+            //     link.href=window.URL.createObjectURL(resp);
+            //     link.download="Report.xls";
+            //     link.click();
+          	if(resp) {
+          		this.toastyService.success('Успешно экспортирован');
+          	}else {
+          		this.toastyService.error('Ошибка на сервере');
+            }
           },
           error =>  this.errorMessage = <any>error
         );
