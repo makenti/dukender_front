@@ -195,16 +195,16 @@ export class ProposalService {
     });
 
     let options = new RequestOptions({ headers: headers, responseType: ResponseContentType.Blob });
-    let bodyString = transformRequest(data);
+    let bodyString = "request_id="+data.request_id;
 
     return this.http.post(serverURL + '/sellers/requests/export_to_excel/', bodyString,{
         headers: headers,
         responseType: ResponseContentType.Blob
     }).map((res: any) => {
       let blob = new Blob([res._body], {
-              type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-16le"
+            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-16le"
           });
-      FileSaver.saveAs(blob, "proposal.xls");
+      FileSaver.saveAs(blob, "proposal"+data.request_id+"_"+data.customer+"_"+data.date+".xls");
       return true;
     });
   }

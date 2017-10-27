@@ -16,10 +16,10 @@
     border-spacing: 0;
 }
 
-.proposal-table thead, 
-.proposal-table tbody, 
-.proposal-table tr, 
-.proposal-table th, 
+.proposal-table thead,
+.proposal-table tbody,
+.proposal-table tr,
+.proposal-table th,
 .proposal-table td { display: block; }
 
 .proposal-table thead tr {
@@ -29,7 +29,7 @@
     width:         calc(100% - 16px);
 }
 
-.proposal-table tr:after { 
+.proposal-table tr:after {
     content: ' ';
     display: block;
     visibility: hidden;
@@ -42,38 +42,38 @@
     overflow-x: hidden;
 }
 
-.proposal-table tbody td, 
+.proposal-table tbody td,
 .proposal-table thead th {
     width: 10%;
     float: left;
 }
 
-.proposal-table tbody td:first-child, 
+.proposal-table tbody td:first-child,
 .proposal-table thead th:first-child {
 	width: 25%;
 }
-.proposal-table tbody td:nth-child(2), 
+.proposal-table tbody td:nth-child(2),
 .proposal-table thead th:nth-child(2),
-.proposal-table tbody td:nth-child(4), 
+.proposal-table tbody td:nth-child(4),
 .proposal-table thead th:nth-child(4),
-.proposal-table tbody td:nth-child(5), 
+.proposal-table tbody td:nth-child(5),
 .proposal-table thead th:nth-child(5) {
     width: 15%;
 }
-.proposal-table tbody td:nth-child(3), 
+.proposal-table tbody td:nth-child(3),
 .proposal-table thead th:nth-child(3) {
     text-align: center;
 }
-.proposal-table tbody td:nth-child(4), 
+.proposal-table tbody td:nth-child(4),
 .proposal-table thead th:nth-child(4),
-.proposal-table tbody td:nth-child(5), 
+.proposal-table tbody td:nth-child(5),
 .proposal-table thead th:nth-child(5),
-.proposal-table tbody td:nth-child(6), 
+.proposal-table tbody td:nth-child(6),
 .proposal-table thead th:nth-child(6) {
     text-align: right;
 }
 
-.proposal-table tbody td:last-child, 
+.proposal-table tbody td:last-child,
 .proposal-table thead th:last-child {
     width: 10%;
 }
@@ -143,10 +143,10 @@ a.ban-customer-link{
     color: #fff;
     font-style: normal;
 }
-
+.btns-container .mm-btn{margin-bottom: 5px;}
 .set-status-btn{
     text-decoration: underline;
-    color: #337ab7; 
+    color: #337ab7;
     cursor: pointer;
 }
 .customer-new-status {

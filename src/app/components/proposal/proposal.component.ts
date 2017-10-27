@@ -471,15 +471,13 @@ export class ProposalComponent implements OnInit  {
 
   onExportProposal() {
   	let data = {
-  		request_id: this.id
+  		request_id: this.id,
+			customer: this.proposal.customer.name,
+			date: this.proposalDate
   	};
   	this.proposalService.exportProposal(data)
         .subscribe(
           resp => {
-						// var link=document.createElement('a');
-            //     link.href=window.URL.createObjectURL(resp);
-            //     link.download="Report.xls";
-            //     link.click();
           	if(resp) {
           		this.toastyService.success('Успешно экспортирован');
           	}else {
