@@ -115,14 +115,15 @@ export class ProposalComponent implements OnInit  {
            }else {
              this.proposal = resp;
              this.proposalItems = [];
+						 console.log(this.proposal.status);
              if((this.proposal.status === 1 || this.proposal.status === 5) &&
                  this.proposal.editor === this.currUser.username) {
                this.mode = 'edit';
              }
-             for(var i=0; i < this.currUser.permissions.length; i++){
-               if(this.currUser.permissions[i].permission_type === 0 && this.proposal.status !== 3)
-                 this.mode = 'edit'; //TODO: eshe nuzhno uchest' kompaniu i sotrudnika?
-             }
+            //  for(var i=0; i < this.currUser.permissions.length; i++){
+            //    if(this.currUser.permissions[i].permission_type === 0 && this.proposal.status !== 3)
+            //      this.mode = 'edit'; //TODO: eshe nuzhno uchest' kompaniu i sotrudnika?
+            //  }
              if(this.proposal.status === 2){
                this.editMode = false;
              }

@@ -206,11 +206,9 @@
 							(click)="onExecuteProposal()"
 							*ngIf="mode === 'edit'"
 							[disabled]="!editMode">Исполнить</button>
-			<button class="mm-btn mm-btn-default "
+			<button class="mm-btn mm-btn-danger "
 							(click)="modalDeleteProposal.show()"
 							*ngIf="mode === 'edit'">Удалить заявку</button>
-		</div>
-		<div *ngIf="proposal !== null">
 			<button class="mm-btn mm-btn-default btn-space-right"
 							(click)="onPrintProposal()">Печать</button>
 			<button class="mm-btn mm-btn-default btn-space-right"

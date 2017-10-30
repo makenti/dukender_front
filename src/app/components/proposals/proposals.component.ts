@@ -7,6 +7,8 @@ import {
 		  ProposalService,
       CompanyProfileService } from '../../services/index';
 
+import { proposalLimit } from '../../common/config/limits';
+
 @Component({
   selector: 'app-proposals',
   templateUrl: './proposals.component.html',
@@ -56,6 +58,7 @@ export class ProposalsComponent implements OnInit {
   		status: filter,
 			timestamp: '',
 			customer_id: '',
+			limit: proposalLimit,
       district_ids: this.selectedDistricts
   	};
   	this.proposalService.getProposals(data)
@@ -130,7 +133,7 @@ export class ProposalsComponent implements OnInit {
 
   showProposal(item: any) {
     let curUserEntry = (this.currUser.entry !== undefined && this.currUser.entry !== null)?this.currUser.entry: null;
-    if((curUserEntry !== null && curUserEntry.profile_type === 1) ||
+    if(curUserEntry !== null ||
         item.editor === this.currUser.username && item.status !== 0 ||
         item.status === 0) {
       this.router.navigate(['/proposal', item.request_id]);

@@ -10,6 +10,7 @@ import {
   PromotionService,
   ErrorService } from '../../services/index';
 import { ToastyService } from 'ng2-toasty';
+import { priceLimit } from '../../common/config/limits';
 // import { ImageCropperComponent, CropperSettings, Bounds } from 'ng2-img-cropper';
 // import { serverURL } from '../../shared/config/server';
 
@@ -56,7 +57,7 @@ export class ProductsComponent implements OnInit {
   public searchQuery: string = '';
   private sortField:string = "";
   private sortOrder:string = "asc";
-  private limit: number = 2000;
+  private limit: number = priceLimit;
   private timestamp: any = '';
 
   private errorMessage: string;
@@ -245,7 +246,6 @@ export class ProductsComponent implements OnInit {
     }
   }
   getCategoryProducts() {
-    this.limit = 2000;
     this.loading = true;
     let data = {
       category_id: (this.selectedCategory !== null) ? this.selectedCategory.category.id : '',
