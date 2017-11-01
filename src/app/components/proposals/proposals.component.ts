@@ -27,7 +27,10 @@ export class ProposalsComponent implements OnInit {
   private companyRegions: any[] = [];
   private loading: boolean = false;
   private proposalStats: any[] = [];
-
+  private searchQuery: string = '';
+  private sortField:string = "";
+  private sortOrder:string = "asc";
+  
   constructor(
     private auth: AuthService,
   	private router: Router,
@@ -141,5 +144,13 @@ export class ProposalsComponent implements OnInit {
       this.toastyService.warning('Вы не можете обработать эту заявку');
     }
   }
-
+  handleSortField(field: string){
+    if(field === this.sortField){
+      this.sortOrder = this.sortOrder === "asc"?"desc":"asc";
+    }
+    else{
+      this.sortField = field;
+      this.sortOrder = "asc";
+    }
+  }
 }

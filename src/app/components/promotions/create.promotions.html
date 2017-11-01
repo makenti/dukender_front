@@ -139,7 +139,7 @@
 	    				</tr> 
 	    			</thead> 
 	    			<tbody> 
-	    				<tr *ngFor="let product of products | searchDeep: 'name': searchQuery"> 
+	    				<tr *ngFor="let product of products | searchPipe: 'name': searchQuery"> 
 	    					<td>{{product.article}}</td> 
 	    					<td>{{product.name}}</td> 
 	    					<td>{{product.made_in}}</td> 
