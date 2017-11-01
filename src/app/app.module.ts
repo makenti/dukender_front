@@ -9,9 +9,9 @@ import { TooltipModule } from 'ngx-tooltip';
 
 // bootstrap modules
 // import { AlertModule } from 'ngx-bootstrap';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { MyDatePickerModule } from 'mydatepicker';
+import { Daterangepicker } from 'ng2-daterangepicker';
 
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -146,9 +146,9 @@ const appRoutes: Routes = [
       appRoutes,
       { enableTracing: true }
     ),
-    BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
     MyDatePickerModule,
+    Daterangepicker,
     TooltipModule
   ],
   providers: [

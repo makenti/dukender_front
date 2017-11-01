@@ -9,7 +9,7 @@ import 'moment/min/locales';
 moment.locale('ru-ru');
 
 import { ToastyService } from 'ng2-toasty';
-// import { DaterangepickerConfig } from 'ng2-daterangepicker';
+import { DaterangepickerConfig } from 'ng2-daterangepicker';
 
 /**
  * This class represents the lazy loaded promotionsComponent.
@@ -60,17 +60,17 @@ export class CreatePromotionsComponent implements OnInit {
     private toastyService: ToastyService,
     private companyService: CompanyProfileService,
     private productService: ProductService,
-    // private daterangepickerOptions: DaterangepickerConfig
+    private daterangepickerOptions: DaterangepickerConfig
     ) {
-    // this.daterangepickerOptions.settings = {
-    //   locale: {
-    //     format: 'DD.MM.YYYY',
-    //     cancelLabel: 'Отмена',
-    //     applyLabel: 'Ок',
-    //   },
-    //   minDate: moment(),
-    //   alwaysShowCalendars: false,
-    // };
+    this.daterangepickerOptions.settings = {
+      locale: {
+        format: 'DD.MM.YYYY',
+        cancelLabel: 'Отмена',
+        applyLabel: 'Ок',
+      },
+      minDate: moment(),
+      alwaysShowCalendars: false,
+    };
   }
 
   ngOnInit() {
