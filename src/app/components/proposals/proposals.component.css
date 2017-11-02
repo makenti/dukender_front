@@ -87,7 +87,10 @@
 .proposals-table thead th:nth-child(9) {
     width: 10%;
 }
-
+table thead th.sortable-field{
+  cursor: pointer;
+  color: #337ab7;
+}
 /*table thead,
 table tbody {
   display: table;
