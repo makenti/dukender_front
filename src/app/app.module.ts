@@ -49,7 +49,6 @@ import { BlackListComponent } from './components/customers/black_list.component'
 import { RelationshipComponent } from './components/customers/relationship.component';
 
 import { SearchPipe } from './pipes/search.pipe';
-import { SearchProposalPipe } from './pipes/searchProposal.pipe';
 import { SearchDeepPipe } from './pipes/searchDeep.pipe';
 import { SortPipe } from './pipes/sort.pipe';
 
@@ -136,7 +135,6 @@ const appRoutes: Routes = [
     SearchPipe,
     SortPipe,
     SearchDeepPipe,
-    SearchProposalPipe
   ],
   imports: [
     BrowserModule,

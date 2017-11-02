@@ -73,6 +73,10 @@ export class ProposalsComponent implements OnInit {
             }else {
             	if(resp.code === 0) {
             		this.proposals = resp.requests;
+                for(let i = 0; i < this.proposals.length; i++){
+                  this.proposals[i].customer_name = this.proposals[i].customer.name;
+                  this.proposals[i].customer_district = this.proposals[i].customer.district.name;
+                }
                 if(resp.request_stats !== undefined)
                   this.proposalStats = resp.request_stats;
             	}
