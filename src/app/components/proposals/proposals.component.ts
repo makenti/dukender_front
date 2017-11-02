@@ -31,6 +31,8 @@ export class ProposalsComponent implements OnInit {
   private sortField:string = "";
   private sortOrder:string = "asc";
   
+  private filter: any;
+
   constructor(
     private auth: AuthService,
   	private router: Router,
@@ -40,10 +42,11 @@ export class ProposalsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    var id = window.localStorage.getItem('selectedProposalType');
+    let id = this.proposalService.getFilter().selected;
     if(id!==null){
       this.getProposals(id);
     }
+    this.getLocalFilter();
     this.auth.updateUserInfo().subscribe(
       resp => {
         if(resp) {
@@ -52,13 +55,18 @@ export class ProposalsComponent implements OnInit {
         }
       }, null);
   }
-
-  getProposals(filter: any) {
-  	this.selectedFilter = filter;
+  getLocalFilter(){
+    let id = this.selectedFilter === ''? 7 : this.selectedFilter;
+    this.sortField = this.proposalService.getFilter().fields[id].field;
+    this.sortOrder = this.proposalService.getFilter().fields[id].order;
+    console.log(this.sortField, this.sortOrder);
+  }
+  getProposals(id: any) {
+  	this.selectedFilter = id;
     this.proposals = [];
     this.loading = true;
   	let data = {
-  		status: filter,
+  		status: id,
 			timestamp: '',
 			customer_id: '',
 			limit: proposalLimit,
@@ -85,7 +93,8 @@ export class ProposalsComponent implements OnInit {
           },
           error =>  this.errorMessage = <any>error
         );
-    window.localStorage.setItem('selectedProposalType', filter);
+    this.proposalService.setSelectedFilter(id);
+    this.getLocalFilter();
   }
 
   getCompanyRegions() {
@@ -156,5 +165,6 @@ export class ProposalsComponent implements OnInit {
       this.sortField = field;
       this.sortOrder = "asc";
     }
+    this.proposalService.setSortFilter(this.selectedFilter, field, this.sortOrder);
   }
 }

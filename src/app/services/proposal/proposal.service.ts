@@ -14,10 +14,27 @@ declare var saveAs:any;
 @Injectable()
 export class ProposalService {
 
+  private filter = {
+    selected: '',
+    fields: 
+    [ { field: '', order: ''},    
+      { field: '', order: ''},    
+      { field: '', order: ''},    
+      { field: '', order: ''},    
+      { field: '', order: ''},    
+      { field: '', order: ''},    
+      { field: '', order: ''},    
+      { field: '', order: ''},]
+  };
+
   constructor(
     private http: Http,
     private auth: AuthService
-  ) { }
+  ) {
+    let filter = JSON.parse(window.localStorage.getItem('filter'));
+    if(filter) 
+      this.setFilter(filter);
+  }
 
   getProposals(data: any): Observable<any> {
     let headers = new Headers({
@@ -229,5 +246,26 @@ export class ProposalService {
                     })
                     .catch(handleError);
   }
+  setFilter(filter: any){
+    this.filter = filter;
+    window.localStorage.setItem('filter', JSON.stringify(filter));
+  }
+  setSortFilter(filterId, fieldId, order){
+    filterId = filterId ==='' ? 7:filterId;
+    this.filter.fields[filterId].field = fieldId;
+    this.filter.fields[filterId].order = order;
+    this.setFilter(this.filter);
+  }
+  setSelectedFilter(id: any){
+    this.filter.selected = id;
+    this.setFilter(this.filter);
+  }
 
+  getFilter(){
+    let filter = JSON.parse(window.localStorage.getItem('filter'));
+    console.log(filter);
+    if(filter)
+      return filter;
+    return null;
+  }
 }
