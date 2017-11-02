@@ -84,7 +84,18 @@ export class ProposalsComponent implements OnInit {
                 for(let i = 0; i < this.proposals.length; i++){
                   this.proposals[i].customer_name = this.proposals[i].customer.name;
                   this.proposals[i].customer_district = this.proposals[i].customer.district.name;
+                    console.log(this.proposals[i].items);
+                  this.proposals[i].tooltip = "";
+                  for(let j = 0; j < this.proposals[i].items.length; j++){
+                    if(j == 3){
+                      this.proposals[i].tooltip += "...";
+                      break;
+                    }
+                    let k = j + 1;
+                    this.proposals[i].tooltip += k + ". " + this.proposals[i].items[j]+" \r\n";
+                  }
                 }
+
                 if(resp.request_stats !== undefined)
                   this.proposalStats = resp.request_stats;
             	}

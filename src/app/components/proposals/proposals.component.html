@@ -120,7 +120,7 @@
 			</tr>
 			<tr *ngFor="let item of proposals | searchPipe: 'customer_name': searchQuery | sortBy: sortField : sortOrder" 
 				(click)="showProposal(item)"
-				[tooltip]="item.customer_name" tooltipPlacement="bottom">
+				[tooltip]="item.tooltip" tooltipPlacement="bottom">
 				<td>{{item.request_id}}</td>
 				<td>{{ ((item.create_time/1000000) | amFromUnix) | amDateFormat:'DD-MM-YYYY' }}</td>
 				<td><i class="approved-icon" title="проверен Dukender"
