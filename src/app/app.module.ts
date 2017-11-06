@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MomentModule } from 'angular2-moment';
 import { TooltipModule } from 'ngx-tooltip';
+import { ImageCropperComponent } from 'ng2-img-cropper';
 
 // bootstrap modules
 // import { AlertModule } from 'ngx-bootstrap';
@@ -52,6 +53,7 @@ import { RelationshipComponent } from './components/customers/relationship.compo
 import { SearchPipe } from './pipes/search.pipe';
 import { SearchDeepPipe } from './pipes/searchDeep.pipe';
 import { SortPipe } from './pipes/sort.pipe';
+
 
 import {
   AuthService,
@@ -136,6 +138,7 @@ const appRoutes: Routes = [
     SearchPipe,
     SortPipe,
     SearchDeepPipe,
+    ImageCropperComponent
   ],
   imports: [
     BrowserModule,
