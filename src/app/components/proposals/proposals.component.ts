@@ -33,6 +33,16 @@ export class ProposalsComponent implements OnInit {
   
   private filter: any;
 
+  statuses = [
+    {id: 0, status: "Входящие"},
+    {id: 1, status: "В работе"},
+    {id: 2, status: "В доставке"},
+    {id: 3, status: "Исполненные"},
+    {id: 4, status: "Согласование с магазином"},
+    {id: 5, status: "Согласование с поставщиком"},
+    {id: 6, status: "Отмененные"},
+    {id: "", status: "Все"},
+  ]
   constructor(
     private auth: AuthService,
   	private router: Router,
@@ -183,9 +193,12 @@ export class ProposalsComponent implements OnInit {
     this.proposalService.setSortFilter(this.selectedFilter, field, this.sortOrder);
   }
   downloadExcel(){
+    let id = this.selectedFilter ==="" ? 7 : this.selectedFilter;
     let data = {
-      status: this.selectedFilter
+      status: this.selectedFilter,
+      status_name: this.statuses[id].status
     };
+    console.log(data.status_name);
     this.proposalService.downloadExcel(data)
         .subscribe(
           resp => {
