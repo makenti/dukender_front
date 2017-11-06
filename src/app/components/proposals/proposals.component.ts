@@ -8,6 +8,7 @@ import {
       CompanyProfileService } from '../../services/index';
 
 import { proposalLimit } from '../../common/config/limits';
+// import { SortPipe} from '../../pipes/sort.pipe';
 
 @Component({
   selector: 'app-proposals',
@@ -32,7 +33,18 @@ export class ProposalsComponent implements OnInit {
   private sortOrder:string = "asc";
   
   private filter: any;
+  private last_timestamp: string = "";
 
+  statuses = [
+    {id: 0, status: "Входящие"},
+    {id: 1, status: "В работе"},
+    {id: 2, status: "В доставке"},
+    {id: 3, status: "Исполненные"},
+    {id: 4, status: "Согласование с магазином"},
+    {id: 5, status: "Согласование с поставщиком"},
+    {id: 6, status: "Отмененные"},
+    {id: "", status: "Все"},
+  ]
   constructor(
     private auth: AuthService,
   	private router: Router,
@@ -61,6 +73,24 @@ export class ProposalsComponent implements OnInit {
     let id = this.selectedFilter === ''? 7 : this.selectedFilter;
     this.sortField = this.proposalService.getFilter().fields[id].field;
     this.sortOrder = this.proposalService.getFilter().fields[id].order;
+  }
+  downloadExcel(){
+    let id = this.selectedFilter ==="" ? 7 : this.selectedFilter;
+    let data = {
+      status: this.selectedFilter,
+      status_name: this.statuses[id].status
+    };
+    this.proposalService.downloadExcel(data)
+        .subscribe(
+          resp => {
+            if(resp) {
+              this.toastyService.success('Успешно экспортирован');
+            }else {
+              this.toastyService.error('Ошибка на сервере');
+            }
+          },
+          error =>  this.errorMessage = <any>error
+        );
   }
   getProposals(id: any) {
   	this.selectedFilter = id;
@@ -99,7 +129,10 @@ export class ProposalsComponent implements OnInit {
                     this.proposals[i].tooltip += k + ". " + this.proposals[i].items[j]+" \r\n";
                   }
                 }
-
+                if(resp.requests !== undefined && 
+                  resp.requests !== null && 
+                  resp.requests.length !==0)
+                  this.last_timestamp = resp.requests[resp.requests.length - 1].timestamp;
                 if(resp.request_stats !== undefined)
                   this.proposalStats = resp.request_stats;
             	}
@@ -111,7 +144,66 @@ export class ProposalsComponent implements OnInit {
     this.proposalService.setSelectedFilter(id);
     this.getLocalFilter();
   }
+  getProposalsMore() {
+    let data = {
+      status: this.selectedFilter,
+      timestamp: this.last_timestamp,
+      customer_id: '',
+      limit: proposalLimit,
+      district_ids: this.selectedDistricts
+    };
+    this.proposalService.getProposals(data)
+        .subscribe(
+          resp => {
+            this.modalCheckDistricts.hide();
+            if(resp !== null) {
+              if(resp.code === 0) {
+                if(resp.requests.length === 0|| 
+                  resp.requests === null ||
+                  resp.requests === undefined)
+                  return;
 
+                for(let i = 0; i < resp.requests.length; i++){
+                  let exist:boolean = false
+                  for(let j = 0; j < this.proposals.length; j++){
+                    if(resp.requests[i].timestamp === this.proposals[j].timestamp)
+                      exist = true;
+                  }  
+                  if(!exist)
+                    this.proposals.push(resp.requests[i]);                    
+                }
+                // this.proposals = new SortPipe().transform(this.proposals, this.sortField, this.sortOrder); //this is for sort dynamically
+
+                for(let i = 0; i < this.proposals.length; i++){
+                  this.proposals[i].customer_name = this.proposals[i].customer.name;
+                  this.proposals[i].customer_district = this.proposals[i].customer.district.name;
+                  this.proposals[i].tooltip = "";
+                  if(this.proposals[i].items === null || this.proposals[i].items === undefined){
+                    this.proposals[i].tooltip = "...";
+                    break;
+                  }
+                  for(let j = 0; j < this.proposals[i].items.length; j++){
+                    if(j == 3){
+                      this.proposals[i].tooltip += "...";
+                      break;
+                    }
+                    let k = j + 1;
+                    this.proposals[i].tooltip += k + ". " + this.proposals[i].items[j]+" \r\n";
+                  }
+                }
+                if(resp.requests !== undefined && 
+                  resp.requests !== null && 
+                  resp.requests.length !==0)
+                  this.last_timestamp = resp.requests[resp.requests.length - 1].timestamp;
+
+                if(resp.request_stats !== undefined)
+                  this.proposalStats = resp.request_stats;
+              }
+            }
+          },
+          error =>  this.errorMessage = <any>error
+        );
+  }
   getCompanyRegions() {
     this.companyService.getCompanyRegions()
         .subscribe(
@@ -182,20 +274,11 @@ export class ProposalsComponent implements OnInit {
     }
     this.proposalService.setSortFilter(this.selectedFilter, field, this.sortOrder);
   }
-  downloadExcel(){
-    let data = {
-      status: this.selectedFilter
-    };
-    this.proposalService.downloadExcel(data)
-        .subscribe(
-          resp => {
-            if(resp) {
-              this.toastyService.success('Успешно экспортирован');
-            }else {
-              this.toastyService.error('Ошибка на сервере');
-            }
-          },
-          error =>  this.errorMessage = <any>error
-        );
+
+  onScroll (e: any) {
+    if(e.target.scrollHeight <= e.target.scrollTop + e.srcElement.clientHeight){
+      this.getProposalsMore();
+    }    
   }
+
 }

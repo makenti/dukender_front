@@ -284,9 +284,9 @@ export class ProposalService {
         responseType: ResponseContentType.Blob
     }).map((res: any) => {
       let blob = new Blob([res._body], {
-            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-16le"
-          });
-      FileSaver.saveAs(blob, "proposal"+data.request_id+"_"+data.customer+"_"+data.date+".xls");
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-16le"
+      });
+      FileSaver.saveAs(blob, "Заявки-" + data.status_name + ".xls");
       return true;
     });
   }
