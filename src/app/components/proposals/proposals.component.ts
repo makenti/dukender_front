@@ -182,4 +182,20 @@ export class ProposalsComponent implements OnInit {
     }
     this.proposalService.setSortFilter(this.selectedFilter, field, this.sortOrder);
   }
+  downloadExcel(){
+    let data = {
+      status: this.selectedFilter
+    };
+    this.proposalService.downloadExcel(data)
+        .subscribe(
+          resp => {
+            if(resp) {
+              this.toastyService.success('Успешно экспортирован');
+            }else {
+              this.toastyService.error('Ошибка на сервере');
+            }
+          },
+          error =>  this.errorMessage = <any>error
+        );
+  }
 }
