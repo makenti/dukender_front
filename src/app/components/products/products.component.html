@@ -239,7 +239,7 @@
 						(onCrop)="cropped($event)"></img-cropper>
 					</span>
 					<span class="result rounded" *ngIf="nProductImage.image">
-				    <img style="position: absolute; top: 10px;" [src]="nProductImage.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
+				    <img style="position: absolute; top: -90px; right: 100px;" [src]="nProductImage.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
 					</span>
 					<span class="delete-img-btn"
 						(click)="deleteProductImage()"
@@ -353,7 +353,7 @@
 						(onCrop)="cropped($event)"></img-cropper>
 					</span>
 					<span class="result rounded" *ngIf="sProductImage.image">
-				    <img style="position: absolute; top: 10px;" [src]="sProductImage.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
+				    <img style="position: absolute; top: -90px; right: 100px;" [src]="sProductImage.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
 					</span>
 					<span class="delete-img-btn"
 						(click)="deleteProductImage()"
