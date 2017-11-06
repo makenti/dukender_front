@@ -130,7 +130,12 @@ export class ProductsComponent implements OnInit {
     width: 0,
     height: 0
   };
-
+  private cropPosition = {
+    x: 0,
+    y: 0,
+    w: 200,
+    h: 200
+  }
   constructor (
     private categoryService: CategoryService,
     private companyService: CompanyProfileService,
@@ -152,7 +157,7 @@ export class ProductsComponent implements OnInit {
     this.cropperSettings.noFileInput = true;
     this.cropperSettings.croppedWidth = 100;
     this.cropperSettings.croppedHeight = 100;
-    this.cropperSettings.canvasWidth = 400;
+    this.cropperSettings.canvasWidth = 600;
     this.cropperSettings.canvasHeight = 300;
     this.cropperSettings.minWidth = 200;
     this.cropperSettings.minHeight = 200;
@@ -170,6 +175,14 @@ export class ProductsComponent implements OnInit {
     
     this.croppedLeft = bounds.left;
     this.croppedTop = bounds.top;
+
+    //second method:
+    // this.croppedHeight = this.cropPosition.h;
+    // this.croppedWidth = this.cropPosition.w;
+    
+    // this.croppedLeft = this.cropPosition.x;
+    // this.croppedTop = this.cropPosition.y;
+    // console.log(this.cropPosition)
   }
 
   onSelectImage(event:any) {
@@ -506,7 +519,7 @@ export class ProductsComponent implements OnInit {
     this.newProduct.image = null;
     this.imageSelected = false;
   }
-
+  
   onUpdateProduct() {
     this.addLoading = true;
     if(this.currentImage.height/this.currentImage.width < 0.75){
