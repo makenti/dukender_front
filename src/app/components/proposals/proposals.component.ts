@@ -42,11 +42,13 @@ export class ProposalsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    let id = this.proposalService.getFilter().selected;
-    if(id!==null){
-      this.getProposals(id);
+    if(this.proposalService.getFilter()){
+      let id = this.proposalService.getFilter().selected;
+      if(id!==null){
+        this.getProposals(id);
+      }
+      this.getLocalFilter();
     }
-    this.getLocalFilter();
     this.auth.updateUserInfo().subscribe(
       resp => {
         if(resp) {
@@ -59,7 +61,6 @@ export class ProposalsComponent implements OnInit {
     let id = this.selectedFilter === ''? 7 : this.selectedFilter;
     this.sortField = this.proposalService.getFilter().fields[id].field;
     this.sortOrder = this.proposalService.getFilter().fields[id].order;
-    console.log(this.sortField, this.sortOrder);
   }
   getProposals(id: any) {
   	this.selectedFilter = id;
@@ -84,8 +85,11 @@ export class ProposalsComponent implements OnInit {
                 for(let i = 0; i < this.proposals.length; i++){
                   this.proposals[i].customer_name = this.proposals[i].customer.name;
                   this.proposals[i].customer_district = this.proposals[i].customer.district.name;
-                    console.log(this.proposals[i].items);
                   this.proposals[i].tooltip = "";
+                  if(this.proposals[i].items === null || this.proposals[i].items === undefined){
+                    this.proposals[i].tooltip = "...";
+                    break;
+                  }
                   for(let j = 0; j < this.proposals[i].items.length; j++){
                     if(j == 3){
                       this.proposals[i].tooltip += "...";
