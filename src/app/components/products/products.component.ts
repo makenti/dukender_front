@@ -185,8 +185,6 @@ export class ProductsComponent implements OnInit {
         image.src = loadEvent.target.result;
         that.cropper.setImage(image);
         that.loadingImage = false;
-        console.log(image)
-        console.log(image.src)
       };
       this.newProduct.image = event.srcElement.files;
     }else if(this.processMode === 'edit') {
@@ -425,7 +423,6 @@ export class ProductsComponent implements OnInit {
       this.selectedProduct = product;
       if(product.image !== null) {
         this.selectedImage = serverURL + product.image;
-        console.log(this.selectedImage);
       }
       this.processMode = 'edit';
       this.modalEditProduct.show();
