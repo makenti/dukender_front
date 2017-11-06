@@ -8,6 +8,7 @@ import {
       CompanyProfileService } from '../../services/index';
 
 import { proposalLimit } from '../../common/config/limits';
+// import { SortPipe} from '../../pipes/sort.pipe';
 
 @Component({
   selector: 'app-proposals',
@@ -79,7 +80,6 @@ export class ProposalsComponent implements OnInit {
       status: this.selectedFilter,
       status_name: this.statuses[id].status
     };
-    console.log(data.status_name);
     this.proposalService.downloadExcel(data)
         .subscribe(
           resp => {
@@ -129,7 +129,10 @@ export class ProposalsComponent implements OnInit {
                     this.proposals[i].tooltip += k + ". " + this.proposals[i].items[j]+" \r\n";
                   }
                 }
-                this.last_timestamp = resp.requests[resp.requests.length - 1].timestamp;
+                if(resp.requests !== undefined && 
+                  resp.requests !== null && 
+                  resp.requests.length !==0)
+                  this.last_timestamp = resp.requests[resp.requests.length - 1].timestamp;
                 if(resp.request_stats !== undefined)
                   this.proposalStats = resp.request_stats;
             	}
@@ -155,6 +158,11 @@ export class ProposalsComponent implements OnInit {
             this.modalCheckDistricts.hide();
             if(resp !== null) {
               if(resp.code === 0) {
+                if(resp.requests.length === 0|| 
+                  resp.requests === null ||
+                  resp.requests === undefined)
+                  return;
+
                 for(let i = 0; i < resp.requests.length; i++){
                   let exist:boolean = false
                   for(let j = 0; j < this.proposals.length; j++){
@@ -164,6 +172,7 @@ export class ProposalsComponent implements OnInit {
                   if(!exist)
                     this.proposals.push(resp.requests[i]);                    
                 }
+                // this.proposals = new SortPipe().transform(this.proposals, this.sortField, this.sortOrder); //this is for sort dynamically
 
                 for(let i = 0; i < this.proposals.length; i++){
                   this.proposals[i].customer_name = this.proposals[i].customer.name;
@@ -182,7 +191,10 @@ export class ProposalsComponent implements OnInit {
                     this.proposals[i].tooltip += k + ". " + this.proposals[i].items[j]+" \r\n";
                   }
                 }
-                this.last_timestamp = resp.requests[resp.requests.length - 1].timestamp;
+                if(resp.requests !== undefined && 
+                  resp.requests !== null && 
+                  resp.requests.length !==0)
+                  this.last_timestamp = resp.requests[resp.requests.length - 1].timestamp;
 
                 if(resp.request_stats !== undefined)
                   this.proposalStats = resp.request_stats;
