@@ -235,11 +235,11 @@
 				</div>
 				<div class="product-preview-container" *ngIf="imageSelected">
 					<span *ngIf="imageSelected">
-						<!-- <img-cropper #cropper [image]="nProductImage" [settings]="cropperSettings"
-						(onCrop)="cropped($event)"></img-cropper> -->
+						<img-cropper #cropper [image]="nProductImage" [settings]="cropperSettings"
+						(onCrop)="cropped($event)"></img-cropper>
 					</span>
 					<span class="result rounded" *ngIf="nProductImage.image">
-				    <!-- <img style="position: absolute; top: 10px;" [src]="nProductImage.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight"> -->
+				    <img style="position: absolute; top: 10px;" [src]="nProductImage.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
 					</span>
 					<span class="delete-img-btn"
 						(click)="deleteProductImage()"
@@ -247,6 +247,7 @@
 						<i class="fa fa-times"
 							aria-hidden="true"></i>
 					</span>
+					
 				</div>
 				<div class="flex-container flex-center">
 					<button class="mm-btn mm-btn-primary"
@@ -348,11 +349,11 @@
 				</div>
 				<div class="product-preview-container" *ngIf="imageSelected">
 					<span>
-						<!-- <img-cropper #cropper2 [image]="sProductImage" [settings]="cropperSettings"
-						(onCrop)="cropped($event)"></img-cropper> -->
+						<img-cropper #cropper2 [image]="sProductImage" [settings]="cropperSettings"
+						(onCrop)="cropped($event)"></img-cropper>
 					</span>
 					<span class="result rounded" *ngIf="sProductImage.image">
-				    <!-- <img style="position: absolute; top: 10px;" [src]="sProductImage.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight"> -->
+				    <img style="position: absolute; top: 10px;" [src]="sProductImage.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
 					</span>
 					<span class="delete-img-btn"
 						(click)="deleteProductImage()"

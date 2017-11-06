@@ -30,6 +30,7 @@
     "moment": "^2.18.1",
     "mydatepicker": "^2.0.31",
     "ng2-daterangepicker": "^2.0.10",
+    "ng2-img-cropper": "^0.9.0",
     "ng2-toasty": "^4.0.3",
     "ngx-bootstrap": "^1.9.1",
     "ngx-tooltip": "0.0.9",

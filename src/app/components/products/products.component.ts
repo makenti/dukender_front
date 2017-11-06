@@ -11,8 +11,8 @@ import {
   ErrorService } from '../../services/index';
 import { ToastyService } from 'ng2-toasty';
 import { priceLimit } from '../../common/config/limits';
-// import { ImageCropperComponent, CropperSettings, Bounds } from 'ng2-img-cropper';
-// import { serverURL } from '../../shared/config/server';
+import { ImageCropperComponent, CropperSettings, Bounds } from 'ng2-img-cropper';
+import { serverURL } from '../../common/config/server';
 
 @Component({
   selector: 'app-products',
@@ -48,11 +48,11 @@ export class ProductsComponent implements OnInit {
   @ViewChild('modalAddProductDesc')
   modalAddProductDesc: ModalDirective;
 
-  // @ViewChild('cropper', undefined)
-  // cropper:ImageCropperComponent;
-  //
-  // @ViewChild('cropper2', undefined)
-  // cropper2:ImageCropperComponent;
+  @ViewChild('cropper', undefined)
+  cropper:ImageCropperComponent;
+  
+  @ViewChild('cropper2', undefined)
+  cropper2:ImageCropperComponent;
 
   public searchQuery: string = '';
   private sortField:string = "";
@@ -80,7 +80,7 @@ export class ProductsComponent implements OnInit {
 
   private sProductImage: any;
   private nProductImage: any;
-  // private cropperSettings: CropperSettings;
+  private cropperSettings: CropperSettings;
   private imageSelected: boolean = false;
   private croppedWidth:number;
   private croppedHeight:number;
@@ -148,26 +148,29 @@ export class ProductsComponent implements OnInit {
     this.getCategoryProducts();
     this.getCompanyCategories();
     //for cropper
-    // this.cropperSettings = new CropperSettings();
-    // this.cropperSettings.noFileInput = true;
-    // this.cropperSettings.croppedWidth = 100;
-    // this.cropperSettings.croppedHeight = 100;
-    // this.cropperSettings.canvasWidth = 400;
-    // this.cropperSettings.canvasHeight = 300;
-    // this.cropperSettings.minWidth = 200;
-    // this.cropperSettings.minHeight = 200;
-    // this.cropperSettings.keepAspect = true;
-    // this.cropperSettings.minWithRelativeToResolution = false;
+    this.cropperSettings = new CropperSettings();
+    this.cropperSettings.noFileInput = true;
+    this.cropperSettings.croppedWidth = 100;
+    this.cropperSettings.croppedHeight = 100;
+    this.cropperSettings.canvasWidth = 400;
+    this.cropperSettings.canvasHeight = 300;
+    this.cropperSettings.minWidth = 200;
+    this.cropperSettings.minHeight = 200;
+    this.cropperSettings.keepAspect = true;
+    this.cropperSettings.minWithRelativeToResolution = false;
     this.sProductImage = {};
     this.nProductImage = {};
   }
   //for cropper:
-  // cropped(bounds:Bounds) {
-  //   this.croppedHeight = bounds.height;
-  //   this.croppedWidth = bounds.width;
-  //   this.croppedLeft = bounds.left;
-  //   this.croppedTop = bounds.top;
-  // }
+  cropped(bounds:Bounds) {
+    // this.croppedHeight = bounds.height;
+    // this.croppedWidth = bounds.width;
+    this.croppedHeight =bounds.bottom-bounds.top;
+    this.croppedWidth = bounds.right-bounds.left;
+    
+    this.croppedLeft = bounds.left;
+    this.croppedTop = bounds.top;
+  }
 
   onSelectImage(event:any) {
     this.loadingImage = true;
@@ -180,14 +183,16 @@ export class ProductsComponent implements OnInit {
     if(this.processMode === 'add') {
       myReader.onloadend = function (loadEvent:any) {
         image.src = loadEvent.target.result;
-        // that.cropper.setImage(image);
+        that.cropper.setImage(image);
         that.loadingImage = false;
+        console.log(image)
+        console.log(image.src)
       };
       this.newProduct.image = event.srcElement.files;
     }else if(this.processMode === 'edit') {
       myReader.onloadend = function (loadEvent:any) {
         image.src = loadEvent.target.result;
-        // that.cropper2.setImage(image);
+        that.cropper2.setImage(image);
       };
       this.selectedProduct.image = event.srcElement.files;
       image.addEventListener('load',function(){
@@ -360,6 +365,8 @@ export class ProductsComponent implements OnInit {
       this.newProduct.left = (this.croppedLeft !== undefined)?this.croppedLeft:0;
       this.newProduct.width = (this.croppedWidth !== undefined)?this.croppedWidth:0;
       this.newProduct.height = (this.croppedHeight !== undefined)?this.croppedHeight:0;
+      
+      // console.log(this.newProduct)
       this.addLoading = true;
       this.productService.updateProduct(this.newProduct)
           .subscribe(
@@ -417,7 +424,8 @@ export class ProductsComponent implements OnInit {
     if(product !== null ) {
       this.selectedProduct = product;
       if(product.image !== null) {
-        // this.selectedImage = serverURL + product.image;
+        this.selectedImage = serverURL + product.image;
+        console.log(this.selectedImage);
       }
       this.processMode = 'edit';
       this.modalEditProduct.show();
