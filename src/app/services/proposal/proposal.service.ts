@@ -278,7 +278,6 @@ export class ProposalService {
 
     let options = new RequestOptions({ headers: headers, responseType: ResponseContentType.Blob });
     let bodyString = "status="+data.status;
-    // let bodyString = transformRequest(data);
 
     return this.http.post(serverURL + '/sellers/requests/export_to_excel/all/', bodyString,{
         headers: headers,
