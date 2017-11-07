@@ -121,8 +121,15 @@
 			<tr *ngFor="let item of proposals | searchPipe: 'customer_name': searchQuery | sortBy: sortField : sortOrder" 
 				(click)="showProposal(item)"
 				[tooltip]="item.tooltip" tooltipPlacement="bottom"
+				[class.new-request]="item.is_open===false"
 				>
-				<td>{{item.request_id}}</td>
+				<td>
+					{{item.request_id}}
+					<span class="new-comment" 
+						*ngIf="item.has_new_comment&&item.is_open">
+						<i class="fa fa-comment" aria-hidden="true"></i>
+					</span>
+				</td>
 				<td>{{ ((item.create_time/1000000) | amFromUnix) | amDateFormat:'DD-MM-YYYY' }}</td>
 				<td><i class="approved-icon" title="проверен Dukender"
 					*ngIf="item.customer.approved" aria-hidden="true"></i></td>

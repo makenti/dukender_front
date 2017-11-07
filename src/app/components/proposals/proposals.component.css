@@ -48,7 +48,8 @@
 .proposals-table thead th {
     width: 14%;
     float: left;
-
+  height: 100%;
+  position: relative;
 }
 .proposals-table thead th {
     text-align: center;
@@ -91,6 +92,24 @@ table thead th.sortable-field{
   cursor: pointer;
   color: #337ab7;
 }
+.proposals-table tbody tr.new-request{
+  background-color: #237ee8;
+}
+tr.new-request td{
+  color: #fff;
+  background-color: #237ee8;
+}
+tr td .new-comment{
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+tr td .new-comment i{
+  color: #237ee8;
+  font-size: 16px;
+}
+
+
 /*table thead,
 table tbody {
   display: table;
