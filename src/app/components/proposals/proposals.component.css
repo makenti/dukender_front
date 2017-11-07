@@ -93,11 +93,12 @@ table thead th.sortable-field{
   color: #337ab7;
 }
 .proposals-table tbody tr.new-request{
-  background-color: #237ee8;
+  /*background-color: #237ee8;*/
 }
 tr.new-request td{
-  color: #fff;
-  background-color: #237ee8;
+  /*color: #fff;*/
+  /*background-color: #237ee8;*/
+  font-weight: 900;
 }
 tr td .new-comment{
   position: absolute;
