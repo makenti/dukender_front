@@ -166,24 +166,6 @@ export class ProductsComponent implements OnInit {
     this.sProductImage = {};
     this.nProductImage = {};
   }
-  //for cropper:
-  cropped(bounds:Bounds) {
-    // this.croppedHeight = bounds.height;
-    // this.croppedWidth = bounds.width;
-    this.croppedHeight =bounds.bottom-bounds.top;
-    this.croppedWidth = bounds.right-bounds.left;
-    
-    this.croppedLeft = bounds.left;
-    this.croppedTop = bounds.top;
-
-    //second method:
-    // this.croppedHeight = this.cropPosition.h;
-    // this.croppedWidth = this.cropPosition.w;
-    
-    // this.croppedLeft = this.cropPosition.x;
-    // this.croppedTop = this.cropPosition.y;
-    // console.log(this.cropPosition)
-  }
 
   onSelectImage(event:any) {
     this.loadingImage = true;
@@ -375,16 +357,10 @@ export class ProductsComponent implements OnInit {
 
   onAddProduct() {
     if(this.checkAddProductForm()) {
-      if(this.imageSelected){
-        this.newProduct.resize = 'true';
-        this.newProduct.top = this.croppedTop;
-        this.newProduct.left = this.croppedLeft;
-        this.newProduct.width = this.croppedWidth;
-        this.newProduct.height = this.croppedHeight;
-        this.newProduct.image = this.newProduct.image[0];
-      }
-      // console.log(this.newProduct)
       this.addLoading = true;
+      if(this.imageSelected){
+        this.newProduct.image = this.dataURLtoFile(this.nProductImage.image, 'image.png');
+      }
       this.productService.updateProduct(this.newProduct, this.imageSelected)
           .subscribe(
             res => {
@@ -412,7 +388,24 @@ export class ProductsComponent implements OnInit {
           );
     }
   }
-
+  onUpdateProduct() {
+    this.addLoading = true;
+    if(this.imageSelected){
+      this.selectedProduct.image = this.dataURLtoFile(this.sProductImage.image, 'image.png');
+    }
+    this.productService.updateProduct(this.selectedProduct, this.imageSelected)
+        .subscribe(
+          res => {
+            if(res) {
+              this.toastyService.success('Товар обновлен');
+              this.getCategoryProducts();
+              this.onCloseEditProduct();
+            }
+            this.addLoading = false;
+          },
+          error =>  this.errorMessage = <any>error
+        );
+  }
   clearAddModal() {
     this.newProduct = {
       id: '',
@@ -526,34 +519,15 @@ export class ProductsComponent implements OnInit {
     this.newProduct.image = null;
     this.imageSelected = false;
   }
-  
-  onUpdateProduct() {
-    this.addLoading = true;
-    if(this.imageSelected){
-      if(this.currentImage.height/this.currentImage.width < 0.75){
-        this.selectedProduct.top = this.croppedTop - (this.currentImage.width*0.75 - this.currentImage.height);
+  dataURLtoFile(dataurl, filename):any {
+      var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+          bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+      while(n--){
+          u8arr[n] = bstr.charCodeAt(n);
       }
-      this.selectedProduct.resize = 'true';
-      this.selectedProduct.image = this.selectedProduct.image[0];
-    }
-    this.selectedProduct.left = this.croppedLeft;
-    this.selectedProduct.width = this.croppedWidth;
-    this.selectedProduct.height = this.croppedHeight;
-
-    console.log(this.selectedProduct);
-    this.productService.updateProduct(this.selectedProduct, this.imageSelected)
-        .subscribe(
-          res => {
-            if(res) {
-              this.toastyService.success('Товар обновлен');
-              this.getCategoryProducts();
-              this.onCloseEditProduct();
-            }
-            this.addLoading = false;
-          },
-          error =>  this.errorMessage = <any>error
-        );
-  }
+      return new File([u8arr], filename, {type:mime});
+  }  
+  
 
   onSelectFile(event: any) {
     this.selectedFile = event.target.files;

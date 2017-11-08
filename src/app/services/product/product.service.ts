@@ -58,11 +58,6 @@ export class ProductService {
       formData.append('part_1c', product.part_1c);
       if(imageSelected){
         formData.append('image', product.image);
-        formData.append('resize', product.resize);
-        formData.append('top',product.top);
-        formData.append('left',  product.left);
-        formData.append('width', product.width);
-        formData.append('height', product.height);
       }else if(product.image === null){
         formData.append('image', null);
       }
