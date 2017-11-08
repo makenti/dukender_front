@@ -276,6 +276,8 @@ export class ProductsComponent implements OnInit {
               this.toastyService.warning('У Вас нет товаров');
             }else {
               if(resp.code === 0) {
+                if(resp.price_list === undefined || resp.price_list.length === 0)
+                  return;
                 this.products = resp.price_list;
                 if(this.limit < resp.price_list.length)
                   this.timestamp = resp.price_list[this.limit-1].timestamp;
@@ -304,6 +306,8 @@ export class ProductsComponent implements OnInit {
         .subscribe(
           resp => {
             if(resp.code === 0) {
+              if(resp.price_list === undefined || resp.price_list.length === 0)
+                return;
               if(resp.price_list.length < this.limit){
                 this.limit = 0;
               }
@@ -371,15 +375,17 @@ export class ProductsComponent implements OnInit {
 
   onAddProduct() {
     if(this.checkAddProductForm()) {
-      if(this.newProduct.image !== null) this.newProduct.resize = 'true';
-      this.newProduct.top = (this.croppedTop !== undefined)?this.croppedTop:0;
-      this.newProduct.left = (this.croppedLeft !== undefined)?this.croppedLeft:0;
-      this.newProduct.width = (this.croppedWidth !== undefined)?this.croppedWidth:0;
-      this.newProduct.height = (this.croppedHeight !== undefined)?this.croppedHeight:0;
-      
+      if(this.imageSelected){
+        this.newProduct.resize = 'true';
+        this.newProduct.top = this.croppedTop;
+        this.newProduct.left = this.croppedLeft;
+        this.newProduct.width = this.croppedWidth;
+        this.newProduct.height = this.croppedHeight;
+        this.newProduct.image = this.newProduct.image[0];
+      }
       // console.log(this.newProduct)
       this.addLoading = true;
-      this.productService.updateProduct(this.newProduct)
+      this.productService.updateProduct(this.newProduct, this.imageSelected)
           .subscribe(
             res => {
               if(res !== undefined && res !== null) {
@@ -440,6 +446,7 @@ export class ProductsComponent implements OnInit {
       this.processMode = 'edit';
       this.modalEditProduct.show();
     }else {
+      this.toastyService.warning('Товар не существует!');
     }
   }
 
@@ -478,7 +485,7 @@ export class ProductsComponent implements OnInit {
   }
 
   onEditProduct() {
-    this.productService.updateProduct(this.selectedProduct)
+    this.productService.updateProduct(this.selectedProduct, this.imageSelected)
         .subscribe(
           resp => {
             if(resp === null) {
@@ -522,14 +529,19 @@ export class ProductsComponent implements OnInit {
   
   onUpdateProduct() {
     this.addLoading = true;
-    if(this.currentImage.height/this.currentImage.width < 0.75){
-      this.selectedProduct.top = this.croppedTop - (this.currentImage.width*0.75 - this.currentImage.height);
+    if(this.imageSelected){
+      if(this.currentImage.height/this.currentImage.width < 0.75){
+        this.selectedProduct.top = this.croppedTop - (this.currentImage.width*0.75 - this.currentImage.height);
+      }
+      this.selectedProduct.resize = 'true';
+      this.selectedProduct.image = this.selectedProduct.image[0];
     }
     this.selectedProduct.left = this.croppedLeft;
     this.selectedProduct.width = this.croppedWidth;
     this.selectedProduct.height = this.croppedHeight;
-    this.selectedProduct.resize = 'true';
-    this.productService.updateProduct(this.selectedProduct)
+
+    console.log(this.selectedProduct);
+    this.productService.updateProduct(this.selectedProduct, this.imageSelected)
         .subscribe(
           res => {
             if(res) {
