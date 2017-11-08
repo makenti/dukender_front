@@ -35,7 +35,7 @@ export class ProductService {
                     .catch(handleError);
   }
 
-  updateProduct(product: any): Observable<any> {
+  updateProduct(product: any, imageSelected: boolean): Observable<any> {
 
     return Observable.create((observer: any) => {
 
@@ -56,12 +56,11 @@ export class ProductService {
       formData.append('description', product.description);
       formData.append('id_1c', product.id_1c);
       formData.append('part_1c', product.part_1c);
-      formData.append('image', (product.image !== undefined && product.image !== null) ? product.image[0]:'');
-      formData.append('resize', product.resize);
-      formData.append('top', product.top);
-      formData.append('left', product.left);
-      formData.append('width', product.width);
-      formData.append('height', product.height);
+      if(imageSelected){
+        formData.append('image', product.image);
+      }else if(product.image === null){
+        formData.append('image', null);
+      }
       xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
