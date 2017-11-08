@@ -34,7 +34,7 @@
 						<div class="mm-btn mm-btn-default btn-space-right" (click)="onRemoveRegion(region)">Удалить</div>
 
 						<div>
-							<label class="mm-control mm-control--checkbox"> 
+							<label class="mm-control mm-control--checkbox" style="margin-bottom: 0;"> 
 								Выделить все
 					      <input type="checkbox"
 					      	(change)="selectAll(region, $event)"/>
@@ -42,7 +42,7 @@
 					    </label>
 						</div>
 
-						<div class="min_amount">
+						<div class="min_amount flex-container flex-center">
 							<span class="btn-space-right">Минимальная сумма</span>
 							<input type="number" class="mm-input input-sm btn-space-right" 
 								[(ngModel)]="amount"

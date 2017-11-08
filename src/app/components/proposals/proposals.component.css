@@ -86,7 +86,7 @@
 
 .proposals-table tbody td:nth-child(9),
 .proposals-table thead th:nth-child(9) {
-    width: 10%;
+    width: 17%;
 }
 table thead th.sortable-field{
   cursor: pointer;
