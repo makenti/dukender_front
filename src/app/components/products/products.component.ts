@@ -534,8 +534,11 @@ export class ProductsComponent implements OnInit {
     this.fileSelected = true;
   }
 
+
   uploadPriceList() {
     if(this.checkUploadForm()) {
+      this.loading = true;
+      this.modalImportPrice.hide();
       let data = {
         files: this.selectedFile,
         category_id: this.uploadCategory
@@ -543,10 +546,12 @@ export class ProductsComponent implements OnInit {
       this.uploadService.importProductFile(data)
           .subscribe(
             res => {
+              this.loading = false;
               if(res) {
                 this.toastyService.success('Прайс-лист успешно загружен');
                 this.getCategoryProducts();
-                this.onCloseImportModal();
+              }else{
+                this.toastyService.warning('Прайс-лист не загружен');
               }
             },
             error =>  {
