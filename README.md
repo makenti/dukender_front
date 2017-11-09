@@ -1,6 +1,13 @@
 # WebFront
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.3.2.
+## Development: 
+Run `ng serve` for run project with development api locally
+Run `ng build --no-delete-output-path` for development build
+
+## Production: 
+Run `ng serve --prod --aot=false` for run project with production api locally
+Run `ng build --target=production --environment=prod --output-path=prod --aot=false --no-delete-output-path` for development build
 
 ## Development server
 
