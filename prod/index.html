@@ -1,0 +1,61 @@
+<!doctype html><html lang="en"><head><title>dukender.kz</title><base href="/"><meta charset="utf-8"><meta name="description" content="Dukender.kz - это платформа для продажи и покупки товаров между поставщиками и торговыми точками в вашем городе"><meta id="viewport" name="viewport" content="width=1024"><meta http-equiv="X-UA-Compatible" content="IE=edge"><link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet"><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"><meta http-equiv="cache-control" content="no-cache, must-revalidate, post-check=0, pre-check=0"><meta http-equiv="expires" content="0"><meta http-equiv="pragma" content="no-cache"><!-- smart app banner --><meta name="apple-itunes-app" content="app-id=1233980393"><!-- smart app banner --><script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async="async"></script><script>var useragentid = null;
+    var OneSignal = window.OneSignal || [];
+    OneSignal.push(["init", {
+      appId: "bbce45ee-feac-47b0-9a48-43d07a960da8",
+      autoRegister: true, /* Set to true to automatically prompt visitors */
+      subdomainName: 'dukender-web',
+      safari_web_id: 'web.onesignal.auto.477dedc8-8bcf-40fd-b64c-238033111672',
+      httpPermissionRequest: {
+        enable: true
+      },
+      notifyButton: {
+        enable: false /* Set to false to hide */
+      }
+    }]);
+
+    OneSignal.push(function() {
+      OneSignal.getUserId().then(function(userId) {                
+        if(userId == null){
+          console.log('user id not found');
+        }
+        else{
+          useragentid = userId;
+          OneSignal.push(["getNotificationPermission", function(permission){
+          }]);
+          OneSignal.isPushNotificationsEnabled(function(isEnabled) {
+            if (isEnabled){
+              window.localStorage.setItem('push_token', useragentid);
+            }
+            else{
+              console.log('disabled');
+            }
+          });
+        }
+      });
+    });
+    //Secondly this will check when subscription changed
+    OneSignal.push(function() {
+      OneSignal.on('subscriptionChange', function (isSubscribed) {
+        if(isSubscribed==true){
+          OneSignal.getUserId().then(function(userId) {
+            useragentid = userId;
+            window.localStorage.setItem('push_token', useragentid);
+          });
+        }
+        else if(isSubscribed==false){
+          OneSignal.getUserId().then(function(userId) {
+            useragentid = userId;
+            window.localStorage.removeItem('push_token');
+          });
+        }
+        else{
+          console.log('Unable to process the request');
+        }
+      });
+    });</script><link href="styles.3a1293459f8f7e48bc50.bundle.css" rel="stylesheet"/></head><body><app-root><div class="loading-block"><div class="loading"><img src="./assets/images/body-logo.png"></div></div></app-root><!-- Google analytics --><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-106433795-1', 'auto');
+    ga('send', 'pageview');</script><!-- Google analytics --><script type="text/javascript" src="inline.3c522fd4ad0baafa0f24.bundle.js"></script><script type="text/javascript" src="polyfills.67d068662b88f84493d2.bundle.js"></script><script type="text/javascript" src="scripts.e5f5a08b501d76508713.bundle.js"></script><script type="text/javascript" src="vendor.bf63c00abe496b83f024.bundle.js"></script><script type="text/javascript" src="main.6fc53185cc3c3a56ff32.bundle.js"></script></body></html>

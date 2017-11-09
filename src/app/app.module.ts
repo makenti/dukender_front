@@ -6,7 +6,7 @@ import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MomentModule } from 'angular2-moment';
 import { TooltipModule } from 'ngx-tooltip';
-import { ImageCropperComponent } from 'ng2-img-cropper';
+import { ImageCropperModule } from 'ng2-img-cropper/index';
 
 // bootstrap modules
 // import { AlertModule } from 'ngx-bootstrap';
@@ -138,7 +138,7 @@ const appRoutes: Routes = [
     SearchPipe,
     SortPipe,
     SearchDeepPipe,
-    ImageCropperComponent
+    // ProposalPrintComponent
   ],
   imports: [
     BrowserModule,
@@ -154,7 +154,8 @@ const appRoutes: Routes = [
     MyDatePickerModule,
     BsDropdownModule.forRoot(),
     Daterangepicker,
-    TooltipModule
+    TooltipModule,
+    ImageCropperModule
   ],
   providers: [
     AuthService,
@@ -170,6 +171,9 @@ const appRoutes: Routes = [
     ErrorService,
     ToolbarService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [
+    ImageCropperModule
+  ]
 })
 export class AppModule { }
