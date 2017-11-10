@@ -17,14 +17,14 @@ export class ProposalService {
   private filter = {
     selected: '',
     fields: 
-    [ { field: '', order: ''},    
-      { field: '', order: ''},    
-      { field: '', order: ''},    
-      { field: '', order: ''},    
-      { field: '', order: ''},    
-      { field: '', order: ''},    
-      { field: '', order: ''},    
-      { field: '', order: ''},]
+    [ { field: '', order: '', scroll: 0, limit: 0},    
+      { field: '', order: '', scroll: 0, limit: 0},    
+      { field: '', order: '', scroll: 0, limit: 0},    
+      { field: '', order: '', scroll: 0, limit: 0},    
+      { field: '', order: '', scroll: 0, limit: 0},    
+      { field: '', order: '', scroll: 0, limit: 0},    
+      { field: '', order: '', scroll: 0, limit: 0},    
+      { field: '', order: '', scroll: 0, limit: 0},],
   };
 
   constructor(
@@ -256,6 +256,12 @@ export class ProposalService {
     this.filter.fields[filterId].order = order;
     this.setFilter(this.filter);
   }
+  setScrollPositionAndLimit(filterId, scroll, limit){
+    filterId = filterId ==='' ? 7:filterId;
+    this.filter.fields[filterId].scroll = scroll;
+    this.filter.fields[filterId].limit = limit;
+    this.setFilter(this.filter);
+  }
   setSelectedFilter(id: any){
     this.filter.selected = id;
     this.setFilter(this.filter);
@@ -263,7 +269,7 @@ export class ProposalService {
 
   getFilter(){
     let filter = JSON.parse(window.localStorage.getItem('filter'));
-    console.log(filter);
+    // console.log(filter);
     if(filter)
       return filter;
     return null;

@@ -114,7 +114,8 @@
 				</th>
 			</tr>
 		</thead>
-		<tbody (scroll)="onScroll($event)">
+		<tbody (scroll)="onScroll($event)" id="proposalTable"
+			#proposalListBody>
 			<tr *ngIf="!loading && proposals.length === 0" class="empty-table">
 				<span>У Вас еще нет заявок</span>
 			</tr>
