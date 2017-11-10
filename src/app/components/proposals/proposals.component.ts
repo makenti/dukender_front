@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewChecked, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap';
 import { ToastyService } from 'ng2-toasty';
@@ -15,10 +15,14 @@ import { proposalLimit } from '../../common/config/limits';
   templateUrl: './proposals.component.html',
   styleUrls: ['./proposals.component.css'],
 })
-export class ProposalsComponent implements OnInit {
+export class ProposalsComponent implements OnInit, AfterViewChecked {
 
   @ViewChild('modalCheckDistricts')
   modalCheckDistricts: ModalDirective;
+
+  @ViewChild('proposalListBody')
+  myScrollContainer: ElementRef;
+  Math: any;
 
 	private proposals: any[] = [];
 	private errorMessage: any[] = [];
@@ -34,7 +38,6 @@ export class ProposalsComponent implements OnInit {
   
   private filter: any;
   private last_timestamp: string = "";
-
   statuses = [
     {id: 0, status: "Входящие"},
     {id: 1, status: "В работе"},
@@ -44,7 +47,9 @@ export class ProposalsComponent implements OnInit {
     {id: 5, status: "Согласование с поставщиком"},
     {id: 6, status: "Отмененные"},
     {id: "", status: "Все"},
-  ]
+  ];
+  private scrolled: boolean = true;
+
   constructor(
     private auth: AuthService,
   	private router: Router,
@@ -52,8 +57,8 @@ export class ProposalsComponent implements OnInit {
     private companyService: CompanyProfileService,
     private toastyService: ToastyService
   ) { }
-
   ngOnInit() {
+    this.Math = Math;
     if(this.proposalService.getFilter()){
       let id = this.proposalService.getFilter().selected;
       if(id!==null){
@@ -69,10 +74,38 @@ export class ProposalsComponent implements OnInit {
         }
       }, null);
   }
+  ngAfterViewChecked(){
+    // console.log("ngAfterViewChecked")
+    this.scrollTo();
+  }
+  scrollTo(){
+    let columnId = this.selectedFilter === ''? 7 : this.selectedFilter;
+    let column = this.proposalService.getFilter().fields[columnId];
+    console.log(column);
+    let scroll = column.scroll;
+      console.log("scroll");
+    if(scroll > 0 && 
+      column.limit > proposalLimit &&
+      !this.scrolled ){
+      console.log("scrollingto", scroll);
+      // document.getElementById('proposalTable').scrollTop = scroll;
+      try {
+        console.log(this.myScrollContainer.nativeElement.scrollTop, "===", column.scroll)
+        if(this.myScrollContainer.nativeElement.scrollTop !== column.scroll){
+          console.log("scrolling");
+          this.myScrollContainer.nativeElement.scrollTop = column.scroll;
+        }else{
+          this.scrolled = true;
+          console.log("scrolled");
+        }
+      } catch(err) { }
+    }
+  }
   getLocalFilter(){
     let id = this.selectedFilter === ''? 7 : this.selectedFilter;
-    this.sortField = this.proposalService.getFilter().fields[id].field;
-    this.sortOrder = this.proposalService.getFilter().fields[id].order;
+    let column = this.proposalService.getFilter().fields[id];
+    this.sortField = column.field;
+    this.sortOrder = column.order;
   }
   downloadExcel(){
     let id = this.selectedFilter ==="" ? 7 : this.selectedFilter;
@@ -96,11 +129,20 @@ export class ProposalsComponent implements OnInit {
   	this.selectedFilter = id;
     this.proposals = [];
     this.loading = true;
+    this.scrolled = false;
+    //scroll: 
+    let columnId = this.selectedFilter === ''? 7 : this.selectedFilter;
+    let column = this.proposalService.getFilter().fields[columnId];
+    let limit = proposalLimit;
+    if(column.scroll > 0 && column.limit > proposalLimit){
+      limit = column.limit;
+    }
+
   	let data = {
   		status: id,
 			timestamp: '',
 			customer_id: '',
-			limit: proposalLimit,
+			limit: limit,
       district_ids: this.selectedDistricts
   	};
   	this.proposalService.getProposals(data)
@@ -163,7 +205,6 @@ export class ProposalsComponent implements OnInit {
                   resp.requests === null ||
                   resp.requests === undefined)
                   return;
-
                 for(let i = 0; i < resp.requests.length; i++){
                   let exist:boolean = false
                   for(let j = 0; j < this.proposals.length; j++){
@@ -279,7 +320,16 @@ export class ProposalsComponent implements OnInit {
   onScroll (e: any) {
     if(e.target.scrollHeight <= e.target.scrollTop + e.srcElement.clientHeight){
       this.getProposalsMore();
-    }    
+    }
+    //count minimum limit and scroll position:
+    let scrollPos = e.target.scrollTop;
+    let scrollLimit = this.Math.round(scrollPos/32.64 + 10);
+    // console.log(scrollPos, e.srcElement.scrollHeight, scrollLimit);
+    if(scrollLimit < proposalLimit){
+      scrollLimit = proposalLimit;
+    }
+    this.proposalService.setScrollPositionAndLimit(this.selectedFilter, scrollPos, scrollLimit);
+    // console.log(scrollPos);
   }
 
 }

@@ -17,14 +17,14 @@ export class ProposalService {
   private filter = {
     selected: '',
     fields: 
-    [ { field: '', order: ''},    
-      { field: '', order: ''},    
-      { field: '', order: ''},    
-      { field: '', order: ''},    
-      { field: '', order: ''},    
-      { field: '', order: ''},    
-      { field: '', order: ''},    
-      { field: '', order: ''},]
+    [ { field: '', order: '', scroll: 0, limit: 0},    
+      { field: '', order: '', scroll: 0, limit: 0},    
+      { field: '', order: '', scroll: 0, limit: 0},    
+      { field: '', order: '', scroll: 0, limit: 0},    
+      { field: '', order: '', scroll: 0, limit: 0},    
+      { field: '', order: '', scroll: 0, limit: 0},    
+      { field: '', order: '', scroll: 0, limit: 0},    
+      { field: '', order: '', scroll: 0, limit: 0},],
   };
 
   constructor(
@@ -254,6 +254,12 @@ export class ProposalService {
     filterId = filterId ==='' ? 7:filterId;
     this.filter.fields[filterId].field = fieldId;
     this.filter.fields[filterId].order = order;
+    this.setFilter(this.filter);
+  }
+  setScrollPositionAndLimit(filterId, scroll, limit){
+    filterId = filterId ==='' ? 7:filterId;
+    this.filter.fields[filterId].scroll = scroll;
+    this.filter.fields[filterId].limit = limit;
     this.setFilter(this.filter);
   }
   setSelectedFilter(id: any){
