@@ -163,7 +163,8 @@ export class ProposalComponent implements OnInit  {
                  action_bonus_item_active: item.action_bonus_item_active,
                  action_bonus_money_active: item.action_bonus_money_active,
                  removed: item.deleted,
-                 item_info: item
+                 item_info: item,
+                 bonus_item: item.bonus_item
                };
                if(!(p.removed && this.proposal.status !== 1 && this.proposal.status !== 5)) {
                  this.proposalItems.push(p);
@@ -173,6 +174,17 @@ export class ProposalComponent implements OnInit  {
              this.itemsTotalSum = resp.total_price;
              if(this.proposal.status !== 2 && this.proposal.status !== 3 && this.proposal.status !== 6)
                this.checkChangesInPriceList();
+
+            //if tovarnyi bonus:
+            for(let i = 0; i < this.proposalItems.length; i++) {
+              let item = this.proposalItems[i];
+              if(item.bonus_item !== null &&
+                item.bonus_item !== undefined){
+                item.bonus_item.price = 0;
+                item.bonus_item.count = this.Math.trunc(item.count / item.item_info.for_count * item.item_info.bonus_count);
+                this.proposalItems.splice(i+1, 0, item.bonus_item);
+              }
+            }
            }
          },
          error =>  this.errorMessage = <any>error
