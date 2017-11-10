@@ -135,7 +135,7 @@
 										[disabled]="item.removed"
 										(ngModelChange)="onChange($event, item)"
 										*ngIf="mode === 'edit'"/>
-						<span *ngIf="item.item_info.action_bonus_item_active"
+						<span *ngIf="item.item_info&&item.item_info.action_bonus_item_active"
 							class="label label-primary">
 							+{{this.Math.trunc(item.count / item.item_info.for_count * item.item_info.bonus_count)}}
 						</span>
@@ -288,8 +288,8 @@
 			  			<p>Согласуйте дату доставки</p>
 			  		</div>
 			  		<div *ngIf="countChanged">
-			  			<p>Новое количество {{itemToShow.item_info.count}}</p>
-			  			<p>Старое количество {{itemToShow.item_info.prev_count}}</p>
+			  			<p *ngIf="itemToShow.item_info">Новое количество {{itemToShow.item_info.count}}</p>
+			  			<p *ngIf="itemToShow.item_info">Старое количество {{itemToShow.item_info.prev_count}}</p>
 			  		</div>
 			  	</div>
 			  	<div *ngIf="!countChanged && !deliveryChanged">
