@@ -75,6 +75,7 @@ export class ProposalComponent implements OnInit  {
   // private accessToEdit: boolean = true;
   private accessToExec: boolean = true;
   private editMode: boolean = true;
+  private delete: boolean = false;
   private isEditableProposal: boolean = false;
 
   // private proposalBeforeEdit:any = '';
@@ -144,7 +145,11 @@ export class ProposalComponent implements OnInit  {
                this.deliveryDateText = moment(this.deliveryDate).format('DD.MM.YYYY');
                this.deliveryBefore = moment(parseInt(resp.delivery_time, 10)).format('DD.MM.YYYY');
              }
-
+             if(this.proposal.status === 2){
+               if(moment().diff(this.deliveryDate, 'days') > 5){
+                 this.delete = true;
+               }
+             }
              for( let item of resp.items) {
                let pr = parseInt((item.action_discount_active)?item.new_price:item.price, 10);
                let p = {

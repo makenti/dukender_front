@@ -118,7 +118,7 @@
 			<tr *ngIf="!loading && proposals.length === 0" class="empty-table">
 				<span>У Вас еще нет заявок</span>
 			</tr>
-			<tr *ngFor="let item of proposals | searchPipe: 'customer_name': searchQuery | sortBy: sortField : sortOrder" 
+			<tr *ngFor="let item of proposals | searchPipe: 'searchField': searchQuery | sortBy: sortField : sortOrder" 
 				(click)="showProposal(item)"
 				[tooltip]="item.tooltip" tooltipPlacement="bottom"
 				[class.new-request]="item.is_open===false"

@@ -113,6 +113,7 @@ export class ProposalsComponent implements OnInit {
             	if(resp.code === 0) {
             		this.proposals = resp.requests;
                 for(let i = 0; i < this.proposals.length; i++){
+                  this.proposals[i].searchField = this.proposals[i].request_id + this.proposals[i].customer.name;
                   this.proposals[i].customer_name = this.proposals[i].customer.name;
                   this.proposals[i].customer_district = this.proposals[i].customer.district.name;
                   this.proposals[i].tooltip = "";

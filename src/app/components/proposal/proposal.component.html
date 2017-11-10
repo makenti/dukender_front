@@ -208,7 +208,7 @@
 							[disabled]="!editMode">Исполнить</button>
 			<button class="mm-btn mm-btn-danger "
 							(click)="modalDeleteProposal.show()"
-							*ngIf="mode === 'edit'">Удалить заявку</button>
+							*ngIf="mode === 'edit'||delete">Удалить заявку</button>
 			<button class="mm-btn mm-btn-default btn-space-right"
 							(click)="onPrintProposal()">Печать</button>
 			<button class="mm-btn mm-btn-default btn-space-right"
