@@ -76,36 +76,40 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
   }
   ngAfterViewChecked(){
     // console.log("ngAfterViewChecked")
-    this.scrollTo();
+    if(this.proposalService.getFilter()){
+      this.scrollTo();
+    }
   }
   scrollTo(){
     let columnId = this.selectedFilter === ''? 7 : this.selectedFilter;
     let column = this.proposalService.getFilter().fields[columnId];
-    // console.log(column);
+    console.log(column);
     let scroll = column.scroll;
-      // console.log("scroll");
+      console.log("scroll");
     if(scroll > 0 && 
       column.limit > proposalLimit &&
       !this.scrolled ){
-      // console.log("scrollingto", scroll);
+      console.log("scrollingto", scroll);
       // document.getElementById('proposalTable').scrollTop = scroll;
       try {
-        // console.log(this.myScrollContainer.nativeElement.scrollTop, "===", column.scroll)
+        console.log(this.myScrollContainer.nativeElement.scrollTop, "===", column.scroll)
         if(this.myScrollContainer.nativeElement.scrollTop !== column.scroll){
-          // console.log("scrolling");
+          console.log("scrolling");
           this.myScrollContainer.nativeElement.scrollTop = column.scroll;
         }else{
           this.scrolled = true;
-          // console.log("scrolled");
+          console.log("scrolled");
         }
       } catch(err) { }
     }
   }
   getLocalFilter(){
     let id = this.selectedFilter === ''? 7 : this.selectedFilter;
-    let column = this.proposalService.getFilter().fields[id];
-    this.sortField = column.field;
-    this.sortOrder = column.order;
+    if(this.proposalService.getFilter()){
+      let column = this.proposalService.getFilter().fields[id];
+      this.sortField = column.field;
+      this.sortOrder = column.order;
+    }
   }
   downloadExcel(){
     let id = this.selectedFilter ==="" ? 7 : this.selectedFilter;
@@ -131,11 +135,13 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
     this.loading = true;
     this.scrolled = false;
     //scroll: 
-    let columnId = this.selectedFilter === ''? 7 : this.selectedFilter;
-    let column = this.proposalService.getFilter().fields[columnId];
     let limit = proposalLimit;
-    if(column.scroll > 0 && column.limit > proposalLimit){
-      limit = column.limit;
+    if(this.proposalService.getFilter()){
+      let columnId = this.selectedFilter === ''? 7 : this.selectedFilter;
+      let column = this.proposalService.getFilter().fields[columnId];
+      if(column.scroll > 0 && column.limit > proposalLimit){
+        limit = column.limit;
+      }
     }
 
   	let data = {
