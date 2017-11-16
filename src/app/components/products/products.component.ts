@@ -155,8 +155,8 @@ export class ProductsComponent implements OnInit {
     //for cropper
     this.cropperSettings = new CropperSettings();
     this.cropperSettings.noFileInput = true;
-    this.cropperSettings.croppedWidth = 100;
-    this.cropperSettings.croppedHeight = 100;
+    this.cropperSettings.croppedWidth = 600;
+    this.cropperSettings.croppedHeight = 600;
     this.cropperSettings.canvasWidth = 600;
     this.cropperSettings.canvasHeight = 300;
     this.cropperSettings.minWidth = 200;
