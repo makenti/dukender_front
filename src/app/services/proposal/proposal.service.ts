@@ -269,7 +269,7 @@ export class ProposalService {
 
   getFilter(){
     let filter = JSON.parse(window.localStorage.getItem('filter'));
-    console.log(filter);
+    // console.log(filter);
     if(filter)
       return filter;
     return null;

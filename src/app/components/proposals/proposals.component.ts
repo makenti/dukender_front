@@ -83,21 +83,21 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
   scrollTo(){
     let columnId = this.selectedFilter === ''? 7 : this.selectedFilter;
     let column = this.proposalService.getFilter().fields[columnId];
-    console.log(column);
+    // console.log(column);
     let scroll = column.scroll;
-      console.log("scroll");
+      // console.log("scroll");
     if(scroll > 0 &&
       !this.scrolled ){
-      console.log("scrollingto", scroll);
+      // console.log("scrollingto", scroll);
       document.getElementById('proposalTable').scrollTop = scroll;
       try {
-        console.log(this.myScrollContainer.nativeElement.scrollTop, "===", column.scroll)
+        // console.log(this.myScrollContainer.nativeElement.scrollTop, "===", column.scroll)
         if(this.myScrollContainer.nativeElement.scrollTop !== column.scroll){
-          console.log("scrolling");
+          // console.log("scrolling");
           this.myScrollContainer.nativeElement.scrollTop = column.scroll;
         }else{
           this.scrolled = true;
-          console.log("scrolled");
+          // console.log("scrolled");
         }
       } catch(err) { }
     }
@@ -329,12 +329,12 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
     //count minimum limit and scroll position:
     let scrollPos = e.target.scrollTop;
     let scrollLimit = this.Math.round(scrollPos/32.64 + 10);
-    console.log(scrollPos, e.srcElement.scrollHeight, scrollLimit);
+    // console.log(scrollPos, e.srcElement.scrollHeight, scrollLimit);
     if(scrollLimit < proposalLimit){
       scrollLimit = proposalLimit;
     }
     this.proposalService.setScrollPositionAndLimit(this.selectedFilter, scrollPos, scrollLimit);
-    console.log(scrollPos);
+    // console.log(scrollPos);
   }
 
 }
