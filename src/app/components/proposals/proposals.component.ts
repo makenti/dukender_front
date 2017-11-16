@@ -89,7 +89,7 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
     if(scroll > 0 &&
       !this.scrolled ){
       // console.log("scrollingto", scroll);
-      document.getElementById('proposalTable').scrollTop = scroll;
+      // document.getElementById('proposalTable').scrollTop = scroll;
       try {
         // console.log(this.myScrollContainer.nativeElement.scrollTop, "===", column.scroll)
         if(this.myScrollContainer.nativeElement.scrollTop !== column.scroll){

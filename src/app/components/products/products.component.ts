@@ -259,7 +259,7 @@ export class ProductsComponent implements OnInit {
             }else {
               if(resp.code === 0) {
                 if(resp.price_list === undefined || resp.price_list.length === 0)
-                  return;
+                  this.toastyService.warning('У Вас нет товаров');
                 this.products = resp.price_list;
                 if(this.limit < resp.price_list.length)
                   this.timestamp = resp.price_list[this.limit-1].timestamp;
