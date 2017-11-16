@@ -86,11 +86,10 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
     console.log(column);
     let scroll = column.scroll;
       console.log("scroll");
-    if(scroll > 0 && 
-      column.limit > proposalLimit &&
+    if(scroll > 0 &&
       !this.scrolled ){
       console.log("scrollingto", scroll);
-      // document.getElementById('proposalTable').scrollTop = scroll;
+      document.getElementById('proposalTable').scrollTop = scroll;
       try {
         console.log(this.myScrollContainer.nativeElement.scrollTop, "===", column.scroll)
         if(this.myScrollContainer.nativeElement.scrollTop !== column.scroll){
@@ -330,12 +329,12 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
     //count minimum limit and scroll position:
     let scrollPos = e.target.scrollTop;
     let scrollLimit = this.Math.round(scrollPos/32.64 + 10);
-    // console.log(scrollPos, e.srcElement.scrollHeight, scrollLimit);
+    console.log(scrollPos, e.srcElement.scrollHeight, scrollLimit);
     if(scrollLimit < proposalLimit){
       scrollLimit = proposalLimit;
     }
     this.proposalService.setScrollPositionAndLimit(this.selectedFilter, scrollPos, scrollLimit);
-    // console.log(scrollPos);
+    console.log(scrollPos);
   }
 
 }
