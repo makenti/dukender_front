@@ -158,3 +158,30 @@ a.ban-customer-link{
 }
 
 .print-only {display: none}
+.proposal-table .h1{
+    height: 40.42px;
+    min-height: 40.42px;
+    overflow-y: hidden;
+}
+.proposal-table .h2{
+    height: calc(40.42*2px);
+    min-height: calc(40.42*2px);
+    overflow-y: hidden;
+}
+.proposal-table .h3{
+    height: calc(40.42*3px);
+    min-height: calc(40.42*3px);
+    overflow-y: hidden;
+}
+.proposal-table .h4{
+    height: calc(40.42*4px);
+    min-height: calc(40.42*4px);
+}
+.proposal-table .h5{
+    height: calc(40.42*5px);
+    min-height: calc(40.42*5px);
+}
+.proposal-table .h6{
+    height: calc(40.42*6px);
+    min-height: calc(40.42*6px);
+}
