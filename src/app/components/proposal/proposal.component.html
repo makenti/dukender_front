@@ -99,7 +99,7 @@
 					<th *ngIf="mode === 'edit'" class="no-print"></th>
 				</tr>
 			</thead>
-			<tbody *ngIf="proposalItems !== null">
+			<tbody *ngIf="proposalItems !== null" class="{{proposalBodyClass}}">
 				<tr *ngFor="let item of proposalItems | searchPipe: 'name': searchQuery">
 					<td (click)="onShowItemOldData(item)">
 						<span class="removed-item" *ngIf="item.removed">{{item.removed}} {{item.name}}</span>

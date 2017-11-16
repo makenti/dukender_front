@@ -83,6 +83,7 @@ export class ProposalComponent implements OnInit  {
   private deliveryBefore: string = '';
   private itemToShow: any = null;
   private customerAddress: string = '';
+  private proposalBodyClass: string = 'h';
 
   constructor(
   	private auth: AuthService,
@@ -185,6 +186,7 @@ export class ProposalComponent implements OnInit  {
                 this.proposalItems.splice(i+1, 0, item.bonus_item);
               }
             }
+            this.proposalBodyClass = "h"+this.proposalItems.length;
            }
          },
          error =>  this.errorMessage = <any>error
