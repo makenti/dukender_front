@@ -77,6 +77,27 @@
 								class="set-status-btn"
 								>Показать</span>
 				</div>
+				<div class="proposal-info-field relation">
+					<b>Id 1C </b>
+					<input type="number" 
+						class="mm-input"
+						placeholder=""
+						[(ngModel)]="id_1c">
+					<span (click)="onSetCustomerRelation()"
+						*ngIf="id_1c_changed"
+						class="set-status-btn">
+						Сохранить</span>
+				</div>
+				<div class="proposal-info-field relation">
+					<b>Имя 1C </b>
+					<input type="text" 
+						class="mm-input"
+						placeholder=""
+						[(ngModel)]="name_1c">
+					<span (click)="onSetCustomerRelation()"
+								class="set-status-btn"
+								>Сохранить</span>
+				</div>
 			</div>
 		</div>
 		<div class="search-container no-print">

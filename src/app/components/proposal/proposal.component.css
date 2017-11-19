@@ -185,3 +185,8 @@ a.ban-customer-link{
     height: calc(40.42*6px);
     min-height: calc(40.42*6px);
 }
+.relation input{
+    width: 100px;
+    height: 26px;
+    margin-right: 12px;
+}

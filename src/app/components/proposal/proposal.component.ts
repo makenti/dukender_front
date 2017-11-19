@@ -84,7 +84,10 @@ export class ProposalComponent implements OnInit  {
   private itemToShow: any = null;
   private customerAddress: string = '';
   private proposalBodyClass: string = 'h';
-
+  private id_1c: number;
+  private id_1c_changed: boolean = false;
+  private name_1c: string = "";
+  private info: string = "";
   constructor(
   	private auth: AuthService,
   	private router: Router,
