@@ -182,6 +182,7 @@ export class ProposalComponent implements OnInit  {
               if(item.bonus_item !== null &&
                 item.bonus_item !== undefined){
                 item.bonus_item.price = 0;
+                item.bonus_item.is_bonus = true;
                 item.bonus_item.count = this.Math.trunc(item.count / item.item_info.for_count * item.item_info.bonus_count);
                 this.proposalItems.splice(i+1, 0, item.bonus_item);
               }
@@ -328,7 +329,7 @@ export class ProposalComponent implements OnInit  {
   collectProposalItems() {
     this.proposalItemsToSend = [];
     this.proposalItems.map((p: any) => {
-      if(!p.removed) {
+      if(!p.removed && p.is_bonus !== true) {
         let proposal = {
           item_id: p.item_id,
           count: p.count,
