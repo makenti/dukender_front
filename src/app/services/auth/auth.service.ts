@@ -23,9 +23,9 @@ export class AuthService {
   };
 
   constructor(
-    private http: Http,
-    private router: Router,
-    private toasty: ToastyService) {}
+    public http: Http,
+    public router: Router,
+    public toasty: ToastyService) {}
 
   authenticate(data:any): Observable<any> {
 

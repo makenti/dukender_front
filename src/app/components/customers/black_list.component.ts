@@ -14,16 +14,16 @@ import { AuthService, CustomersService } from '../../services/index';
 })
 export class BlackListComponent implements OnInit {
 
-	private errorMessage: any[] = [];
-	private bannedCustomers: any[] = [];
-	private selectedCustomers: any[] = [];
-  private loading: boolean = false;
+	public errorMessage: any[] = [];
+	public bannedCustomers: any[] = [];
+	public selectedCustomers: any[] = [];
+  public loading: boolean = false;
 
   constructor(
-  		private auth: AuthService,
-  		private router: Router,
-  		private customerService: CustomersService,
-      private toastyService: ToastyService) {}
+  		public auth: AuthService,
+  		public router: Router,
+  		public customerService: CustomersService,
+      public toastyService: ToastyService) {}
 
   ngOnInit() {
   	this.getBannedCustomers();

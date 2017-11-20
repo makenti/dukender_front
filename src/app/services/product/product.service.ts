@@ -14,9 +14,9 @@ import { PromotionService } from '../promotion/promotion.service';
 export class ProductService {
 
   constructor(
-    private http: Http,
-    private auth: AuthService,
-    private promService: PromotionService
+    public http: Http,
+    public auth: AuthService,
+    public promService: PromotionService
   ) { }
 
   addProduct(product: any): Observable<any> {

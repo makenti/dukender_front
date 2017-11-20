@@ -26,18 +26,18 @@ export class PromotionsComponent implements OnInit {
   loading: boolean = false;
 
   public searchQuery: string = '';
-  private sortField:string = "id";
-  private sortOrder:string = "asc";
+  public sortField:string = "id";
+  public sortOrder:string = "asc";
 
-  private selectedFilter = '';
-  private timestamp: any = '';
-  private limit: number = 2000;
+  public selectedFilter = '';
+  public timestamp: any = '';
+  public limit: number = 2000;
 
   constructor(
-  	private auth: AuthService,
-  	private router: Router,
-  	private promotionService: PromotionService,
-    private toastyService: ToastyService) {}
+  	public auth: AuthService,
+  	public router: Router,
+  	public promotionService: PromotionService,
+    public toastyService: ToastyService) {}
 
   ngOnInit() {
     var id = window.localStorage.getItem('selectedPromotionType');

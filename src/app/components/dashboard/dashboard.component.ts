@@ -16,17 +16,17 @@ export class DashboardComponent implements OnInit {
   public sortBy = 'email';
   public sortOrder = 'asc';
 
-	private proposals: any[] = [];
-  private loading: boolean = false;
-  private errorMessage: any[] = [];
+	public proposals: any[] = [];
+  public loading: boolean = false;
+  public errorMessage: any[] = [];
 
-  private currUser: any;
+  public currUser: any;
   
   constructor(
-    private auth: AuthService,
-  	private router: Router,
-    private toastyService: ToastyService,
-  	private proposalService: ProposalService
+    public auth: AuthService,
+  	public router: Router,
+    public toastyService: ToastyService,
+  	public proposalService: ProposalService
   ) { }
 
   ngOnInit() {

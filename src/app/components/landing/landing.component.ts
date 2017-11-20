@@ -16,27 +16,27 @@ export class LandingComponent implements OnInit {
   @ViewChild('modalRegister')
   modal: ModalDirective;
 
-  private localUser = {
+  public localUser = {
     username: '',
     password: ''
   };
-  private newUser = {
+  public newUser = {
     email: '',
     password: '',
     checkOffer: false
   };
 
-  private showLogin = true;
-  private showRegister = false;
-  private rememberMe = false;
-  private loginErrorMessage = new Array();
-  private registerErrorMessage = new Array();
+  public showLogin = true;
+  public showRegister = false;
+  public rememberMe = false;
+  public loginErrorMessage = new Array();
+  public registerErrorMessage = new Array();
 
   constructor(
-    private auth: AuthService,
-    private errorSrv: ErrorService,
-    private toolbarSrv: ToolbarService,
-    private router: Router) {
+    public auth: AuthService,
+    public errorSrv: ErrorService,
+    public toolbarSrv: ToolbarService,
+    public router: Router) {
   }
 
   ngOnInit() {

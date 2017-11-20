@@ -12,8 +12,8 @@ export class ToolbarService {
   toolbarTitle: string = 'Добро пожаловать в Dukender.';
 
   constructor(
-    private http: Http,
-    private auth: AuthService
+    public http: Http,
+    public auth: AuthService
   ) { }
 
   setToolbarTitle(newTitle: string) {

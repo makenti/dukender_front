@@ -14,7 +14,7 @@ declare var saveAs:any;
 @Injectable()
 export class ProposalService {
 
-  private filter = {
+  public filter = {
     selected: '',
     fields: 
     [ { field: '', order: '', scroll: 0, limit: 0},    
@@ -28,8 +28,8 @@ export class ProposalService {
   };
 
   constructor(
-    private http: Http,
-    private auth: AuthService
+    public http: Http,
+    public auth: AuthService
   ) {
     let filter = JSON.parse(window.localStorage.getItem('filter'));
     if(filter) 

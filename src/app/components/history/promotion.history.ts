@@ -11,15 +11,15 @@ import { AuthService, HistoryService } from '../../services/index';
 })
 export class PromotionHistoryComponent implements OnInit {
 
-  private errorMessage: any[] = [];
-  private history: any[] = [];
-  private loading: boolean = false;
+  public errorMessage: any[] = [];
+  public history: any[] = [];
+  public loading: boolean = false;
 
  	constructor(
-  	private auth: AuthService,
-  	private router: Router,
-    private toastyService: ToastyService,
-  	private historyService: HistoryService) {}
+  	public auth: AuthService,
+  	public router: Router,
+    public toastyService: ToastyService,
+  	public historyService: HistoryService) {}
 
   ngOnInit() {
   	this.getHistory();

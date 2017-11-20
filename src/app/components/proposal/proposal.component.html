@@ -77,6 +77,18 @@
 								class="set-status-btn"
 								>Показать</span>
 				</div>
+				<div class="proposal-info-field">
+					<b (click)="modalId1c.show()" class="set-status-btn">БИН по бухучету:</b>
+					<span>{{proposal.relation_full.id_1c}}</span>
+				</div>
+				<div class="proposal-info-field">
+					<b (click)="modalName1c.show()" class="set-status-btn">Название по бухучету:</b>
+					<span>{{proposal.relation_full.name_1c}}</span>
+				</div>
+				<div class="proposal-info-field">
+					<b (click)="modalInfo.show()" class="set-status-btn">Дополнительная информация:</b>
+					<span>{{relation.short_info}}</span>
+				</div>
 			</div>
 		</div>
 		<div class="search-container no-print">
@@ -344,6 +356,81 @@
 				<div class="modal-btns flex-container flex-center">
 					<button class="mm-btn mm-btn-default" (click)="modalDeleteProposal.hide()">Отмена</button>
 					<button class="mm-btn mm-btn-danger" (click)="onRevokeProposal()">Удалить</button>
+				</div>
+		  </div>
+		</div>
+  </div>
+</div>
+
+<div bsModal #modalId1c="bs-modal" *ngIf="proposal"
+	class="modal fade modal-small modal-delete-user">
+	<div class="modal-dialog modal-sm">
+    <div class="modal-content">
+		  <div class="modal-body">
+		  	<div class="modal-wrapper">
+		    	<p class="text-center">БИН по бухучету</p>
+		    </div>
+		    <div class="flex-container flex-center info">
+			    <input
+			    	type="number"
+			    	class="mm-input"
+			    	placeholder="Максимум 12 знака"
+			    	max="999999999999"
+			    	[(ngModel)]="relation.id_1c" />
+			  </div>
+				<div class="modal-btns flex-container flex-center">
+					<button class="mm-btn mm-btn-default" (click)="closeInfo()">Отмена</button>
+					<button class="mm-btn mm-btn-danger" (click)="saveInfo()">Сохранить</button>
+				</div>
+		  </div>
+		</div>
+  </div>
+</div>
+
+<div bsModal #modalName1c="bs-modal" *ngIf="proposal"
+	class="modal fade modal-small modal-delete-user">
+	<div class="modal-dialog modal-sm">
+    <div class="modal-content">
+		  <div class="modal-body">
+		  	<div class="modal-wrapper">
+		    	<p class="text-center">Название по бухучету</p>
+		    </div>
+		    <div class="flex-container flex-center info">
+			    <input
+			    	type="text"
+			    	class="mm-input"
+			    	maxlength="20"
+			    	placeholder="Максимум 20 знака"
+			    	[(ngModel)]="relation.name_1c" />
+			  </div>
+				<div class="modal-btns flex-container flex-center">
+					<button class="mm-btn mm-btn-default" (click)="closeInfo()">Отмена</button>
+					<button class="mm-btn mm-btn-danger" (click)="saveInfo()">Сохранить</button>
+				</div>
+		  </div>
+		</div>
+  </div>
+</div>
+
+<div bsModal #modalInfo="bs-modal" *ngIf="proposal"
+	class="modal fade modal-small modal-delete-user">
+	<div class="modal-dialog modal-sm">
+    <div class="modal-content">
+		  <div class="modal-body">
+		  	<div class="modal-wrapper">
+		    	<p class="text-center">Дополнительная информация</p>
+		    </div>
+		    <div class="flex-container flex-center info">
+			    <textarea
+			    	type="text"
+			    	class="mm-input"
+			    	rows="3"
+			    	maxlength="5000"
+			    	[(ngModel)]="relation.info"></textarea>
+			  </div>
+				<div class="modal-btns flex-container flex-center">
+					<button class="mm-btn mm-btn-default" (click)="closeInfo()">Отмена</button>
+					<button class="mm-btn mm-btn-danger" (click)="saveInfo()">Сохранить</button>
 				</div>
 		  </div>
 		</div>

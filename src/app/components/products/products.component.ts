@@ -55,44 +55,44 @@ export class ProductsComponent implements OnInit {
   cropper2:ImageCropperComponent;
 
   public searchQuery: string = '';
-  private sortField:string = "";
-  private sortOrder:string = "asc";
-  private limit: number = priceLimit;
-  private timestamp: any = '';
+  public sortField:string = "";
+  public sortOrder:string = "asc";
+  public limit: number = priceLimit;
+  public timestamp: any = '';
 
-  private errorMessage: string;
-  private categories = new Array();
-  private companyCategories = new Array();
-  private products = new Array();
-  private selectedCategory: any = null;
-  private selectedProducts: any[] = [];
-  private selectedImage: any = null;
-  private processMode: string = '';
-  private fileSelected: boolean = false;
-  private allSelected: boolean = false;
-  private productImageText: string = 'Выберите файл';
-  private selectedFile: any = null;
-  private fileChooserInit: boolean = false;
-  private loading: boolean = false;
-  private loadingOnSave: boolean = false;
-  private addLoading: boolean = false;
-  private uploadCategory = '';
+  public errorMessage: string;
+  public categories = new Array();
+  public companyCategories = new Array();
+  public products = new Array();
+  public selectedCategory: any = null;
+  public selectedProducts: any[] = [];
+  public selectedImage: any = null;
+  public processMode: string = '';
+  public fileSelected: boolean = false;
+  public allSelected: boolean = false;
+  public productImageText: string = 'Выберите файл';
+  public selectedFile: any = null;
+  public fileChooserInit: boolean = false;
+  public loading: boolean = false;
+  public loadingOnSave: boolean = false;
+  public addLoading: boolean = false;
+  public uploadCategory = '';
 
-  private sProductImage: any;
-  private nProductImage: any;
-  private cropperSettings: CropperSettings;
-  private imageSelected: boolean = false;
-  private croppedWidth:number;
-  private croppedHeight:number;
-  private croppedLeft:number;
-  private croppedTop:number;
+  public sProductImage: any;
+  public nProductImage: any;
+  public cropperSettings: CropperSettings;
+  public imageSelected: boolean = false;
+  public croppedWidth:number;
+  public croppedHeight:number;
+  public croppedLeft:number;
+  public croppedTop:number;
 
   currentImage: any = {
     height: 0,
     width: 0
   };
   loadingImage: boolean = false;
-  private newProduct = {
+  public newProduct = {
     id: '',
     category_id: 0,
     name: '',
@@ -111,7 +111,7 @@ export class ProductsComponent implements OnInit {
     width: 0,
     height: 0
   };
-  private selectedProduct = {
+  public selectedProduct = {
     id: '',
     category_id: 0,
     name: '',
@@ -130,21 +130,21 @@ export class ProductsComponent implements OnInit {
     width: 0,
     height: 0
   };
-  private cropPosition = {
+  public cropPosition = {
     x: 0,
     y: 0,
     w: 200,
     h: 200
   }
   constructor (
-    private categoryService: CategoryService,
-    private companyService: CompanyProfileService,
-    private productService: ProductService,
-    private uploadService: UploadService,
-    private auth: AuthService,
-    private router: Router,
-    private toastyService: ToastyService,
-    private errorService: ErrorService,
+    public categoryService: CategoryService,
+    public companyService: CompanyProfileService,
+    public productService: ProductService,
+    public uploadService: UploadService,
+    public auth: AuthService,
+    public router: Router,
+    public toastyService: ToastyService,
+    public errorService: ErrorService,
   ) {}
 
   ngOnInit() {
