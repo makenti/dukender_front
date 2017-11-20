@@ -26,37 +26,37 @@
 				class="mm-btn mm-btn-filter mm-btn-filter-2"
 				(click)="getProposals('0')"
 				[class.selected]="selectedFilter == '0'"
-				[disabled]="loading">Входящие <i>{{proposalStats.inbound}}</i></button>
+				[disabled]="loading">Входящие <i *ngIf="proposalStats">{{proposalStats.inbound}}</i></button>
 		<button
 				class="mm-btn mm-btn-filter mm-btn-filter-3"
 				(click)="getProposals('1')"
 				[class.selected]="selectedFilter == '1'"
-				[disabled]="loading">В работе <i>{{proposalStats.processing}}</i></button>
+				[disabled]="loading">В работе <i *ngIf="proposalStats">{{proposalStats.processing}}</i></button>
 		<button
 				class="mm-btn mm-btn-filter mm-btn-filter-4"
 				(click)="getProposals('5')"
 				[class.selected]="selectedFilter == '5'"
-				[disabled]="loading">Согласование с поставщиком <i>{{proposalStats.approving}}</i></button>
+				[disabled]="loading">Согласование с поставщиком <i *ngIf="proposalStats">{{proposalStats.approving}}</i></button>
 		<button
 				class="mm-btn mm-btn-filter mm-btn-filter-5"
 				(click)="getProposals('4')"
 				[class.selected]="selectedFilter == '4'"
-				[disabled]="loading">Согласование с магазином <i>{{proposalStats.approving_c}}</i></button>
+				[disabled]="loading">Согласование с магазином <i *ngIf="proposalStats">{{proposalStats.approving_c}}</i></button>
 		<button
 				class="mm-btn mm-btn-filter mm-btn-filter-6"
 				(click)="getProposals('2')"
 				[class.selected]="selectedFilter == '2'"
-				[disabled]="loading">В доставке <i>{{proposalStats.delivery}}</i></button>
+				[disabled]="loading">В доставке <i *ngIf="proposalStats">{{proposalStats.delivery}}</i></button>
 		<button
 				class="mm-btn mm-btn-filter mm-btn-filter-7"
 				(click)="getProposals('3')"
 				[class.selected]="selectedFilter == '3'"
-				[disabled]="loading">Исполненные <i>{{proposalStats.closed}}</i></button>
+				[disabled]="loading">Исполненные <i *ngIf="proposalStats">{{proposalStats.closed}}</i></button>
 		<button
 				class="mm-btn mm-btn-filter mm-btn-filter-8"
 				(click)="getProposals('6')"
 				[class.selected]="selectedFilter == '6'"
-				[disabled]="loading">Отмененные <i>{{proposalStats.cancelled}}</i></button>
+				[disabled]="loading">Отмененные <i *ngIf="proposalStats">{{proposalStats.cancelled}}</i></button>
 	</div>
 
 	<table class="table table-striped proposals-table"
@@ -145,7 +145,22 @@
 	</table>
 
 	<div class="flex-container flex-between btns-container">
-		<button class="mm-btn mm-btn-default" (click)="downloadExcel()">Скачать отчет</button>
+		<div class="dropdown navbar-d" dropdown>
+      <button dropdownToggle class="dropdown-btn navbar-d-btn btn-space-right">
+        <span>Скачать отчет</span>
+        <i class="fa fa-caret-down" aria-hidden="true"></i>
+      </button>
+      <ul *dropdownMenu class="dropdown-menu navbar-d-menu">
+        <li>
+          <button class="dropdown-btn navbar-d-btn">
+            <span>Скачать отчет</span>
+            <i class="fa fa-caret-up" aria-hidden="true"></i>
+          </button>
+        </li>
+        <li><a (click)="downloadExcel()">по заявкм</a></li>
+				<li><a (click)="downloadExcelItem()">по товарам</a></li>
+      </ul>
+  	</div>
 		<button class="mm-btn mm-btn-default" (click)="updateProposals()">Обновить</button>
 	</div>
 </div>

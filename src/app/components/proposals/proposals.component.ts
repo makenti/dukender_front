@@ -128,6 +128,24 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
           error =>  this.errorMessage = <any>error
         );
   }
+  downloadExcelItem(){
+    let id = this.selectedFilter ==="" ? 7 : this.selectedFilter;
+    let data = {
+      status: this.selectedFilter,
+      status_name: this.statuses[id].status
+    };
+    this.proposalService.downloadExcelItem(data)
+        .subscribe(
+          resp => {
+            if(resp) {
+              this.toastyService.success('Успешно экспортирован');
+            }else {
+              this.toastyService.error('Ошибка на сервере');
+            }
+          },
+          error =>  this.errorMessage = <any>error
+        );
+  }
   getProposals(id: any) {
   	this.selectedFilter = id;
     this.proposals = [];

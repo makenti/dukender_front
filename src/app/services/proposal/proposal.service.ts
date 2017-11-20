@@ -296,4 +296,25 @@ export class ProposalService {
       return true;
     });
   }
+  downloadExcelItem(data: any) {
+    let headers = new Headers({
+      'Auth-Token': this.auth.getToken(),
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Accept': 'application/vnd.ms-excel'
+    });
+
+    let options = new RequestOptions({ headers: headers, responseType: ResponseContentType.Blob });
+    let bodyString = "status="+data.status;
+
+    return this.http.post(serverURL + '/sellers/requests/export_to_excel/all/v2/', bodyString,{
+        headers: headers,
+        responseType: ResponseContentType.Blob
+    }).map((res: any) => {
+      let blob = new Blob([res._body], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-16le"
+      });
+      FileSaver.saveAs(blob, "Заявки-" + data.status_name + ".xls");
+      return true;
+    });
+  }
 }
