@@ -57,6 +57,15 @@ export class ProposalComponent implements OnInit  {
   @ViewChild('modalDeleteProposal')
   modalDeleteProposal: ModalDirective;
 
+  @ViewChild('modalId1c')
+  modalId1c: ModalDirective;
+
+  @ViewChild('modalName1c')
+  modalName1c: ModalDirective;
+
+  @ViewChild('modalInfo')
+  modalInfo: ModalDirective;
+
   public searchQuery: string = '';
 	public errorMessage = new Array();
 	public proposal: any = null;
@@ -84,10 +93,9 @@ export class ProposalComponent implements OnInit  {
   public itemToShow: any = null;
   public customerAddress: string = '';
   public proposalBodyClass: string = 'h';
-  public id_1c: number;
-  public id_1c_changed: boolean = false;
-  public name_1c: string = "";
-  public info: string = "";
+
+  public relation:any;
+
   constructor(
   	public auth: AuthService,
   	public router: Router,
@@ -178,7 +186,13 @@ export class ProposalComponent implements OnInit  {
              this.itemsTotalSum = resp.total_price;
              if(this.proposal.status !== 2 && this.proposal.status !== 3 && this.proposal.status !== 6)
                this.checkChangesInPriceList();
-
+            //for additional info: 
+            this.relation = Object.assign({}, this.proposal.relation_full);
+            
+            this.relation.short_info = this.relation.info;
+            if(this.relation.info.length > 20){
+              this.relation.short_info = this.relation.info.substr(0, 20)+"...";
+            }
             //if tovarnyi bonus:
             for(let i = 0; i < this.proposalItems.length; i++) {
               let item = this.proposalItems[i];
@@ -691,5 +705,46 @@ export class ProposalComponent implements OnInit  {
       </html>`
     );
     popupWin.document.close();
+  }
+  closeInfo(){
+    this.relation = Object.assign({}, this.proposal.relation_full);
+    this.modalId1c.hide();
+    this.modalName1c.hide();
+    this.modalInfo.hide();
+  }
+  saveInfo(){
+    if(this.relation.id_1c > 999999999999){
+      this.toastyService.error('БИН должен быть 12-значным');
+      return;
+    }
+    if(this.relation.name_1c.length > 20){
+      this.toastyService.error('Название должен быть максимум 20-значным');
+      return;
+    }
+    let data = {
+      shop_id: this.proposal.customer.id,
+      id_1c: this.relation.id_1c,
+      name_1c: this.relation.name_1c,
+      info: this.relation.info,
+      relation: parseInt(this.proposal.relation, 10)
+    };
+    this.customerService.setCustomerStatus(data)
+        .subscribe(
+          resp => {
+            if (resp.code === 0){
+              this.proposal.relation_full = Object.assign({}, this.relation);
+              this.relation.short_info = this.relation.info;
+              if(this.relation.info.length > 20){
+                this.relation.short_info = this.relation.info.substr(0, 20)+"...";
+              }
+            }else{
+              this.toastyService.error('Попробуйте еще раз');
+            }
+            this.modalId1c.hide();
+            this.modalName1c.hide();
+            this.modalInfo.hide();
+          },
+          error =>  this.errorMessage = <any>error
+        );    
   }
 }

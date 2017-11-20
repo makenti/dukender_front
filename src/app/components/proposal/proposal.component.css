@@ -190,3 +190,11 @@ a.ban-customer-link{
     height: 26px;
     margin-right: 12px;
 }
+.info {
+    margin-bottom: 24px;
+}
+.info textarea{
+    height: 140px;
+    width: 100%;
+    border-radius: 0;
+}
