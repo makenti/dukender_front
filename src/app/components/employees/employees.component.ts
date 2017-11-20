@@ -24,12 +24,12 @@ export class EmployeesComponent implements OnInit {
   @ViewChild('modalDelegateUser')
   modalDelegateUser: ModalDirective;
 
-  private errorMessage: string;
-  private staff: any[];
-  private formChecked: boolean = false;
-  private loading: boolean = false;
+  public errorMessage: string;
+  public staff: any[];
+  public formChecked: boolean = false;
+  public loading: boolean = false;
 
-  private newEmployee = {
+  public newEmployee = {
     first_name: '',
     second_name: '',
     middle_name: '',
@@ -38,7 +38,7 @@ export class EmployeesComponent implements OnInit {
     permissions: new Array()
   };
 
-  private selectedEmployee = {
+  public selectedEmployee = {
     first_name: '',
     second_name: '',
     middle_name: '',
@@ -47,18 +47,18 @@ export class EmployeesComponent implements OnInit {
     profile_type: '',
     permissions: new Array()
   };
-  private selectedProfileType: any;
-  private selectedUsers = new Array();
-  private selectedEmployees = new Array();
-  private selectedRoleName = 'Выберите роль';
-  private profileTypes = [
+  public selectedProfileType: any;
+  public selectedUsers = new Array();
+  public selectedEmployees = new Array();
+  public selectedRoleName = 'Выберите роль';
+  public profileTypes = [
     { id: 1, name: 'Администратор' },
     { id: 2, name: 'Оператор прайс-листа' },
     { id: 3, name: 'Оператор заявок' },
     { id: 4, name: 'Оператор акций'}
   ];
 
-  private permissionsList = [
+  public permissionsList = [
     { id: 0, name: 'Заявки', selected: false },
     { id: 1, name: 'Акции и скидки', selected: false },
     { id: 2, name: 'Компания', selected: false },
@@ -68,13 +68,13 @@ export class EmployeesComponent implements OnInit {
     // { id: 3, name: 'Взаимоотношения с заказчиками', selected: false },
   ];
 
-  private employeeToDelegate:any = null;
+  public employeeToDelegate:any = null;
 
   constructor(
-    private employeeService: EmployeeService,
-    private auth: AuthService,
-    private errorService: ErrorService,
-    private toastyService: ToastyService
+    public employeeService: EmployeeService,
+    public auth: AuthService,
+    public errorService: ErrorService,
+    public toastyService: ToastyService
   ) { }
 
   ngOnInit() {

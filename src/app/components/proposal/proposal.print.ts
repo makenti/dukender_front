@@ -16,21 +16,21 @@
 
 // export class ProposalPrintComponent implements OnInit  {
 
-// 	private errorMessage = new Array();
-// 	private proposal: any = null;
-//   private key: string;
-//   private proposalItems = new Array();
-//   private deliveryDate: any = '';
-//   private deliveryDateText: any = '';
-//   private proposalDate: any = '';
-//   private customerAddress: any = '';
+// 	public errorMessage = new Array();
+// 	public proposal: any = null;
+//   public key: string;
+//   public proposalItems = new Array();
+//   public deliveryDate: any = '';
+//   public deliveryDateText: any = '';
+//   public proposalDate: any = '';
+//   public customerAddress: any = '';
 
 //   constructor(
-//   	private auth: AuthService,
-//   	private router: Router,
-//     private route: ActivatedRoute,
-//   	private proposalService: ProposalService,
-//     private toastyService: ToastyService) {}
+//   	public auth: AuthService,
+//   	public router: Router,
+//     public route: ActivatedRoute,
+//   	public proposalService: ProposalService,
+//     public toastyService: ToastyService) {}
 
 //   ngOnInit() {
 //     this.route.params.subscribe(params => {

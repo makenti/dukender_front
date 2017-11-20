@@ -10,9 +10,9 @@ import { AuthService, ToolbarService } from '../../services/index';
 })
 export class ResetSuccessComponent {
   constructor(
-    private auth: AuthService,
-    private router: Router,
-    private toolbarService: ToolbarService) {
+    public auth: AuthService,
+    public router: Router,
+    public toolbarService: ToolbarService) {
     this.toolbarService.setToolbarTitle('Восстановление пароля.');
   }
 }

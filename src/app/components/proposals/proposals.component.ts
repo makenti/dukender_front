@@ -24,20 +24,20 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
   myScrollContainer: ElementRef;
   Math: any;
 
-	private proposals: any[] = [];
-	private errorMessage: any[] = [];
-	private selectedFilter = '';
-  private selectedDistricts: any[] = [];
-  private currUser: any;
-  private companyRegions: any[] = [];
-  private loading: boolean = false;
-  private proposalStats: any[] = [];
-  private searchQuery: string = '';
-  private sortField:string = "";
-  private sortOrder:string = "asc";
+	public proposals: any;
+	public errorMessage: any;
+	public selectedFilter = '';
+  public selectedDistricts: any;
+  public currUser: any;
+  public companyRegions: any;
+  public loading: boolean = false;
+  public proposalStats: any;
+  public searchQuery: string = '';
+  public sortField:string = "";
+  public sortOrder:string = "asc";
   
-  private filter: any;
-  private last_timestamp: string = "";
+  public filter: any;
+  public last_timestamp: string = "";
   statuses = [
     {id: 0, status: "Входящие"},
     {id: 1, status: "В работе"},
@@ -48,14 +48,14 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
     {id: 6, status: "Отмененные"},
     {id: "", status: "Все"},
   ];
-  private scrolled: boolean = true;
+  public scrolled: boolean = true;
 
   constructor(
-    private auth: AuthService,
-  	private router: Router,
-  	private proposalService: ProposalService,
-    private companyService: CompanyProfileService,
-    private toastyService: ToastyService
+    public auth: AuthService,
+  	public router: Router,
+  	public proposalService: ProposalService,
+    public companyService: CompanyProfileService,
+    public toastyService: ToastyService
   ) { }
   ngOnInit() {
     this.Math = Math;

@@ -13,20 +13,20 @@ import { ToastyService } from 'ng2-toasty';
   styleUrls: ['company.info.css']
 })
 export class CompanyCategoryComponent implements OnInit {
-	private errorMessage: string;
-	private categories: any[] = [];
-  private companyCategories: any[] = [];
-	private selectedCategories: any[] = [];
-  private staticCategories: any[] = [];
-  private loading: boolean = false;
-  private register: boolean = true;
+	public errorMessage: string;
+	public categories: any[] = [];
+  public companyCategories: any[] = [];
+	public selectedCategories: any[] = [];
+  public staticCategories: any[] = [];
+  public loading: boolean = false;
+  public register: boolean = true;
 
  	constructor (
-    private categoryService: CategoryService,
-    private companyService: CompanyProfileService,
-    private auth: AuthService,
-    private router: Router,
-    private toastyService: ToastyService
+    public categoryService: CategoryService,
+    public companyService: CompanyProfileService,
+    public auth: AuthService,
+    public router: Router,
+    public toastyService: ToastyService
    ) {
   }
 

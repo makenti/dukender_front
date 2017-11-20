@@ -19,9 +19,9 @@ export class CompanyProfileService {
   progressObserver: any;
 
   constructor(
-    private http: Http,
-    private auth: AuthService,
-    private router: Router
+    public http: Http,
+    public auth: AuthService,
+    public router: Router
   ) { }
 
   registerFirstStep(body: Object): Observable<any> {

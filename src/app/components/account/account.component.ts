@@ -13,31 +13,31 @@ import { AuthService, AccountService } from '../../services/index';
 })
 export class AccountComponent implements OnInit {
 
-  private errorMessage: any[] = [];
-  private accountsData: any[] = [];
-  private startSaldo: number;
-  private endSaldo: number;
-  private turnover: number;
-  private posTurnover: number;
-  private years: any[] = [];
-  private selectedYear: number = 2017;
-  private selectedMonth: number = moment().month() + 1;
-  private userCompany: any = null;
-  private loading: boolean = false;
-  private currentDate: any = moment().format('DD MMMM YYYY');
+  public errorMessage: any[] = [];
+  public accountsData: any[] = [];
+  public startSaldo: number;
+  public endSaldo: number;
+  public turnover: number;
+  public posTurnover: number;
+  public years: any[] = [];
+  public selectedYear: number = 2017;
+  public selectedMonth: number = moment().month() + 1;
+  public userCompany: any = null;
+  public loading: boolean = false;
+  public currentDate: any = moment().format('DD MMMM YYYY');
 
-  private allCredits: number = 0;
+  public allCredits: number = 0;
 
-  private selectedDates = {
+  public selectedDates = {
     month: moment().month(),
     year: moment().year()
   };
 
   constructor(
-    private auth: AuthService,
-    private router: Router,
-    private toastyService: ToastyService,
-    private accountsService: AccountService) {
+    public auth: AuthService,
+    public router: Router,
+    public toastyService: ToastyService,
+    public accountsService: AccountService) {
     this.years = [2016, 2017, 2018];
     console.log(moment().month() + 1);
   }

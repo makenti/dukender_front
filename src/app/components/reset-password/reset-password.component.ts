@@ -16,15 +16,16 @@ export class ResetPasswordComponent implements OnInit {
   @ViewChild('modalReset')
   modal:ModalDirective;
 
-  resetUser = {
+  public resetUser = {
     username: ''
   };
-
+  public errorMessage:string = "";
+  
   constructor(
-    private auth: AuthService,
-    private router: Router,
-    private toolbarService: ToolbarService,
-    private toastyService: ToastyService
+    public auth: AuthService,
+    public router: Router,
+    public toolbarService: ToolbarService,
+    public toastyService: ToastyService
   ) { }
 
   ngOnInit() {

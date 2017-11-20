@@ -15,8 +15,8 @@ export class PromotionService {
   selectedProducts:any;
 
   constructor(
-    private http: Http,
-    private auth: AuthService
+    public http: Http,
+    public auth: AuthService
   ) { }
 
   getPromotions(data: any): Observable<any> {

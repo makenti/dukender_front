@@ -13,8 +13,8 @@ import { AuthService } from '../auth/index';
 export class AccountService {
 
   constructor(
-    private http: Http,
-    private auth: AuthService
+    public http: Http,
+    public auth: AuthService
   ) { }
 
   getAccounts(data: any): Observable<any> {

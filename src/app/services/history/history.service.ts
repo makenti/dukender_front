@@ -13,8 +13,8 @@ import { AuthService } from '../auth/index';
 export class HistoryService {
 
   constructor(
-    private http: Http,
-    private auth: AuthService
+    public http: Http,
+    public auth: AuthService
   ) { }
 
   getHistory(data: any): Observable<any> {

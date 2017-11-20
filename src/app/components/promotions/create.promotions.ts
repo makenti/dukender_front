@@ -37,14 +37,14 @@ export class CreatePromotionsComponent implements OnInit {
   companyProfile: any = null;
   daterange: any = {};
 
-  private companyCategories: any[] = [];
-  private loading:boolean = false;
-  private searchQuery:string = '';
-  private selectedCategory:any = null;
-  private products:any[] = [];
+  public companyCategories: any[] = [];
+  public loading:boolean = false;
+  public searchQuery:string = '';
+  public selectedCategory:any = null;
+  public products:any[] = [];
 
-  private selectedBonusItem:any = null;
-  private currentProduct:any = null;
+  public selectedBonusItem:any = null;
+  public currentProduct:any = null;
 
   @ViewChild('modalShowInfo')
   modalShowInfo:ModalDirective;
@@ -53,14 +53,14 @@ export class CreatePromotionsComponent implements OnInit {
   modalAddBonusItem:ModalDirective;
   
   constructor(
-  	private auth: AuthService,
-  	private router: Router,
-  	private route: ActivatedRoute,
-  	private promotionService: PromotionService,
-    private toastyService: ToastyService,
-    private companyService: CompanyProfileService,
-    private productService: ProductService,
-    private daterangepickerOptions: DaterangepickerConfig
+  	public auth: AuthService,
+  	public router: Router,
+  	public route: ActivatedRoute,
+  	public promotionService: PromotionService,
+    public toastyService: ToastyService,
+    public companyService: CompanyProfileService,
+    public productService: ProductService,
+    public daterangepickerOptions: DaterangepickerConfig
     ) {
     this.daterangepickerOptions.settings = {
       locale: {

@@ -9,8 +9,8 @@ import { AuthService } from '../auth/index';
 export class ErrorService {
 
   constructor(
-    private http: Http,
-    private auth: AuthService
+    public http: Http,
+    public auth: AuthService
   ) { }
 
   getCodeMessage(code: number) {

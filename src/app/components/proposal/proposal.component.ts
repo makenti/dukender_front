@@ -57,44 +57,44 @@ export class ProposalComponent implements OnInit  {
   @ViewChild('modalDeleteProposal')
   modalDeleteProposal: ModalDirective;
 
-  private searchQuery: string = '';
-	private errorMessage = new Array();
-	private proposal: any = null;
-  private proposalItems = new Array();
-  private proposalItemsToSend = new Array();
-	private mode: string = 'read';
-	private emailToSend: string = '';
-  private id: number;
-  private deliveryDate: any = '';
-  private deliveryDateText: any = '';
-  private selDate: Object = {year: 0, month: 0, day: 0};
+  public searchQuery: string = '';
+	public errorMessage = new Array();
+	public proposal: any = null;
+  public proposalItems = new Array();
+  public proposalItemsToSend = new Array();
+	public mode: string = 'read';
+	public emailToSend: string = '';
+  public id: number;
+  public deliveryDate: any = '';
+  public deliveryDateText: any = '';
+  public selDate: Object = {year: 0, month: 0, day: 0};
 
-  private proposalDate: any = '';
-  private newComment: string;
-  private currUser: any;
-  // private accessToEdit: boolean = true;
-  private accessToExec: boolean = true;
-  private editMode: boolean = true;
-  private delete: boolean = false;
-  private isEditableProposal: boolean = false;
+  public proposalDate: any = '';
+  public newComment: string;
+  public currUser: any;
+  // public accessToEdit: boolean = true;
+  public accessToExec: boolean = true;
+  public editMode: boolean = true;
+  public delete: boolean = false;
+  public isEditableProposal: boolean = false;
 
-  // private proposalBeforeEdit:any = '';
-  private proposalBefore: string = '';
-  private deliveryBefore: string = '';
-  private itemToShow: any = null;
-  private customerAddress: string = '';
-  private proposalBodyClass: string = 'h';
-  private id_1c: number;
-  private id_1c_changed: boolean = false;
-  private name_1c: string = "";
-  private info: string = "";
+  // public proposalBeforeEdit:any = '';
+  public proposalBefore: string = '';
+  public deliveryBefore: string = '';
+  public itemToShow: any = null;
+  public customerAddress: string = '';
+  public proposalBodyClass: string = 'h';
+  public id_1c: number;
+  public id_1c_changed: boolean = false;
+  public name_1c: string = "";
+  public info: string = "";
   constructor(
-  	private auth: AuthService,
-  	private router: Router,
-  	private route: ActivatedRoute,
-    private proposalService: ProposalService,
-  	private customerService: CustomersService,
-    private toastyService: ToastyService) {}
+  	public auth: AuthService,
+  	public router: Router,
+  	public route: ActivatedRoute,
+    public proposalService: ProposalService,
+  	public customerService: CustomersService,
+    public toastyService: ToastyService) {}
 
   ngOnInit() {
     this.Math = Math;
