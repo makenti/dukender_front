@@ -56,6 +56,7 @@ export class ProductService {
       formData.append('description', product.description);
       formData.append('id_1c', product.id_1c);
       formData.append('part_1c', product.part_1c);
+      formData.append('barcode', product.barcode);
       if(imageSelected){
         formData.append('image', product.image);
       }else if(product.image === null){

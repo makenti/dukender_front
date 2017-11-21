@@ -113,7 +113,8 @@ export class ProductsComponent implements OnInit {
     top: 0,
     left: 0,
     width: 0,
-    height: 0
+    height: 0,
+    barcode: '',
   };
   public selectedProduct = {
     id: '',
@@ -132,7 +133,8 @@ export class ProductsComponent implements OnInit {
     top: 0,
     left: 0,
     width: 0,
-    height: 0
+    height: 0,
+    barcode: ''
   };
   public cropPosition = {
     x: 0,
@@ -489,7 +491,8 @@ export class ProductsComponent implements OnInit {
       top: 0,
       left: 0,
       width: 0,
-      height: 0
+      height: 0,
+      barcode: ''
     };
     this.selectedImage = null;
     this.imageSelected = false;
@@ -514,7 +517,8 @@ export class ProductsComponent implements OnInit {
       top: 0,
       left: 0,
       width: 0,
-      height: 0
+      height: 0,
+      barcode: ''
     };
     this.selectedImage = null;
     this.imageSelected = false;
