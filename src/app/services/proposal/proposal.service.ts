@@ -26,7 +26,9 @@ export class ProposalService {
       { field: '', order: '', scroll: 0, limit: 0},    
       { field: '', order: '', scroll: 0, limit: 0},],
   };
-
+  public refresh:boolean = true;
+  public proposals;
+  
   constructor(
     public http: Http,
     public auth: AuthService

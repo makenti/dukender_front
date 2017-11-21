@@ -59,6 +59,9 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
     public toastyService: ToastyService
   ) { }
   ngOnInit() {
+    if(this.proposalService.refresh === false){
+      return;
+    }
     this.Math = Math;
     if(this.proposalService.getFilter()){
       let id = this.proposalService.getFilter().selected;
@@ -67,13 +70,13 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
       }
       this.getLocalFilter();
     }
-    this.auth.updateUserInfo().subscribe(
-      resp => {
-        if(resp) {
-          this.currUser = this.auth.getUser();
-          this.getCompanyRegions();
-        }
-      }, null);
+    // this.auth.updateUserInfo().subscribe(
+    //   resp => {
+    //     if(resp) {
+    //       this.currUser = this.auth.getUser();
+    //       this.getCompanyRegions();
+    //     }
+    //   }, null);
   }
   ngAfterViewChecked(){
     // console.log("ngAfterViewChecked")
