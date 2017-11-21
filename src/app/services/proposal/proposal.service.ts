@@ -292,7 +292,7 @@ export class ProposalService {
       let blob = new Blob([res._body], {
         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-16le"
       });
-      FileSaver.saveAs(blob, "Заявки-" + data.status_name + ".xls");
+      FileSaver.saveAs(blob, "Отчет_по_заявкам-" + data.status_name + ".xls");
       return true;
     });
   }
@@ -313,7 +313,7 @@ export class ProposalService {
       let blob = new Blob([res._body], {
         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-16le"
       });
-      FileSaver.saveAs(blob, "Заявки-" + data.status_name + ".xls");
+      FileSaver.saveAs(blob, "Отчет_по_товарам-" + data.status_name + ".xls");
       return true;
     });
   }

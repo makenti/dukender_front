@@ -234,7 +234,7 @@
 				</div>
 				<div class="product-preview-container" *ngIf="imageSelected">
 					<span *ngIf="imageSelected">
-						<img-cropper #cropper [image]="nProductImage" [settings]="cropperSettings"></img-cropper>
+						<img-cropper (onCrop)="cropped($event)" #cropper [image]="nProductImage" [settings]="cropperSettings"></img-cropper>
 					</span>
 					<span class="result rounded" *ngIf="nProductImage.image">
 				    <img style="position: absolute; top: -90px; right: 100px;" [src]="nProductImage.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
@@ -248,7 +248,7 @@
 				</div>
 				<div class="flex-container flex-center">
 					<button class="mm-btn mm-btn-primary"
-						(click)="onAddProduct()"
+						(click)="checkImage()"
 						[disabled]="addLoading">Добавить</button>
 				</div>
 			</div>
@@ -346,7 +346,7 @@
 				</div>
 				<div class="product-preview-container" *ngIf="imageSelected">
 					<span>
-						<img-cropper #cropper2 [image]="sProductImage" [settings]="cropperSettings"></img-cropper>
+						<img-cropper (onCrop)="cropped($event)" #cropper2 [image]="sProductImage" [settings]="cropperSettings"></img-cropper>
 					</span>
 					<span class="result rounded" *ngIf="sProductImage.image">
 				    <img style="position: absolute; top: -90px; right: 100px;" [src]="sProductImage.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
@@ -359,7 +359,7 @@
 					</span>
 				</div>
 				<div class="flex-container flex-center">
-					<button class="mm-btn mm-btn-primary" (click)="onUpdateProduct()">Сохранить товар</button>
+					<button class="mm-btn mm-btn-primary" (click)="checkImage()">Сохранить товар</button>
 				</div>
 
 			</div>
@@ -442,6 +442,24 @@
 				<div class="modal-btns flex-container flex-center">
 					<button class="mm-btn mm-btn-default" (click)="modalDeleteProduct.hide()">Отмена</button>
 					<button class="mm-btn mm-btn-danger" (click)="removeProducts()">Удалить</button>
+				</div>
+			</div>
+		</div>
+  </div>
+</div>
+
+<div bsModal #modalCheckImage="bs-modal"
+	class="modal fade modal-small modal-delete-product">
+	<div class="modal-dialog modal-sm">
+    <div class="modal-content">
+  		<div class="modal-body">
+
+		  	<h3 class="modal-title text-center">Выбранная картинка  будет плохо отображатся. Минимальный размер 600x600 пикселей. </h3>
+		  	<div class="modal-wrapper">
+		    </div>
+				<div class="modal-btns flex-container flex-center">
+					<button class="mm-btn mm-btn-default" (click)="hideCheckImage()">Изменить картинку</button>
+					<button class="mm-btn mm-btn-danger" (click)="continueAddUpdate()">Продолжить</button>
 				</div>
 			</div>
 		</div>

@@ -54,6 +54,10 @@ export class ProductsComponent implements OnInit {
   @ViewChild('cropper2', undefined)
   cropper2:ImageCropperComponent;
 
+  @ViewChild('modalCheckImage')
+  modalCheckImage: ModalDirective;
+
+
   public searchQuery: string = '';
   public sortField:string = "";
   public sortOrder:string = "asc";
@@ -135,7 +139,8 @@ export class ProductsComponent implements OnInit {
     y: 0,
     w: 200,
     h: 200
-  }
+  };
+
   constructor (
     public categoryService: CategoryService,
     public companyService: CompanyProfileService,
@@ -166,37 +171,6 @@ export class ProductsComponent implements OnInit {
     this.sProductImage = {};
     this.nProductImage = {};
   }
-
-  onSelectImage(event:any) {
-    this.loadingImage = true;
-    this.productImageText = 'Файл выбран. Перевыбрать?';
-    this.imageSelected = true;
-    var image:any = new Image();
-    var file:File = event.target.files[0];
-    var myReader:FileReader = new FileReader();
-    var that = this;
-    if(this.processMode === 'add') {
-      myReader.onloadend = function (loadEvent:any) {
-        image.src = loadEvent.target.result;
-        that.cropper.setImage(image);
-        that.loadingImage = false;
-      };
-      this.newProduct.image = event.srcElement.files;
-    }else if(this.processMode === 'edit') {
-      myReader.onloadend = function (loadEvent:any) {
-        image.src = loadEvent.target.result;
-        that.cropper2.setImage(image);
-      };
-      this.selectedProduct.image = event.srcElement.files;
-      image.addEventListener('load',function(){
-        that.currentImage.height = image.height;
-        that.currentImage.width = image.width;
-        that.loadingImage = false;
-      });
-    }
-    myReader.readAsDataURL(file);
-  }
-
   getCategories() {
     this.categoryService.getCategories()
         .subscribe(
@@ -354,7 +328,83 @@ export class ProductsComponent implements OnInit {
     }
     return true;
   }
-
+  //Edit/Add products:
+  onClickProduct(product: any) {
+    if(product !== null ) {
+      this.selectedProduct = product;
+      if(product.image !== null) {
+        this.selectedImage = serverURL + product.image;
+      }
+      this.processMode = 'edit';
+      this.modalEditProduct.show();
+    }else {
+      this.toastyService.warning('Товар не существует!');
+    }
+  }
+  cropped(bounds:Bounds) {
+    this.croppedHeight =bounds.bottom-bounds.top;
+    this.croppedWidth = bounds.right-bounds.left;
+  }
+  onSelectImage(event:any) {
+    this.loadingImage = true;
+    this.productImageText = 'Файл выбран. Перевыбрать?';
+    this.imageSelected = true;
+    var image:any = new Image();
+    var file:File = event.target.files[0];
+    var myReader:FileReader = new FileReader();
+    var that = this;
+    if(this.processMode === 'add') {
+      myReader.onloadend = function (loadEvent:any) {
+        image.src = loadEvent.target.result;
+        that.cropper.setImage(image);
+        that.loadingImage = false;
+      };
+      this.newProduct.image = event.srcElement.files;
+    }else if(this.processMode === 'edit') {
+      myReader.onloadend = function (loadEvent:any) {
+        image.src = loadEvent.target.result;
+        that.cropper2.setImage(image);
+      };
+      this.selectedProduct.image = event.srcElement.files;
+      image.addEventListener('load',function(){
+        that.currentImage.height = image.height;
+        that.currentImage.width = image.width;
+        that.loadingImage = false;
+      });
+    }
+    myReader.readAsDataURL(file);
+  }
+  checkImage(){
+    if(this.imageSelected && this.croppedHeight < 600 && this.croppedWidth < 600){
+      this.modalAddProduct.hide();
+      this.modalEditProduct.hide();
+      this.modalCheckImage.show();
+    }else
+      if(this.processMode === 'add')
+        this.onAddProduct();
+      else
+        this.onUpdateProduct();
+  }
+  hideCheckImage(){
+    this.modalCheckImage.hide();
+    if(this.processMode === 'add')
+      this.modalAddProduct.show();
+    else
+      this.modalEditProduct.show();
+  }
+  continueAddUpdate(){
+    this.modalCheckImage.hide();
+    if(this.processMode === 'add')
+      this.onAddProduct();
+    else
+      this.onUpdateProduct();
+  }
+  onCloseAddProduct() {
+    this.modalAddProduct.hide();
+    this.imageSelected = false;
+    this.selectedImage = null;
+    this.productImageText = 'Выберите файл';
+  }
   onAddProduct() {
     if(this.checkAddProductForm()) {
       this.addLoading = true;
@@ -406,6 +456,21 @@ export class ProductsComponent implements OnInit {
           error =>  this.errorMessage = <any>error
         );
   }
+  // onEditProduct() {
+  //   this.productService.updateProduct(this.selectedProduct, this.imageSelected)
+  //       .subscribe(
+  //         resp => {
+  //           if(resp === null) {
+  //             this.toastyService.warning('Вы не правильно заполнили');
+  //           }else {
+  //             this.processMode = '';
+  //             this.getCategoryProducts();
+  //             this.modalEditProduct.hide();
+  //           }
+  //         },
+  //         error =>  this.errorMessage = <any>error
+  //       );
+  // }
   clearAddModal() {
     this.newProduct = {
       id: '',
@@ -427,24 +492,6 @@ export class ProductsComponent implements OnInit {
       height: 0
     };
     this.selectedImage = null;
-    this.productImageText = 'Выберите файл';
-  }
-
-  onClickProduct(product: any) {
-    if(product !== null ) {
-      this.selectedProduct = product;
-      if(product.image !== null) {
-        this.selectedImage = serverURL + product.image;
-      }
-      this.processMode = 'edit';
-      this.modalEditProduct.show();
-    }else {
-      this.toastyService.warning('Товар не существует!');
-    }
-  }
-
-  onCloseAddProduct() {
-    this.modalAddProduct.hide();
     this.imageSelected = false;
     this.productImageText = 'Выберите файл';
   }
@@ -473,45 +520,6 @@ export class ProductsComponent implements OnInit {
     this.imageSelected = false;
     this.productImageText = 'Выберите файл';
   }
-
-  showProductImage(product: any) {
-  }
-
-  onEditProduct() {
-    this.productService.updateProduct(this.selectedProduct, this.imageSelected)
-        .subscribe(
-          resp => {
-            if(resp === null) {
-              this.toastyService.warning('Вы не правильно заполнили');
-            }else {
-              this.processMode = '';
-              this.getCategoryProducts();
-              this.modalEditProduct.hide();
-            }
-          },
-          error =>  this.errorMessage = <any>error
-        );
-  }
-
-  // onSelectImage(event: any) {
-  //   if(this.processMode === 'edit') {
-  //     this.selectedProduct.image = event.srcElement.files;
-
-  //   }else if (this.processMode = 'add') {
-  //     this.newProduct.image = event.srcElement.files;
-  //   }
-
-  //   if (event.target.files && event.target.files[0]) {
-  //     var reader = new FileReader();
-  //     reader.onload = (event: any) => {
-  //       this.selectedImage = event.target.result;
-  //     }
-  //     reader.readAsDataURL(event.target.files[0]);
-  //   }
-
-  //   this.productImageText = 'Файл выбран. Перевыбрать?';
-  // }
-
   deleteProductImage() {
     this.selectedImage = '';
     this.productImageText = 'Выберите файл';
@@ -519,6 +527,7 @@ export class ProductsComponent implements OnInit {
     this.newProduct.image = null;
     this.imageSelected = false;
   }
+  //upload price list:
   dataURLtoFile(dataurl, filename):any {
       var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
           bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
@@ -527,14 +536,10 @@ export class ProductsComponent implements OnInit {
       }
       return new File([u8arr], filename, {type:mime});
   }  
-  
-
   onSelectFile(event: any) {
     this.selectedFile = event.target.files;
     this.fileSelected = true;
   }
-
-
   uploadPriceList() {
     if(this.checkUploadForm()) {
       this.loading = true;
@@ -561,12 +566,10 @@ export class ProductsComponent implements OnInit {
           );
     }
   }
-
   onOpenImportModal() {
     this.fileChooserInit = true;
     this.modalImportPrice.show();
   }
-
   onCloseImportModal() {
     this.uploadCategory = '';
     this.fileChooserInit = false;
@@ -574,7 +577,6 @@ export class ProductsComponent implements OnInit {
     this.fileSelected = false;
     this.modalImportPrice.hide();
   }
-
   checkUploadForm() {
     if(this.selectedFile === undefined || this.selectedFile === null) {
       this.toastyService.warning('Вы не выбрали файл');
@@ -586,7 +588,7 @@ export class ProductsComponent implements OnInit {
     }
     return true;
   }
-
+  //delete products:
   clickDeleteBtn() {
     this.getSelectedProducts();
     if(this.selectedProducts !== undefined && this.selectedProducts.length > 0) {
@@ -595,7 +597,6 @@ export class ProductsComponent implements OnInit {
       this.toastyService.warning('Вы не выбрали товар');
     }
   }
-
   removeProducts() {
     let productsToRemove = this.getProductIds();
     this.productService.removeProducts(productsToRemove)
@@ -610,7 +611,6 @@ export class ProductsComponent implements OnInit {
           error =>  this.errorMessage = <any>error
         );
   }
-
   getProductIds() {
     let newProducts: any[] = [];
     this.products.map(p => {
@@ -622,17 +622,15 @@ export class ProductsComponent implements OnInit {
     // this.selectedProducts = newProducts;
     return newProducts;
   }
-
   selectAllProducts() {
     this.allSelected = true;
     this.products.forEach(i => i.checked = true);
   }
-
   unSelectAllProducts() {
     this.allSelected = false;
     this.products.forEach(i => i.checked = false);
   }
-
+  //print:
   printProducts() {
     let printContents: any, popupWin: any;
     printContents = document.getElementById('productsPrintContent').innerHTML;
