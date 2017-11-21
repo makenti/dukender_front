@@ -227,6 +227,11 @@
 							<label>Описание</label>
 							<button class="mm-btn mm-btn-link" (click)="modalAddProductDesc.show()">добавить описание</button>
 						</div>
+						<div class="form-field">
+							<label>Штрих код</label>
+							<input type="text" class="mm-input" maxlength="48"
+								[(ngModel)]="newProduct.barcode" />
+						</div>
 					</div>
 				</div>
 				<div *ngIf="loadingImage" class="loader-component">
@@ -236,9 +241,9 @@
 					<span *ngIf="imageSelected">
 						<img-cropper (onCrop)="cropped($event)" #cropper [image]="nProductImage" [settings]="cropperSettings"></img-cropper>
 					</span>
-					<span class="result rounded" *ngIf="nProductImage.image">
+					<!-- <span class="result rounded" *ngIf="nProductImage.image">
 				    <img style="position: absolute; top: -90px; right: 100px;" [src]="nProductImage.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
-					</span>
+					</span> -->
 					<span class="delete-img-btn"
 						(click)="deleteProductImage()"
 						*ngIf="imageSelected">
@@ -330,7 +335,11 @@
 							<button class="mm-btn mm-btn-link" (click)="modalEditProductDesc.show()">изменить описание</button>
 							<!-- <div [froalaEditor]>Hello, Froala!</div> -->
 						</div>
-
+						<div class="form-field">
+							<label>Штрих код</label>
+							<input type="text" class="mm-input" maxlength="48"
+								[(ngModel)]="selectedProduct.barcode" />
+						</div>
 					</div>
 				</div>
 				<div class="product-preview-container" *ngIf="(selectedImage !== null)&&!imageSelected">
@@ -348,9 +357,7 @@
 					<span>
 						<img-cropper (onCrop)="cropped($event)" #cropper2 [image]="sProductImage" [settings]="cropperSettings"></img-cropper>
 					</span>
-					<span class="result rounded" *ngIf="sProductImage.image">
-				    <img style="position: absolute; top: -90px; right: 100px;" [src]="sProductImage.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
-					</span>
+					
 					<span class="delete-img-btn"
 						(click)="deleteProductImage()"
 						*ngIf="imageSelected">
@@ -358,6 +365,10 @@
 							aria-hidden="true"></i>
 					</span>
 				</div>
+				<!-- <div class="flex-container flex-around result rounded" *ngIf="imageSelected&&sProductImage.image">
+					<span>Предварительный просмотр</span>
+			    <img style="" [src]="sProductImage.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
+				</div> -->
 				<div class="flex-container flex-center">
 					<button class="mm-btn mm-btn-primary" (click)="checkImage()">Сохранить товар</button>
 				</div>
