@@ -18,15 +18,15 @@ import { ToastyService } from 'ng2-toasty';
   styleUrls: ['register.component.css']
 })
 export class RegisterComponent implements OnInit {
-	private errorMessage: string;
-  private regions: string[];
-  private countries: string[];
-  private districts: any[];
-  private selectedRegion: any;
-  private selectedDistrict: any;
-  private selectedCountry: any;
+	public errorMessage: string;
+  public regions: string[];
+  public countries: string[];
+  public districts: any[];
+  public selectedRegion: any;
+  public selectedDistrict: any;
+  public selectedCountry: any;
 
-  private newCompany = {
+  public newCompany = {
     tin: '',
     name: '',
     short_name: '',
@@ -42,16 +42,16 @@ export class RegisterComponent implements OnInit {
     second_name: '',
     additional_info: ''
   };
-  private adminFullName = '';
-  private isAdmin = false;
+  public adminFullName = '';
+  public isAdmin = false;
 
   constructor (
-    private regionService: CompanyRegionsService,
-    private companyService: CompanyProfileService,
-    private auth: AuthService,
-    private router: Router,
-    private toastyService: ToastyService,
-    private errorService: ErrorService,
+    public regionService: CompanyRegionsService,
+    public companyService: CompanyProfileService,
+    public auth: AuthService,
+    public router: Router,
+    public toastyService: ToastyService,
+    public errorService: ErrorService,
    ) {
   }
 

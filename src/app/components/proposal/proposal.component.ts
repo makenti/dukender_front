@@ -57,41 +57,52 @@ export class ProposalComponent implements OnInit  {
   @ViewChild('modalDeleteProposal')
   modalDeleteProposal: ModalDirective;
 
-  private searchQuery: string = '';
-	private errorMessage = new Array();
-	private proposal: any = null;
-  private proposalItems = new Array();
-  private proposalItemsToSend = new Array();
-	private mode: string = 'read';
-	private emailToSend: string = '';
-  private id: number;
-  private deliveryDate: any = '';
-  private deliveryDateText: any = '';
-  private selDate: Object = {year: 0, month: 0, day: 0};
+  @ViewChild('modalId1c')
+  modalId1c: ModalDirective;
 
-  private proposalDate: any = '';
-  private newComment: string;
-  private currUser: any;
-  // private accessToEdit: boolean = true;
-  private accessToExec: boolean = true;
-  private editMode: boolean = true;
-  private delete: boolean = false;
-  private isEditableProposal: boolean = false;
+  @ViewChild('modalName1c')
+  modalName1c: ModalDirective;
 
-  // private proposalBeforeEdit:any = '';
-  private proposalBefore: string = '';
-  private deliveryBefore: string = '';
-  private itemToShow: any = null;
-  private customerAddress: string = '';
-  private proposalBodyClass: string = 'h';
+  @ViewChild('modalInfo')
+  modalInfo: ModalDirective;
+
+  public searchQuery: string = '';
+	public errorMessage = new Array();
+	public proposal: any = null;
+  public proposalItems = new Array();
+  public proposalItemsToSend = new Array();
+	public mode: string = 'read';
+	public emailToSend: string = '';
+  public id: number;
+  public deliveryDate: any = '';
+  public deliveryDateText: any = '';
+  public selDate: Object = {year: 0, month: 0, day: 0};
+
+  public proposalDate: any = '';
+  public newComment: string;
+  public currUser: any;
+  // public accessToEdit: boolean = true;
+  public accessToExec: boolean = true;
+  public editMode: boolean = true;
+  public delete: boolean = false;
+  public isEditableProposal: boolean = false;
+
+  // public proposalBeforeEdit:any = '';
+  public proposalBefore: string = '';
+  public deliveryBefore: string = '';
+  public itemToShow: any = null;
+  public customerAddress: string = '';
+  public proposalBodyClass: string = 'h';
+
+  public relation:any;
 
   constructor(
-  	private auth: AuthService,
-  	private router: Router,
-  	private route: ActivatedRoute,
-    private proposalService: ProposalService,
-  	private customerService: CustomersService,
-    private toastyService: ToastyService) {}
+  	public auth: AuthService,
+  	public router: Router,
+  	public route: ActivatedRoute,
+    public proposalService: ProposalService,
+  	public customerService: CustomersService,
+    public toastyService: ToastyService) {}
 
   ngOnInit() {
     this.Math = Math;
@@ -175,7 +186,13 @@ export class ProposalComponent implements OnInit  {
              this.itemsTotalSum = resp.total_price;
              if(this.proposal.status !== 2 && this.proposal.status !== 3 && this.proposal.status !== 6)
                this.checkChangesInPriceList();
-
+            //for additional info: 
+            this.relation = Object.assign({}, this.proposal.relation_full);
+            
+            this.relation.short_info = this.relation.info;
+            if(this.relation.info.length > 20){
+              this.relation.short_info = this.relation.info.substr(0, 20)+"...";
+            }
             //if tovarnyi bonus:
             for(let i = 0; i < this.proposalItems.length; i++) {
               let item = this.proposalItems[i];
@@ -688,5 +705,46 @@ export class ProposalComponent implements OnInit  {
       </html>`
     );
     popupWin.document.close();
+  }
+  closeInfo(){
+    this.relation = Object.assign({}, this.proposal.relation_full);
+    this.modalId1c.hide();
+    this.modalName1c.hide();
+    this.modalInfo.hide();
+  }
+  saveInfo(){
+    if(this.relation.id_1c > 999999999999){
+      this.toastyService.error('БИН должен быть 12-значным');
+      return;
+    }
+    if(this.relation.name_1c.length > 20){
+      this.toastyService.error('Название должен быть максимум 20-значным');
+      return;
+    }
+    let data = {
+      shop_id: this.proposal.customer.id,
+      id_1c: this.relation.id_1c,
+      name_1c: this.relation.name_1c,
+      info: this.relation.info,
+      relation: parseInt(this.proposal.relation, 10)
+    };
+    this.customerService.setCustomerStatus(data)
+        .subscribe(
+          resp => {
+            if (resp.code === 0){
+              this.proposal.relation_full = Object.assign({}, this.relation);
+              this.relation.short_info = this.relation.info;
+              if(this.relation.info.length > 20){
+                this.relation.short_info = this.relation.info.substr(0, 20)+"...";
+              }
+            }else{
+              this.toastyService.error('Попробуйте еще раз');
+            }
+            this.modalId1c.hide();
+            this.modalName1c.hide();
+            this.modalInfo.hide();
+          },
+          error =>  this.errorMessage = <any>error
+        );    
   }
 }

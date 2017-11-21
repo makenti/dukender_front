@@ -2,7 +2,7 @@
 
 	<h3 class="text-center">Прайс-лист</h3>
 	<p class="text-center">
-		Загрузите прайс-лист в систему одним кликом!<br>
+		Загрузите прайс-лист в систему одним кликом!<br/>
 		Шаблон для заполнения можно скачать  <a href="./assets/price_list.xlsx">отсюда</a>
 	</p>
 	<div class="search-container">
@@ -23,13 +23,12 @@
 				<div class="list-group product-category-list no-print">
 				  <button type="button" class="list-group-item"
 				  	[class.active]="selectedCategory === null"
-				  	(click)="onSelectCategory(null, $event)"
-				  	>Все продукты</button>
+				  	(click)="onSelectCategory(null)">Все продукты</button>
 				  <button type="button" class="list-group-item"
 				  	*ngFor="let cat of companyCategories"
 				  	[class.active]="selectedCategory !== null && selectedCategory.category.id === cat.category.id"
 		      	name="categories"
-			      (click)="onSelectCategory(cat, $event)">{{cat.category.name}}</button>
+			      (click)="onSelectCategory(cat)">{{cat.category.name}}</button>
 				</div>
 			</div>
 		</div>
@@ -225,6 +224,11 @@
 								[(ngModel)]="newProduct.made_in" />
 						</div>
 						<div class="form-field">
+							<label>Штрих код</label>
+							<input type="text" class="mm-input" maxlength="48"
+								[(ngModel)]="newProduct.barcode" />
+						</div>
+						<div class="form-field">
 							<label>Описание</label>
 							<button class="mm-btn mm-btn-link" (click)="modalAddProductDesc.show()">добавить описание</button>
 						</div>
@@ -235,11 +239,11 @@
 				</div>
 				<div class="product-preview-container" *ngIf="imageSelected">
 					<span *ngIf="imageSelected">
-						<img-cropper #cropper [image]="nProductImage" [settings]="cropperSettings"></img-cropper>
+						<img-cropper (onCrop)="cropped($event)" #cropper [image]="nProductImage" [settings]="cropperSettings"></img-cropper>
 					</span>
-					<span class="result rounded" *ngIf="nProductImage.image">
+					<!-- <span class="result rounded" *ngIf="nProductImage.image">
 				    <img style="position: absolute; top: -90px; right: 100px;" [src]="nProductImage.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
-					</span>
+					</span> -->
 					<span class="delete-img-btn"
 						(click)="deleteProductImage()"
 						*ngIf="imageSelected">
@@ -249,7 +253,7 @@
 				</div>
 				<div class="flex-container flex-center">
 					<button class="mm-btn mm-btn-primary"
-						(click)="onAddProduct()"
+						(click)="checkImage()"
 						[disabled]="addLoading">Добавить</button>
 				</div>
 			</div>
@@ -327,11 +331,15 @@
 								[(ngModel)]="selectedProduct.made_in" />
 						</div>
 						<div class="form-field">
+							<label>Штрих код</label>
+							<input type="text" class="mm-input" maxlength="48"
+								[(ngModel)]="selectedProduct.barcode" />
+						</div>
+						<div class="form-field">
 							<label>Описание</label>
 							<button class="mm-btn mm-btn-link" (click)="modalEditProductDesc.show()">изменить описание</button>
 							<!-- <div [froalaEditor]>Hello, Froala!</div> -->
 						</div>
-
 					</div>
 				</div>
 				<div class="product-preview-container" *ngIf="(selectedImage !== null)&&!imageSelected">
@@ -347,11 +355,9 @@
 				</div>
 				<div class="product-preview-container" *ngIf="imageSelected">
 					<span>
-						<img-cropper #cropper2 [image]="sProductImage" [settings]="cropperSettings"></img-cropper>
+						<img-cropper (onCrop)="cropped($event)" #cropper2 [image]="sProductImage" [settings]="cropperSettings"></img-cropper>
 					</span>
-					<span class="result rounded" *ngIf="sProductImage.image">
-				    <img style="position: absolute; top: -90px; right: 100px;" [src]="sProductImage.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
-					</span>
+					
 					<span class="delete-img-btn"
 						(click)="deleteProductImage()"
 						*ngIf="imageSelected">
@@ -359,8 +365,12 @@
 							aria-hidden="true"></i>
 					</span>
 				</div>
+				<!-- <div class="flex-container flex-around result rounded" *ngIf="imageSelected&&sProductImage.image">
+					<span>Предварительный просмотр</span>
+			    <img style="" [src]="sProductImage.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
+				</div> -->
 				<div class="flex-container flex-center">
-					<button class="mm-btn mm-btn-primary" (click)="onUpdateProduct()">Сохранить товар</button>
+					<button class="mm-btn mm-btn-primary" (click)="checkImage()">Сохранить товар</button>
 				</div>
 
 			</div>
@@ -443,6 +453,24 @@
 				<div class="modal-btns flex-container flex-center">
 					<button class="mm-btn mm-btn-default" (click)="modalDeleteProduct.hide()">Отмена</button>
 					<button class="mm-btn mm-btn-danger" (click)="removeProducts()">Удалить</button>
+				</div>
+			</div>
+		</div>
+  </div>
+</div>
+
+<div bsModal #modalCheckImage="bs-modal"
+	class="modal fade modal-small modal-delete-product">
+	<div class="modal-dialog modal-sm">
+    <div class="modal-content">
+  		<div class="modal-body">
+
+		  	<h3 class="modal-title text-center">Выбранная картинка  будет плохо отображатся. Минимальный размер 600x600 пикселей. </h3>
+		  	<div class="modal-wrapper">
+		    </div>
+				<div class="modal-btns flex-container flex-center">
+					<button class="mm-btn mm-btn-default" (click)="hideCheckImage()">Изменить картинку</button>
+					<button class="mm-btn mm-btn-danger" (click)="continueAddUpdate()">Продолжить</button>
 				</div>
 			</div>
 		</div>

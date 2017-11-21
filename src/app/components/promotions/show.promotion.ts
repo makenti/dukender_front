@@ -23,13 +23,13 @@ export class ShowPromotionComponent implements OnInit {
   promTitle: string = '';
   promotionType: any = null;
 
-  private bonusItem: any = null;
+  public bonusItem: any = null;
 
   constructor(
-  	private auth: AuthService,
-  	private router: Router,
-  	private route: ActivatedRoute,
-  	private promotionService: PromotionService
+  	public auth: AuthService,
+  	public router: Router,
+  	public route: ActivatedRoute,
+  	public promotionService: PromotionService
     ) {
   }
 

@@ -12,8 +12,8 @@ import { AuthService } from './auth.service';
 export class AuthManager implements CanActivate {
 
   constructor(
-    private router: Router,
-    private auth: AuthService) {}
+    public router: Router,
+    public auth: AuthService) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     let authKey = window.localStorage.getItem('auth_key');

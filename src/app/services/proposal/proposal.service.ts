@@ -14,7 +14,7 @@ declare var saveAs:any;
 @Injectable()
 export class ProposalService {
 
-  private filter = {
+  public filter = {
     selected: '',
     fields: 
     [ { field: '', order: '', scroll: 0, limit: 0},    
@@ -28,8 +28,8 @@ export class ProposalService {
   };
 
   constructor(
-    private http: Http,
-    private auth: AuthService
+    public http: Http,
+    public auth: AuthService
   ) {
     let filter = JSON.parse(window.localStorage.getItem('filter'));
     if(filter) 
@@ -292,7 +292,28 @@ export class ProposalService {
       let blob = new Blob([res._body], {
         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-16le"
       });
-      FileSaver.saveAs(blob, "Заявки-" + data.status_name + ".xls");
+      FileSaver.saveAs(blob, "Отчет_по_заявкам-" + data.status_name + ".xls");
+      return true;
+    });
+  }
+  downloadExcelItem(data: any) {
+    let headers = new Headers({
+      'Auth-Token': this.auth.getToken(),
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Accept': 'application/vnd.ms-excel'
+    });
+
+    let options = new RequestOptions({ headers: headers, responseType: ResponseContentType.Blob });
+    let bodyString = "status="+data.status;
+
+    return this.http.post(serverURL + '/sellers/requests/export_to_excel/all/v2/', bodyString,{
+        headers: headers,
+        responseType: ResponseContentType.Blob
+    }).map((res: any) => {
+      let blob = new Blob([res._body], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-16le"
+      });
+      FileSaver.saveAs(blob, "Отчет_по_товарам-" + data.status_name + ".xls");
       return true;
     });
   }

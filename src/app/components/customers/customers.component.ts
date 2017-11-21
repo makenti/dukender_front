@@ -13,13 +13,13 @@ import { AuthService, CustomersService } from '../../services/index';
 })
 export class CustomersComponent implements OnInit {
 
-  private customers: any[] = [];
-	private errorMessage: any[] = [];
+  public customers: any[] = [];
+	public errorMessage: any[] = [];
 
   constructor(
-  		private auth: AuthService,
-  		private router: Router,
-  		private customerService: CustomersService) {}
+  		public auth: AuthService,
+  		public router: Router,
+  		public customerService: CustomersService) {}
 
   ngOnInit() {
   	this.getCustomers();

@@ -14,8 +14,8 @@ import { AuthService } from '../auth/index';
 export class CategoryService {
 
   constructor(
-    private http: Http,
-    private auth: AuthService
+    public http: Http,
+    public auth: AuthService
   ) { }
 
   getCategories(): Observable<any[]> {

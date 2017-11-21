@@ -18,25 +18,25 @@ import { ToastyService } from 'ng2-toasty';
 })
 export class CompanyRegionsComponent implements OnInit {
 
-	private errorMessage: string;
-  private regions: string[];
-  private districts: any[];
-  private selectedRegion: any;
-  private selectedRegionID: any;
-  private companyRegions: any[] = [];
-  private districtsData: any[] = [];
-  private currentCompany: any;
-  private loading: boolean = false;
-  private register: boolean = true;
-  // private checked
-  private amount: any = null;
+	public errorMessage: string;
+  public regions: string[];
+  public districts: any[];
+  public selectedRegion: any;
+  public selectedRegionID: any;
+  public companyRegions: any[] = [];
+  public districtsData: any[] = [];
+  public currentCompany: any;
+  public loading: boolean = false;
+  public register: boolean = true;
+  // public checked
+  public amount: any = null;
 
   constructor (
-    private regionService: CompanyRegionsService,
-    private companyService: CompanyProfileService,
-    private auth: AuthService,
-    private router: Router,
-    private toastyService: ToastyService
+    public regionService: CompanyRegionsService,
+    public companyService: CompanyProfileService,
+    public auth: AuthService,
+    public router: Router,
+    public toastyService: ToastyService
    ) {
   }
 

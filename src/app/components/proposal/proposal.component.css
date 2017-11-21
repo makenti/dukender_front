@@ -159,29 +159,42 @@ a.ban-customer-link{
 
 .print-only {display: none}
 .proposal-table .h1{
-    height: 40.42px;
-    min-height: 40.42px;
+    height: auto;
+    min-height: calc(40.42px + 2px); /*2px-padding, 40.42-heightof 1row*/
     overflow-y: hidden;
 }
 .proposal-table .h2{
-    height: calc(40.42*2px);
-    min-height: calc(40.42*2px);
+    height:auto;    
+    min-height: calc(40.42*2px + 2px); /*2px-padding, 40.42-heightof 1row*/
     overflow-y: hidden;
 }
 .proposal-table .h3{
-    height: calc(40.42*3px);
-    min-height: calc(40.42*3px);
+    height:auto;    
+    min-height: calc(40.42*3px + 2px); /*2px-padding, 40.42-heightof 1row*/
     overflow-y: hidden;
 }
 .proposal-table .h4{
-    height: calc(40.42*4px);
-    min-height: calc(40.42*4px);
+    height:auto;    
+    min-height: calc(40.42*4px + 2px); /*2px-padding, 40.42-heightof 1row*/
 }
 .proposal-table .h5{
-    height: calc(40.42*5px);
-    min-height: calc(40.42*5px);
+    height:auto;    
+    min-height: calc(40.42*5px + 2px); /*2px-padding, 40.42-heightof 1row*/
 }
 .proposal-table .h6{
-    height: calc(40.42*6px);
-    min-height: calc(40.42*6px);
+    height:auto;    
+    min-height: calc(40.42*6px + 2px); /*2px-padding, 40.42-heightof 1row*/
+}
+.relation input{
+    width: 100px;
+    height: 26px;    
+    margin-right: 12px;
+}
+.info {
+    margin-bottom: 24px;
+}
+.info textarea{
+    height: 140px;
+    width: 100%;
+    border-radius: 0;
 }

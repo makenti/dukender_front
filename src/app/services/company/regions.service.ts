@@ -14,8 +14,8 @@ import { AuthService } from '../auth/index';
 export class CompanyRegionsService {
 
   constructor(
-    private http: Http,
-    private auth: AuthService
+    public http: Http,
+    public auth: AuthService
   ) { }
 
   getCountries(): Observable<any[]> {

@@ -13,8 +13,8 @@ export class HeaderComponent implements OnInit {
 	dropds: boolean;
 
   constructor(
-    private auth: AuthService,
-    private toolbarService: ToolbarService
+    public auth: AuthService,
+    public toolbarService: ToolbarService
   ) { }
 
   ngOnInit() {

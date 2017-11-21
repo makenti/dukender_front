@@ -20,8 +20,8 @@ export class UserProfileComponent implements OnInit {
   };
 
   constructor(
-    private auth: AuthService,
-    private toastyService: ToastyService
+    public auth: AuthService,
+    public toastyService: ToastyService
   ) { }
 
   ngOnInit() {

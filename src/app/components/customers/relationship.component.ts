@@ -13,14 +13,14 @@ import { AuthService } from '../../services/index';
 })
 export class RelationshipComponent {
 
-	// private errorMessage: any[] = [];
-  // private history = [
-	 //  {
-	 //  	date: '12.05.2016',
-	 //  	desc: 'Просрочен товар по заявке № 45987',
-	 //  	note: 'Товар заменили',
-	 //  }
-  // ];
+	public errorMessage: any[] = [];
+  public history = [
+	  {
+	  	date: '12.05.2016',
+	  	desc: 'Просрочен товар по заявке № 45987',
+	  	note: 'Товар заменили',
+	  }
+  ];
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(public auth: AuthService, public router: Router) {}
 }

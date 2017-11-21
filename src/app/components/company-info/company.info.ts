@@ -25,12 +25,12 @@ export class CompanyInfoComponent implements OnInit {
   public phoneMask = ['+7 (', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/,'-', /\d/, /\d/];
   public tinMask = [/\d/,/\d/,/\d/,/\d/,/\d/,/\d/,/\d/,/\d/,/\d/,/\d/,/\d/,/\d/];
 
-	private errorMessage: string;
-  private regions: string[];
-  private districts: any[];
-  private selectedRegion: any;
-  private selectedDistrict: any;
-  private companyProfile = {
+	public errorMessage: string;
+  public regions: string[];
+  public districts: any[];
+  public selectedRegion: any;
+  public selectedDistrict: any;
+  public companyProfile = {
     tin: '',
     name: '',
     short_name: '',
@@ -45,16 +45,16 @@ export class CompanyInfoComponent implements OnInit {
     second_name: '',
     additional_info: ''
   };
-  private companyPreview: any;
-  private adminFullName = '';
-  private isAdmin = false;
+  public companyPreview: any;
+  public adminFullName = '';
+  public isAdmin = false;
 
   constructor(
-    private auth: AuthService,
-    private router: Router,
-    private toastyService: ToastyService,
-    private regionService: CompanyRegionsService,
-    private companyService: CompanyProfileService,
+    public auth: AuthService,
+    public router: Router,
+    public toastyService: ToastyService,
+    public regionService: CompanyRegionsService,
+    public companyService: CompanyProfileService,
   ) { }
 
   ngOnInit() {

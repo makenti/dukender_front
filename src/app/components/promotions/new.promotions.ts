@@ -21,21 +21,21 @@ export class PromotionProductsComponent implements OnInit {
   loading: boolean = false;
   public searchQuery: string = '';
 
-	private errorMessage: string;
-	private categories = new Array();
-  private companyCategories = new Array();
-  private products = new Array();
-  private selectedCategory: any = null;
-  private selectedProducts: any[] = [];
+	public errorMessage: string;
+	public categories = new Array();
+  public companyCategories = new Array();
+  public products = new Array();
+  public selectedCategory: any = null;
+  public selectedProducts: any[] = [];
 
   constructor(
-    private categoryService: CategoryService,
-    private companyService: CompanyProfileService,
-    private productService: ProductService,
-    private promotionService: PromotionService,
-    private auth: AuthService,
-    private router: Router,
-    private toastyService: ToastyService) {}
+    public categoryService: CategoryService,
+    public companyService: CompanyProfileService,
+    public productService: ProductService,
+    public promotionService: PromotionService,
+    public auth: AuthService,
+    public router: Router,
+    public toastyService: ToastyService) {}
 
   ngOnInit() {
     // this.getCategories();

@@ -17,8 +17,8 @@ export class UploadService {
   progressObserver: any;
 
   constructor(
-    private http: Http,
-    private auth: AuthService
+    public http: Http,
+    public auth: AuthService
   ) {
     // this.progress$ = Observable.create((observer: any) => {
     //     this.progressObserver = observer
