@@ -113,7 +113,7 @@ table thead th.sortable-field:hover{
 
 /* form */
 .add-product-form {
-  margin: 27px 0;
+  margin: 0;
   width: 100%;
   display: flex;
   direction: row
@@ -195,4 +195,23 @@ table thead th.sortable-field:hover{
 .result img{
   width: 100px;
   height: 100px;
+}
+.display-none{
+  display: none;
+}
+.product-btns button{
+  margin-left: 10px;
+}
+.img-preview{
+  width: 618px;
+  height: 320px;
+}
+.img-preview img{
+  height: 100%;
+}
+.redText{
+  color: red;
+}
+.greenText{
+  color: green;
 }

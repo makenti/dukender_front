@@ -96,7 +96,7 @@
 			</table>
 
 			<div class="flex-container flex-between price-btns-container no-print">
-				<button class="mm-btn mm-btn-primary" (click)="modalAddProduct.show();this.processMode = 'add';">Добавить товар</button>
+				<button class="mm-btn mm-btn-primary" (click)="onAddNewProduct()">Добавить товар</button>
 				<button class="mm-btn mm-btn-default" (click)="onOpenImportModal()">Импорт из Excell</button>
 				<button class="mm-btn mm-btn-default" (click)="printProducts()">Печать</button>
 				<button
@@ -237,7 +237,20 @@
 				<div *ngIf="loadingImage" class="loader-component">
 					<div class="loader"></div>
 				</div>
-				<div class="product-preview-container" *ngIf="imageSelected">
+				<h5 *ngIf="imageSelected">
+					Для хорошего отображения картинки товара, выберите картинку размера не меньше 600x600 пикселей. <br/>
+					<b [class]="chosenImage.validationClass" *ngIf="!isCrop">Размер текущей картинки: {{chosenImage.width}}x{{chosenImage.height}} пикселей.</b>
+					<b [class]="chosenImage.validationClass" *ngIf="isCrop">Размер текущей обрезанной картинки: {{croppedWidth}}x{{croppedHeight}} пикселей.</b> 
+				</h5>
+				<div class="product-preview-container img-preview" *ngIf="imageSelected&&!loadingImage&&!isCrop">
+					<img [src]="chosenImage.full">
+					<span class="delete-img-btn"
+						(click)="deleteSelectedImage()">
+						<i class="fa fa-times"
+							aria-hidden="true"></i>
+					</span>
+				</div>
+				<div class="product-preview-container" [class.display-none]="!isCrop" *ngIf="imageSelected">
 					<span *ngIf="imageSelected">
 						<img-cropper (onCrop)="cropped($event)" #cropper [image]="nProductImage" [settings]="cropperSettings"></img-cropper>
 					</span>
@@ -245,13 +258,24 @@
 				    <img style="position: absolute; top: -90px; right: 100px;" [src]="nProductImage.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
 					</span> -->
 					<span class="delete-img-btn"
-						(click)="deleteProductImage()"
+						(click)="deleteSelectedImage()"
 						*ngIf="imageSelected">
 						<i class="fa fa-times"
 							aria-hidden="true"></i>
 					</span>
 				</div>
-				<div class="flex-container flex-center">
+				<div class="flex-container flex-end product-btns">
+					<button class="mm-btn mm-btn-default"
+						*ngIf="imageSelected&&!isCrop"
+						(click)="isCrop=true">
+						Обрезать картинку
+					</button>
+					<button 
+						class="mm-btn mm-btn-default"
+						*ngIf="imageSelected&&isCrop"
+						(click)="isCrop=false">
+						Отменить обрезку
+					</button>
 					<button class="mm-btn mm-btn-primary"
 						(click)="checkImage()"
 						[disabled]="addLoading">Добавить</button>
@@ -342,6 +366,14 @@
 						</div>
 					</div>
 				</div>
+				<div *ngIf="loadingImage" class="loader-component">
+					<div class="loader"></div>
+				</div>
+				<h5 *ngIf="imageSelected">
+					Для хорошего отображения картинки товара, выберите картинку размера не меньше 600x600 пикселей. <br/>
+					<b [class]="chosenImage.validationClass" *ngIf="!isCrop">Размер текущей картинки: {{chosenImage.width}}x{{chosenImage.height}} пикселей.</b>
+					<b [class]="chosenImage.validationClass" *ngIf="isCrop">Размер текущей обрезанной картинки: {{croppedWidth}}x{{croppedHeight}} пикселей.</b> 
+				</h5>
 				<div class="product-preview-container" *ngIf="(selectedImage !== null)&&!imageSelected">
 					<img *ngIf="selectedImage !== null"
 						[src]="selectedImage"
@@ -353,13 +385,23 @@
 							aria-hidden="true"></i>
 					</span>
 				</div>
-				<div class="product-preview-container" *ngIf="imageSelected">
+				<div class="product-preview-container img-preview" *ngIf="imageSelected&&!loadingImage&&!isCrop">
+					<img [src]="chosenImage.full">
+					<span class="delete-img-btn"
+						(click)="deleteSelectedImage()"
+						*ngIf="selectedImage !== null && selectedImage !== ''">
+						<i class="fa fa-times"
+							aria-hidden="true"></i>
+					</span>
+				</div>
+				<div class="product-preview-container" 
+					[class.display-none]="!isCrop"
+					*ngIf="imageSelected">
 					<span>
 						<img-cropper (onCrop)="cropped($event)" #cropper2 [image]="sProductImage" [settings]="cropperSettings"></img-cropper>
 					</span>
-					
 					<span class="delete-img-btn"
-						(click)="deleteProductImage()"
+						(click)="deleteSelectedImage()"
 						*ngIf="imageSelected">
 						<i class="fa fa-times"
 							aria-hidden="true"></i>
@@ -369,7 +411,18 @@
 					<span>Предварительный просмотр</span>
 			    <img style="" [src]="sProductImage.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
 				</div> -->
-				<div class="flex-container flex-center">
+				<div class="flex-container flex-end product-btns">
+					<button class="mm-btn mm-btn-default"
+						*ngIf="imageSelected&&!isCrop"
+						(click)="isCrop=true">
+						Обрезать картинку
+					</button>
+					<button 
+						class="mm-btn mm-btn-default"
+						*ngIf="imageSelected&&isCrop"
+						(click)="isCrop=false">
+						Отменить обрезку
+					</button>
 					<button class="mm-btn mm-btn-primary" (click)="checkImage()">Сохранить товар</button>
 				</div>
 

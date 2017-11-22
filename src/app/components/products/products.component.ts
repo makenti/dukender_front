@@ -90,12 +90,16 @@ export class ProductsComponent implements OnInit {
   public croppedHeight:number;
   public croppedLeft:number;
   public croppedTop:number;
-
-  currentImage: any = {
+  public isCrop:boolean = false;
+  public loadingImage: boolean = false;
+  public chosenImage:any = {
+    full: '',
+    cropped: '',
+    width: 0,
     height: 0,
-    width: 0
+    validationClass: 'greenText'
   };
-  loadingImage: boolean = false;
+
   public newProduct = {
     id: '',
     category_id: 0,
@@ -282,7 +286,13 @@ export class ProductsComponent implements OnInit {
           error =>  this.errorMessage = <any>error
         );
   }
-
+  onAddNewProduct(){
+    this.processMode = 'add';
+    this.productImageText = 'Выберите файл';
+    this.imageSelected = false;
+    this.selectedImage = null;
+    this.modalAddProduct.show();
+  }
   onSelectProduct(product: any) {
     let ind = this.selectedProducts.map(function(e) {return e.id;}).indexOf(product.id);
     if(ind > -1) {
@@ -334,9 +344,15 @@ export class ProductsComponent implements OnInit {
   onClickProduct(product: any) {
     if(product !== null ) {
       this.selectedProduct = product;
+
+      this.imageSelected = false;
+      this.isCrop = false;      
       if(product.image !== null) {
         this.selectedImage = serverURL + product.image;
+      }else{
+        this.selectedImage = null;
       }
+      this.productImageText = 'Выберите файл';
       this.processMode = 'edit';
       this.modalEditProduct.show();
     }else {
@@ -346,6 +362,12 @@ export class ProductsComponent implements OnInit {
   cropped(bounds:Bounds) {
     this.croppedHeight =bounds.bottom-bounds.top;
     this.croppedWidth = bounds.right-bounds.left;
+    if(this.isCrop){
+      if(this.croppedHeight >= 600 && this.croppedWidth >= 600)
+        this.chosenImage.validationClass = "greenText";
+      else
+        this.chosenImage.validationClass = "redText";
+    }
   }
   onSelectImage(event:any) {
     this.loadingImage = true;
@@ -357,20 +379,32 @@ export class ProductsComponent implements OnInit {
     var that = this;
     if(this.processMode === 'add') {
       myReader.onloadend = function (loadEvent:any) {
+        that.chosenImage.full = loadEvent.target.result;
         image.src = loadEvent.target.result;
         that.cropper.setImage(image);
-        that.loadingImage = false;
       };
-      this.newProduct.image = event.srcElement.files;
+      image.addEventListener('load',function(){
+        that.chosenImage.width = image.width;
+        that.chosenImage.height = image.height;
+        if(image.width >= 600 && image.height >= 600)
+          that.chosenImage.validationClass = "greenText";
+        else
+          that.chosenImage.validationClass = "redText";
+        that.loadingImage = false;
+      });
     }else if(this.processMode === 'edit') {
       myReader.onloadend = function (loadEvent:any) {
+        that.chosenImage.full = loadEvent.target.result;
         image.src = loadEvent.target.result;
         that.cropper2.setImage(image);
       };
-      this.selectedProduct.image = event.srcElement.files;
       image.addEventListener('load',function(){
-        that.currentImage.height = image.height;
-        that.currentImage.width = image.width;
+        that.chosenImage.width = image.width;
+        that.chosenImage.height = image.height;
+        if(image.width >= 600 && image.height >= 600)
+          that.chosenImage.validationClass = "greenText";
+        else
+          that.chosenImage.validationClass = "redText";
         that.loadingImage = false;
       });
     }
@@ -411,7 +445,10 @@ export class ProductsComponent implements OnInit {
     if(this.checkAddProductForm()) {
       this.addLoading = true;
       if(this.imageSelected){
-        this.newProduct.image = this.dataURLtoFile(this.nProductImage.image, 'image.png');
+        if(this.isCrop)
+          this.newProduct.image = this.dataURLtoFile(this.nProductImage.image, 'image.png');
+        else
+          this.newProduct.image = this.dataURLtoFile(this.chosenImage.full, 'image.png');
       }
       this.productService.updateProduct(this.newProduct, this.imageSelected)
           .subscribe(
@@ -443,7 +480,10 @@ export class ProductsComponent implements OnInit {
   onUpdateProduct() {
     this.addLoading = true;
     if(this.imageSelected){
-      this.selectedProduct.image = this.dataURLtoFile(this.sProductImage.image, 'image.png');
+      if(this.isCrop)
+        this.selectedProduct.image = this.dataURLtoFile(this.sProductImage.image, 'image.png');
+      else
+        this.selectedProduct.image = this.dataURLtoFile(this.chosenImage.full, 'image.png');
     }
     this.productService.updateProduct(this.selectedProduct, this.imageSelected)
         .subscribe(
@@ -531,7 +571,15 @@ export class ProductsComponent implements OnInit {
     this.newProduct.image = null;
     this.imageSelected = false;
   }
-  //upload price list:
+  deleteSelectedImage(){
+    this.productImageText = 'Выберите файл';
+    this.imageSelected = false;
+    if(this.selectedProduct.image !== null) {
+      this.selectedImage = serverURL + this.selectedProduct.image;
+    }else{
+      this.selectedImage = null;
+    }
+  }
   dataURLtoFile(dataurl, filename):any {
       var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
           bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
@@ -540,6 +588,7 @@ export class ProductsComponent implements OnInit {
       }
       return new File([u8arr], filename, {type:mime});
   }  
+  //upload price list:
   onSelectFile(event: any) {
     this.selectedFile = event.target.files;
     this.fileSelected = true;
