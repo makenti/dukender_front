@@ -49,6 +49,7 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
     {id: "", status: "Все"},
   ];
   public scrolled: boolean = true;
+  private interval:number; 
 
   constructor(
     public auth: AuthService,
@@ -318,8 +319,18 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
     this.getProposals('');
     // window.localStorage.setItem('user_districts', this.selectedDistricts);
   }
-
+  mouseDown(event){
+    this.interval = (new Date()).getTime();
+  }
+  mouseUp(event, item){
+    console.log((new Date()).getTime() - this.interval);
+    if((new Date()).getTime() - this.interval < 400){
+      this.showProposal(item);
+    }
+  }
   showProposal(item: any) {
+    event.stopPropagation();
+    console.log("d",event)
     let curUserEntry = (this.currUser.entry !== undefined && this.currUser.entry !== null)?this.currUser.entry: null;
     if(curUserEntry !== null ||
         item.editor === this.currUser.username && item.status !== 0 ||

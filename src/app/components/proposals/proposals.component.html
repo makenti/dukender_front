@@ -120,7 +120,8 @@
 				<span>У Вас еще нет заявок</span>
 			</tr>
 			<tr *ngFor="let item of proposals | searchPipe: 'searchField': searchQuery | sortBy: sortField : sortOrder" 
-				(click)="showProposal(item)"
+				(mousedown)="mouseDown($event)"
+				(mouseup)="mouseUp($event, item)"
 				[tooltip]="item.tooltip" tooltipPlacement="bottom"
 				[class.new-request]="item.is_open===false"
 				>
