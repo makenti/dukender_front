@@ -127,8 +127,8 @@
 				>
 				<td>
 					{{item.request_id}}
-					<span class="new-comment" 
-						*ngIf="item.has_new_comment">
+					<span [class]="item.has_new_comment?'new-comment':'comment'" 
+						*ngIf="item.has_new_comment||item.has_comment">
 						<i class="fa fa-comment" aria-hidden="true"></i>
 					</span>
 				</td>
