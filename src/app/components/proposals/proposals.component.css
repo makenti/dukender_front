@@ -100,13 +100,18 @@ tr.new-request td{
   /*background-color: #237ee8;*/
   font-weight: 900;
 }
-tr td .new-comment{
+tr td .new-comment,
+tr td .comment{
   position: absolute;
   top: 0;
   right: 0;
 }
 tr td .new-comment i{
   color: #237ee8;
+  font-size: 16px;
+}
+tr td .comment i{
+  color: #bdbdbd;
   font-size: 16px;
 }
 
