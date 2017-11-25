@@ -69,14 +69,16 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
         this.getProposals(id);
       }
       this.getLocalFilter();
+    }else{
+      this.getProposals('');
     }
-    // this.auth.updateUserInfo().subscribe(
-    //   resp => {
-    //     if(resp) {
-    //       this.currUser = this.auth.getUser();
-    //       this.getCompanyRegions();
-    //     }
-    //   }, null);
+    this.auth.updateUserInfo().subscribe(
+      resp => {
+        if(resp) {
+          this.currUser = this.auth.getUser();
+          this.getCompanyRegions();
+        }
+      }, null);
   }
   ngAfterViewChecked(){
     // console.log("ngAfterViewChecked")
@@ -205,6 +207,7 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
                   this.last_timestamp = resp.requests[resp.requests.length - 1].timestamp;
                 if(resp.request_stats !== undefined)
                   this.proposalStats = resp.request_stats;
+
             	}
             }
             this.loading = false;
