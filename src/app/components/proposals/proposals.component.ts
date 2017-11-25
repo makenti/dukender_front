@@ -59,9 +59,9 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
     public toastyService: ToastyService
   ) { }
   ngOnInit() {
-    if(this.proposalService.refresh === false){
-      return;
-    }
+    // if(this.proposalService.refresh === false){
+    //   return;
+    // }
     this.Math = Math;
     if(this.proposalService.getFilter()){
       let id = this.proposalService.getFilter().selected;
@@ -207,7 +207,6 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
                   this.last_timestamp = resp.requests[resp.requests.length - 1].timestamp;
                 if(resp.request_stats !== undefined)
                   this.proposalStats = resp.request_stats;
-
             	}
             }
             this.loading = false;
