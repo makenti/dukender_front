@@ -19,42 +19,42 @@
 
 		<button
 				class="mm-btn mm-btn-filter mm-btn-filter-1"
-				(click)="getProposals('')"
+				(click)="onClickProposalTypes('')"
 				[class.selected]="selectedFilter == ''"
 				[disabled]="loading">Все заявки</button>
 		<button
 				class="mm-btn mm-btn-filter mm-btn-filter-2"
-				(click)="getProposals('0')"
+				(click)="onClickProposalTypes('0')"
 				[class.selected]="selectedFilter == '0'"
 				[disabled]="loading">Входящие <i *ngIf="proposalStats">{{proposalStats.inbound}}</i></button>
 		<button
 				class="mm-btn mm-btn-filter mm-btn-filter-3"
-				(click)="getProposals('1')"
+				(click)="onClickProposalTypes('1')"
 				[class.selected]="selectedFilter == '1'"
 				[disabled]="loading">В работе <i *ngIf="proposalStats">{{proposalStats.processing}}</i></button>
 		<button
 				class="mm-btn mm-btn-filter mm-btn-filter-4"
-				(click)="getProposals('5')"
+				(click)="onClickProposalTypes('5')"
 				[class.selected]="selectedFilter == '5'"
 				[disabled]="loading">Согласование с поставщиком <i *ngIf="proposalStats">{{proposalStats.approving}}</i></button>
 		<button
 				class="mm-btn mm-btn-filter mm-btn-filter-5"
-				(click)="getProposals('4')"
+				(click)="onClickProposalTypes('4')"
 				[class.selected]="selectedFilter == '4'"
 				[disabled]="loading">Согласование с магазином <i *ngIf="proposalStats">{{proposalStats.approving_c}}</i></button>
 		<button
 				class="mm-btn mm-btn-filter mm-btn-filter-6"
-				(click)="getProposals('2')"
+				(click)="onClickProposalTypes('2')"
 				[class.selected]="selectedFilter == '2'"
 				[disabled]="loading">В доставке <i *ngIf="proposalStats">{{proposalStats.delivery}}</i></button>
 		<button
 				class="mm-btn mm-btn-filter mm-btn-filter-7"
-				(click)="getProposals('3')"
+				(click)="onClickProposalTypes('3')"
 				[class.selected]="selectedFilter == '3'"
 				[disabled]="loading">Исполненные <i *ngIf="proposalStats">{{proposalStats.closed}}</i></button>
 		<button
 				class="mm-btn mm-btn-filter mm-btn-filter-8"
-				(click)="getProposals('6')"
+				(click)="onClickProposalTypes('6')"
 				[class.selected]="selectedFilter == '6'"
 				[disabled]="loading">Отмененные <i *ngIf="proposalStats">{{proposalStats.cancelled}}</i></button>
 	</div>

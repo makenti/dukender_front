@@ -29,7 +29,7 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
 	public selectedFilter = '';
   public selectedDistricts: any;
   public currUser: any;
-  public companyRegions: any;
+  public companyRegions: any[] = [];
   public loading: boolean = false;
   public proposalStats: any;
   public searchQuery: string = '';
@@ -59,9 +59,6 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
     public toastyService: ToastyService
   ) { }
   ngOnInit() {
-    // if(this.proposalService.refresh === false){
-    //   return;
-    // }
     this.Math = Math;
     if(this.proposalService.getFilter()){
       let id = this.proposalService.getFilter().selected;
@@ -152,12 +149,25 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
           error =>  this.errorMessage = <any>error
         );
   }
+  onClickProposalTypes(id: any){
+    localStorage.removeItem("proposals");
+    localStorage.removeItem("proposalStats");
+    localStorage.removeItem("last_timestamp");
+    this.getProposals(id);
+  }
   getProposals(id: any) {
-  	this.selectedFilter = id;
+    this.selectedFilter = id;
+    this.scrolled = false;
+    if(localStorage.getItem("proposals")){
+      this.proposals = JSON.parse(localStorage.getItem("proposals"));
+      this.proposalStats = JSON.parse(localStorage.getItem("proposalStats"));
+      this.last_timestamp = JSON.parse(localStorage.getItem("last_timestamp"));
+      this.getLocalFilter();
+      return;
+    } 
     this.proposals = [];
     this.loading = true;
-    this.scrolled = false;
-    //scroll: 
+    //scroll:
     let limit = proposalLimit;
     if(this.proposalService.getFilter()){
       let columnId = this.selectedFilter === ''? 7 : this.selectedFilter;
@@ -165,8 +175,7 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
       if(column.scroll > 0 && column.limit > proposalLimit){
         limit = column.limit;
       }
-    }
-
+    } 
   	let data = {
   		status: id,
 			timestamp: '',
@@ -187,18 +196,20 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
                   this.proposals[i].searchField = this.proposals[i].request_id + this.proposals[i].customer.name;
                   this.proposals[i].customer_name = this.proposals[i].customer.name;
                   this.proposals[i].customer_district = this.proposals[i].customer.district.name;
-                  this.proposals[i].tooltip = "";
-                  if(this.proposals[i].items === null || this.proposals[i].items === undefined){
-                    this.proposals[i].tooltip = "...";
-                    break;
-                  }
-                  for(let j = 0; j < this.proposals[i].items.length; j++){
-                    if(j == 3){
-                      this.proposals[i].tooltip += "...";
-                      break;
+                  this.proposals[i].tooltip = "...";
+                  if(this.proposals[i].items !== null && 
+                    this.proposals[i].items !== undefined){
+                    for(let j = 0; j < this.proposals[i].items.length; j++){
+                      if(j == 0){
+                        this.proposals[i].tooltip = "";
+                      }
+                      if(j == 3){
+                        this.proposals[i].tooltip += "...";
+                        break;
+                      }
+                      let k = j + 1;
+                      this.proposals[i].tooltip += k + ". " + this.proposals[i].items[j]+" \r\n";
                     }
-                    let k = j + 1;
-                    this.proposals[i].tooltip += k + ". " + this.proposals[i].items[j]+" \r\n";
                   }
                 }
                 if(resp.requests !== undefined && 
@@ -207,6 +218,10 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
                   this.last_timestamp = resp.requests[resp.requests.length - 1].timestamp;
                 if(resp.request_stats !== undefined)
                   this.proposalStats = resp.request_stats;
+                localStorage.setItem("proposals", JSON.stringify(this.proposals));
+                localStorage.setItem("proposalStats", JSON.stringify(this.proposalStats));
+                localStorage.setItem("last_timestamp", JSON.stringify(this.last_timestamp));
+
             	}
             }
             this.loading = false;
@@ -249,17 +264,16 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
                   this.proposals[i].customer_name = this.proposals[i].customer.name;
                   this.proposals[i].customer_district = this.proposals[i].customer.district.name;
                   this.proposals[i].tooltip = "";
-                  if(this.proposals[i].items === null || this.proposals[i].items === undefined){
-                    this.proposals[i].tooltip = "...";
-                    break;
-                  }
-                  for(let j = 0; j < this.proposals[i].items.length; j++){
-                    if(j == 3){
-                      this.proposals[i].tooltip += "...";
-                      break;
+                  if(this.proposals[i].items !== null && 
+                    this.proposals[i].items !== undefined){
+                    for(let j = 0; j < this.proposals[i].items.length; j++){
+                      if(j == 3){
+                        this.proposals[i].tooltip += "...";
+                        break;
+                      }
+                      let k = j + 1;
+                      this.proposals[i].tooltip += k + ". " + this.proposals[i].items[j]+" \r\n";
                     }
-                    let k = j + 1;
-                    this.proposals[i].tooltip += k + ". " + this.proposals[i].items[j]+" \r\n";
                   }
                 }
                 if(resp.requests !== undefined && 
@@ -269,6 +283,9 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
 
                 if(resp.request_stats !== undefined)
                   this.proposalStats = resp.request_stats;
+                localStorage.setItem("proposals", JSON.stringify(this.proposals));
+                localStorage.setItem("proposalStats", JSON.stringify(this.proposalStats));
+                localStorage.setItem("last_timestamp", JSON.stringify(this.last_timestamp));
               }
             }
           },
@@ -296,7 +313,8 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
       };
       for (let key in value) {
         if(key !== 'region_name') {
-          region.districts.push(value[key]);
+          if(region.districts)
+            region.districts.push(value[key]);
         }
       }
       this.companyRegions.push(region);
@@ -354,7 +372,7 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
   }
 
   onScroll (e: any) {
-    if(e.target.scrollHeight <= e.target.scrollTop + e.srcElement.clientHeight){
+    if(e.target.scrollHeight <= e.target.scrollTop + e.target.clientHeight){
       this.getProposalsMore();
     }
     //count minimum limit and scroll position:

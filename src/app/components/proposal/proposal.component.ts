@@ -377,6 +377,7 @@ export class ProposalComponent implements OnInit  {
                 }else if(resp.status === 7) {
                   this.toastyService.success('Вы успешно сохранили');
                 }
+                this.clearLocalData();
                 this.proposal = resp;
               }else {
                 this.toastyService.error('Ошибка на сервере');
@@ -402,6 +403,7 @@ export class ProposalComponent implements OnInit  {
               }else {
                 this.toastyService.warning('Error');
               }
+              this.clearLocalData();
             },
             error =>  this.errorMessage = <any>error
           );
@@ -411,7 +413,11 @@ export class ProposalComponent implements OnInit  {
       this.toastyService.error('Нет доступа');
     }
   }
-
+  clearLocalData(){
+    localStorage.removeItem("proposals");
+    localStorage.removeItem("proposalStats");
+    localStorage.removeItem("last_timestamp");
+  }
   onChange(e: any, item: any) {
     if(parseInt(e, 10) < 0) {
       item.count = 1;
@@ -474,6 +480,7 @@ export class ProposalComponent implements OnInit  {
                 this.toastyService.success('Заявка отправлена в доставку');
                 this.proposal = resp.result;
                 this.mode = 'read';
+                this.clearLocalData();
               }else {
                 this.toastyService.error('Ошибка при отправке');
               }
@@ -537,6 +544,7 @@ export class ProposalComponent implements OnInit  {
             if(resp) {
               this.toastyService.info('Ваша заявка удалена');
               this.router.navigate(['/proposals']);
+              this.clearLocalData();
             }else {
               this.toastyService.error('Ошибка на сервере');
             }
