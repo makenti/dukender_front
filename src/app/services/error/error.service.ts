@@ -119,7 +119,7 @@ export class ErrorService {
         errorMessage = 'CODE_INVALID';
         break;
       case 50:
-        errorMessage = 'Не правильная форма прайс-листа. Скачайте по указанной ссылке.';
+        errorMessage = 'Не правильная форма прайс-листа';
         break;
       case 51:
         errorMessage = 'NO_ACTIVE_PRICE';

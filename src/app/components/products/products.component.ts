@@ -181,7 +181,10 @@ export class ProductsComponent implements OnInit {
     this.categoryService.getCategories()
         .subscribe(
           categories => this.categories = categories,
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.errorService.getCodeMessage(error.code)
+            this.errorMessage = <any>error
+          }
         );
   }
 
@@ -192,7 +195,10 @@ export class ProductsComponent implements OnInit {
             this.companyCategories = data;
             // data.map((x:any) => this.selectedCategories.push(x.category.id));
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.errorService.getCodeMessage(error.code)
+            this.errorMessage = <any>error
+          }
         );
   }
   onScroll (e: any) {
@@ -252,7 +258,11 @@ export class ProductsComponent implements OnInit {
               }
             }
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.loading = false;
+            this.errorService.getCodeMessage(error.code)
+            this.errorMessage = <any>error
+          }
         );
   }
   getCategoryProductsMore() {
@@ -283,7 +293,9 @@ export class ProductsComponent implements OnInit {
               });
             }
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.errorMessage = <any>error
+          }
         );
   }
   onAddNewProduct(){
@@ -320,7 +332,10 @@ export class ProductsComponent implements OnInit {
         .subscribe(
           res => {
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.errorService.getCodeMessage(error.code)
+            this.errorMessage = <any>error
+          }
         );
   }
 
@@ -473,7 +488,11 @@ export class ProductsComponent implements OnInit {
               }
               this.addLoading = false;
             },
-            error =>  this.errorMessage = <any>error
+            error =>  {
+              this.errorService.getCodeMessage(error.code)
+              this.errorMessage = <any>error
+              this.addLoading = false;
+            }
           );
     }
   }
@@ -495,7 +514,11 @@ export class ProductsComponent implements OnInit {
             }
             this.addLoading = false;
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.addLoading = false;
+            this.errorService.getCodeMessage(error.code)
+            this.errorMessage = <any>error
+          }
         );
   }
   // onEditProduct() {
@@ -604,18 +627,19 @@ export class ProductsComponent implements OnInit {
       this.uploadService.importProductFile(data)
           .subscribe(
             res => {
-              this.loading = false;
               if(res) {
                 this.toastyService.success('Прайс-лист успешно загружен');
                 this.getCategoryProducts();
               }else{
                 this.toastyService.warning('Прайс-лист не загружен');
               }
+              this.loading = false;
             },
             error =>  {
-              this.toastyService.warning(error.message);
+              this.toastyService.warning(this.errorService.getCodeMessage(error.code));
               this.errorMessage = <any>error;
-            }
+              this.loading = false;
+            }            
           );
     }
   }
@@ -661,7 +685,10 @@ export class ProductsComponent implements OnInit {
               this.modalDeleteProduct.hide();
             }
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.errorService.getCodeMessage(error.code)
+            this.errorMessage = <any>error
+          }
         );
   }
   getProductIds() {
