@@ -157,6 +157,7 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
   }
   getProposals(id: any) {
     this.selectedFilter = id;
+    this.scrolled = false;
     if(localStorage.getItem("proposals")){
       this.proposals = JSON.parse(localStorage.getItem("proposals"));
       this.proposalStats = JSON.parse(localStorage.getItem("proposalStats"));
@@ -164,7 +165,6 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
       this.getLocalFilter();
       return;
     } 
-    this.scrolled = false;
     this.proposals = [];
     this.loading = true;
     //scroll:
@@ -372,7 +372,7 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
   }
 
   onScroll (e: any) {
-    if(e.target.scrollHeight <= e.target.scrollTop + e.srcElement.clientHeight){
+    if(e.target.scrollHeight <= e.target.scrollTop + e.target.clientHeight){
       this.getProposalsMore();
     }
     //count minimum limit and scroll position:
