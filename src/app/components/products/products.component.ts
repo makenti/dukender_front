@@ -230,6 +230,7 @@ export class ProductsComponent implements OnInit {
     }
   }
   getCategoryProducts() {
+    this.products = [];
     this.loading = true;
     let data = {
       category_id: (this.selectedCategory !== null) ? this.selectedCategory.category.id : '',
@@ -240,12 +241,15 @@ export class ProductsComponent implements OnInit {
         .subscribe(
           resp => {
             this.loading = false;
+            console.log(resp)
             if(resp === null) {
-              this.toastyService.warning('У Вас нет товаров');
+              // this.toastyService.warning('У Вас нет товаров');
             }else {
               if(resp.code === 0) {
-                if(resp.price_list === undefined || resp.price_list.length === 0)
-                  this.toastyService.warning('У Вас нет товаров');
+                if(resp.price_list === undefined || resp.price_list.length === 0){
+                  // this.toastyService.warning('У Вас нет товаров');
+                  return;
+                }
                 this.products = resp.price_list;
                 if(this.limit < resp.price_list.length)
                   this.timestamp = resp.price_list[this.limit-1].timestamp;

@@ -414,9 +414,9 @@ export class ProposalComponent implements OnInit  {
     }
   }
   clearLocalData(){
-    localStorage.removeItem("proposals");
-    localStorage.removeItem("proposalStats");
-    localStorage.removeItem("last_timestamp");
+    sessionStorage.removeItem("proposals");
+    sessionStorage.removeItem("proposalStats");
+    sessionStorage.removeItem("last_timestamp");
   }
   onChange(e: any, item: any) {
     if(parseInt(e, 10) < 0) {

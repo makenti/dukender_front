@@ -149,19 +149,22 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
           error =>  this.errorMessage = <any>error
         );
   }
+  clearSessionData(){
+    sessionStorage.removeItem("proposals");
+    sessionStorage.removeItem("proposalStats");
+    sessionStorage.removeItem("last_timestamp");
+  }
   onClickProposalTypes(id: any){
-    localStorage.removeItem("proposals");
-    localStorage.removeItem("proposalStats");
-    localStorage.removeItem("last_timestamp");
+    this.clearSessionData();
     this.getProposals(id);
   }
   getProposals(id: any) {
     this.selectedFilter = id;
     this.scrolled = false;
-    if(localStorage.getItem("proposals")){
-      this.proposals = JSON.parse(localStorage.getItem("proposals"));
-      this.proposalStats = JSON.parse(localStorage.getItem("proposalStats"));
-      this.last_timestamp = JSON.parse(localStorage.getItem("last_timestamp"));
+    if(sessionStorage.getItem("proposals")){
+      this.proposals = JSON.parse(sessionStorage.getItem("proposals"));
+      this.proposalStats = JSON.parse(sessionStorage.getItem("proposalStats"));
+      this.last_timestamp = JSON.parse(sessionStorage.getItem("last_timestamp"));
       this.getLocalFilter();
       return;
     } 
@@ -218,9 +221,9 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
                   this.last_timestamp = resp.requests[resp.requests.length - 1].timestamp;
                 if(resp.request_stats !== undefined)
                   this.proposalStats = resp.request_stats;
-                localStorage.setItem("proposals", JSON.stringify(this.proposals));
-                localStorage.setItem("proposalStats", JSON.stringify(this.proposalStats));
-                localStorage.setItem("last_timestamp", JSON.stringify(this.last_timestamp));
+                sessionStorage.setItem("proposals", JSON.stringify(this.proposals));
+                sessionStorage.setItem("proposalStats", JSON.stringify(this.proposalStats));
+                sessionStorage.setItem("last_timestamp", JSON.stringify(this.last_timestamp));
 
             	}
             }
@@ -283,9 +286,9 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
 
                 if(resp.request_stats !== undefined)
                   this.proposalStats = resp.request_stats;
-                localStorage.setItem("proposals", JSON.stringify(this.proposals));
-                localStorage.setItem("proposalStats", JSON.stringify(this.proposalStats));
-                localStorage.setItem("last_timestamp", JSON.stringify(this.last_timestamp));
+                sessionStorage.setItem("proposals", JSON.stringify(this.proposals));
+                sessionStorage.setItem("proposalStats", JSON.stringify(this.proposalStats));
+                sessionStorage.setItem("last_timestamp", JSON.stringify(this.last_timestamp));
               }
             }
           },
@@ -335,6 +338,7 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
   }
 
   updateProposals() {
+    this.clearSessionData();
     this.getProposals(this.selectedFilter);
   }
 
