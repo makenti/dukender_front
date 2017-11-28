@@ -62,7 +62,7 @@
 				</thead>
 				<tbody (scroll)="onScroll($event)">
 					<tr *ngIf="!loading && products.length === 0" class="empty-table">
-						<span>У Вас нет товаров в прайс-листе</span>
+						<span>У Вас нет товаров</span>
 					</tr>
 					<tr *ngFor="let product of products | searchPipe: 'name': searchQuery | sortBy: sortField : sortOrder">
 						<td (click)="onClickProduct(product)">{{product.article }}</td>

@@ -153,6 +153,9 @@ export class AuthService {
   }
 
   logout() {
+    sessionStorage.removeItem("proposals");
+    sessionStorage.removeItem("proposalStats");
+    sessionStorage.removeItem("last_timestamp");
     window.localStorage.removeItem('auth_key');
     window.localStorage.removeItem('user');
     this.isAuthenticated = false;
