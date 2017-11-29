@@ -707,12 +707,27 @@ export class ProductsComponent implements OnInit {
     return newProducts;
   }
   selectAllProducts() {
-    this.allSelected = true;
-    this.products.forEach(i => i.checked = true);
+    this.products.forEach(i => i.checked = this.allSelected);
   }
-  unSelectAllProducts() {
-    this.allSelected = false;
-    this.products.forEach(i => i.checked = false);
+  exportExcell(){
+    console.log(this.selectedCategory)
+    let cat = this.selectedCategory === null?"":this.selectedCategory.category.id;
+    let name = this.selectedCategory === null?"Все продукты":this.selectedCategory.category.name;
+    let data = {
+      category_id: cat
+    };
+    this.productService.exportPricelist(data, name)
+        .subscribe(
+          resp => {
+            console.log(resp);
+            if(resp) {
+              this.toastyService.success('Успешно экспортирован');
+            }else {
+              // this.toastyService.warning(this.errorService.getCodeMessage(resp));
+            }
+          },
+          error =>  this.errorMessage = <any>error
+        );
   }
   //print:
   printProducts() {
