@@ -366,8 +366,8 @@ export class ProductsComponent implements OnInit {
 
       this.imageSelected = false;
       this.isCrop = false;      
-      if(product.image !== null) {
-        this.selectedImage = serverURL + product.image;
+      if(product.image_url !== null) {
+        this.selectedImage = product.image_url;
       }else{
         this.selectedImage = null;
       }

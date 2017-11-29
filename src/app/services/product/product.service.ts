@@ -164,7 +164,7 @@ export class ProductService {
     });
 
     let options = new RequestOptions({ headers: headers, responseType: ResponseContentType.Blob });
-    let bodyString = "request_id="+data.request_id;
+    let bodyString = "category_id="+data.category_id;
 
     return this.http.post(serverURL + '/products/price/export_to_excel/', bodyString,{
         headers: headers,
