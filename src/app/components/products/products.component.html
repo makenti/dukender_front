@@ -57,7 +57,14 @@
 							*ngIf="sortField==='category'"></i>
 						</th>
 						<th class="text-center">Наличие товара</th>
-						<th class="text-center no-print">ОТМЕТКА</th>
+						<th class="text-center no-print">ОТМЕТКА
+							<label class="mm-control mm-control--checkbox text-center">
+					      <input type="checkbox"
+					      	(change)="selectAllProducts()"
+					      	[(ngModel)]="allSelected" />
+					      <div class="mm-control__indicator"></div>
+					    </label>
+						</th>
 					</tr>
 				</thead>
 				<tbody (scroll)="onScroll($event)">
@@ -98,15 +105,8 @@
 			<div class="flex-container flex-between price-btns-container no-print">
 				<button class="mm-btn mm-btn-primary" (click)="onAddNewProduct()">Добавить товар</button>
 				<button class="mm-btn mm-btn-default" (click)="onOpenImportModal()">Импорт из Excell</button>
+				<button class="mm-btn mm-btn-default" (click)="exportExcell()">Экспорт в Excell</button>
 				<button class="mm-btn mm-btn-default" (click)="printProducts()">Печать</button>
-				<button
-					*ngIf="!allSelected"
-					class="mm-btn mm-btn-default"
-					(click)="selectAllProducts()">Выделить все</button>
-				<button
-					*ngIf="allSelected"
-					class="mm-btn mm-btn-default"
-					(click)="unSelectAllProducts()">Снять все</button>
 				<button class="mm-btn mm-btn-danger" (click)="clickDeleteBtn()">Удалить</button>
 			</div>
 		</div>

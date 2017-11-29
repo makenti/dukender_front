@@ -127,6 +127,27 @@ export class ErrorService {
       case 52:
         errorMessage = 'OLD_PRICE_LIST';
         break;
+      case 53:
+        errorMessage = 'Ошибка киви';
+        break;
+      case 54:
+        errorMessage = 'Не получилось добавить товары, вы превысили количество товаров';
+        break;
+      case 55:
+        errorMessage = 'Ошибка сервера';
+        break;
+      case 56:
+        errorMessage = 'Ошибка сервера';
+        break;
+      case 57:
+        errorMessage = 'Ошибка сервера';
+        break;
+      case 58:
+        errorMessage = 'Ошибка сервера';
+        break;
+      case 403:
+        errorMessage = 'Ошибка безопасности';
+        break;
       case 888:
         errorMessage = 'UNKNOWN_ERROR';
         break;

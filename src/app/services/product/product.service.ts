@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response, RequestOptions } from '@angular/http';
+import { Http, Headers, Response, RequestOptions, ResponseContentType } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { serverURL } from '../../common/config/server';
 import { transformRequest } from '../../common/config/transformRequest';
 import { handleError } from '../../common/config/errorHandler';
+import * as FileSaver from 'file-saver';
 
 import { AuthService } from '../auth/index';
 import { PromotionService } from '../promotion/promotion.service';
@@ -153,6 +154,28 @@ export class ProductService {
                       }
                     })
                     .catch(handleError);
+  }
+
+  exportPricelist(data: any, name: string) {
+    let headers = new Headers({
+      'Auth-Token': this.auth.getToken(),
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Accept': 'application/vnd.ms-excel'
+    });
+
+    let options = new RequestOptions({ headers: headers, responseType: ResponseContentType.Blob });
+    let bodyString = "request_id="+data.request_id;
+
+    return this.http.post(serverURL + '/products/price/export_to_excel/', bodyString,{
+        headers: headers,
+        responseType: ResponseContentType.Blob
+    }).map((res: any) => {
+      let blob = new Blob([res._body], {
+            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-16le"
+          });
+      FileSaver.saveAs(blob, "Прайс_лист_"+name+".xls");
+      return true;
+    });
   }
 
 }
