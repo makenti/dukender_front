@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastyService } from 'ng2-toasty';
 
-import { AuthService, CustomersService } from '../../services/index';
+import { AuthService, CustomersService, ErrorService } from '../../services/index';
 /**
  * This class represents the lazy loaded AboutComponent.
  */
@@ -23,6 +23,7 @@ export class BlackListComponent implements OnInit {
   		public auth: AuthService,
   		public router: Router,
   		public customerService: CustomersService,
+      public errorService: ErrorService,
       public toastyService: ToastyService) {}
 
   ngOnInit() {
@@ -42,7 +43,10 @@ export class BlackListComponent implements OnInit {
             }
             this.loading = false;
           },
-          error => this.errorMessage = <any>error
+          error => {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
 
@@ -68,7 +72,10 @@ export class BlackListComponent implements OnInit {
               this.toastyService.success('Вы успешно убрали');
             }
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
 

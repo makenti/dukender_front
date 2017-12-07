@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import {
   AuthService,
   CategoryService,
+  ErrorService,
   CompanyProfileService } from '../../services/index';
 import { ToastyService } from 'ng2-toasty';
 
@@ -26,6 +27,7 @@ export class CompanyCategoryComponent implements OnInit {
     public companyService: CompanyProfileService,
     public auth: AuthService,
     public router: Router,
+    public errorService: ErrorService,
     public toastyService: ToastyService
    ) {
   }
@@ -67,7 +69,10 @@ export class CompanyCategoryComponent implements OnInit {
             this.loading = false;
             this.getStaticCategories();
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
   getStaticCategories(){
@@ -91,7 +96,10 @@ export class CompanyCategoryComponent implements OnInit {
             }
             this.loading = false;
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
     }
   }
@@ -102,7 +110,10 @@ export class CompanyCategoryComponent implements OnInit {
             this.categories = categories;
             this.getCompanyCategories();
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
 
@@ -148,7 +159,10 @@ export class CompanyCategoryComponent implements OnInit {
               this.toastyService.success('Данные успешно обновлены');
             }
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
   // for register:
@@ -165,7 +179,10 @@ export class CompanyCategoryComponent implements OnInit {
               this.router.navigate(['/home']);
             }
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
   updateStorageUser() {

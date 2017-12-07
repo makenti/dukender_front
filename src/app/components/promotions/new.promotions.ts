@@ -6,6 +6,7 @@ import {
   CategoryService,
   CompanyProfileService,
   ProductService,
+  ErrorService,
 	PromotionService } from '../../services/index';
 
 import { ToastyService } from 'ng2-toasty';
@@ -35,6 +36,7 @@ export class PromotionProductsComponent implements OnInit {
     public promotionService: PromotionService,
     public auth: AuthService,
     public router: Router,
+    public errorService: ErrorService,
     public toastyService: ToastyService) {}
 
   ngOnInit() {
@@ -48,7 +50,10 @@ export class PromotionProductsComponent implements OnInit {
     this.categoryService.getCategories()
         .subscribe(
           categories => this.categories = categories,
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
 
@@ -58,7 +63,10 @@ export class PromotionProductsComponent implements OnInit {
           data => {
             this.companyCategories = data;
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
 
@@ -94,7 +102,10 @@ export class PromotionProductsComponent implements OnInit {
             	}
             }
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
 

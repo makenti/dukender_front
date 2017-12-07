@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastyService } from 'ng2-toasty';
 
-import { AuthService, CustomersService } from '../../services/index';
+import { AuthService, CustomersService, ErrorService } from '../../services/index';
 /**
  * This class represents the lazy loaded AboutComponent.
  */
@@ -19,6 +20,8 @@ export class CustomersComponent implements OnInit {
   constructor(
   		public auth: AuthService,
   		public router: Router,
+      public errorService: ErrorService,
+      public toastyService: ToastyService,
   		public customerService: CustomersService) {}
 
   ngOnInit() {
@@ -43,7 +46,10 @@ export class CustomersComponent implements OnInit {
             	}
             }
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
 }

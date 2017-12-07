@@ -87,7 +87,10 @@ export class RegisterComponent implements OnInit {
     this.regionService.getRegionsByCountry(data)
         .subscribe(
           regions => this.regions = regions,
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
 
@@ -102,7 +105,10 @@ export class RegisterComponent implements OnInit {
               this.newCompany.district = data.district.id;
             }
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
 
@@ -110,7 +116,10 @@ export class RegisterComponent implements OnInit {
     this.regionService.getRegions()
         .subscribe(
           regions => this.regions = regions,
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
 
@@ -141,7 +150,10 @@ export class RegisterComponent implements OnInit {
     this.regionService.getRegionDistricts(data)
         .subscribe(
           districts => this.districts = districts,
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
 
@@ -249,7 +261,10 @@ export class RegisterComponent implements OnInit {
               this.toastyService.warning(this.errorService.getCodeMessage(resp.code));
             }
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
 
@@ -273,7 +288,7 @@ export class RegisterComponent implements OnInit {
             }
           },
           error =>  {
-            this.toastyService.warning(error.message);
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
             this.errorMessage = <any>error;
           }
         );
