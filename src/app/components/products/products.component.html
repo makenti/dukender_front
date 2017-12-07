@@ -183,18 +183,17 @@
 								[(ngModel)]="newProduct.article" />
 						</div>
 						<div class="form-field">
-				    	<label>Категория*</label>
-				    	<div class="mm-select">
-								<select [(ngModel)]="newProduct.category_id" >
-									<option *ngFor="let cat of companyCategories" [ngValue]="cat.category.id">
-								    <span class="badge">{{cat.category.name}}</span>
-								  </option>
-								</select>
-								<div class="select__arrow"></div>
-				    	</div>
+							<label>Цена*</label>
+							<input type="number" class="mm-input" maxlength="300" min="0"
+								[(ngModel)]="newProduct.price" />
 						</div>
 						<div class="form-field">
-							<label>1C </label>
+							<label>Ед. измер.*</label>
+							<input style="font-size: 16px;" type="text" class="mm-input" maxlength="300"
+								[(ngModel)]="newProduct.nomenclature" required/>
+						</div>
+						<div class="form-field">
+							<label>1C*</label>
 							<input type="text" class="mm-input" maxlength="300"
 								[(ngModel)]="newProduct.id_1c" />
 						</div>
@@ -209,19 +208,25 @@
 
 					<div class="side">
 						<div class="form-field">
-							<label>Цена*</label>
-							<input type="number" class="mm-input" maxlength="300" min="0"
-								[(ngModel)]="newProduct.price" />
-						</div>
-						<div class="form-field">
-							<label>Ед. измер.*</label>
-							<input type="text" class="mm-input" maxlength="300"
-								[(ngModel)]="newProduct.nomenclature" required/>
+				    	<label>Категория*</label>
+				    	<div class="mm-select">
+								<select [(ngModel)]="newProduct.category_id" >
+									<option *ngFor="let cat of companyCategories" [ngValue]="cat.category.id">
+								    <span class="badge">{{cat.category.name}}</span>
+								  </option>
+								</select>
+								<div class="select__arrow"></div>
+				    	</div>
 						</div>
 						<div class="form-field">
 							<label>Производ.</label>
 							<input type="text" class="mm-input" maxlength="300"
 								[(ngModel)]="newProduct.made_in" />
+						</div>
+						<div class="form-field">
+							<label style="text-align: left;">Мин. остаток</label>
+							<input style="font-size: 16px;" type="number" class="mm-input" maxlength="10000" min="0"
+								[(ngModel)]="newProduct.min_left" />
 						</div>
 						<div class="form-field">
 							<label>Штрих код</label>
@@ -305,7 +310,7 @@
 						<div class="form-field">
 							<label>Название</label>
 							<input type="text" class="mm-input" maxlength="300"
-								[(ngModel)]="selectedProduct.name" [disabled]="true"/>
+								[(ngModel)]="selectedProduct.name"/>
 						</div>
 						<div class="form-field">
 							<label>Артикул</label>
@@ -313,18 +318,17 @@
 								[(ngModel)]="selectedProduct.article" />
 						</div>
 						<div class="form-field">
-				    	<label>Категория</label>
-				    	<div class="mm-select">
-								<select [(ngModel)]="selectedProduct.category_id" (ngModelChange)="onSelectNewCategory($event)" [disabled]="true">
-									<option *ngFor="let cat of companyCategories" [ngValue]="cat.category.id" >
-								    <span class="badge">{{cat.category.name}}</span>
-								  </option>
-								</select>
-								<div class="select__arrow"></div>
-				    	</div>
+							<label>Цена</label>
+							<input type="number" class="mm-input" maxlength="300" min="0"
+								[(ngModel)]="selectedProduct.price" />
 						</div>
 						<div class="form-field">
-							<label>1C </label>
+							<label>Ед. измер.</label>
+							<input type="text" class="mm-input" maxlength="300"
+								[(ngModel)]="selectedProduct.nomenclature"/>
+						</div>
+						<div class="form-field">
+							<label>1C</label>
 							<input type="text" class="mm-input" maxlength="300"
 								[(ngModel)]="selectedProduct.id_1c" />
 						</div>
@@ -340,19 +344,25 @@
 
 					<div class="side">
 						<div class="form-field">
-							<label>Цена</label>
-							<input type="number" class="mm-input" maxlength="300" min="0"
-								[(ngModel)]="selectedProduct.price" />
-						</div>
-						<div class="form-field">
-							<label>Ед. измер.</label>
-							<input type="text" class="mm-input" maxlength="300"
-								[(ngModel)]="selectedProduct.nomenclature" [disabled]="true"/>
+				    	<label>Категория</label>
+				    	<div class="mm-select">
+								<select [(ngModel)]="selectedProduct.category_id" (ngModelChange)="onSelectNewCategory($event)">
+									<option *ngFor="let cat of companyCategories" [ngValue]="cat.category.id" >
+								    <span class="badge">{{cat.category.name}}</span>
+								  </option>
+								</select>
+								<div class="select__arrow"></div>
+				    	</div>
 						</div>
 						<div class="form-field">
 							<label>Производ.</label>
 							<input type="text" class="mm-input" maxlength="300"
 								[(ngModel)]="selectedProduct.made_in" />
+						</div>
+						<div class="form-field">
+							<label style="text-align: left;">Мин. остаток</label>
+							<input style="font-size: 16px;" type="number" class="mm-input" maxlength="10000" min="0"
+								[(ngModel)]="selectedProduct.min_left" />
 						</div>
 						<div class="form-field">
 							<label>Штрих код</label>

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ToastyService } from 'ng2-toasty';
 
-import { AuthService, PromotionService } from '../../services/index';
+import { AuthService, PromotionService, ErrorService } from '../../services/index';
 
 import * as moment from 'moment';
 import 'moment/min/locales';
@@ -29,7 +30,9 @@ export class ShowPromotionComponent implements OnInit {
   	public auth: AuthService,
   	public router: Router,
   	public route: ActivatedRoute,
-  	public promotionService: PromotionService
+  	public promotionService: PromotionService,
+    public errorService: ErrorService,
+    public toastyService: ToastyService
     ) {
   }
 
@@ -56,7 +59,10 @@ export class ShowPromotionComponent implements OnInit {
               }            
             }
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
 

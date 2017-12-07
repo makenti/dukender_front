@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import * as moment from 'moment';
 import { ToastyService } from 'ng2-toasty';
-import { AuthService, AccountService } from '../../services/index';
+import { AuthService, AccountService, ErrorService } from '../../services/index';
 
 @Component({
   moduleId: module.id,
@@ -37,6 +37,7 @@ export class AccountComponent implements OnInit {
     public auth: AuthService,
     public router: Router,
     public toastyService: ToastyService,
+    public errorService: ErrorService,
     public accountsService: AccountService) {
     this.years = [2016, 2017, 2018];
     console.log(moment().month() + 1);
@@ -109,7 +110,10 @@ export class AccountComponent implements OnInit {
             }
             this.loading = false;
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
 

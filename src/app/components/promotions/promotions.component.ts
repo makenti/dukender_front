@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap';
 import { ToastyService } from 'ng2-toasty';
-import { AuthService, PromotionService } from '../../services/index';
+import { AuthService, PromotionService, ErrorService } from '../../services/index';
 
 @Component({
   selector: 'app-promotions',
@@ -36,6 +36,7 @@ export class PromotionsComponent implements OnInit {
   constructor(
   	public auth: AuthService,
   	public router: Router,
+    public errorService: ErrorService,
   	public promotionService: PromotionService,
     public toastyService: ToastyService) {}
 
@@ -83,7 +84,10 @@ export class PromotionsComponent implements OnInit {
               this.timestamp = resp[0].timestamp; //there some problem, back give it in desc order
             }
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
     window.localStorage.setItem('selectedPromotionType', filter);
   }
@@ -108,7 +112,10 @@ export class PromotionsComponent implements OnInit {
               this.promotions.push(p);
             }
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
 
@@ -151,7 +158,10 @@ export class PromotionsComponent implements OnInit {
               this.toastyService.success('Ошибка при удалении');
             }
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
 

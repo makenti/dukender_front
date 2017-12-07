@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastyService } from 'ng2-toasty';
 
-import { AuthService, HistoryService } from '../../services/index';
+import { AuthService, HistoryService, ErrorService } from '../../services/index';
 
 @Component({
   selector: 'app-pricehistory',
@@ -19,6 +19,7 @@ export class PriceHistoryComponent implements OnInit {
   constructor(
   	public auth: AuthService,
   	public router: Router,
+    public errorService: ErrorService,
     public toastyService: ToastyService,
   	public historyService: HistoryService) {}
 
@@ -41,7 +42,10 @@ export class PriceHistoryComponent implements OnInit {
             }
             this.loading = false;
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
 }

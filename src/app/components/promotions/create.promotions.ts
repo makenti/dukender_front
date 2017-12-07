@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap';
 
-import { AuthService, PromotionService, ProductService, CompanyProfileService } from '../../services/index';
+import { AuthService, ErrorService, PromotionService, ProductService, CompanyProfileService } from '../../services/index';
 
 import * as moment from 'moment';
 import 'moment/min/locales';
@@ -60,6 +60,7 @@ export class CreatePromotionsComponent implements OnInit {
     public toastyService: ToastyService,
     public companyService: CompanyProfileService,
     public productService: ProductService,
+    public errorService: ErrorService,
     public daterangepickerOptions: DaterangepickerConfig
     ) {
     this.daterangepickerOptions.settings = {
@@ -127,7 +128,10 @@ export class CreatePromotionsComponent implements OnInit {
         data => {
           this.companyCategories = data;
         },
-        error =>  this.errorMessage = <any>error
+        error =>  {
+          this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+          this.errorMessage = <any>error
+        }
       );
   }
   getCategoryProducts() {
@@ -153,7 +157,10 @@ export class CreatePromotionsComponent implements OnInit {
             }
           }
         },
-        error =>  this.errorMessage = <any>error
+        error =>  {
+          this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+          this.errorMessage = <any>error
+        }
       );
   }
   // "request_percent":1,
@@ -264,7 +271,10 @@ export class CreatePromotionsComponent implements OnInit {
               this.toastyService.error(resp.message);
             }
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
 

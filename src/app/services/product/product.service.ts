@@ -58,6 +58,7 @@ export class ProductService {
       formData.append('id_1c', product.id_1c);
       formData.append('part_1c', product.part_1c);
       formData.append('barcode', product.barcode);
+      formData.append('min_left', product.min_left);
       if(imageSelected){
         formData.append('image', product.image);
       }else if(product.image === null){

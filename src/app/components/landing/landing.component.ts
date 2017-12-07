@@ -2,6 +2,7 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ModalDirective } from 'ngx-bootstrap';
+import { ToastyService } from 'ng2-toasty';
 
 import { AuthService, ErrorService, ToolbarService } from '../../services/index';
 
@@ -34,8 +35,9 @@ export class LandingComponent implements OnInit {
 
   constructor(
     public auth: AuthService,
-    public errorSrv: ErrorService,
+    public errorService: ErrorService,
     public toolbarSrv: ToolbarService,
+    public toastyService: ToastyService,
     public router: Router) {
   }
 
@@ -110,11 +112,14 @@ export class LandingComponent implements OnInit {
               this.checkRegisterStep();
               this.connectPushService();
             } else {
-              let errorMessage = this.errorSrv.getCodeMessage(res.code);
+              let errorMessage = this.errorService.getCodeMessage(res.code);
               this.loginErrorMessage.push(errorMessage);
             }
           },
-          error => console.log(<any>error)
+          error => {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            console.log(<any>error)
+          }
         );
   }
 
@@ -162,11 +167,14 @@ export class LandingComponent implements OnInit {
               this.modal.show();
               this.connectPushService();
             } else {
-              let errorMessage = this.errorSrv.getCodeMessage(res.code);
+              let errorMessage = this.errorService.getCodeMessage(res.code);
               this.registerErrorMessage.push(errorMessage);
             }
           },
-          error => console.log(<any>error)
+          error => {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            console.log(<any>error)
+          }
         );
   }
 

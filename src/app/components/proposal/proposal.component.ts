@@ -8,6 +8,7 @@ import * as moment from 'moment';
 import {
 			AuthService,
 		  ProposalService,
+      ErrorService,
       CustomersService } from '../../services/index';
 
 /**
@@ -102,6 +103,7 @@ export class ProposalComponent implements OnInit  {
   	public route: ActivatedRoute,
     public proposalService: ProposalService,
   	public customerService: CustomersService,
+    public errorService: ErrorService,
     public toastyService: ToastyService) {}
 
   ngOnInit() {
@@ -207,7 +209,10 @@ export class ProposalComponent implements OnInit  {
             this.proposalBodyClass = "h"+this.proposalItems.length;
            }
          },
-         error =>  this.errorMessage = <any>error
+         error =>  {
+           this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+           this.errorMessage = <any>error
+         }
        );
    }
 
@@ -383,7 +388,10 @@ export class ProposalComponent implements OnInit  {
                 this.toastyService.error('Ошибка на сервере');
               }
             },
-            error =>  this.errorMessage = <any>error
+            error => {
+              this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+              this.errorMessage = <any>error
+            }
           );
     }
   }
@@ -405,7 +413,10 @@ export class ProposalComponent implements OnInit  {
               }
               this.clearLocalData();
             },
-            error =>  this.errorMessage = <any>error
+            error =>  {
+              this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+              this.errorMessage = <any>error
+            }
           );
     }else if(this.proposal.status !== 4 && this.proposal.editor === this.currUser.username) {
       this.mode = 'edit';
@@ -485,7 +496,10 @@ export class ProposalComponent implements OnInit  {
                 this.toastyService.error('Ошибка при отправке');
               }
             },
-            error =>  this.errorMessage = <any>error
+            error =>  {
+              this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+              this.errorMessage = <any>error
+            }
           );
     }
   }
@@ -510,7 +524,10 @@ export class ProposalComponent implements OnInit  {
             }
             this.modalEnterEmail.hide();
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
 
@@ -529,7 +546,10 @@ export class ProposalComponent implements OnInit  {
           		this.toastyService.error('Ошибка на сервере');
             }
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
 
@@ -549,7 +569,10 @@ export class ProposalComponent implements OnInit  {
               this.toastyService.error('Ошибка на сервере');
             }
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
 
@@ -576,7 +599,10 @@ export class ProposalComponent implements OnInit  {
                 this.toastyService.error('Ошибка на сервере');
               }
             },
-            error =>  this.errorMessage = <any>error
+            error =>  {
+              this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+              this.errorMessage = <any>error
+            }
           );
     }
   }
@@ -595,7 +621,10 @@ export class ProposalComponent implements OnInit  {
               this.toastyService.error('Ошибка на сервере');
             }
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
 
@@ -640,7 +669,10 @@ export class ProposalComponent implements OnInit  {
               this.modalBanCustomer.hide();
             }
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
 
@@ -668,7 +700,10 @@ export class ProposalComponent implements OnInit  {
             if (resp.code === 0)
               this.proposal.relation = (parseInt(this.proposal.relation, 10) + 1) % 2;
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
 
@@ -752,7 +787,10 @@ export class ProposalComponent implements OnInit  {
             this.modalName1c.hide();
             this.modalInfo.hide();
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );    
   }
 }

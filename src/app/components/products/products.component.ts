@@ -119,6 +119,7 @@ export class ProductsComponent implements OnInit {
     width: 0,
     height: 0,
     barcode: '',
+    min_left: 0,
   };
   public selectedProduct = {
     id: '',
@@ -138,7 +139,8 @@ export class ProductsComponent implements OnInit {
     left: 0,
     width: 0,
     height: 0,
-    barcode: ''
+    barcode: '',
+    min_left: 0,
   };
   public cropPosition = {
     x: 0,
@@ -182,7 +184,7 @@ export class ProductsComponent implements OnInit {
         .subscribe(
           categories => this.categories = categories,
           error =>  {
-            this.errorService.getCodeMessage(error.code)
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
             this.errorMessage = <any>error
           }
         );
@@ -196,7 +198,7 @@ export class ProductsComponent implements OnInit {
             // data.map((x:any) => this.selectedCategories.push(x.category.id));
           },
           error =>  {
-            this.errorService.getCodeMessage(error.code)
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
             this.errorMessage = <any>error
           }
         );
@@ -264,7 +266,7 @@ export class ProductsComponent implements OnInit {
           },
           error =>  {
             this.loading = false;
-            this.errorService.getCodeMessage(error.code)
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
             this.errorMessage = <any>error
           }
         );
@@ -298,6 +300,7 @@ export class ProductsComponent implements OnInit {
             }
           },
           error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
             this.errorMessage = <any>error
           }
         );
@@ -337,7 +340,7 @@ export class ProductsComponent implements OnInit {
           res => {
           },
           error =>  {
-            this.errorService.getCodeMessage(error.code)
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
             this.errorMessage = <any>error
           }
         );
@@ -355,6 +358,9 @@ export class ProductsComponent implements OnInit {
       return false;
     } else if(this.newProduct.price === 0) {
       this.toastyService.warning('Цена товара указана как ноль тенге');
+      return false;
+    } else if(this.newProduct.id_1c === '') {
+      this.toastyService.warning('Вы не заполнили ID 1C');
       return false;
     }
     return true;
@@ -493,7 +499,7 @@ export class ProductsComponent implements OnInit {
               this.addLoading = false;
             },
             error =>  {
-              this.errorService.getCodeMessage(error.code)
+              this.toastyService.warning(this.errorService.getCodeMessage(error.code));
               this.errorMessage = <any>error
               this.addLoading = false;
             }
@@ -511,16 +517,18 @@ export class ProductsComponent implements OnInit {
     this.productService.updateProduct(this.selectedProduct, this.imageSelected)
         .subscribe(
           res => {
-            if(res) {
+            if(res.code === 0) {
               this.toastyService.success('Товар обновлен');
               this.getCategoryProducts();
               this.onCloseEditProduct();
+            }else{
+              this.toastyService.warning(String(res.code) + String(res.message));
             }
             this.addLoading = false;
           },
           error =>  {
             this.addLoading = false;
-            this.errorService.getCodeMessage(error.code)
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
             this.errorMessage = <any>error
           }
         );
@@ -559,7 +567,8 @@ export class ProductsComponent implements OnInit {
       left: 0,
       width: 0,
       height: 0,
-      barcode: ''
+      barcode: '',
+      min_left: 0,
     };
     this.selectedImage = null;
     this.imageSelected = false;
@@ -585,7 +594,8 @@ export class ProductsComponent implements OnInit {
       left: 0,
       width: 0,
       height: 0,
-      barcode: ''
+      barcode: '',
+      min_left: 0,
     };
     this.selectedImage = null;
     this.imageSelected = false;
@@ -690,7 +700,7 @@ export class ProductsComponent implements OnInit {
             }
           },
           error =>  {
-            this.errorService.getCodeMessage(error.code)
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
             this.errorMessage = <any>error
           }
         );
@@ -726,7 +736,10 @@ export class ProductsComponent implements OnInit {
               // this.toastyService.warning(this.errorService.getCodeMessage(resp));
             }
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
   //print:

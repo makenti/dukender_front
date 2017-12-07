@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import {
   AuthService,
   CompanyRegionsService,
+  ErrorService,
   CompanyProfileService } from '../../services/index';
 
 import { ToastyService } from 'ng2-toasty';
@@ -36,7 +37,8 @@ export class CompanyRegionsComponent implements OnInit {
     public companyService: CompanyProfileService,
     public auth: AuthService,
     public router: Router,
-    public toastyService: ToastyService
+    public toastyService: ToastyService,
+    public errorService: ErrorService
    ) {
   }
 
@@ -67,7 +69,10 @@ export class CompanyRegionsComponent implements OnInit {
             this.regions = regions;
             this.loading = false;
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
 
@@ -116,7 +121,10 @@ export class CompanyRegionsComponent implements OnInit {
             });
             this.companyRegions.push(region);
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
 
@@ -130,7 +138,10 @@ export class CompanyRegionsComponent implements OnInit {
               this.convertFromServer(data);
             }
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
 
@@ -188,7 +199,10 @@ export class CompanyRegionsComponent implements OnInit {
               this.toastyService.success('Вы успешно обновили данные');
             }
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
   selectAll(region, e){

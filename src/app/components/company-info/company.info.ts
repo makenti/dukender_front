@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import {
   AuthService,
+  ErrorService,
   CompanyRegionsService,
   CompanyProfileService
 } from '../../services/index';
@@ -55,6 +56,7 @@ export class CompanyInfoComponent implements OnInit {
     public toastyService: ToastyService,
     public regionService: CompanyRegionsService,
     public companyService: CompanyProfileService,
+    public errorService: ErrorService,
   ) { }
 
   ngOnInit() {
@@ -68,7 +70,10 @@ export class CompanyInfoComponent implements OnInit {
     this.regionService.getRegions()
         .subscribe(
           regions => this.regions = regions,
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
 
@@ -84,7 +89,10 @@ export class CompanyInfoComponent implements OnInit {
               this.companyPreview = serverURL + data.image;
             }
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
 
@@ -125,7 +133,7 @@ export class CompanyInfoComponent implements OnInit {
             }
           },
           error =>  {
-            this.toastyService.warning(error.message);
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
             this.errorMessage = <any>error;
           }
         );
@@ -140,7 +148,10 @@ export class CompanyInfoComponent implements OnInit {
           districts => {
             this.districts = districts;
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
 
@@ -205,7 +216,10 @@ export class CompanyInfoComponent implements OnInit {
                 this.toastyService.error('Ошибка при обновлении профиля компании');
               }
             },
-            error => this.errorMessage = <any>error
+            error => {
+              this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+              this.errorMessage = <any>error
+            }
           );
     }
   }

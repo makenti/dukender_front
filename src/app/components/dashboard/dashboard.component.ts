@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastyService } from 'ng2-toasty';
-import { AuthService, ProposalService } from '../../services/index';
+import { AuthService, ProposalService, ErrorService } from '../../services/index';
 
 @Component({
   selector: 'app-dashboard',
@@ -26,7 +26,8 @@ export class DashboardComponent implements OnInit {
     public auth: AuthService,
   	public router: Router,
     public toastyService: ToastyService,
-  	public proposalService: ProposalService
+  	public proposalService: ProposalService,
+    public errorService: ErrorService
   ) { }
 
   ngOnInit() {
@@ -62,7 +63,10 @@ export class DashboardComponent implements OnInit {
             	}
             }
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
 

@@ -5,6 +5,7 @@ import { ToastyService } from 'ng2-toasty';
 import {
 			AuthService,
 		  ProposalService,
+      ErrorService,
       CompanyProfileService } from '../../services/index';
 
 import { proposalLimit } from '../../common/config/limits';
@@ -55,6 +56,7 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
     public auth: AuthService,
   	public router: Router,
   	public proposalService: ProposalService,
+    public errorService: ErrorService,
     public companyService: CompanyProfileService,
     public toastyService: ToastyService
   ) { }
@@ -128,7 +130,10 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
               this.toastyService.error('Ошибка на сервере');
             }
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
   downloadExcelItem(){
@@ -146,7 +151,10 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
               this.toastyService.error('Ошибка на сервере');
             }
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
   clearSessionData(){
@@ -229,7 +237,10 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
             }
             this.loading = false;
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
     this.proposalService.setSelectedFilter(id);
     this.getLocalFilter();
@@ -292,7 +303,10 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
               }
             }
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
   getCompanyRegions() {
@@ -301,7 +315,10 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
           data => {
             this.convertFromServer(data);
           },
-          error =>  this.errorMessage = <any>error
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
         );
   }
 
