@@ -1,20 +1,22 @@
 <div class="main-container home-container">
 
 	<h3 class="text-center">Прайс-лист</h3>
-	<p class="text-center">
-		Загрузите прайс-лист в систему одним кликом!<br/>
-		Шаблон для заполнения можно скачать  <a href="./assets/price_list.xlsx">отсюда</a>
-	</p>
-	<div class="search-container">
-		<label>Введите название товара или артикул, чтобы найти нужный товар</label>
-		<input
-			type="text"
-			class="mm-input"
-			placeholder="поиск товара"
-			[(ngModel)]="searchQuery" />
-		<!-- <button
-			class="mm-btn mm-btn-default"
-	  	(click)="onSearchProduct($event)">Поиск</button> -->
+	<div class="row">
+		<div class="col-xs-6">
+			Загрузите прайс-лист в систему одним кликом!<br/>
+			Шаблон для заполнения можно скачать  <a href="./assets/price_list.xlsx">отсюда</a>
+		</div>
+		<div class="col-xs-6 search-container">
+			<label>Введите название товара или артикул, чтобы найти нужный товар</label>
+			<input
+				type="text"
+				class="mm-input"
+				placeholder="поиск товара"
+				[(ngModel)]="searchQuery" />
+			<!-- <button
+				class="mm-btn mm-btn-default"
+		  	(click)="onSearchProduct($event)">Поиск</button> -->
+		</div>
 	</div>
 	<div class="row" id="productsPrintContent">
 		<div class="col-xs-2">
@@ -48,7 +50,7 @@
 							*ngIf="sortField==='name'">
 							</i>
 						</th>
-						<th>ПРОИЗВОДИТЕЛЬ</th>
+						<th>ПРОИЗВОД.</th>
 						<th>ЕД.ИЗМЕРЕНИЯ</th>
 						<th>ЦЕНА</th>
 						<th class="sortable-field"
@@ -184,7 +186,7 @@
 						</div>
 						<div class="form-field">
 							<label>Цена*</label>
-							<input type="number" class="mm-input" maxlength="300" min="0"
+							<input type="number" class="mm-input" maxlength="300" min="0" step="any"
 								[(ngModel)]="newProduct.price" />
 						</div>
 						<div class="form-field">
@@ -319,7 +321,7 @@
 						</div>
 						<div class="form-field">
 							<label>Цена</label>
-							<input type="number" class="mm-input" maxlength="300" min="0"
+							<input type="number" class="mm-input" maxlength="300" min="0" step="any"
 								[(ngModel)]="selectedProduct.price" />
 						</div>
 						<div class="form-field">
