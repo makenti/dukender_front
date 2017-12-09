@@ -666,7 +666,7 @@ input:checked + .slider:before {
 
 /* search block */
 .search-container {
-  margin: 15px 0;
+  /*margin: 15px 0;*/
   text-align: right
 }
 .search-container .mm-input{

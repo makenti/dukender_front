@@ -81,7 +81,18 @@ h2 {
 .products-table thead th:last-child {
   width: 10%;
 }
-
+.products-table tbody td:nth-child(2),
+.products-table thead th:nth-child(2){
+  width: 18%;
+}
+.products-table tbody td:nth-child(3),
+.products-table thead th:nth-child(3){
+  width: 9%;
+}
+.products-table tbody td:nth-child(4),
+.products-table thead th:nth-child(4){
+  width: 12%;
+}
 table thead th.sortable-field{
   cursor: pointer;
   color: #337ab7;
