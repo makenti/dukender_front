@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap';
 import { Router } from '@angular/router';
 import {
@@ -573,6 +573,13 @@ export class ProductsComponent implements OnInit {
     this.selectedImage = null;
     this.imageSelected = false;
     this.productImageText = 'Выберите файл';
+  }
+  @HostListener('window:keyup', ['$event'])
+  keyboardInput(event: KeyboardEvent) {
+    let x = event.keyCode;
+    if (x === 27) {
+      this.onCloseEditProduct();
+    }
   }
   onCloseEditProduct() {
     this.modalEditProduct.hide();

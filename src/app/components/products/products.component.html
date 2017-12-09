@@ -186,7 +186,7 @@
 						</div>
 						<div class="form-field">
 							<label>Цена*</label>
-							<input type="number" class="mm-input" maxlength="300" min="0"
+							<input type="number" class="mm-input" maxlength="300" min="0" step="any"
 								[(ngModel)]="newProduct.price" />
 						</div>
 						<div class="form-field">
@@ -292,7 +292,7 @@
   </div>
 </div>
 
-<div bsModal #modalEditProduct="bs-modal"
+<div bsModal #modalEditProduct="bs-modal" keyup="keyEvent($event)"
 	class="modal fade modal-add-product">
 	<div class="modal-dialog">
     <div class="modal-content">
@@ -321,7 +321,7 @@
 						</div>
 						<div class="form-field">
 							<label>Цена</label>
-							<input type="number" class="mm-input" maxlength="300" min="0"
+							<input type="number" class="mm-input" maxlength="300" min="0" step="any"
 								[(ngModel)]="selectedProduct.price" />
 						</div>
 						<div class="form-field">
