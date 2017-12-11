@@ -204,12 +204,13 @@ export class ProductsComponent implements OnInit {
         );
   }
   onScroll (e: any) {
-    if(e.target.scrollHeight <= e.target.scrollTop + e.srcElement.clientHeight){
+    if(e.target.scrollHeight <= e.target.scrollTop + e.srcElement.clientHeight && this.products.length >= priceLimit){
       this.getCategoryProductsMore();
     }
   }
   onSelectCategory(newCategory: any) {
     this.selectedCategory = newCategory;
+    this.limit = priceLimit;
     this.getCategoryProducts();
   }
 
@@ -290,7 +291,13 @@ export class ProductsComponent implements OnInit {
                 this.limit = 0;
               }
               for(var pl of resp.price_list){
-                this.products.push(pl);
+                let exist:boolean = false;
+                for(let i = 0; i < this.products.length; i++){
+                  if(this.products[i].id === pl.id)
+                    exist = true;
+                }
+                if(!exist)
+                  this.products.push(pl);
                 this.timestamp = pl.timestamp;
               }
               this.products.map(p => {
@@ -358,9 +365,6 @@ export class ProductsComponent implements OnInit {
       return false;
     } else if(this.newProduct.price === 0) {
       this.toastyService.warning('Цена товара указана как ноль тенге');
-      return false;
-    } else if(this.newProduct.id_1c === '') {
-      this.toastyService.warning('Вы не заполнили ID 1C');
       return false;
     }
     return true;
