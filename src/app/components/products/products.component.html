@@ -1,10 +1,39 @@
 <div class="main-container home-container">
 
 	<h3 class="text-center">Прайс-лист</h3>
-	<div class="row">
+	<p class="text-center">
+		Загрузите прайс-лист в систему одним кликом!<br/>
+		Шаблон для заполнения можно скачать  <a href="./assets/price_list.xlsx">отсюда</a>
+	</p>
+	<div class="row" style="margin-bottom: 10px;">
 		<div class="col-xs-6">
-			Загрузите прайс-лист в систему одним кликом!<br/>
-			Шаблон для заполнения можно скачать  <a href="./assets/price_list.xlsx">отсюда</a>
+			<label for="">Товарная группа</label>
+			<div class="dropdown navbar-d no-print" dropdown
+		    *ngIf="this.auth.perms.settings">
+		    <button dropdownToggle class="dropdown-btn navbar-d-btn">
+		      <span *ngIf="selectedCategory !== null">{{selectedCategory.category.name}}</span>
+		      <span *ngIf="selectedCategory == null">Все продукты</span>
+		      <i class="fa fa-caret-down" aria-hidden="true"></i>
+		    </button>
+		    <ul *dropdownMenu class="dropdown-menu navbar-d-menu">
+  			  <li>
+  			  	<button 
+  			  		type="button" 
+  			  		class="list-group-item"
+  						[class.active]="selectedCategory === null"
+  			  		(click)="onSelectCategory(null)"
+  			  	>
+  			  		Все продукты
+  			  	</button>
+  			  </li>
+  			  <li *ngFor="let cat of companyCategories">
+	  			  <button type="button" class="list-group-item"
+	  			  	[class.active]="selectedCategory !== null && selectedCategory.category.id === cat.category.id"
+	  	      	name="categories"
+	  		      (click)="onSelectCategory(cat)">{{cat.category.name}}</button>
+	  		  </li>
+		    </ul>
+			</div>
 		</div>
 		<div class="col-xs-6 search-container">
 			<label>Введите название товара или артикул, чтобы найти нужный товар</label>
@@ -12,29 +41,15 @@
 				type="text"
 				class="mm-input"
 				placeholder="поиск товара"
-				[(ngModel)]="searchQuery" />
+				[(ngModel)]="searchQuery" 
+				style="width: 300px;height:40px;border: none;"/>
 			<!-- <button
 				class="mm-btn mm-btn-default"
 		  	(click)="onSearchProduct($event)">Поиск</button> -->
 		</div>
 	</div>
 	<div class="row" id="productsPrintContent">
-		<div class="col-xs-2">
-			<div>
-				<p class="block-header">ТОВАРНАЯ ГРУППА</p>
-				<div class="list-group product-category-list no-print">
-				  <button type="button" class="list-group-item"
-				  	[class.active]="selectedCategory === null"
-				  	(click)="onSelectCategory(null)">Все продукты</button>
-				  <button type="button" class="list-group-item"
-				  	*ngFor="let cat of companyCategories"
-				  	[class.active]="selectedCategory !== null && selectedCategory.category.id === cat.category.id"
-		      	name="categories"
-			      (click)="onSelectCategory(cat)">{{cat.category.name}}</button>
-				</div>
-			</div>
-		</div>
-		<div class="col-xs-10">
+		<div class="col-xs-12">
 
 			<table class="table table-striped products-table price-l-table" [class.loading]="loading">
 				<thead>
@@ -195,7 +210,7 @@
 								[(ngModel)]="newProduct.nomenclature" required/>
 						</div>
 						<div class="form-field">
-							<label>1C*</label>
+							<label>1C</label>
 							<input type="text" class="mm-input" maxlength="300"
 								[(ngModel)]="newProduct.id_1c" />
 						</div>
