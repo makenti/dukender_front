@@ -65,6 +65,7 @@
 							*ngIf="sortField==='name'">
 							</i>
 						</th>
+						<th>ФОТО</th>
 						<th>ПРОИЗВОД.</th>
 						<th>ЕД.ИЗМЕРЕНИЯ</th>
 						<th>ЦЕНА</th>
@@ -91,6 +92,9 @@
 					<tr *ngFor="let product of products | searchPipe: 'name': searchQuery | sortBy: sortField : sortOrder">
 						<td (click)="onClickProduct(product)">{{product.article }}</td>
 						<td (click)="onClickProduct(product)">{{product.name}}</td>
+						<td (click)="onClickProduct(product)" style="padding: 5px;">
+							<img *ngIf="product.image_url" [src]="product.image_url" style="width: 40px; height:40px;">
+						</td>
 						<td (click)="onClickProduct(product)">{{product.made_in}}</td>
 						<td (click)="onClickProduct(product)">{{product.nomenclature}}</td>
 						<td (click)="onClickProduct(product)">
