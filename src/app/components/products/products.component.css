@@ -72,7 +72,7 @@ h2 {
 
 .products-table tbody td,
 .products-table thead th {
-    width: 13%;
+    width: 11%;
     float: left;
 }
 .products-table tbody td:first-child,
@@ -83,15 +83,11 @@ h2 {
 }
 .products-table tbody td:nth-child(2),
 .products-table thead th:nth-child(2){
-  width: 18%;
+  width: 16%;
 }
 .products-table tbody td:nth-child(3),
 .products-table thead th:nth-child(3){
-  width: 9%;
-}
-.products-table tbody td:nth-child(4),
-.products-table thead th:nth-child(4){
-  width: 12%;
+  width: 8%;
 }
 table thead th.sortable-field{
   cursor: pointer;

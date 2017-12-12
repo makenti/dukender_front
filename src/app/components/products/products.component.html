@@ -65,6 +65,7 @@
 							*ngIf="sortField==='name'">
 							</i>
 						</th>
+						<th>ФОТО</th>
 						<th>ПРОИЗВОД.</th>
 						<th>ЕД.ИЗМЕРЕНИЯ</th>
 						<th>ЦЕНА</th>
@@ -91,6 +92,9 @@
 					<tr *ngFor="let product of products | searchPipe: 'name': searchQuery | sortBy: sortField : sortOrder">
 						<td (click)="onClickProduct(product)">{{product.article }}</td>
 						<td (click)="onClickProduct(product)">{{product.name}}</td>
+						<td (click)="onClickProduct(product)" style="padding: 5px;">
+							<img *ngIf="product.image_url" [src]="product.image_url" style="width: 40px; height:40px;">
+						</td>
 						<td (click)="onClickProduct(product)">{{product.made_in}}</td>
 						<td (click)="onClickProduct(product)">{{product.nomenclature}}</td>
 						<td (click)="onClickProduct(product)">
@@ -218,7 +222,7 @@
 			    		<label>Фото</label>
 			    		<label class="mm-btn mm-btn-link btn-file">
 						    <span>{{productImageText}}</span>
-					        <input id="custom-input" type="file" (change)="onSelectImage($event)">
+					        <input id="custom-input" type="file" accept="image/x-png,image/jpeg" (change)="onSelectImage($event)">
 						</label>
 						</div>
 					</div>
@@ -353,7 +357,7 @@
 			    		<label>Рисунок</label>
 			    		<label class="mm-btn mm-btn-link">
 						    <span>{{productImageText}}</span>
-						    <input id = "custom-input" type="file" style="display: none;"
+						    <input id = "custom-input" type="file" style="display: none;" accept="image/x-png,image/jpeg"
 						    (change)="onSelectImage($event)">
 						</label>
 						</div>

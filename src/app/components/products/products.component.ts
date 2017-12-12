@@ -168,6 +168,7 @@ export class ProductsComponent implements OnInit {
     //for cropper
     this.cropperSettings = new CropperSettings();
     this.cropperSettings.noFileInput = true;
+    this.cropperSettings.allowedFilesRegex =  /.(jpe?g|png)$/i;
     this.cropperSettings.croppedWidth = 600;
     this.cropperSettings.croppedHeight = 600;
     this.cropperSettings.canvasWidth = 600;
@@ -204,7 +205,7 @@ export class ProductsComponent implements OnInit {
         );
   }
   onScroll (e: any) {
-    if(e.target.scrollHeight <= e.target.scrollTop + e.srcElement.clientHeight && this.products.length >= priceLimit){
+    if(e.target.scrollHeight <= e.target.scrollTop + e.srcElement.clientHeight){
       this.getCategoryProductsMore();
     }
   }
@@ -244,7 +245,7 @@ export class ProductsComponent implements OnInit {
         .subscribe(
           resp => {
             this.loading = false;
-            console.log(resp)
+            // console.log(resp)
             if(resp === null) {
               // this.toastyService.warning('У Вас нет товаров');
             }else {
@@ -731,7 +732,7 @@ export class ProductsComponent implements OnInit {
     this.products.forEach(i => i.checked = this.allSelected);
   }
   exportExcell(){
-    console.log(this.selectedCategory)
+    // console.log(this.selectedCategory)
     let cat = this.selectedCategory === null?"":this.selectedCategory.category.id;
     let name = this.selectedCategory === null?"Все продукты":this.selectedCategory.category.name;
     let data = {
@@ -740,7 +741,7 @@ export class ProductsComponent implements OnInit {
     this.productService.exportPricelist(data, name)
         .subscribe(
           resp => {
-            console.log(resp);
+            // console.log(resp);
             if(resp) {
               this.toastyService.success('Успешно экспортирован');
             }else {
