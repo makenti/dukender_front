@@ -168,6 +168,7 @@ export class ProductsComponent implements OnInit {
     //for cropper
     this.cropperSettings = new CropperSettings();
     this.cropperSettings.noFileInput = true;
+    this.cropperSettings.allowedFilesRegex =  /.(jpe?g|png)$/i;
     this.cropperSettings.croppedWidth = 600;
     this.cropperSettings.croppedHeight = 600;
     this.cropperSettings.canvasWidth = 600;

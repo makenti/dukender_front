@@ -222,7 +222,7 @@
 			    		<label>Фото</label>
 			    		<label class="mm-btn mm-btn-link btn-file">
 						    <span>{{productImageText}}</span>
-					        <input id="custom-input" type="file" (change)="onSelectImage($event)">
+					        <input id="custom-input" type="file" accept="image/x-png,image/jpeg" (change)="onSelectImage($event)">
 						</label>
 						</div>
 					</div>
@@ -357,7 +357,7 @@
 			    		<label>Рисунок</label>
 			    		<label class="mm-btn mm-btn-link">
 						    <span>{{productImageText}}</span>
-						    <input id = "custom-input" type="file" style="display: none;"
+						    <input id = "custom-input" type="file" style="display: none;" accept="image/x-png,image/jpeg"
 						    (change)="onSelectImage($event)">
 						</label>
 						</div>
