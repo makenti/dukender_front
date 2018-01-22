@@ -134,7 +134,9 @@ export class ProposalComponent implements OnInit  {
            }else {
              this.proposal = resp;
              this.proposalItems = [];
-						 console.log(this.proposal.status);
+             console.log(this.proposal.status);
+             console.log(this.proposal.items[0].price);
+						 console.log(this.proposal.items[0].count);
              if((this.proposal.status === 1 || this.proposal.status === 5) &&
                  this.proposal.editor === this.currUser.username) {
                this.mode = 'edit';
@@ -172,7 +174,7 @@ export class ProposalComponent implements OnInit  {
                 }
              }
              for( let item of resp.items) {
-               let pr = parseInt((item.action_discount_active)?item.new_price:item.price, 10);
+               let pr = (item.action_discount_active)?item.new_price:item.price;
                let p = {
                  item_id: item.id,
                  count: item.count,
