@@ -58,6 +58,9 @@ export class ProposalComponent implements OnInit  {
   @ViewChild('modalDeleteProposal')
   modalDeleteProposal: ModalDirective;
 
+  @ViewChild('modalPerformProposal')
+  modalPerformProposal: ModalDirective;
+
   @ViewChild('modalId1c')
   modalId1c: ModalDirective;
 
@@ -86,6 +89,7 @@ export class ProposalComponent implements OnInit  {
   public accessToExec: boolean = true;
   public editMode: boolean = true;
   public delete: boolean = false;
+  public canPerform: boolean = true;
   public isEditableProposal: boolean = false;
 
   // public proposalBeforeEdit:any = '';
@@ -130,7 +134,9 @@ export class ProposalComponent implements OnInit  {
            }else {
              this.proposal = resp;
              this.proposalItems = [];
-						 console.log(this.proposal.status);
+             console.log(this.proposal.status);
+             console.log(this.proposal.items[0].price);
+						 console.log(this.proposal.items[0].count);
              if((this.proposal.status === 1 || this.proposal.status === 5) &&
                  this.proposal.editor === this.currUser.username) {
                this.mode = 'edit';
@@ -160,12 +166,15 @@ export class ProposalComponent implements OnInit  {
                this.deliveryBefore = moment(parseInt(resp.delivery_time, 10)).format('DD.MM.YYYY');
              }
              if(this.proposal.status === 2){
-               if(moment().diff(this.deliveryDate, 'days') > 5){
-                 this.delete = true;
-               }
+                 if(moment().diff(this.deliveryDate, 'days') > 5){
+                   this.delete = true;
+                 }
+                if(moment().diff(this.deliveryDate, 'days') > 3){
+                  this.canPerform == true;
+                }
              }
              for( let item of resp.items) {
-               let pr = parseInt((item.action_discount_active)?item.new_price:item.price, 10);
+               let pr = (item.action_discount_active)?item.new_price:item.price;
                let p = {
                  item_id: item.id,
                  count: item.count,
@@ -565,6 +574,29 @@ export class ProposalComponent implements OnInit  {
               this.toastyService.info('Ваша заявка удалена');
               this.router.navigate(['/proposals']);
               this.clearLocalData();
+            }else {
+              this.toastyService.error('Ошибка на сервере');
+            }
+          },
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
+        );
+  }
+  onPerformProposal() {
+    let data = {
+      request_id: this.id,
+      key: this.proposal.key
+    };
+    this.proposalService.performProposal(data)
+        .subscribe(
+          resp => {
+            if(resp) {
+              this.toastyService.info('Заявка завершена');
+              this.router.navigate(['/proposals']);
+              this.clearLocalData();
+              this.modalPerformProposal.hide();
             }else {
               this.toastyService.error('Ошибка на сервере');
             }
