@@ -221,6 +221,9 @@
 			<button class="mm-btn mm-btn-danger "
 							(click)="modalDeleteProposal.show()"
 							*ngIf="mode === 'edit'||delete">Удалить заявку</button>
+			<button class="mm-btn mm-btn-primary btn-space-right"
+							*ngIf="canPerform"
+							(click)="modalPerformProposal.show()">Завершить</button>
 			<button class="mm-btn mm-btn-default btn-space-right"
 							(click)="onPrintProposal()">Печать</button>
 			<button class="mm-btn mm-btn-default btn-space-right"
@@ -356,6 +359,22 @@
 				<div class="modal-btns flex-container flex-center">
 					<button class="mm-btn mm-btn-default" (click)="modalDeleteProposal.hide()">Отмена</button>
 					<button class="mm-btn mm-btn-danger" (click)="onRevokeProposal()">Удалить</button>
+				</div>
+		  </div>
+		</div>
+  </div>
+</div>
+<div bsModal #modalPerformProposal="bs-modal"
+	class="modal fade modal-small modal-delete-user">
+	<div class="modal-dialog modal-sm">
+    <div class="modal-content">
+		  <div class="modal-body">
+		  	<div class="modal-wrapper">
+		    	<p class="text-center">Вы уверены, что хотите завершить заявку и назначить как исполненный?</p>
+		    </div>
+				<div class="modal-btns flex-container flex-center">
+					<button class="mm-btn mm-btn-default" (click)="modalPerformProposal.hide()">Отмена</button>
+					<button class="mm-btn mm-btn-danger" (click)="onPerformProposal()">Да</button>
 				</div>
 		  </div>
 		</div>

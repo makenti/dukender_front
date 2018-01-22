@@ -248,6 +248,26 @@ export class ProposalService {
                     })
                     .catch(handleError);
   }
+  performProposal(data: any): Observable<any> {
+    let headers = new Headers({
+      'Auth-Token': this.auth.getToken(),
+      'Content-Type': 'application/x-www-form-urlencoded'
+    });
+
+    let options = new RequestOptions({ headers: headers });
+    let bodyString = transformRequest(data);
+
+    return this.http.post(serverURL + '/sellers/requests/accept/', bodyString, options)
+                    .map((res: Response) => {
+                      let resp = res.json();
+                      if (resp.code === 0) {
+                        return true;
+                      }else {
+                        return false;
+                      }
+                    })
+                    .catch(handleError);
+  }
   setFilter(filter: any){
     this.filter = filter;
     window.localStorage.setItem('filter', JSON.stringify(filter));
