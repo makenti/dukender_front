@@ -9,8 +9,6 @@ import {
       CompanyProfileService } from '../../services/index';
 
 import { proposalLimit } from '../../common/config/limits';
-// import { SortPipe} from '../../pipes/sort.pipe';
-// import { ReadPipe} from '../../pipes/read.pipe';
 
 @Component({
   selector: 'app-proposals',
@@ -353,11 +351,6 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
       }else {
         this.selectedDistricts.push(district.id);
       }
-    }
-  }
-  onSelectPropReadType(type_id){
-    if(type_id == 2){
-
     }
   }
 
