@@ -9,7 +9,6 @@ import {
       CompanyProfileService } from '../../services/index';
 
 import { proposalLimit } from '../../common/config/limits';
-// import { SortPipe} from '../../pipes/sort.pipe';
 
 @Component({
   selector: 'app-proposals',
@@ -51,6 +50,7 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
   ];
   public scrolled: boolean = true;
   private interval:number; 
+  public openedProposals:number = 2;
 
   constructor(
     public auth: AuthService,

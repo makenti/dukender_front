@@ -145,13 +145,14 @@ table tbody {
     color: #fff;
     font-style: normal;
 }
-/*dropdown*/
+/*dropdown:*/
 .navbar-d-btn {
-  width: 160px;
+  width: 170px;
   height: 34px;
-  background-color: #eee;
+  background-color: #fff;
   /*box-shadow: inset 0 1px 3px 0 #fff;*/
-  border: solid 1px #eee;
+  /*border: solid 1px #eee;*/
+  border: none;
   border-radius: 34px;
   padding: 0 15px;
 
@@ -177,8 +178,8 @@ table tbody {
 }
 
 .navbar-d-menu{
-  margin-top: -34px;
-  width: 160px;
+  margin-top: -40px;
+  width: 170px;
   min-width: 140px;
   padding: 0;
   border-radius: 17px;
@@ -196,6 +197,14 @@ table tbody {
   align-items: center;
   font-weight: 600;
 }
+.navbar-d-menu>li>button.list-group-item {
+  border: none;
+  border-bottom: 1px solid #ddd;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
 .navbar-d-menu>li>a {
   font-size: 13px;
   height: 40px;
@@ -206,3 +215,4 @@ table tbody {
   color: #237ee8;
   background: #f5f5f5;
 }
+
