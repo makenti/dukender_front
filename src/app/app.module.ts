@@ -53,6 +53,7 @@ import { RelationshipComponent } from './components/customers/relationship.compo
 import { SearchPipe } from './pipes/search.pipe';
 import { SearchDeepPipe } from './pipes/searchDeep.pipe';
 import { SortPipe } from './pipes/sort.pipe';
+import { ReadPipe } from './pipes/read.pipe';
 
 
 import {
@@ -138,6 +139,7 @@ const appRoutes: Routes = [
     SearchPipe,
     SortPipe,
     SearchDeepPipe,
+    ReadPipe,
     // ProposalPrintComponent
   ],
   imports: [

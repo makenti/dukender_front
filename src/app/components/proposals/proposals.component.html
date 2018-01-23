@@ -3,12 +3,39 @@
 	<h3 class="text-center">Журнал заявок</h3>
 
 	<div class="flex-container flex-between">
-		<button
-			class="mm-btn mm-btn-default btn-space-right select-districts-btn"
-			(click)="modalCheckDistricts.show()">
-			<span>Фильтр по районам</span>
-			<i class="fa fa-caret-down" aria-hidden="true"></i>
-		</button>
+		<div class="flex-container">
+			<button
+				class="mm-btn mm-btn-default btn-space-right select-districts-btn"
+				(click)="modalCheckDistricts.show()">
+				<span>Фильтр по районам</span>
+				<i class="fa fa-caret-down" aria-hidden="true"></i>
+			</button>
+			<div class="dropdown navbar-d no-print" dropdown>
+			    <button dropdownToggle class="dropdown-btn navbar-d-btn">
+			      <span *ngIf="openedProposals == 2">Все</span>
+			      <span *ngIf="openedProposals == 1">Прочитанные</span>
+			      <span *ngIf="openedProposals == 0">Не прочитанные</span>
+			      <i class="fa fa-caret-down" aria-hidden="true"></i>
+			    </button>
+			    <ul *dropdownMenu class="dropdown-menu navbar-d-menu">
+					<li>
+					  	<button type="button" class="list-group-item" (click)="openedProposals = 2">
+					  		Все
+					  	</button>
+					  </li>
+					<li>
+		  			  	<button type="button" class="list-group-item" (click)="openedProposals = 1">
+		  		      		Прочитанные
+		  		      	</button>
+		  		  	</li>
+	  				<li>
+	  	  			  	<button type="button" class="list-group-item" (click)="openedProposals = 0">
+	  	  		      		Не прочитанные
+	  	  		      	</button>
+	  	  		  	</li>
+			    </ul>
+			</div>
+		</div>
 		<input
 			type="text"
 			class="mm-input"
@@ -119,7 +146,7 @@
 			<tr *ngIf="!loading && proposals.length === 0" class="empty-table">
 				<span>У Вас еще нет заявок</span>
 			</tr>
-			<tr *ngFor="let item of proposals | searchPipe: 'searchField': searchQuery | sortBy: sortField : sortOrder" 
+			<tr *ngFor="let item of proposals | searchPipe: 'searchField': searchQuery | sortBy: sortField : sortOrder | readPipe: 'is_open': openedProposals" 
 				(mousedown)="mouseDown($event)"
 				(mouseup)="mouseUp($event, item)"
 				[tooltip]="item.tooltip" tooltipPlacement="bottom"
