@@ -49,6 +49,7 @@ import { RequestHistoryComponent } from './components/history/request.history';
 import { CustomersComponent } from './components/customers/customers.component';
 import { BlackListComponent } from './components/customers/black_list.component';
 import { RelationshipComponent } from './components/customers/relationship.component';
+import { NotificationComponent } from './components/notifications/notifications.component';
 
 import { SearchPipe } from './pipes/search.pipe';
 import { SearchDeepPipe } from './pipes/searchDeep.pipe';
@@ -101,6 +102,7 @@ const appRoutes: Routes = [
   { path: 'company_category', component: CompanyCategoryComponent, canActivate: [AuthManager] },
   { path: 'company_region', component: CompanyRegionsComponent, canActivate: [AuthManager] },
   { path: 'account', component: AccountComponent, canActivate: [AuthManager] },
+  { path: 'notifications', component: NotificationComponent, canActivate: [AuthManager] },
   { path: '**', component: NotFoundComponent }
 ];
 
@@ -136,6 +138,7 @@ const appRoutes: Routes = [
     CompanyCategoryComponent,
     ProposalComponent,
     CompanyRegionsComponent,
+    NotificationComponent,
     SearchPipe,
     SortPipe,
     SearchDeepPipe,
