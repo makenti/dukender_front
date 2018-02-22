@@ -1,0 +1,11 @@
+<div class="main-container home-container">
+
+	<h3 class="text-center">Уведомления компании</h3>
+	<div *ngFor="let notify of notifications" class="list-group">
+		<div class="bs-callout bs-callout-primary">
+			<h4>{{notify.title}}</h4>
+		    <p>{{notify.message}}</p>
+		    <a target="_blank" href="{{notify.link}}">{{notify.link}}</a>
+		</div>
+	</div>
+</div>

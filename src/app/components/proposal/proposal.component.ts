@@ -89,7 +89,7 @@ export class ProposalComponent implements OnInit  {
   public accessToExec: boolean = true;
   public editMode: boolean = true;
   public delete: boolean = false;
-  public canPerform: boolean = true;
+  public canPerform: boolean = false;
   public isEditableProposal: boolean = false;
 
   // public proposalBeforeEdit:any = '';
@@ -100,6 +100,8 @@ export class ProposalComponent implements OnInit  {
   public proposalBodyClass: string = 'h';
 
   public relation:any;
+
+  public confirmationKey:any = '';
 
   constructor(
   	public auth: AuthService,
@@ -166,9 +168,9 @@ export class ProposalComponent implements OnInit  {
                this.deliveryBefore = moment(parseInt(resp.delivery_time, 10)).format('DD.MM.YYYY');
              }
              if(this.proposal.status === 2){
-                 if(moment().diff(this.deliveryDate, 'days') > 5){
-                   this.delete = true;
-                 }
+                if(moment().diff(this.deliveryDate, 'days') > 5){
+                  this.delete = true;
+                }
                 if(moment().diff(this.deliveryDate, 'days') > 3){
                   this.canPerform == true;
                 }
@@ -585,20 +587,23 @@ export class ProposalComponent implements OnInit  {
         );
   }
   onPerformProposal() {
+    if(this.confirmationKey.trim() === ""){
+      return;
+    }
     let data = {
       request_id: this.id,
-      key: this.proposal.key
+      key: this.confirmationKey
     };
     this.proposalService.performProposal(data)
         .subscribe(
           resp => {
-            if(resp) {
+            if(resp.code === 0) {
               this.toastyService.info('Заявка завершена');
               this.router.navigate(['/proposals']);
               this.clearLocalData();
               this.modalPerformProposal.hide();
             }else {
-              this.toastyService.error('Ошибка на сервере');
+              this.toastyService.error('Не правильный код');
             }
           },
           error =>  {
