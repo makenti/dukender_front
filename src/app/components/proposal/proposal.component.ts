@@ -172,7 +172,7 @@ export class ProposalComponent implements OnInit  {
                   this.delete = true;
                 }
                 if(moment().diff(this.deliveryDate, 'days') > 3){
-                  this.canPerform == true;
+                  this.canPerform = true;
                 }
              }
              for( let item of resp.items) {

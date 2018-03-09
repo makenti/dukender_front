@@ -133,7 +133,16 @@ export class AuthService {
               })
               .catch(handleError);
   }
-
+  updateUser(): Observable<any>{
+    let headers = new Headers({'Auth-Token': this.getToken() });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post(serverURL + '/auth/get_user/', {}, options)
+                    .map((res: Response) => {
+                      let resp = res.json();
+                      return resp;
+                    })
+                    .catch(handleError);
+  }
   checkAuth() {
     if(window.localStorage.getItem('auth_key')) {
       return true;
