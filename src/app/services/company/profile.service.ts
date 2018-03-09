@@ -95,7 +95,6 @@ export class CompanyProfileService {
                     })
                     .catch(handleError);
   }
-
   getCompanyRegions(): Observable<any> {
     let headers = new Headers({'Auth-Token': this.auth.getToken() });
     let options = new RequestOptions({ headers: headers });
@@ -168,7 +167,20 @@ export class CompanyProfileService {
                     })
                     .catch(handleError);
   }
-
+  readNotifications(data: Object): Observable<any> {
+    let headers = new Headers({
+      'Auth-Token': this.auth.getToken(),
+      'Content-Type': 'application/x-www-form-urlencoded'
+    });
+    let options = new RequestOptions({ headers: headers });
+    let bodyString = transformRequest(data);
+    return this.http.post(serverURL + '/moderators/inform/mark_read/', bodyString, options)
+                    .map((res: Response) => {
+                      let resp = res.json();
+                      return resp;
+                    })
+                    .catch(handleError);
+  }
   uploadCompanyPhoto(data: any): Observable<any> {
     return Observable.create((observer: any) => {
 
