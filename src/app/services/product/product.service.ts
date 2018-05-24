@@ -179,4 +179,20 @@ export class ProductService {
     });
   }
 
+  addToCategory(data: any): Observable<any> {
+    let headers = new Headers({
+      'Auth-Token': this.auth.getToken(),
+      'Content-Type': 'application/x-www-form-urlencoded'
+    });
+
+    let options = new RequestOptions({ headers: headers });
+    let bodyString = transformRequest(data);
+    return this.http.post(serverURL + '/products/create_edit_item_v2/', bodyString, options)
+                    .map((res: Response) => {
+                      let resp = res.json();
+                      return resp;
+                    })
+                    .catch(handleError);
+  }
+
 }

@@ -19,7 +19,11 @@ h2 {
   padding: 8px;
   margin: 0;
 }
-
+.filters{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
 .product-category-list{
   max-height: 300px;
   overflow-y: auto;
@@ -88,6 +92,22 @@ h2 {
 .products-table tbody td:nth-child(3),
 .products-table thead th:nth-child(3){
   width: 8%;
+}
+.products-table thead th.force-middle {
+
+}
+.products-table thead th.force-middle span{
+  display: inline-block;
+  vertical-align: middle;
+}
+.products-table thead th.force-middle input{
+  margin: 0;
+}
+.products-table thead th.force-middle label{
+  vertical-align: middle;
+}
+.products-table thead th.force-middle label div{
+  top: 0;
 }
 table thead th.sortable-field{
   cursor: pointer;
@@ -229,8 +249,7 @@ table thead th.sortable-field:hover{
 }
 /*dropdown:*/
 .navbar-d-btn {
-  width: 300px;
-  height: 40px;
+  height: 34px;
   background-color: #fff;
   /*box-shadow: inset 0 1px 3px 0 #fff;*/
   /*border: solid 1px #eee;*/
@@ -261,7 +280,6 @@ table thead th.sortable-field:hover{
 
 .navbar-d-menu{
   margin-top: -40px;
-  width: 300px;
   min-width: 140px;
   padding: 0;
   border-radius: 17px;
@@ -296,4 +314,30 @@ table thead th.sortable-field:hover{
 .navbar-d-menu>li>a:hover{
   color: #237ee8;
   background: #f5f5f5;
+}
+
+#modalAddToCategory h3{
+  text-align: center;
+}
+#modalAddToCategory .dropdown-btn {
+  width: 180px;
+}
+#modalAddToCategory .dropdown-menu{
+  width: 180px;
+}
+#modalAddToCategory input{
+  width: 180px;
+}
+#modalAddToCategory .label-cat{
+  margin-top: 32px;
+}
+
+#modalAddToCategory .modal-content{
+  background: #f2f2f2;
+}
+.search-container input{
+  float: left;
+}
+.inline-filter{
+  display: flex;
 }

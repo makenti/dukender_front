@@ -42,6 +42,10 @@ export class ProductsComponent implements OnInit {
   @ViewChild('modalDeleteProduct')
   modalDeleteProduct: ModalDirective;
 
+
+  @ViewChild('modalAddToCategory')
+  modalAddToCategory: ModalDirective;
+
   @ViewChild('modalImportPrice')
   modalImportPrice: ModalDirective;
 
@@ -148,6 +152,12 @@ export class ProductsComponent implements OnInit {
     w: 200,
     h: 200
   };
+  public newCat = {
+    group: null,
+    cat: null,
+    newCat: '',
+    createNew: false
+  }
 
   constructor (
     public categoryService: CategoryService,
@@ -690,6 +700,44 @@ export class ProductsComponent implements OnInit {
       return false;
     }
     return true;
+  }
+  //add to category
+  handleAddToCategory() {
+    this.getSelectedProducts();
+    if(this.selectedProducts !== undefined && this.selectedProducts.length > 0) {
+      this.modalAddToCategory.show();
+      this.newCat.group = this.companyCategories[0].category;
+      this.newCat.cat = this.companyCategories[0].category;
+    }else {
+      this.toastyService.warning('Вы не выбрали товар');
+    }
+  }
+  selectGroup(group){
+    this.newCat.group = group;
+  }
+  selectCat(category){
+    this.newCat.cat = category;
+  }
+  addToCategory(){
+    if(this.newCat.createNew && this.newCat.newCat.replace(/ /g,'') == ""){
+      this.toastyService.warning("Заполните название категорий");
+      return;
+    }
+    let data = this.newCat;
+    this.productService.addToCategory(data)
+        .subscribe(
+          res => {
+            if(res) {
+              this.toastyService.info('Товары добавлены в категорию');
+              this.getCategoryProducts();
+              this.modalAddToCategory.hide();
+            }
+          },
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+            this.errorMessage = <any>error
+          }
+        );
   }
   //delete products:
   clickDeleteBtn() {
