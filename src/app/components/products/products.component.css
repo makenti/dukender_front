@@ -320,13 +320,13 @@ table thead th.sortable-field:hover{
   text-align: center;
 }
 #modalAddToCategory .dropdown-btn {
-  width: 180px;
+  width: 240px;
 }
 #modalAddToCategory .dropdown-menu{
-  width: 180px;
+  width: 240px;
 }
 #modalAddToCategory input{
-  width: 180px;
+  width: 240px;
 }
 #modalAddToCategory .label-cat{
   margin-top: 32px;

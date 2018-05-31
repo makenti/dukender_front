@@ -45,8 +45,8 @@
 			</div>
 			<div class="dropdown navbar-d no-print" dropdown *ngIf="this.auth.perms.settings" style="margin-left: 20px;">
 				<button dropdownToggle class="dropdown-btn navbar-d-btn">
-					<span *ngIf="selectedCategory !== null">{{selectedCategory.category.name}}</span>
-					<span *ngIf="selectedCategory == null">Все категории</span>
+					<span *ngIf="selectedSubCat">{{selectedSubCat.name}}</span>
+					<span *ngIf="selectedSubCat == null">Все категории</span>
 					<i class="fa fa-caret-down" aria-hidden="true"></i>
 				</button>
 				<ul *dropdownMenu class="dropdown-menu navbar-d-menu">
@@ -54,20 +54,23 @@
 						<button 
 							type="button" 
 							class="dropdown-btn navbar-d-btn"
-							(click)="onSelectCategory(null)"
+							(click)="onSelectSubCategory(null)"
 						>
 							<span>Все категории</span>
 							<i class="fa fa-caret-up" aria-hidden="true"></i>
 						</button>
 					</li>
-					<li *ngFor="let cat of companyCategories">
+					<li *ngFor="let cat of selectedCategory?.category.childs">
 						<button type="button" class="list-group-item"
-							[class.active]="selectedCategory !== null && selectedCategory.category.id === cat.category.id"
+							[class.active]="selectedSubCat !== null && selectedSubCat.id === cat.id"
 						name="categories"
-						(click)="onSelectCategory(cat)">{{cat.category.name}}</button>
+						(click)="onSelectSubCategory(cat)">{{cat.name}}</button>
 					</li>
 				</ul>
 			</div>
+			<button dropdownToggle class="dropdown-btn navbar-d-btn" (click)="handleCreateCatModal()" style="margin-left: 20px">
+				<i class="fa fa-plus cursor-pointer m-0"></i>
+			</button>
 		</div>
 	</div>
 	<div class="row" id="productsPrintContent">
@@ -122,7 +125,10 @@
 						<td (click)="onClickProduct(product)">
 							{{product.price|number: '1.2-2'}}
 						</td>
-						<td (click)="onClickProduct(product)">{{product.category}}</td>
+						<td (click)="onClickProduct(product)">
+							{{product.category}}&nbsp;
+							<span *ngIf="product.subcategory!=='null'">({{product.subcategory}})</span>
+						</td>
 						<td class="text-center">
 							<label class="switch no-print">
 							  <input type="checkbox"
@@ -559,29 +565,30 @@
 				<div class="dropdown navbar-d" dropdown
 					*ngIf="this.auth.perms.company">
 					<button dropdownToggle class="dropdown-btn navbar-d-btn btn-space-right">
-						<span *ngIf="newCat.group !== null">{{newCat.group.name}}</span>						
+						<span *ngIf="newCat.group !== null">{{newCat.group.name}}</span>					
+						<span *ngIf="newCat.group == null">Товарная группа</span>					
 						<i class="fa fa-caret-down" aria-hidden="true"></i>
 					</button>
 					<ul *dropdownMenu class="dropdown-menu navbar-d-menu">
-						<li *ngFor="let cat of companyCategories">
-							<a (click)="selectGroup(cat.category)">{{cat.category.name}}</a>
+						<li *ngFor="let group of companyCategories">
+							<a (click)="selectGroup(group.category)">{{group.category.name}}</a>
 						</li>
 					</ul>
 				</div>
-				<label class="label-cat"><a (click)="newCat.createNew = false">Выберите категорию</a> или <a (click)="newCat.createNew=true">создайте новую</a></label>							
+				<label class="label-cat">Выберите категорию или <a (click)="handleCreateCatModal()">создайте новую</a></label>							
 				<div class="dropdown navbar-d" dropdown
-					*ngIf="this.auth.perms.company&&!newCat.createNew">
+					*ngIf="this.auth.perms.company">
 					<button dropdownToggle class="dropdown-btn navbar-d-btn btn-space-right">
-						<span *ngIf="newCat.cat !== null">{{newCat.cat.name}}</span>
+						<span *ngIf="newCat.cat">{{newCat.cat.name}}</span>
+						<span *ngIf="!newCat.cat">Категория</span>
 						<i class="fa fa-caret-down" aria-hidden="true"></i>
 					</button>
 					<ul *dropdownMenu class="dropdown-menu navbar-d-menu">
-						<li *ngFor="let cat of companyCategories">
-							<a (click)="selectCat(cat.category)">{{cat.category.name}}</a>
+						<li *ngFor="let cat of newCat.group?.childs">
+							<a (click)="selectCat(cat)">{{cat.name}}</a>
 						</li>
 					</ul>
 				</div>
-				<input *ngIf="newCat.createNew" type="text" class="mm-input" placeholder="Название категорий" [(ngModel)]="newCat.newCat" style="height:40px;border: none;"/>
 			</div>
 
 		  	<div class="modal-wrapper">
@@ -594,7 +601,7 @@
 		</div>
   </div>
 </div>
-
+<create-category [show]="newCat.createNew" [companyCategories]="companyCategories" (handle)="handleCreateCatModal($event)"></create-category>
 <div bsModal #modalDeleteProduct="bs-modal"
 	class="modal fade modal-small modal-delete-product">
 	<div class="modal-dialog modal-sm">

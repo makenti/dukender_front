@@ -187,12 +187,25 @@ export class ProductService {
 
     let options = new RequestOptions({ headers: headers });
     let bodyString = transformRequest(data);
-    return this.http.post(serverURL + '/products/create_edit_item_v2/', bodyString, options)
+    return this.http.post(serverURL + '/products/set_categories/', bodyString, options)
                     .map((res: Response) => {
                       let resp = res.json();
                       return resp;
                     })
                     .catch(handleError);
   }
-
+  createCategory(data: any): Observable<any> {
+    let headers = new Headers({
+      'Auth-Token': this.auth.getToken(),
+      'Content-Type': 'application/x-www-form-urlencoded'
+    });
+    let options = new RequestOptions({ headers: headers });
+    let bodyString = transformRequest(data);
+    return this.http.post(serverURL + '/products/subcategory/create/', bodyString, options)
+                    .map((res: Response) => {
+                      let resp = res.json();
+                      return resp;
+                    })
+                    .catch(handleError);
+  }
 }
