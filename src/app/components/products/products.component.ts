@@ -172,7 +172,7 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit() {
     this.auth.updateUserInfo().subscribe(null, null);
-    this.getCategories();
+    // this.getCategories();
     this.getCategoryProducts();
     this.getCompanyCategories();
     //for cropper
@@ -200,7 +200,6 @@ export class ProductsComponent implements OnInit {
           }
         );
   }
-
   getCompanyCategories() {
     this.companyService.getCompanyCategories()
         .subscribe(
@@ -219,11 +218,6 @@ export class ProductsComponent implements OnInit {
           }
         );
   }
-  onScroll (e: any) {
-    if(e.target.scrollHeight <= e.target.scrollTop + e.srcElement.clientHeight){
-      this.getCategoryProductsMore();
-    }
-  }
   onSelectCategory(newCategory: any) {
     console.log(newCategory)
     this.selectedSubCat = null;    
@@ -236,16 +230,13 @@ export class ProductsComponent implements OnInit {
     this.selectedSubCat = sub;
     this.getCategoryProducts();    
   }
-
   onSelectFileCategory(newCategory: any) {
     this.uploadCategory = newCategory;
     // this.getCategoryProducts();
   }
-
   onSearchProduct() {
     this.getCategoryProducts();
   }
-
   handleSortField(field: string){
     if(field === this.sortField){
       this.sortOrder = this.sortOrder === "asc"?"desc":"asc";
@@ -304,6 +295,11 @@ export class ProductsComponent implements OnInit {
             this.errorMessage = <any>error
           }
         );
+  }
+  onScroll (e: any) {
+    if(e.target.scrollHeight <= e.target.scrollTop + e.srcElement.clientHeight){
+      this.getCategoryProductsMore();
+    }
   }
   getCategoryProductsMore() {
     if(this.limit === 0)
