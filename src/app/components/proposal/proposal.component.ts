@@ -597,7 +597,7 @@ export class ProposalComponent implements OnInit  {
     this.proposalService.performProposal(data)
         .subscribe(
           resp => {
-            if(resp.code === 0) {
+            if(resp.code == 0) {
               this.toastyService.info('Заявка завершена');
               this.router.navigate(['/proposals']);
               this.clearLocalData();
