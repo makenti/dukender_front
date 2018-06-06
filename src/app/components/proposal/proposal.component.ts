@@ -167,12 +167,16 @@ export class ProposalComponent implements OnInit  {
                this.deliveryDateText = moment(this.deliveryDate).format('DD.MM.YYYY');
                this.deliveryBefore = moment(parseInt(resp.delivery_time, 10)).format('DD.MM.YYYY');
              }
+             console.log(this.proposal.status)
              if(this.proposal.status === 2){
                 if(moment().diff(this.deliveryDate, 'days') > 5){
                   this.delete = true;
                 }
+                console.log(moment().diff(this.deliveryDate, 'days'))
+                
                 if(moment().diff(this.deliveryDate, 'days') > 3){
                   this.canPerform = true;
+                  console.log(true)
                 }
              }
              for( let item of resp.items) {
@@ -603,7 +607,7 @@ export class ProposalComponent implements OnInit  {
               this.clearLocalData();
               this.modalPerformProposal.hide();
             }else {
-              this.toastyService.error('Не правильный код');
+              this.toastyService.error(resp.message);
             }
           },
           error =>  {
