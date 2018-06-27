@@ -37,7 +37,8 @@ export class ProductService {
   }
 
   updateProduct(product: any, imageSelected: boolean): Observable<any> {
-
+    if(product.id_1c == null)
+      product.id_1c = '';
     return Observable.create((observer: any) => {
 
       let formData: FormData = new FormData(),
