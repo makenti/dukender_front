@@ -260,11 +260,7 @@ export class ProposalService {
     return this.http.post(serverURL + '/sellers/requests/accept/', bodyString, options)
                     .map((res: Response) => {
                       let resp = res.json();
-                      if (resp.code === 0) {
-                        return true;
-                      }else {
-                        return false;
-                      }
+                      return resp;
                     })
                     .catch(handleError);
   }
