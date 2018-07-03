@@ -124,6 +124,7 @@
 			</table>
 
 			<div class="flex-container flex-between price-btns-container no-print">
+				<button class="mm-btn mm-btn-primary" (click)="handleProductModal(true)">Добавить товар</button>
 				<button class="mm-btn mm-btn-primary" (click)="onAddNewProduct()">Добавить товар</button>
 				<button class="mm-btn mm-btn-default" (click)="onOpenImportModal()">Импорт из Excell</button>
 				<button class="mm-btn mm-btn-default" (click)="exportExcell()">Экспорт в Excell</button>
@@ -133,7 +134,7 @@
 		</div>
 	</div>
 </div>
-
+<product-modal [categories]="categories"></product-modal>
 <div bsModal #modalImportPrice="bs-modal"
 	class="modal fade modal-small modal-import-price">
 	<div class="modal-dialog modal-sm">

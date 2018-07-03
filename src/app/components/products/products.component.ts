@@ -13,7 +13,7 @@ import { ToastyService } from 'ng2-toasty';
 import { priceLimit } from '../../common/config/limits';
 import { ImageCropperComponent, CropperSettings, Bounds } from 'ng2-img-cropper';
 import { serverURL } from '../../common/config/server';
-
+import { ProductModal } from './product-modal.component';
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
@@ -57,6 +57,8 @@ export class ProductsComponent implements OnInit {
   @ViewChild('modalCheckImage')
   modalCheckImage: ModalDirective;
 
+  @ViewChild(ProductModal)
+  productModal: ProductModal;
 
   public searchQuery: string = '';
   public sortField:string = "";
@@ -261,6 +263,8 @@ export class ProductsComponent implements OnInit {
                   this.timestamp = resp.price_list[resp.price_list.length-1].timestamp;
                 this.products.map(p => {
                   p.checked = false;
+                  if(p.id_1c == null)
+                    p.id_1c = '';
                   return p;
                 });
               }
@@ -303,6 +307,8 @@ export class ProductsComponent implements OnInit {
               }
               this.products.map(p => {
                 p.checked = false;
+                if(p.id_1c == null)
+                  p.id_1c = '';
                 return p;
               });
             }
@@ -470,6 +476,9 @@ export class ProductsComponent implements OnInit {
     this.imageSelected = false;
     this.selectedImage = null;
     this.productImageText = 'Выберите файл';
+  }
+  handleProductModal(state){
+    this.productModal.handleOpenClose(state);
   }
   onAddProduct() {
     if(this.checkAddProductForm()) {

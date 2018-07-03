@@ -100,51 +100,7 @@ table thead th.sortable-field:hover{
 .show-print{
   display: none;
 }
-/* input file */
-.btn-file {
-    position: relative;
-    overflow: hidden;
-    margin: 0 20px;
-}
-
-.btn-file input[type=file] {
-    position: absolute;
-    top: 0;
-    right: 0;
-    min-width: 100%;
-    min-height: 100%;
-    font-size: 100px;
-    text-align: right;
-    filter: alpha(opacity=0);
-    opacity: 0;
-    outline: none;
-    background: white;
-    cursor: inherit;
-    display: block;
-}
-
 /* form */
-.add-product-form {
-  margin: 0;
-  width: 100%;
-  display: flex;
-  direction: row
-}
-.add-product-form .side{
-  flex: 1;
-  padding: 10px;
-  direction: column;
-}
-.form-field {
-  display: flex;
-  direction: row;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-.form-field label{
-  margin: 0;
-}
 .price-l-table th{
   font-size: 10px;
 }

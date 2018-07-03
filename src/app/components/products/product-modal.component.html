@@ -1,0 +1,134 @@
+<div bsModal #modalAddProduct="bs-modal"
+	class="modal fade modal-add-product">
+	<div class="modal-dialog">
+    <div class="modal-content">
+    	<div *ngIf="addLoading" class="modal-body">
+    		<div class="loader-component">
+    			<div class="loader"></div>
+    		</div>
+    	</div>
+  		<div class="modal-body" *ngIf="!addLoading">
+		  	<span class="modal-close"
+		  				(click)="onCloseAddProduct()">
+		  		<i class="fa fa-times" aria-hidden="true"></i>
+		  	</span>
+		  	<h3 class="modal-title text-center">Добавление товара</h3>
+		    <div class="add-product-form">
+					<div class="side">
+						<div class="form-field">
+							<label>Название*</label>
+							<input type="text" class="mm-input" maxlength="300"
+								[(ngModel)]="newProduct.name" required />
+						</div>
+						<div class="form-field">
+							<label>Артикул</label>
+							<input type="text" class="mm-input" maxlength="300"
+								[(ngModel)]="newProduct.article" />
+						</div>
+						<div class="form-field">
+							<label>Цена*</label>
+							<input type="number" class="mm-input" maxlength="300" min="0" step="any"
+								[(ngModel)]="newProduct.price" />
+						</div>
+						<div class="form-field">
+							<label>Ед. измер.*</label>
+							<input style="font-size: 16px;" type="text" class="mm-input" maxlength="300"
+								[(ngModel)]="newProduct.nomenclature" required/>
+						</div>
+						<div class="form-field">
+							<label>1C</label>
+							<input type="text" class="mm-input" maxlength="300"
+								[(ngModel)]="newProduct.id_1c" />
+						</div>
+						<div class="form-field">
+			    		<label>Фото</label>
+			    		<label class="mm-btn mm-btn-link btn-file">
+						    <span>{{productImageText}}</span>
+					        <input id="custom-input" type="file" accept="image/x-png,image/jpeg" (change)="onSelectImage($event)">
+						</label>
+						</div>
+					</div>
+
+					<div class="side">
+						<div class="form-field">
+				    	<label>Категория*</label>
+				    	<div class="mm-select">
+								<select [(ngModel)]="newProduct.category_id" >
+									<option *ngFor="let cat of companyCategories" [ngValue]="cat.category.id">
+								    <span class="badge">{{cat.category.name}}</span>
+								  </option>
+								</select>
+								<div class="select__arrow"></div>
+				    	</div>
+						</div>
+						<div class="form-field">
+							<label>Производ.</label>
+							<input type="text" class="mm-input" maxlength="300"
+								[(ngModel)]="newProduct.made_in" />
+						</div>
+						<div class="form-field">
+							<label style="text-align: left;">Мин. остаток</label>
+							<input style="font-size: 16px;" type="number" class="mm-input" maxlength="10000" min="0"
+								[(ngModel)]="newProduct.min_left" />
+						</div>
+						<div class="form-field">
+							<label>Штрих код</label>
+							<input type="text" class="mm-input" maxlength="48"
+								[(ngModel)]="newProduct.barcode" />
+						</div>
+						<div class="form-field">
+							<label>Описание</label>
+							<button class="mm-btn mm-btn-link" (click)="modalAddProductDesc.show()">добавить описание</button>
+						</div>
+					</div>
+				</div>
+				<div *ngIf="loadingImage" class="loader-component">
+					<div class="loader"></div>
+				</div>
+				<h5 *ngIf="imageSelected">
+					Для хорошего отображения картинки товара, выберите картинку размера не меньше 600x600 пикселей. <br/>
+					<b [class]="chosenImage.validationClass" *ngIf="!isCrop">Размер текущей картинки: {{chosenImage.width}}x{{chosenImage.height}} пикселей.</b>
+					<b [class]="chosenImage.validationClass" *ngIf="isCrop">Размер текущей обрезанной картинки: {{croppedWidth}}x{{croppedHeight}} пикселей.</b> 
+				</h5>
+				<div class="product-preview-container img-preview" *ngIf="imageSelected&&!loadingImage&&!isCrop">
+					<img [src]="chosenImage.full">
+					<span class="delete-img-btn"
+						(click)="deleteSelectedImage()">
+						<i class="fa fa-times"
+							aria-hidden="true"></i>
+					</span>
+				</div>
+				<div class="product-preview-container" [class.display-none]="!isCrop" *ngIf="imageSelected">
+					<span *ngIf="imageSelected">
+						<img-cropper (onCrop)="cropped($event)" #cropper [image]="nProductImage" [settings]="cropperSettings"></img-cropper>
+					</span>
+					<!-- <span class="result rounded" *ngIf="nProductImage.image">
+				    <img style="position: absolute; top: -90px; right: 100px;" [src]="nProductImage.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
+					</span> -->
+					<span class="delete-img-btn"
+						(click)="deleteSelectedImage()"
+						*ngIf="imageSelected">
+						<i class="fa fa-times"
+							aria-hidden="true"></i>
+					</span>
+				</div>
+				<div class="flex-container flex-end product-btns">
+					<button class="mm-btn mm-btn-default"
+						*ngIf="imageSelected&&!isCrop"
+						(click)="isCrop=true">
+						Обрезать картинку
+					</button>
+					<button 
+						class="mm-btn mm-btn-default"
+						*ngIf="imageSelected&&isCrop"
+						(click)="isCrop=false">
+						Отменить обрезку
+					</button>
+					<button class="mm-btn mm-btn-primary"
+						(click)="checkImage()"
+						[disabled]="addLoading">Добавить</button>
+				</div>
+			</div>
+		</div>
+  </div>
+</div>
