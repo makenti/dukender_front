@@ -129,6 +129,7 @@ export class ProductsComponent implements OnInit {
       limit: this.limit,
       search_word: this.searchQuery,
     };
+    console.log(data)
     this.productService.getCategoryProducts(data)
         .subscribe(
           resp => {
@@ -163,8 +164,6 @@ export class ProductsComponent implements OnInit {
         );
   }
   getCategoryProductsMore() {
-    if(this.limit === 0)
-      return;
     let data = {
       category_id: (this.selectedCategory !== null) ? this.selectedCategory.category.id : '',
       limit: this.limit,
@@ -177,9 +176,6 @@ export class ProductsComponent implements OnInit {
             if(resp.code === 0) {
               if(resp.price_list === undefined || resp.price_list.length === 0)
                 return;
-              if(resp.price_list.length < this.limit){
-                this.limit = 0;
-              }
               for(var pl of resp.price_list){
                 let exist:boolean = false;
                 for(let i = 0; i < this.products.length; i++){
