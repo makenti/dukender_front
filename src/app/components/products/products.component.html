@@ -1,5 +1,4 @@
 <div class="main-container home-container">
-
 	<h3 class="text-center">Прайс-лист</h3>
 	<p class="text-center">
 		Загрузите прайс-лист в систему одним кликом!<br/>
@@ -50,7 +49,6 @@
 	</div>
 	<div class="row" id="productsPrintContent">
 		<div class="col-xs-12">
-
 			<table class="table table-striped products-table price-l-table" [class.loading]="loading">
 				<thead>
 					<tr>
@@ -77,9 +75,7 @@
 						<th class="text-center">Наличие товара</th>
 						<th class="text-center no-print">ОТМЕТКА
 							<label class="mm-control mm-control--checkbox text-center">
-					      <input type="checkbox"
-					      	(change)="selectAllProducts()"
-					      	[(ngModel)]="allSelected" />
+					      <input type="checkbox" (change)="selectAllProducts()" [(ngModel)]="allSelected" />
 					      <div class="mm-control__indicator"></div>
 					    </label>
 						</th>
@@ -122,10 +118,8 @@
 					</tr>
 				</tbody>
 			</table>
-
 			<div class="flex-container flex-between price-btns-container no-print">
-				<button class="mm-btn mm-btn-primary" (click)="handleProductModal(true)">Добавить товар</button>
-				<button class="mm-btn mm-btn-primary" (click)="onAddNewProduct()">Добавить товар</button>
+				<button class="mm-btn mm-btn-primary" (click)="handleProductModal('add', {})">Добавить товар</button>
 				<button class="mm-btn mm-btn-default" (click)="onOpenImportModal()">Импорт из Excell</button>
 				<button class="mm-btn mm-btn-default" (click)="exportExcell()">Экспорт в Excell</button>
 				<button class="mm-btn mm-btn-default" (click)="printProducts()">Печать</button>
@@ -134,7 +128,7 @@
 		</div>
 	</div>
 </div>
-<product-modal [categories]="categories"></product-modal>
+<product-modal [companyCategories]="companyCategories" (getProducts)="getCategoryProducts()"></product-modal>
 <div bsModal #modalImportPrice="bs-modal"
 	class="modal fade modal-small modal-import-price">
 	<div class="modal-dialog modal-sm">
@@ -176,386 +170,17 @@
 		</div>
   </div>
 </div>
-
-<div bsModal #modalAddProduct="bs-modal"
-	class="modal fade modal-add-product">
-	<div class="modal-dialog">
-    <div class="modal-content">
-    	<div *ngIf="addLoading" class="modal-body">
-    		<div class="loader-component">
-    			<div class="loader"></div>
-    		</div>
-    	</div>
-  		<div class="modal-body" *ngIf="!addLoading">
-		  	<span class="modal-close"
-		  				(click)="onCloseAddProduct()">
-		  		<i class="fa fa-times" aria-hidden="true"></i>
-		  	</span>
-		  	<h3 class="modal-title text-center">Добавление товара</h3>
-		    <div class="add-product-form">
-					<div class="side">
-						<div class="form-field">
-							<label>Название*</label>
-							<input type="text" class="mm-input" maxlength="300"
-								[(ngModel)]="newProduct.name" required />
-						</div>
-						<div class="form-field">
-							<label>Артикул</label>
-							<input type="text" class="mm-input" maxlength="300"
-								[(ngModel)]="newProduct.article" />
-						</div>
-						<div class="form-field">
-							<label>Цена*</label>
-							<input type="number" class="mm-input" maxlength="300" min="0" step="any"
-								[(ngModel)]="newProduct.price" />
-						</div>
-						<div class="form-field">
-							<label>Ед. измер.*</label>
-							<input style="font-size: 16px;" type="text" class="mm-input" maxlength="300"
-								[(ngModel)]="newProduct.nomenclature" required/>
-						</div>
-						<div class="form-field">
-							<label>1C</label>
-							<input type="text" class="mm-input" maxlength="300"
-								[(ngModel)]="newProduct.id_1c" />
-						</div>
-						<div class="form-field">
-			    		<label>Фото</label>
-			    		<label class="mm-btn mm-btn-link btn-file">
-						    <span>{{productImageText}}</span>
-					        <input id="custom-input" type="file" accept="image/x-png,image/jpeg" (change)="onSelectImage($event)">
-						</label>
-						</div>
-					</div>
-
-					<div class="side">
-						<div class="form-field">
-				    	<label>Категория*</label>
-				    	<div class="mm-select">
-								<select [(ngModel)]="newProduct.category_id" >
-									<option *ngFor="let cat of companyCategories" [ngValue]="cat.category.id">
-								    <span class="badge">{{cat.category.name}}</span>
-								  </option>
-								</select>
-								<div class="select__arrow"></div>
-				    	</div>
-						</div>
-						<div class="form-field">
-							<label>Производ.</label>
-							<input type="text" class="mm-input" maxlength="300"
-								[(ngModel)]="newProduct.made_in" />
-						</div>
-						<div class="form-field">
-							<label style="text-align: left;">Мин. остаток</label>
-							<input style="font-size: 16px;" type="number" class="mm-input" maxlength="10000" min="0"
-								[(ngModel)]="newProduct.min_left" />
-						</div>
-						<div class="form-field">
-							<label>Штрих код</label>
-							<input type="text" class="mm-input" maxlength="48"
-								[(ngModel)]="newProduct.barcode" />
-						</div>
-						<div class="form-field">
-							<label>Описание</label>
-							<button class="mm-btn mm-btn-link" (click)="modalAddProductDesc.show()">добавить описание</button>
-						</div>
-					</div>
-				</div>
-				<div *ngIf="loadingImage" class="loader-component">
-					<div class="loader"></div>
-				</div>
-				<h5 *ngIf="imageSelected">
-					Для хорошего отображения картинки товара, выберите картинку размера не меньше 600x600 пикселей. <br/>
-					<b [class]="chosenImage.validationClass" *ngIf="!isCrop">Размер текущей картинки: {{chosenImage.width}}x{{chosenImage.height}} пикселей.</b>
-					<b [class]="chosenImage.validationClass" *ngIf="isCrop">Размер текущей обрезанной картинки: {{croppedWidth}}x{{croppedHeight}} пикселей.</b> 
-				</h5>
-				<div class="product-preview-container img-preview" *ngIf="imageSelected&&!loadingImage&&!isCrop">
-					<img [src]="chosenImage.full">
-					<span class="delete-img-btn"
-						(click)="deleteSelectedImage()">
-						<i class="fa fa-times"
-							aria-hidden="true"></i>
-					</span>
-				</div>
-				<div class="product-preview-container" [class.display-none]="!isCrop" *ngIf="imageSelected">
-					<span *ngIf="imageSelected">
-						<img-cropper (onCrop)="cropped($event)" #cropper [image]="nProductImage" [settings]="cropperSettings"></img-cropper>
-					</span>
-					<!-- <span class="result rounded" *ngIf="nProductImage.image">
-				    <img style="position: absolute; top: -90px; right: 100px;" [src]="nProductImage.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
-					</span> -->
-					<span class="delete-img-btn"
-						(click)="deleteSelectedImage()"
-						*ngIf="imageSelected">
-						<i class="fa fa-times"
-							aria-hidden="true"></i>
-					</span>
-				</div>
-				<div class="flex-container flex-end product-btns">
-					<button class="mm-btn mm-btn-default"
-						*ngIf="imageSelected&&!isCrop"
-						(click)="isCrop=true">
-						Обрезать картинку
-					</button>
-					<button 
-						class="mm-btn mm-btn-default"
-						*ngIf="imageSelected&&isCrop"
-						(click)="isCrop=false">
-						Отменить обрезку
-					</button>
-					<button class="mm-btn mm-btn-primary"
-						(click)="checkImage()"
-						[disabled]="addLoading">Добавить</button>
-				</div>
-			</div>
-		</div>
-  </div>
-</div>
-
-<div bsModal #modalEditProduct="bs-modal"
-	class="modal fade modal-add-product">
-	<div class="modal-dialog">
-    <div class="modal-content">
-    	<div *ngIf="addLoading" class="modal-body">
-    		<div class="loader-component">
-    			<div class="loader"></div>
-    		</div>
-    	</div>
-  		<div class="modal-body" *ngIf="!addLoading">
-		  	<span class="modal-close"
-		  				(click)="onCloseEditProduct()">
-		  		<i class="fa fa-times" aria-hidden="true"></i>
-		  	</span>
-		  	<h3 class="modal-title text-center">Редактирование товара</h3>
-		    <div class="add-product-form">
-					<div class="side">
-						<div class="form-field">
-							<label>Название</label>
-							<input type="text" class="mm-input" maxlength="300"
-								[(ngModel)]="selectedProduct.name"/>
-						</div>
-						<div class="form-field">
-							<label>Артикул</label>
-							<input type="text" class="mm-input" maxlength="300"
-								[(ngModel)]="selectedProduct.article" />
-						</div>
-						<div class="form-field">
-							<label>Цена</label>
-							<input type="number" class="mm-input" maxlength="300" min="0" step="any"
-								[(ngModel)]="selectedProduct.price" />
-						</div>
-						<div class="form-field">
-							<label>Ед. измер.</label>
-							<input type="text" class="mm-input" maxlength="300"
-								[(ngModel)]="selectedProduct.nomenclature"/>
-						</div>
-						<div class="form-field">
-							<label>1C</label>
-							<input type="text" class="mm-input" maxlength="300"
-								[(ngModel)]="selectedProduct.id_1c" />
-						</div>
-						<div class="form-field">
-			    		<label>Рисунок</label>
-			    		<label class="mm-btn mm-btn-link">
-						    <span>{{productImageText}}</span>
-						    <input id = "custom-input" type="file" style="display: none;" accept="image/x-png,image/jpeg"
-						    (change)="onSelectImage($event)">
-						</label>
-						</div>
-					</div>
-
-					<div class="side">
-						<div class="form-field">
-				    	<label>Категория</label>
-				    	<div class="mm-select">
-								<select [(ngModel)]="selectedProduct.category_id" (ngModelChange)="onSelectNewCategory($event)">
-									<option *ngFor="let cat of companyCategories" [ngValue]="cat.category.id" >
-								    <span class="badge">{{cat.category.name}}</span>
-								  </option>
-								</select>
-								<div class="select__arrow"></div>
-				    	</div>
-						</div>
-						<div class="form-field">
-							<label>Производ.</label>
-							<input type="text" class="mm-input" maxlength="300"
-								[(ngModel)]="selectedProduct.made_in" />
-						</div>
-						<div class="form-field">
-							<label style="text-align: left;">Мин. остаток</label>
-							<input style="font-size: 16px;" type="number" class="mm-input" maxlength="10000" min="0"
-								[(ngModel)]="selectedProduct.min_left" />
-						</div>
-						<div class="form-field">
-							<label>Штрих код</label>
-							<input type="text" class="mm-input" maxlength="48"
-								[(ngModel)]="selectedProduct.barcode" />
-						</div>
-						<div class="form-field">
-							<label>Описание</label>
-							<button class="mm-btn mm-btn-link" (click)="modalEditProductDesc.show()">изменить описание</button>
-							<!-- <div [froalaEditor]>Hello, Froala!</div> -->
-						</div>
-					</div>
-				</div>
-				<div *ngIf="loadingImage" class="loader-component">
-					<div class="loader"></div>
-				</div>
-				<h5 *ngIf="imageSelected">
-					Для хорошего отображения картинки товара, выберите картинку размера не меньше 600x600 пикселей. <br/>
-					<b [class]="chosenImage.validationClass" *ngIf="!isCrop">Размер текущей картинки: {{chosenImage.width}}x{{chosenImage.height}} пикселей.</b>
-					<b [class]="chosenImage.validationClass" *ngIf="isCrop">Размер текущей обрезанной картинки: {{croppedWidth}}x{{croppedHeight}} пикселей.</b> 
-				</h5>
-				<div class="product-preview-container" *ngIf="(selectedImage !== null)&&!imageSelected">
-					<img *ngIf="selectedImage !== null"
-						[src]="selectedImage"
-						class="product-preview">
-					<span class="delete-img-btn"
-						(click)="deleteProductImage()"
-						*ngIf="selectedImage !== null && selectedImage !== ''">
-						<i class="fa fa-times"
-							aria-hidden="true"></i>
-					</span>
-				</div>
-				<div class="product-preview-container img-preview" *ngIf="imageSelected&&!loadingImage&&!isCrop">
-					<img [src]="chosenImage.full">
-					<span class="delete-img-btn"
-						(click)="deleteSelectedImage()"
-						*ngIf="selectedImage !== null && selectedImage !== ''">
-						<i class="fa fa-times"
-							aria-hidden="true"></i>
-					</span>
-				</div>
-				<div class="product-preview-container" 
-					[class.display-none]="!isCrop"
-					*ngIf="imageSelected">
-					<span>
-						<img-cropper (onCrop)="cropped($event)" #cropper2 [image]="sProductImage" [settings]="cropperSettings"></img-cropper>
-					</span>
-					<span class="delete-img-btn"
-						(click)="deleteSelectedImage()"
-						*ngIf="imageSelected">
-						<i class="fa fa-times"
-							aria-hidden="true"></i>
-					</span>
-				</div>
-				<!-- <div class="flex-container flex-around result rounded" *ngIf="imageSelected&&sProductImage.image">
-					<span>Предварительный просмотр</span>
-			    <img style="" [src]="sProductImage.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
-				</div> -->
-				<div class="flex-container flex-end product-btns">
-					<button class="mm-btn mm-btn-default"
-						*ngIf="imageSelected&&!isCrop"
-						(click)="isCrop=true">
-						Обрезать картинку
-					</button>
-					<button 
-						class="mm-btn mm-btn-default"
-						*ngIf="imageSelected&&isCrop"
-						(click)="isCrop=false">
-						Отменить обрезку
-					</button>
-					<button class="mm-btn mm-btn-primary" (click)="checkImage()">Сохранить товар</button>
-				</div>
-
-			</div>
-		</div>
-  </div>
-</div>
-
-<div bsModal #modalAddProductDesc="bs-modal"
-	class="modal fade modal-add-product-desc">
-	<div class="modal-dialog">
-    <div class="modal-content">
-  		<div class="modal-body">
-
-		  	<h3 class="modal-title text-center">Описание товара</h3>
-		  	<div class="modal-wrapper">
-		    	<textarea maxlength="1000"
-		    		style='height: 200px;'
-		    		[(ngModel)]="newProduct.description" class="form-control">
-		    	</textarea>
-		    </div>
-				<div class="modal-btns flex-container flex-center">
-					<button class="mm-btn mm-btn-default" (click)="modalAddProductDesc.hide()">Отмена</button>
-					<button class="mm-btn mm-btn-primary" (click)="modalAddProductDesc.hide()">Добавить</button>
-				</div>
-			</div>
-		</div>
-  </div>
-</div>
-
-<div bsModal #modalEditProductDesc="bs-modal"
-	class="modal fade modal-edit-product-desc">
-	<div class="modal-dialog">
-    <div class="modal-content">
-  		<div class="modal-body">
-
-		  	<h3 class="modal-title text-center">Описание товара</h3>
-		  	<div class="modal-wrapper">
-		    	<textarea
-		    		style='height: 200px;' maxlength = "999"
-		    		[(ngModel)]="selectedProduct.description" class="form-control">
-		    	</textarea>
-		    </div>
-				<div class="modal-btns flex-container flex-center">
-					<button class="mm-btn mm-btn-default" (click)="modalEditProductDesc.hide()">Отмена</button>
-					<button class="mm-btn mm-btn-primary" (click)="modalEditProductDesc.hide()">Добавить</button>
-				</div>
-			</div>
-		</div>
-  </div>
-</div>
-
-<div bsModal #modalProductAdded="bs-modal"
-	class="modal fade modal-small modal-product-added">
-	<div class="modal-dialog modal-sm">
-    <div class="modal-content">
-  		<div class="modal-body">
-
-		  	<h3 class="modal-title text-center">Товар успешно добавлен.</h3>
-		  	<div class="modal-wrapper">
-		    	<p class="text-center">Хотите добавить еще?</p>
-		    </div>
-				<div class="modal-btns flex-container flex-center">
-					<button class="mm-btn mm-btn-default" (click)="modalProductAdded.hide()">Нет, спасибо</button>
-					<button class="mm-btn mm-btn-primary" (click)="modalProductAdded.hide(); modalAddProduct.show()">Добавить</button>
-				</div>
-			</div>
-		</div>
-  </div>
-</div>
-
 <div bsModal #modalDeleteProduct="bs-modal"
 	class="modal fade modal-small modal-delete-product">
 	<div class="modal-dialog modal-sm">
     <div class="modal-content">
   		<div class="modal-body">
-
 		  	<h3 class="modal-title text-center">Вы уверены, что хотите удалить выбранные товары?</h3>
 		  	<div class="modal-wrapper">
 		    </div>
 				<div class="modal-btns flex-container flex-center">
 					<button class="mm-btn mm-btn-default" (click)="modalDeleteProduct.hide()">Отмена</button>
 					<button class="mm-btn mm-btn-danger" (click)="removeProducts()">Удалить</button>
-				</div>
-			</div>
-		</div>
-  </div>
-</div>
-
-<div bsModal #modalCheckImage="bs-modal"
-	class="modal fade modal-small modal-delete-product">
-	<div class="modal-dialog modal-sm">
-    <div class="modal-content">
-  		<div class="modal-body">
-
-		  	<h3 class="modal-title text-center">Выбранная картинка  будет плохо отображатся. Минимальный размер 600x600 пикселей. </h3>
-		  	<div class="modal-wrapper">
-		    </div>
-				<div class="modal-btns flex-container flex-center">
-					<button class="mm-btn mm-btn-default" (click)="hideCheckImage()">Изменить картинку</button>
-					<button class="mm-btn mm-btn-danger" (click)="continueAddUpdate()">Продолжить</button>
 				</div>
 			</div>
 		</div>

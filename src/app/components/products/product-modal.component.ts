@@ -1,100 +1,41 @@
-import { Component, OnInit, ViewChild, HostListener, Input, Output } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener, Input, Output, OnChanges, SimpleChanges, SimpleChange, EventEmitter } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap';
 import { Router } from '@angular/router';
 import { ImageCropperComponent, CropperSettings, Bounds } from 'ng2-img-cropper';
 import {
-    AuthService,
-    CategoryService,
-    CompanyProfileService,
-    ProductService,
-    UploadService,
-    PromotionService,
-    ErrorService } from '../../services/index';
+  AuthService,
+  CategoryService,
+  CompanyProfileService,
+  ProductService,
+  UploadService,
+  PromotionService,
+  ErrorService } from '../../services/index';
 import { ToastyService } from 'ng2-toasty';
-
+import { serverURL } from '../../common/config/server';
+import { EMPTY_PRODUCT } from '../../common/constants/products';
 @Component({
-    selector: 'product-modal',
-    templateUrl: './product-modal.component.html',
-    styles: [`
-    /* input file */
-    .btn-file {
-        position: relative;
-        overflow: hidden;
-        margin: 0 20px;
-    }
-    .btn-file input[type=file] {
-        position: absolute;
-        top: 0;
-        right: 0;
-        min-width: 100%;
-        min-height: 100%;
-        font-size: 100px;
-        text-align: right;
-        filter: alpha(opacity=0);
-        opacity: 0;
-        outline: none;
-        background: white;
-        cursor: inherit;
-        display: block;
-    }
-    /*form*/    
-      .add-product-form {
-        margin: 0;
-        width: 100%;
-        display: flex;
-        direction: row
-      }
-      .add-product-form .side{
-        flex: 1;
-        padding: 10px;
-        direction: column;
-      }
-      .form-field {
-        display: flex;
-        direction: row;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 10px;
-      }
-      .form-field label{
-        margin: 0;
-      }
-    `]
+  selector: 'product-modal',
+  templateUrl: './product-modal.component.html',
+  styleUrls: ['./product-modal.component.css']
 })
-export class ProductModal implements OnInit {
+export class ProductModal implements OnInit, OnChanges {
     @ViewChild('modalAddProduct')
     modalAddProduct: ModalDirective;
     @ViewChild('modalProductAdded')
     modalProductAdded: ModalDirective;
+    @ViewChild('modalAddProductDesc')
+    modalAddProductDesc: ModalDirective;  
     @ViewChild('cropper', undefined)
     cropper:ImageCropperComponent;
-    @ViewChild('cropper2', undefined)
-    cropper2:ImageCropperComponent;
+    @ViewChild('modalCheckImage')
+    modalCheckImage: ModalDirective;
+    @Input() companyCategories:any[] = [];
+	  @Output() getProducts = new EventEmitter<any[]>();
     processMode: string = '';
     addLoading: boolean = false;
-    newProduct = {
-        id: '',
-        category_id: 0,
-        name: '',
-        article: '',
-        nomenclature: '',
-        made_in: '',
-        price: 0,
-        description: '',
-        id_1c: '',
-        part_1c: 0,
-        active: true,
-        image: '',
-        resize: 'false',
-        top: 0,
-        left: 0,
-        width: 0,
-        height: 0,
-        barcode: '',
-        min_left: 0,
-    };
     selectedImage = null;
     nProductImage;
+    newProduct = EMPTY_PRODUCT;
     imageSelected: boolean = false;
     isCrop:boolean = false;
     loadingImage: boolean = false;
@@ -107,7 +48,19 @@ export class ProductModal implements OnInit {
     };
     productImageText: string = 'Выберите файл';
     cropperSettings: CropperSettings;
-
+    croppedWidth:number;
+    croppedHeight:number;
+    text = {
+      title: 'Добавление товара',
+    }
+    public croppedLeft:number;
+    public croppedTop:number;
+    public cropPosition = {
+      x: 0,
+      y: 0,
+      w: 200,
+      h: 200
+    };
     constructor(
         public categoryService: CategoryService,
         public companyService: CompanyProfileService,
@@ -118,70 +71,99 @@ export class ProductModal implements OnInit {
         public toastyService: ToastyService,
         public errorService: ErrorService,
     ){}
-
     ngOnInit(){
         //for cropper
         this.cropperSettings = new CropperSettings();
         this.cropperSettings.noFileInput = true;
         this.cropperSettings.allowedFilesRegex =  /.(jpe?g|png)$/i;
-        this.cropperSettings.croppedWidth = 600;
-        this.cropperSettings.croppedHeight = 600;
-        this.cropperSettings.canvasWidth = 600;
-        this.cropperSettings.canvasHeight = 300;
-        this.cropperSettings.minWidth = 200;
-        this.cropperSettings.minHeight = 200;
+        this.cropperSettings.croppedWidth = 458;
+        this.cropperSettings.croppedHeight = 458;
+        this.cropperSettings.canvasWidth = 458;
+        this.cropperSettings.canvasHeight = 270;
+        this.cropperSettings.minWidth = 100;
+        this.cropperSettings.minHeight = 100;
         this.cropperSettings.keepAspect = true;
         this.cropperSettings.minWithRelativeToResolution = false;
         this.nProductImage = {};
     }
-    handleOpenClose(state){
-        if(state)
-            this.modalAddProduct.show();
-        else 
-            this.modalAddProduct.hide();
+    ngOnChanges(changes: SimpleChanges) {
+      const companyCategories: SimpleChange = changes.companyCategories;
+      this.companyCategories = companyCategories.currentValue;
+    }
+    handleOpen(mode, product){
+      this.processMode = mode;
+      this.productImageText = 'Выберите файл';
+      this.imageSelected = false;
+      if(mode == 'edit'){
+        this.newProduct = product;
+        this.isCrop = false;      
+        if(product.image_url !== null) {
+          this.selectedImage = product.image_url;
+        }else{
+          this.selectedImage = null;
+        }
+        this.text.title = 'Изменение товара';
+      }else{
+        this.text.title = 'Добавление товара';
+        this.newProduct = Object.assign({}, EMPTY_PRODUCT);
+        this.selectedImage = null;
+      }
+      this.modalAddProduct.show();
+    }
+    handleClose(){
+      this.modalAddProduct.hide();
+    }
+    cropped(bounds:Bounds) {
+      this.croppedHeight =bounds.bottom-bounds.top;
+      this.croppedWidth = bounds.right-bounds.left;
+      if(this.isCrop){
+        if(this.croppedHeight >= 600 && this.croppedWidth >= 600)
+          this.chosenImage.validationClass = "greenText";
+        else
+          this.chosenImage.validationClass = "redText";
+      }
     }
     onSelectImage(event:any) {
-        this.loadingImage = true;
-        this.productImageText = 'Файл выбран. Перевыбрать?';
-        this.imageSelected = true;
-        var image:any = new Image();
-        var file:File = event.target.files[0];
-        var myReader:FileReader = new FileReader();
-        var that = this;
-        if(this.processMode === 'add') {
-          myReader.onloadend = function (loadEvent:any) {
-            that.chosenImage.full = loadEvent.target.result;
-            image.src = loadEvent.target.result;
-            that.cropper.setImage(image);
-          };
-          image.addEventListener('load',function(){
-            that.chosenImage.width = image.width;
-            that.chosenImage.height = image.height;
-            if(image.width >= 600 && image.height >= 600)
-              that.chosenImage.validationClass = "greenText";
-            else
-              that.chosenImage.validationClass = "redText";
-            that.loadingImage = false;
-          });
-        }else if(this.processMode === 'edit') {
-          myReader.onloadend = function (loadEvent:any) {
-            that.chosenImage.full = loadEvent.target.result;
-            image.src = loadEvent.target.result;
-            that.cropper2.setImage(image);
-          };
-          image.addEventListener('load',function(){
-            that.chosenImage.width = image.width;
-            that.chosenImage.height = image.height;
-            if(image.width >= 600 && image.height >= 600)
-              that.chosenImage.validationClass = "greenText";
-            else
-              that.chosenImage.validationClass = "redText";
-            that.loadingImage = false;
-          });
-        }
-        myReader.readAsDataURL(file);
+      this.loadingImage = true;
+      this.productImageText = 'Файл выбран. Перевыбрать?';
+      this.imageSelected = true;
+      var image:any = new Image();
+      var file:File = event.target.files[0];
+      var myReader:FileReader = new FileReader();
+      var that = this;
+      if(this.processMode === 'add') {
+        myReader.onloadend = function (loadEvent:any) {
+          that.chosenImage.full = loadEvent.target.result;
+          image.src = loadEvent.target.result;
+          that.cropper.setImage(image);
+        };
+        image.addEventListener('load',function(){
+          that.chosenImage.width = image.width;
+          that.chosenImage.height = image.height;
+          if(image.width >= 600 && image.height >= 600)
+            that.chosenImage.validationClass = "greenText";
+          else
+            that.chosenImage.validationClass = "redText";
+          that.loadingImage = false;
+        });
+      }else if(this.processMode === 'edit') {
+        myReader.onloadend = function (loadEvent:any) {
+          that.chosenImage.full = loadEvent.target.result;
+          image.src = loadEvent.target.result;
+          that.cropper.setImage(image);
+        };
+        image.addEventListener('load',function(){
+          that.chosenImage.width = image.width;
+          that.chosenImage.height = image.height;
+          if(image.width >= 600 && image.height >= 600)
+            that.chosenImage.validationClass = "greenText";
+          else
+            that.chosenImage.validationClass = "redText";
+          that.loadingImage = false;
+        });
+      }
+      myReader.readAsDataURL(file);
     }
-    
     dataURLtoFile(dataurl, filename):any {
         var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
             bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
@@ -191,46 +173,33 @@ export class ProductModal implements OnInit {
         return new File([u8arr], filename, {type:mime});
     }
     checkAddProductForm() {
-        if(this.newProduct.name === '') {
-          this.toastyService.warning('Вы не заполнили название продукта');
-          return false;
-        } else if(this.newProduct.category_id === 0) {
-          this.toastyService.warning('Укажите категорию товара');
-          return false;
-        } else if(this.newProduct.nomenclature === '') {
-          this.toastyService.warning('Вы не заполнили ед. измерения');
-          return false;
-        } else if(this.newProduct.price === 0) {
-          this.toastyService.warning('Цена товара указана как ноль тенге');
-          return false;
-        }
-        return true;
+      if(this.newProduct.name === '') {
+        this.toastyService.warning('Вы не заполнили название продукта');
+        return false;
+      } else if(this.newProduct.category_id === 0) {
+        this.toastyService.warning('Укажите категорию товара');
+        return false;
+      } else if(this.newProduct.nomenclature === '') {
+        this.toastyService.warning('Вы не заполнили ед. измерения');
+        return false;
+      } else if(this.newProduct.price === 0) {
+        this.toastyService.warning('Цена товара указана как ноль тенге');
+        return false;
+      }
+      return true;
     }
     clearAddModal() {
-        this.newProduct = {
-          id: '',
-          category_id: 0,
-          name: '',
-          article: '',
-          nomenclature: '',
-          made_in: '',
-          price: 0,
-          description: '',
-          id_1c: '',
-          part_1c: 0,
-          active: true,
-          image: '',
-          resize: 'false',
-          top: 0,
-          left: 0,
-          width: 0,
-          height: 0,
-          barcode: '',
-          min_left: 0,
-        };
-        this.selectedImage = null;
-        this.imageSelected = false;
-        this.productImageText = 'Выберите файл';
+      this.newProduct = EMPTY_PRODUCT;
+      this.selectedImage = null;
+      this.imageSelected = false;
+      this.productImageText = 'Выберите файл';
+    }
+    @HostListener('window:keyup', ['$event'])
+    keyboardInput(event: KeyboardEvent) {
+      let x = event.keyCode;
+      if (x === 27) {
+        this.onCloseAddProduct();
+      }
     }
     onCloseAddProduct() {
         this.modalAddProduct.hide();
@@ -238,43 +207,83 @@ export class ProductModal implements OnInit {
         this.selectedImage = null;
         this.productImageText = 'Выберите файл';
     }
+    closeModalProductDesc(){
+      this.newProduct.description = "";
+      this.modalAddProductDesc.hide();
+    }
+    deleteProductImage() {
+      this.selectedImage = '';
+      this.productImageText = 'Выберите файл';
+      this.newProduct.image = null;
+      this.imageSelected = false;
+    }
+    deleteSelectedImage(){
+      this.productImageText = 'Выберите файл';
+      this.imageSelected = false;
+      if(this.newProduct.image !== null) {
+        this.selectedImage = serverURL + this.newProduct.image;
+      }else{
+        this.selectedImage = null;
+      }
+    }
+    checkImage(){
+      if(this.imageSelected && this.croppedHeight < 600 && this.croppedWidth < 600){
+        this.modalAddProduct.hide();
+        this.modalCheckImage.show();
+      }else{
+        this.onAddProduct();
+      }
+    }
+    hideCheckImage(){
+      this.modalCheckImage.hide();
+      this.modalAddProduct.show();
+    }
+    continueAddUpdate(){
+      this.modalCheckImage.hide();
+      this.onAddProduct();
+    }
     onAddProduct() {
-        if(this.checkAddProductForm()) {
-          this.addLoading = true;
-          if(this.imageSelected){
-            if(this.isCrop)
-              this.newProduct.image = this.dataURLtoFile(this.nProductImage.image, 'image.png');
-            else
-              this.newProduct.image = this.dataURLtoFile(this.chosenImage.full, 'image.png');
-          }
-          this.productService.updateProduct(this.newProduct, this.imageSelected)
-              .subscribe(
-                res => {
-                  if(res !== undefined && res !== null) {
-                    if (res.code === 0) {
-                      this.clearAddModal();
-                    //   this.getCategoryProducts();
-                      this.modalAddProduct.hide();
-                      this.modalProductAdded.show();
-                    }else {
-                      if(res.message !== undefined && res.message !== null) {
-                        if(typeof res.message === 'string') {
-                          this.toastyService.warning(res.message);
-                        }else {
-                          this.toastyService.warning("Не все поля заполнены");
-                        }
-                      }else {
-                        this.toastyService.warning("Ошибка при сохранении");
-                      }
-                    }
+      if(this.processMode == 'add')
+        if(!this.checkAddProductForm())
+          return;
+      if(this.imageSelected){
+        if(this.isCrop)
+          this.newProduct.image = this.dataURLtoFile(this.nProductImage.image, 'image.png');
+        else
+          this.newProduct.image = this.dataURLtoFile(this.chosenImage.full, 'image.png');
+      }
+      this.addLoading = true;
+      this.productService.updateProduct(this.newProduct, this.imageSelected)
+          .subscribe(
+            res => {
+              if(res !== undefined && res !== null) {
+                if (res.code === 0) {
+                  this.clearAddModal();
+                  if(this.processMode === 'add'){
+                    this.modalProductAdded.show();
+                  }else{
+                    this.toastyService.success('Товар обновлен');
                   }
-                  this.addLoading = false;
-                },
-                error =>  {
-                  this.toastyService.warning(this.errorService.getCodeMessage(error.code));
-                  this.addLoading = false;
+                  this.getProducts.emit();
+                  this.modalAddProduct.hide();
+                }else {
+                  if(res.message !== undefined && res.message !== null) {
+                    if(typeof res.message === 'string') {
+                      this.toastyService.warning(res.message);
+                    }else {
+                      this.toastyService.warning("Не все поля заполнены");
+                    }
+                  }else {
+                    this.toastyService.warning("Ошибка при сохранении");
+                  }
                 }
-              );
-        }
+              }
+              this.addLoading = false;
+            },
+            error =>  {
+              this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+              this.addLoading = false;
+            }
+          );
       }
 }

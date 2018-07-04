@@ -104,46 +104,6 @@ table thead th.sortable-field:hover{
 .price-l-table th{
   font-size: 10px;
 }
-.product-preview-container{
-/*  max-height: 150px;
-  max-width: 150px;*/
-  text-align: center;
-  margin: 0 auto 10px;
-  position: relative;
-  background: #dcdcdc;
-  max-height: 320px;
-  padding: 10px;
-  /*background-color: #fff;*/
-
-}
-.product-preview{
-  max-height: 150px;
-  max-width: 150px;
-}
-
-.delete-img-btn {
-  width: 32px;
-  height: 32px;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  background-color: #000000;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
-  border-radius: 50%;
-  position: absolute;
-  right: -16px;
-  top: -16px;
-  cursor: pointer;
-}
-.delete-img-btn i{
-  color: #ddd;
-}
 .loader-component{
   padding: 40px;
 }
@@ -159,29 +119,6 @@ table thead th.sortable-field:hover{
   background-repeat: no-repeat;
   background-size: 50px 50px;
   content: "";
-}
-.result img{
-  width: 100px;
-  height: 100px;
-}
-.display-none{
-  display: none;
-}
-.product-btns button{
-  margin-left: 10px;
-}
-.img-preview{
-  width: 618px;
-  height: 320px;
-}
-.img-preview img{
-  height: 100%;
-}
-.redText{
-  color: red;
-}
-.greenText{
-  color: green;
 }
 /*dropdown:*/
 .navbar-d-btn {
