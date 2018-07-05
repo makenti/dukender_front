@@ -193,21 +193,15 @@ export class ProductsComponent implements OnInit {
         );
   }
   lazyLoad(){
-    // Not angular way
-    console.log("lazy load started")
     let that = this;
     var timer = setInterval(function(){
-      console.log(that.afterView);
-      console.log(that.lazyLoaded);
       if(that.afterView && !that.lazyLoaded){
         var allimages= document.getElementsByClassName("pimage");
-        console.log(allimages)
         for (var i=0; i<allimages.length; i++) {
           if (allimages[i].getAttribute('data-src')) {
               allimages[i].setAttribute('src', allimages[i].getAttribute('data-src'));
           }
         }
-        that.lazyLoaded = true;
       }else
       if(that.lazyLoaded){
         clearInterval(timer);
@@ -365,7 +359,6 @@ export class ProductsComponent implements OnInit {
   selectGroup(group){
     this.newCat.group = group;
     this.newCat.cat = null;
-    console.log(group)
   }
   selectCat(category){
     this.newCat.cat = category;
