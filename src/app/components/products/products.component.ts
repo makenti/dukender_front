@@ -31,6 +31,10 @@ export class ProductsComponent implements OnInit {
   @ViewChild('modalDeleteProduct')
   modalDeleteProduct: ModalDirective;
 
+
+  @ViewChild('modalAddToCategory')
+  modalAddToCategory: ModalDirective;
+
   @ViewChild('modalImportPrice')
   modalImportPrice: ModalDirective;
 
@@ -47,6 +51,7 @@ export class ProductsComponent implements OnInit {
   public companyCategories = new Array();
   public products = new Array();
   public selectedCategory: any = null;
+  public selectedSubCat: any = null;
   public selectedProducts: any[] = [];
   public fileSelected: boolean = false;
   public allSelected: boolean = false;
@@ -56,7 +61,11 @@ export class ProductsComponent implements OnInit {
   public loadingOnSave: boolean = false;
   public addLoading: boolean = false;
   public uploadCategory = '';
-
+  public newCat = {
+    group: null,
+    cat: null,
+    createNew: false
+  }
   constructor (
     public categoryService: CategoryService,
     public companyService: CompanyProfileService,
@@ -70,7 +79,7 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit() {
     this.auth.updateUserInfo().subscribe(null, null);
-    this.getCategories();
+    // this.getCategories();
     this.getCategoryProducts();
     this.getCompanyCategories();
   }
@@ -88,6 +97,11 @@ export class ProductsComponent implements OnInit {
         .subscribe(
           data => {
             this.companyCategories = data;
+            this.newCat = {
+              group: null,
+              cat: null,
+              createNew: false
+            }
             // data.map((x:any) => this.selectedCategories.push(x.category.id));
           },
           error =>  {
@@ -95,15 +109,17 @@ export class ProductsComponent implements OnInit {
           }
         );
   }
-  onScroll (e: any) {
-    if(e.target.scrollHeight <= e.target.scrollTop + e.srcElement.clientHeight){
-      this.getCategoryProductsMore();
-    }
-  }
   onSelectCategory(newCategory: any) {
+    console.log(newCategory)
+    this.selectedSubCat = null;    
     this.selectedCategory = newCategory;
     this.limit = priceLimit;
     this.getCategoryProducts();
+  }
+  onSelectSubCategory(sub: any){
+    console.log(sub)
+    this.selectedSubCat = sub;
+    this.getCategoryProducts();    
   }
   onSelectFileCategory(newCategory: any) {
     this.uploadCategory = newCategory;
@@ -121,15 +137,23 @@ export class ProductsComponent implements OnInit {
       this.sortOrder = "asc";
     }
   }
+  handleCreateCatModal(update){
+    this.newCat.createNew = !this.newCat.createNew;
+    if(update)
+      this.getCompanyCategories();
+  }
   getCategoryProducts() {
     this.products = [];
     this.loading = true;
+    let subcats = [];
+    if(this.selectedSubCat !== null)
+      subcats = [this.selectedSubCat.id];
     let data = {
       category_id: (this.selectedCategory !== null) ? this.selectedCategory.category.id : '',
+      subcategory_ids: subcats,
       limit: this.limit,
       search_word: this.searchQuery,
     };
-    console.log(data)
     this.productService.getCategoryProducts(data)
         .subscribe(
           resp => {
@@ -162,6 +186,11 @@ export class ProductsComponent implements OnInit {
             this.toastyService.warning(this.errorService.getCodeMessage(error.code));
           }
         );
+  }
+  onScroll (e: any) {
+    if(e.target.scrollHeight <= e.target.scrollTop + e.srcElement.clientHeight){
+      this.getCategoryProductsMore();
+    }
   }
   getCategoryProductsMore() {
     let data = {
@@ -293,6 +322,55 @@ export class ProductsComponent implements OnInit {
       return false;
     }
     return true;
+  }
+  //add to category
+  handleAddToCategory() {
+    this.getSelectedProducts();
+    if(this.selectedProducts !== undefined && this.selectedProducts.length > 0) {
+      this.modalAddToCategory.show();
+      this.newCat.group = this.companyCategories[0].category;
+    }else {
+      this.toastyService.warning('Вы не выбрали товар');
+    }
+  }
+  selectGroup(group){
+    this.newCat.group = group;
+    this.newCat.cat = null;
+    console.log(group)
+  }
+  selectCat(category){
+    this.newCat.cat = category;
+  }
+  addToCategory(){
+    if(!this.newCat.cat){
+      this.toastyService.warning("Выберите категорию");
+      return;
+    }
+    let sp = [...this.selectedProducts.map(p=>{return p.id})];
+    let data = {
+      category_id: this.newCat.group.id,
+      subcategory_id: this.newCat.cat.id,
+      item_ids: sp
+    };
+    console.log(data);
+    this.productService.addToCategory(data)
+        .subscribe(
+          res => {
+            if(res) {
+              this.toastyService.info('Товары добавлены в категорию');
+              this.getCategoryProducts();
+              this.modalAddToCategory.hide();
+              this.newCat = {
+                group: null,
+                cat: null,
+                createNew: false
+              }
+            }
+          },
+          error =>  {
+            this.toastyService.warning(this.errorService.getCodeMessage(error.code));
+          }
+        );
   }
   //delete products:
   clickDeleteBtn() {

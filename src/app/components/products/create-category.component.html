@@ -1,0 +1,34 @@
+<div>
+<div bsModal #modalCreateCategory="bs-modal" class="modal fade modal-small modal-delete-product" id="modalCreateCategory">
+	<div class="modal-dialog modal-sm">
+        <div class="modal-content" style="background: #f2f2f2;">
+            <div class="modal-body">
+                <h3 class="text-center">Добавить новую категорию</h3>
+                <label class="label-group">Выберите товарную группу</label>			
+				<div class="dropdown navbar-d mb-3" dropdown>
+					<button dropdownToggle class="dropdown-btn navbar-d-btn btn-space-right" style="width: 220px">
+						<span *ngIf="group !== null">{{group.name}}</span>					
+						<span *ngIf="group == null">Товарная группа</span>					
+						<i class="fa fa-caret-down" aria-hidden="true"></i>
+					</button>
+					<ul *dropdownMenu class="dropdown-menu navbar-d-menu">
+						<li *ngFor="let g of companyCategories">
+							<a (click)="selectGroup(g.category)">{{g.category.name}}</a>
+						</li>
+					</ul>
+				</div>
+                <div *ngFor="let cat of categories; let i = index">
+                    <input type="text" class="mm-input mb-3 mr-3" placeholder="Введите название категорий" [(ngModel)]="cat.name" style="height:40px;border: none;"/>
+                    <i *ngIf="i === categories.length - 1" (click)="addNewCat()" class="fa fa-plus cursor-pointer"></i>
+                    <i *ngIf="i !== categories.length - 1" (click)="removeCat(i)" class="fa fa-minus cursor-pointer"></i>
+                </div>
+                <div class="modal-wrapper">
+                    <div class="modal-btns flex-container flex-center">
+                        <button class="mm-btn mm-btn-default" (click)="close()">Отмена</button>
+                        <button class="mm-btn mm-btn-primary" (click)="createCategory()">Добавить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div></div>

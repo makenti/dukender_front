@@ -49,6 +49,7 @@ export class ProductService {
 
       formData.append('id', product.id);
       formData.append('category_id', product.category_id);
+      formData.append('subcategory_id', product.subcategory_id);
       formData.append('name', product.name);
       formData.append('nomenclature', product.nomenclature);
       formData.append('price', product.price);
@@ -180,4 +181,33 @@ export class ProductService {
     });
   }
 
+  addToCategory(data: any): Observable<any> {
+    let headers = new Headers({
+      'Auth-Token': this.auth.getToken(),
+      'Content-Type': 'application/x-www-form-urlencoded'
+    });
+
+    let options = new RequestOptions({ headers: headers });
+    let bodyString = transformRequest(data);
+    return this.http.post(serverURL + '/products/set_categories/', bodyString, options)
+                    .map((res: Response) => {
+                      let resp = res.json();
+                      return resp;
+                    })
+                    .catch(handleError);
+  }
+  createCategory(data: any): Observable<any> {
+    let headers = new Headers({
+      'Auth-Token': this.auth.getToken(),
+      'Content-Type': 'application/x-www-form-urlencoded'
+    });
+    let options = new RequestOptions({ headers: headers });
+    let bodyString = transformRequest(data);
+    return this.http.post(serverURL + '/products/subcategory/create/', bodyString, options)
+                    .map((res: Response) => {
+                      let resp = res.json();
+                      return resp;
+                    })
+                    .catch(handleError);
+  }
 }

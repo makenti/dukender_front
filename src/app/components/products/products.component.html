@@ -4,47 +4,72 @@
 		Загрузите прайс-лист в систему одним кликом!<br/>
 		Шаблон для заполнения можно скачать  <a href="./assets/price_list.xlsx">отсюда</a>
 	</p>
-	<div class="row" style="margin-bottom: 10px;">
-		<div class="col-xs-6">
-			<label for="">Товарная группа</label>
-			<div class="dropdown navbar-d no-print" dropdown
-		    *ngIf="this.auth.perms.settings">
-		    <button dropdownToggle class="dropdown-btn navbar-d-btn">
-		      <span *ngIf="selectedCategory !== null">{{selectedCategory.category.name}}</span>
-		      <span *ngIf="selectedCategory == null">Все продукты</span>
-		      <i class="fa fa-caret-down" aria-hidden="true"></i>
-		    </button>
-		    <ul *dropdownMenu class="dropdown-menu navbar-d-menu">
-  			  <li>
-  			  	<button 
-  			  		type="button" 
-  			  		class="list-group-item"
-  						[class.active]="selectedCategory === null"
-  			  		(click)="onSelectCategory(null)"
-  			  	>
-  			  		Все продукты
-  			  	</button>
-  			  </li>
-  			  <li *ngFor="let cat of companyCategories">
-	  			  <button type="button" class="list-group-item"
-	  			  	[class.active]="selectedCategory !== null && selectedCategory.category.id === cat.category.id"
-	  	      	name="categories"
-	  		      (click)="onSelectCategory(cat)">{{cat.category.name}}</button>
-	  		  </li>
-		    </ul>
-			</div>
-		</div>
-		<div class="col-xs-6 search-container">
-			<label>Введите название товара или артикул, чтобы найти нужный товар</label>
+	<div class="filters">
+		<div class="search-container">
 			<input
 				type="text"
 				class="mm-input"
 				placeholder="поиск товара"
 				[(ngModel)]="searchQuery" 
-				style="width: 300px;height:40px;border: none;"/>
+				style="width: 300px;border: none;"/>
 			<!-- <button
 				class="mm-btn mm-btn-default"
-		  	(click)="onSearchProduct($event)">Поиск</button> -->
+				(click)="onSearchProduct($event)">Поиск</button> -->
+		</div>
+		<div class="inline-filter">
+			<div class="dropdown navbar-d no-print" dropdown *ngIf="this.auth.perms.settings">
+				<button dropdownToggle class="dropdown-btn navbar-d-btn">
+				<span *ngIf="selectedCategory !== null">{{selectedCategory.category.name}}</span>
+				<span *ngIf="selectedCategory == null">Все продукты</span>
+				<i class="fa fa-caret-down" aria-hidden="true"></i>
+				</button>
+				<ul *dropdownMenu class="dropdown-menu navbar-d-menu">
+				<li>
+					<button 
+						type="button" 
+						class="dropdown-btn navbar-d-btn"
+						(click)="onSelectCategory(null)"
+					>
+						<span>Все продукты</span>
+					  	<i class="fa fa-caret-up" aria-hidden="true"></i>
+					</button>
+				</li>
+				<li *ngFor="let cat of companyCategories">
+					<button type="button" class="list-group-item"
+						[class.active]="selectedCategory !== null && selectedCategory.category.id === cat.category.id"
+					name="categories"
+					(click)="onSelectCategory(cat)">{{cat.category.name}}</button>
+				</li>
+				</ul>
+			</div>
+			<div class="dropdown navbar-d no-print" dropdown *ngIf="this.auth.perms.settings" style="margin-left: 20px;">
+				<button dropdownToggle class="dropdown-btn navbar-d-btn">
+					<span *ngIf="selectedSubCat">{{selectedSubCat.name}}</span>
+					<span *ngIf="selectedSubCat == null">Все категории</span>
+					<i class="fa fa-caret-down" aria-hidden="true"></i>
+				</button>
+				<ul *dropdownMenu class="dropdown-menu navbar-d-menu">
+					<li>
+						<button 
+							type="button" 
+							class="dropdown-btn navbar-d-btn"
+							(click)="onSelectSubCategory(null)"
+						>
+							<span>Все категории</span>
+							<i class="fa fa-caret-up" aria-hidden="true"></i>
+						</button>
+					</li>
+					<li *ngFor="let cat of selectedCategory?.category.childs">
+						<button type="button" class="list-group-item"
+							[class.active]="selectedSubCat !== null && selectedSubCat.id === cat.id"
+						name="categories"
+						(click)="onSelectSubCategory(cat)">{{cat.name}}</button>
+					</li>
+				</ul>
+			</div>
+			<button dropdownToggle class="dropdown-btn navbar-d-btn" (click)="handleCreateCatModal()" style="margin-left: 20px">
+				<i class="fa fa-plus cursor-pointer m-0"></i>
+			</button>
 		</div>
 	</div>
 	<div class="row" id="productsPrintContent">
@@ -73,7 +98,7 @@
 							*ngIf="sortField==='category'"></i>
 						</th>
 						<th class="text-center">Наличие товара</th>
-						<th class="text-center no-print">ОТМЕТКА
+						<th class="force-middle text-center no-print"><span>ОТМЕТКА</span>
 							<label class="mm-control mm-control--checkbox text-center">
 					      <input type="checkbox" (change)="selectAllProducts()" [(ngModel)]="allSelected" />
 					      <div class="mm-control__indicator"></div>
@@ -96,7 +121,10 @@
 						<td (click)="onClickProduct(product)">
 							{{product.price|number: '1.2-2'}}
 						</td>
-						<td (click)="onClickProduct(product)">{{product.category}}</td>
+						<td (click)="onClickProduct(product)">
+							{{product.category}}&nbsp;
+							<span *ngIf="product.subcategory!=='null'">({{product.subcategory}})</span>
+						</td>
 						<td class="text-center">
 							<label class="switch no-print">
 							  <input type="checkbox"
@@ -123,6 +151,7 @@
 				<button class="mm-btn mm-btn-default" (click)="onOpenImportModal()">Импорт из Excell</button>
 				<button class="mm-btn mm-btn-default" (click)="exportExcell()">Экспорт в Excell</button>
 				<button class="mm-btn mm-btn-default" (click)="printProducts()">Печать</button>
+				<button class="mm-btn mm-btn-default" (click)="handleAddToCategory()">Добавить в категорию</button>
 				<button class="mm-btn mm-btn-danger" (click)="clickDeleteBtn()">Удалить</button>
 			</div>
 		</div>
@@ -170,6 +199,54 @@
 		</div>
   </div>
 </div>
+<div bsModal #modalAddToCategory="bs-modal"
+	class="modal fade modal-small modal-delete-product" id="modalAddToCategory">
+	<div class="modal-dialog modal-sm">
+    <div class="modal-content">
+  		<div class="modal-body">
+			<h3>Добавить в категорию</h3>
+			<div>
+				<label class="label-group">Выберите товарную группу</label>			
+				<div class="dropdown navbar-d" dropdown
+					*ngIf="this.auth.perms.company">
+					<button dropdownToggle class="dropdown-btn navbar-d-btn btn-space-right">
+						<span *ngIf="newCat.group !== null">{{newCat.group.name}}</span>					
+						<span *ngIf="newCat.group == null">Товарная группа</span>					
+						<i class="fa fa-caret-down" aria-hidden="true"></i>
+					</button>
+					<ul *dropdownMenu class="dropdown-menu navbar-d-menu">
+						<li *ngFor="let group of companyCategories">
+							<a (click)="selectGroup(group.category)">{{group.category.name}}</a>
+						</li>
+					</ul>
+				</div>
+				<label class="label-cat">Выберите категорию или <a (click)="handleCreateCatModal()">создайте новую</a></label>							
+				<div class="dropdown navbar-d" dropdown
+					*ngIf="this.auth.perms.company">
+					<button dropdownToggle class="dropdown-btn navbar-d-btn btn-space-right">
+						<span *ngIf="newCat.cat">{{newCat.cat.name}}</span>
+						<span *ngIf="!newCat.cat">Категория</span>
+						<i class="fa fa-caret-down" aria-hidden="true"></i>
+					</button>
+					<ul *dropdownMenu class="dropdown-menu navbar-d-menu">
+						<li *ngFor="let cat of newCat.group?.childs">
+							<a (click)="selectCat(cat)">{{cat.name}}</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+		  	<div class="modal-wrapper">
+		    </div>
+				<div class="modal-btns flex-container flex-center">
+					<button class="mm-btn mm-btn-default" (click)="modalAddToCategory.hide()">Отмена</button>
+					<button class="mm-btn mm-btn-primary" (click)="addToCategory()">Добавить</button>
+				</div>
+			</div>
+		</div>
+  </div>
+</div>
+<create-category [show]="newCat.createNew" [companyCategories]="companyCategories" (handle)="handleCreateCatModal($event)"></create-category>
 <div bsModal #modalDeleteProduct="bs-modal"
 	class="modal fade modal-small modal-delete-product">
 	<div class="modal-dialog modal-sm">

@@ -29,16 +29,27 @@
                   [(ngModel)]="newProduct.nomenclature" required/>
               </div>
               <div class="form-field">
-                <label>Категория<span class="color-red">*</span></label>
+                <label>Товарная группа<span class="color-red">*</span></label>
                 <div class="mm-select">
-                  <select [(ngModel)]="newProduct.category_id" >
+                  <select [(ngModel)]="newProduct.category_id" (change)="onChangeGroup()">
                     <option *ngFor="let cat of companyCategories" [ngValue]="cat.category.id">
                       <span class="badge">{{cat.category.name}}</span>
                     </option>
                   </select>
                   <div class="select__arrow"></div>
                 </div>
-              </div>
+							</div>
+							<div class="form-field">
+                <label>Категория</label>
+                <div class="mm-select">
+                  <select [(ngModel)]="newProduct.subcategory_id">
+                    <option *ngFor="let cat of subcategories" [ngValue]="cat.id">
+                      <span class="badge">{{cat.name}}</span>
+                    </option>
+                  </select>
+                  <div class="select__arrow"></div>
+                </div>
+							</div>
             </div>
             <div class="side">
               <div class="form-field">

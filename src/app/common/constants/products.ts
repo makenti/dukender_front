@@ -1,6 +1,7 @@
 export const EMPTY_PRODUCT = {
     id: '',
     category_id: 0,
+    subcategory_id: '',
     name: '',
     article: '',
     nomenclature: '',
