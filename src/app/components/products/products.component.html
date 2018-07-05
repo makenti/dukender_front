@@ -114,7 +114,7 @@
 						<td (click)="onClickProduct(product)">{{product.article }}</td>
 						<td (click)="onClickProduct(product)">{{product.name}}</td>
 						<td (click)="onClickProduct(product)" style="padding: 5px;">
-							<img *ngIf="product.image_url" [src]="product.image_url" style="width: 40px; height:40px;">
+							<img class="pimage" *ngIf="product.image_url" src="../../../assets/images/load.gif" attr.data-src="{{product.image_url}}" style="max-width: 40px; max-height:40px;">
 						</td>
 						<td (click)="onClickProduct(product)">{{product.made_in}}</td>
 						<td (click)="onClickProduct(product)">{{product.nomenclature}}</td>

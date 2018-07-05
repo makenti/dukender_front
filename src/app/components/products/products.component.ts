@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Renderer2, ElementRef } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap';
 import { Router } from '@angular/router';
 import {
@@ -30,14 +30,10 @@ export class ProductsComponent implements OnInit {
 
   @ViewChild('modalDeleteProduct')
   modalDeleteProduct: ModalDirective;
-
-
   @ViewChild('modalAddToCategory')
   modalAddToCategory: ModalDirective;
-
   @ViewChild('modalImportPrice')
   modalImportPrice: ModalDirective;
-
   @ViewChild(ProductModal)
   productModal: ProductModal;
 
@@ -66,6 +62,9 @@ export class ProductsComponent implements OnInit {
     cat: null,
     createNew: false
   }
+  public afterView:boolean = false;
+  public lazyLoaded:boolean = false;
+
   constructor (
     public categoryService: CategoryService,
     public companyService: CompanyProfileService,
@@ -75,13 +74,17 @@ export class ProductsComponent implements OnInit {
     public router: Router,
     public toastyService: ToastyService,
     public errorService: ErrorService,
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.auth.updateUserInfo().subscribe(null, null);
     // this.getCategories();
     this.getCategoryProducts();
     this.getCompanyCategories();
+  }
+  ngAfterViewInit(){
+    this.afterView = true;
   }
   getCategories() {
     this.categoryService.getCategories()
@@ -178,6 +181,8 @@ export class ProductsComponent implements OnInit {
                     p.id_1c = '';
                   return p;
                 });
+                this.lazyLoaded = false;
+                this.lazyLoad();
               }
             }
           },
@@ -186,6 +191,28 @@ export class ProductsComponent implements OnInit {
             this.toastyService.warning(this.errorService.getCodeMessage(error.code));
           }
         );
+  }
+  lazyLoad(){
+    // Not angular way
+    console.log("lazy load started")
+    let that = this;
+    var timer = setInterval(function(){
+      console.log(that.afterView);
+      console.log(that.lazyLoaded);
+      if(that.afterView && !that.lazyLoaded){
+        var allimages= document.getElementsByClassName("pimage");
+        console.log(allimages)
+        for (var i=0; i<allimages.length; i++) {
+          if (allimages[i].getAttribute('data-src')) {
+              allimages[i].setAttribute('src', allimages[i].getAttribute('data-src'));
+          }
+        }
+        that.lazyLoaded = true;
+      }else
+      if(that.lazyLoaded){
+        clearInterval(timer);
+      }
+    }, 1000);
   }
   onScroll (e: any) {
     if(e.target.scrollHeight <= e.target.scrollTop + e.srcElement.clientHeight){
@@ -221,6 +248,8 @@ export class ProductsComponent implements OnInit {
                   p.id_1c = '';
                 return p;
               });
+              this.lazyLoaded = false;
+              this.lazyLoad();
             }
           },
           error =>  {
