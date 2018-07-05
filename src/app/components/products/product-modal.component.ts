@@ -12,7 +12,7 @@ import {
   ErrorService } from '../../services/index';
 import { ToastyService } from 'ng2-toasty';
 import { serverURL } from '../../common/config/server';
-import { EMPTY_PRODUCT } from '../../common/constants/products';
+import { EMPTY_PRODUCT, dataURLtoFile } from '../../common/constants/products';
 @Component({
   selector: 'product-modal',
   templateUrl: './product-modal.component.html',
@@ -98,7 +98,7 @@ export class ProductModal implements OnInit, OnChanges {
       if(mode == 'edit'){
         this.newProduct = product;
         this.isCrop = false;      
-        if(product.image_url !== null) {
+        if(product.image_url !== null && product.image_url != "") {
           this.selectedImage = product.image_url;
         }else{
           this.selectedImage = null;
@@ -166,14 +166,6 @@ export class ProductModal implements OnInit, OnChanges {
         });
       }
       myReader.readAsDataURL(file);
-    }
-    dataURLtoFile(dataurl, filename):any {
-        var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
-            bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
-        while(n--){
-            u8arr[n] = bstr.charCodeAt(n);
-        }
-        return new File([u8arr], filename, {type:mime});
     }
     checkAddProductForm() {
       if(this.newProduct.name === '') {
@@ -251,9 +243,9 @@ export class ProductModal implements OnInit, OnChanges {
           return;
       if(this.imageSelected){
         if(this.isCrop)
-          this.newProduct.image = this.dataURLtoFile(this.nProductImage.image, 'image.png');
+          this.newProduct.image = dataURLtoFile(this.nProductImage.image, 'image.png');
         else
-          this.newProduct.image = this.dataURLtoFile(this.chosenImage.full, 'image.png');
+          this.newProduct.image = dataURLtoFile(this.chosenImage.full, 'image.png');
       }
       this.addLoading = true;
       this.productService.updateProduct(this.newProduct, this.imageSelected)
