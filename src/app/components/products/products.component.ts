@@ -78,7 +78,7 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.auth.updateUserInfo().subscribe(null, null);
+    // this.auth.updateUserInfo().subscribe(null, null);
     // this.getCategories();
     this.getCategoryProducts();
     this.getCompanyCategories();

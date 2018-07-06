@@ -17,7 +17,7 @@
 				(click)="onSearchProduct($event)">Поиск</button> -->
 		</div>
 		<div class="inline-filter">
-			<div class="dropdown navbar-d no-print" dropdown *ngIf="this.auth.perms.settings">
+			<div class="dropdown navbar-d no-print" dropdown>
 				<button dropdownToggle class="dropdown-btn navbar-d-btn">
 				<span *ngIf="selectedCategory !== null">{{selectedCategory.category.name}}</span>
 				<span *ngIf="selectedCategory == null">Все продукты</span>
@@ -42,7 +42,7 @@
 				</li>
 				</ul>
 			</div>
-			<div class="dropdown navbar-d no-print" dropdown *ngIf="this.auth.perms.settings" style="margin-left: 20px;">
+			<div class="dropdown navbar-d no-print" dropdown style="margin-left: 20px;">
 				<button dropdownToggle class="dropdown-btn navbar-d-btn">
 					<span *ngIf="selectedSubCat">{{selectedSubCat.name}}</span>
 					<span *ngIf="selectedSubCat == null">Все категории</span>
@@ -207,8 +207,7 @@
 			<h3>Добавить в категорию</h3>
 			<div>
 				<label class="label-group">Выберите товарную группу</label>			
-				<div class="dropdown navbar-d" dropdown
-					*ngIf="this.auth.perms.company">
+				<div class="dropdown navbar-d" dropdown>
 					<button dropdownToggle class="dropdown-btn navbar-d-btn btn-space-right">
 						<span *ngIf="newCat.group !== null">{{newCat.group.name}}</span>					
 						<span *ngIf="newCat.group == null">Товарная группа</span>					
@@ -221,8 +220,7 @@
 					</ul>
 				</div>
 				<label class="label-cat">Выберите категорию или <a (click)="handleCreateCatModal()">создайте новую</a></label>							
-				<div class="dropdown navbar-d" dropdown
-					*ngIf="this.auth.perms.company">
+				<div class="dropdown navbar-d" dropdown>
 					<button dropdownToggle class="dropdown-btn navbar-d-btn btn-space-right">
 						<span *ngIf="newCat.cat">{{newCat.cat.name}}</span>
 						<span *ngIf="!newCat.cat">Категория</span>
