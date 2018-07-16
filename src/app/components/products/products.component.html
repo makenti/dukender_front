@@ -205,32 +205,36 @@
     <div class="modal-content">
   		<div class="modal-body">
 			<h3>Добавить в категорию</h3>
-			<div>
-				<label class="label-group">Выберите товарную группу</label>			
-				<div class="dropdown navbar-d" dropdown>
-					<button dropdownToggle class="dropdown-btn navbar-d-btn btn-space-right">
-						<span *ngIf="newCat.group !== null">{{newCat.group.name}}</span>					
-						<span *ngIf="newCat.group == null">Товарная группа</span>					
-						<i class="fa fa-caret-down" aria-hidden="true"></i>
-					</button>
-					<ul *dropdownMenu class="dropdown-menu navbar-d-menu">
-						<li *ngFor="let group of companyCategories">
-							<a (click)="selectGroup(group.category)">{{group.category.name}}</a>
-						</li>
-					</ul>
+			<div class="cat-main">
+				<div class="form-group">
+					<label class="label-group">Выберите товарную группу</label>			
+					<div class="dropdown navbar-d" dropdown>
+						<button dropdownToggle class="dropdown-btn navbar-d-btn btn-space-right">
+							<span *ngIf="newCat.group !== null">{{newCat.group.name}}</span>					
+							<span *ngIf="newCat.group == null">Товарная группа</span>					
+							<i class="fa fa-caret-down" aria-hidden="true"></i>
+						</button>
+						<ul *dropdownMenu class="dropdown-menu navbar-d-menu">
+							<li *ngFor="let group of companyCategories">
+								<a (click)="selectGroup(group.category)">{{group.category.name}}</a>
+							</li>
+						</ul>
+					</div>
 				</div>
-				<label class="label-cat">Выберите категорию или <a (click)="handleCreateCatModal()">создайте новую</a></label>							
-				<div class="dropdown navbar-d" dropdown>
-					<button dropdownToggle class="dropdown-btn navbar-d-btn btn-space-right">
-						<span *ngIf="newCat.cat">{{newCat.cat.name}}</span>
-						<span *ngIf="!newCat.cat">Категория</span>
-						<i class="fa fa-caret-down" aria-hidden="true"></i>
-					</button>
-					<ul *dropdownMenu class="dropdown-menu navbar-d-menu">
-						<li *ngFor="let cat of newCat.group?.childs">
-							<a (click)="selectCat(cat)">{{cat.name}}</a>
-						</li>
-					</ul>
+				<div class="form-group">
+					<label class="label-cat">Выберите категорию или <a (click)="handleCreateCatModal()">создайте новую</a></label>							
+					<div class="dropdown navbar-d" dropdown>
+						<button dropdownToggle class="dropdown-btn navbar-d-btn btn-space-right">
+							<span *ngIf="newCat.cat">{{newCat.cat.name}}</span>
+							<span *ngIf="!newCat.cat">Категория</span>
+							<i class="fa fa-caret-down" aria-hidden="true"></i>
+						</button>
+						<ul *dropdownMenu class="dropdown-menu navbar-d-menu">
+							<li *ngFor="let cat of newCat.group?.childs">
+								<a (click)="selectCat(cat)">{{cat.name}}</a>
+							</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 

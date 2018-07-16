@@ -221,10 +221,6 @@ table thead th.sortable-field:hover{
 #modalAddToCategory input{
   width: 240px;
 }
-#modalAddToCategory .label-cat{
-  margin-top: 32px;
-}
-
 #modalAddToCategory .modal-content{
   background: #f2f2f2;
 }
@@ -233,4 +229,9 @@ table thead th.sortable-field:hover{
 }
 .inline-filter{
   display: flex;
+}
+.cat-main{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

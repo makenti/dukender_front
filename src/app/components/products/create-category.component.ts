@@ -82,7 +82,6 @@ import { ToastyService } from 'ng2-toasty';
     color: #237ee8;
     background: #f5f5f5;
   }
-  
   `],
   providers: [
     AuthService,
@@ -136,6 +135,8 @@ export class CreateCategoryComponent implements OnInit {
         this.group = g;
     }
     addNewCat(){
+        if(!this.group)
+            this.toastyService.warning("Выберите товарную группу");
         if(this.categories[this.categories.length - 1].name.replace(/ /g,'') !== "" )
             this.categories.push({name: ''});
     }
@@ -143,6 +144,8 @@ export class CreateCategoryComponent implements OnInit {
         this.categories.splice(index, 1);
     }
     createCategory(){
+        if(!this.group)
+           this.toastyService.warning("Выберите товарную группу");
         let cats = [];
         this.categories.map(c=>{
             if(c.name.replace(/ /g, '') !== "")
