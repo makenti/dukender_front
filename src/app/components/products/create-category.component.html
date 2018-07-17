@@ -19,11 +19,14 @@
                             </ul>
                         </div>
                     </div>
-                    <div *ngFor="let cat of categories; let i = index">
-                        <input type="text" class="mm-input mb-3 mr-3" placeholder="Введите название категорий" [(ngModel)]="cat.name" style="height:40px;border: none;"/>
-                        <i *ngIf="i === categories.length - 1" (click)="addNewCat()" class="fa fa-plus cursor-pointer"></i>
-                        <i *ngIf="i !== categories.length - 1" (click)="removeCat(i)" class="fa fa-minus cursor-pointer"></i>
-                    </div>
+                    <input type="text" class="mm-input mb-3 mr-3" placeholder="Введите название категорий" [(ngModel)]="temp.name" style="height:40px;border: none;"/>
+                    <button class="btn" (click)="addNewCat()">Добавить</button>
+                    <div class="cats-added">
+                        <label *ngFor="let cat of categories; let i = index" for="">
+                            {{cat.name}}
+                            <i (click)="removeCat(i)" class="fa fa-minus cursor-pointer"></i>
+                        </label>
+                    </div>  
                 </div>                
                 <div class="modal-wrapper">
                     <div class="modal-btns flex-container flex-center">

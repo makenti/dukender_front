@@ -204,7 +204,7 @@
 	<div class="modal-dialog modal-sm">
     <div class="modal-content">
   		<div class="modal-body">
-			<h3>Добавить в категорию</h3>
+			<h3>Добавить товар в категорию</h3>
 			<div class="cat-main">
 				<div class="form-group">
 					<label class="label-group">Выберите товарную группу</label>			
@@ -222,7 +222,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="label-cat">Выберите категорию или <a (click)="handleCreateCatModal()">создайте новую</a></label>							
+					<label class="label-cat">Выберите категорию</label>							
 					<div class="dropdown navbar-d" dropdown>
 						<button dropdownToggle class="dropdown-btn navbar-d-btn btn-space-right">
 							<span *ngIf="newCat.cat">{{newCat.cat.name}}</span>
@@ -235,6 +235,7 @@
 							</li>
 						</ul>
 					</div>
+					<label for="" class="label-cat">Если не нашли нужную, то <a (click)="handleCreateCatModal()">создайте новую</a></label>
 				</div>
 			</div>
 
@@ -242,7 +243,7 @@
 		    </div>
 				<div class="modal-btns flex-container flex-center">
 					<button class="mm-btn mm-btn-default" (click)="modalAddToCategory.hide()">Отмена</button>
-					<button class="mm-btn mm-btn-primary" (click)="addToCategory()">Добавить</button>
+					<button class="mm-btn mm-btn-primary" (click)="addToCategory()">Сохранить</button>
 				</div>
 			</div>
 		</div>

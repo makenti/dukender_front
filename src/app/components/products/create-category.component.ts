@@ -101,6 +101,9 @@ export class CreateCategoryComponent implements OnInit {
     @Input() show:boolean;
     @Input() companyCategories: any[] = [];
     @Output() handle = new EventEmitter<any>();
+    public temp = {
+        name: ''
+    }
     public categories = [];
     public group = null;
     constructor (
@@ -111,9 +114,7 @@ export class CreateCategoryComponent implements OnInit {
         public auth: AuthService,
         public toastyService: ToastyService,
         public errorService: ErrorService,
-    ) {
-        this.categories.push({name: ''});
-    }
+    ) {}
 
     ngOnInit() {
         console.log(this.categories)
@@ -135,10 +136,12 @@ export class CreateCategoryComponent implements OnInit {
         this.group = g;
     }
     addNewCat(){
-        if(!this.group)
+        if(!this.group){
             this.toastyService.warning("Выберите товарную группу");
-        if(this.categories[this.categories.length - 1].name.replace(/ /g,'') !== "" )
-            this.categories.push({name: ''});
+            return;
+        }
+        if(this.temp.name.replace(/ /g,'') !== "")
+            this.categories.push(Object.assign({}, this.temp));
     }
     removeCat(index){
         this.categories.splice(index, 1);
