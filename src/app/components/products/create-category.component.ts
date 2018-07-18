@@ -82,6 +82,30 @@ import { ToastyService } from 'ng2-toasty';
     color: #237ee8;
     background: #f5f5f5;
   }
+  .cats-added{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+    .cats-added .cat{
+        position: relative;
+        width: calc(50% - 10px);
+        min-height: 34px;
+        margin: 5px;  
+        padding: 0 35px;
+        border-radius: 34px;
+        background: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .cats-added .cat span{
+        overflow: hidden;
+    }
+    .cats-added .cat i{
+        position: absolute;
+        right: 10px;
+    } 
   `],
   providers: [
     AuthService,
@@ -125,10 +149,12 @@ export class CreateCategoryComponent implements OnInit {
         this.handle.emit(false);
     }
     ngOnChanges(changes: SimpleChanges) {
-        console.log(changes);
         if(changes.show)
-            if(changes.show.currentValue)
+            if(changes.show.currentValue){
                 this.modalCreateCategory.show();
+                this.categories = [];
+                this.group = null;
+            }
             else
                 this.modalCreateCategory.hide();
     }
@@ -140,26 +166,32 @@ export class CreateCategoryComponent implements OnInit {
             this.toastyService.warning("Выберите товарную группу");
             return;
         }
-        if(this.temp.name.replace(/ /g,'') !== "")
+        if(this.temp.name.replace(/ /g,'') !== ""){
             this.categories.push(Object.assign({}, this.temp));
+            this.temp.name = "";
+        }
     }
     removeCat(index){
         this.categories.splice(index, 1);
     }
     createCategory(){
-        if(!this.group)
-           this.toastyService.warning("Выберите товарную группу");
+        if(!this.group){
+            this.toastyService.warning("Выберите товарную группу");
+            return;
+        }
+        if(this.categories.length == 0){
+            this.toastyService.warning("Добавьте категорию");
+            return;
+        }
         let cats = [];
         this.categories.map(c=>{
             if(c.name.replace(/ /g, '') !== "")
                 cats.push(c.name)
         });
-        console.log(cats)
         let data = {
             category_id: this.group.id,
             subcategory_names: cats
         };
-        console.log(data)
         this.productService.createCategory(data)
             .subscribe(
                 res => {

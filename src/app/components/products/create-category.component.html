@@ -4,10 +4,10 @@
             <div class="modal-body text-center">
                 <h3 class="text-center">Добавить новую категорию</h3>
                 <div class="w-100 d-flex justify-content-center flex-direction-column">
-                    <div class="">
-                        <label class="label-group">Выберите товарную группу</label>			
-                        <div class="dropdown navbar-d mb-3" dropdown>
-                            <button dropdownToggle class="dropdown-btn navbar-d-btn btn-space-right" style="width: 220px">
+                    <div class="d-flex">
+                        <label class="text-left" style="max-width: 86px">Товарная группа</label>			
+                        <div class="dropdown navbar-d mb-3 mr-3" dropdown>
+                            <button dropdownToggle class="dropdown-btn navbar-d-btn" style="width: 182px;">
                                 <span *ngIf="group !== null">{{group.name}}</span>					
                                 <span *ngIf="group == null">Товарная группа</span>					
                                 <i class="fa fa-caret-down" aria-hidden="true"></i>
@@ -19,19 +19,22 @@
                             </ul>
                         </div>
                     </div>
-                    <input type="text" class="mm-input mb-3 mr-3" placeholder="Введите название категорий" [(ngModel)]="temp.name" style="height:40px;border: none;"/>
-                    <button class="btn" (click)="addNewCat()">Добавить</button>
+                    <div class="d-flex space-between">
+                        <label class="text-left" style="">Название категорий</label>
+                        <input type="text" class="mm-input mb-3 mr-3" placeholder="" [(ngModel)]="temp.name" style="border: none;"/>
+                        <button class="mm-btn mm-btn-default" (click)="addNewCat()">Добавить</button>
+                    </div>
                     <div class="cats-added">
-                        <label *ngFor="let cat of categories; let i = index" for="">
-                            {{cat.name}}
+                        <div class="cat" *ngFor="let cat of categories; let i = index" for="">
+                            <span>{{cat.name}}</span>
                             <i (click)="removeCat(i)" class="fa fa-minus cursor-pointer"></i>
-                        </label>
+                        </div>
                     </div>  
                 </div>                
                 <div class="modal-wrapper">
                     <div class="modal-btns flex-container flex-center">
                         <button class="mm-btn mm-btn-default" (click)="close()">Отмена</button>
-                        <button class="mm-btn mm-btn-primary" (click)="createCategory()">Добавить</button>
+                        <button class="mm-btn mm-btn-primary" (click)="createCategory()">Сохранить</button>
                     </div>
                 </div>
             </div>

@@ -899,6 +899,8 @@ input:checked + .slider:before {
 .float-left{float: left}
 
 .text-center{text-align: center}
+.text-left{text-align: left}
+.text-right{text-align: right}
 .uppercase{text-transform: uppercase}
 .font-weight-light{font-weight:300}
 .font-weight-normal{font-weight:400}
