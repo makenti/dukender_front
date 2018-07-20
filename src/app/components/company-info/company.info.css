@@ -77,7 +77,7 @@
 	text-align: center;
 }
 .reg-cat-wrapper .mm-checkbox-group{
-	width: 270px;
+	/* width: 270px; */
 	text-align: left;
 	margin-bottom: 5px;
 }
@@ -163,4 +163,16 @@
 }
 .min_amount .mm-btn{
   cursor: default;
+}
+ul.categories{
+	list-style-type: none;
+}
+ul.categories li{
+	list-style-type: none;
+}
+.li-group a.create{
+	visibility: hidden;
+}
+.li-group:hover a.create{
+	visibility: visible;
 }

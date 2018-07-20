@@ -8,7 +8,6 @@
 </div>
 
 <div class="main-container home-container">
-
 	<div>
 		<h3 class="text-center" *ngIf="!register">Выберите тип товара</h3>
 		<p class="text-center" *ngIf="!register">Поставьте галочку возле пунктов, которые соответствуют вашему бизнесу </p>
@@ -16,35 +15,90 @@
 		<h3 class="text-center" *ngIf="register">Определите продаваемые товары</h3>
 		<p class="text-center" *ngIf="register">В целях формирования максимально точной клиентской базы, пожалуйста, выберите типы товара</p>
 
-		<div class="flex-container flex-center reg-cat-wrapper"
-			[class.loading]="loading" *ngIf="categories.length > 0">
-			<div class="mm-checkbox-group">
-				<label class="mm-control mm-control--checkbox">
-					<strong>Выбрать все</strong>
-		      <input type="checkbox"
-	      		name="categories" 
-			      (change)="onSelectCategory(0, $event)"
-			      />
-		      <div class="mm-control__indicator"></div>
-		    </label>
-	    </div>
-			<div class="mm-checkbox-group" 
-				*ngFor="let cat of categories">
-				<label class="mm-control mm-control--checkbox">{{cat.name}}
-		      <input type="checkbox"
-		      		name="categories" 
-				      (change)="onSelectCategory(cat, $event)"
-				      [(ngModel)]="cat.disabled?'true':cat.selected"
-				      [disabled]="cat.disabled"/>
-		      <div class="mm-control__indicator"></div>
-		    </label>
-	    </div>
+		<div class="d-flex" *ngIf="categories.length > 0">
+			<div class="d-flex flex-wrap">
+				<div class="mm-checkbox-group w-33">
+					<label class="mm-control mm-control--checkbox">
+						<strong>Выбрать все</strong>
+						<input type="checkbox" name="categories" (change)="onSelectCategory(0, $event)"/>
+						<div class="mm-control__indicator"></div>
+					</label>
+				</div>
+				<div class="w-33" *ngFor="let cat of categories">
+					<div class="d-flex li-group">
+						<div class="mm-checkbox-group">
+							<label class="mm-control mm-control--checkbox">
+								{{cat.name}}
+								<input type="checkbox"
+									name="categories" 
+									(change)="onSelectCategory(cat, $event)"
+									[(ngModel)]="cat.disabled?'true':cat.selected"
+									[disabled]="cat.disabled"/>
+								<div class="mm-control__indicator"></div>
+							</label>
+						</div>
+						<i *ngIf="cat.childs.length!=0" class="fa fa-caret-right ml-2" aria-hidden="true" (click)="cat.collapsed=!cat.collapsed"></i>     
+						<a *ngIf="cat.childs.length == 0" class="create" (click)="cat.create=true;cat.collapsed=true;newCat.name=''">
+							<small>Добавить категорию</small>
+						</a>
+					</div>
+					<ul *ngIf="cat.collapsed" class="categories">
+						<li *ngFor="let c of cat.childs">
+							<div *ngIf="!c.edit" class="d-flex space-between">
+								<span>{{c.name}}</span>
+								<div>
+									<i class="fa fa-pencil ml-3" aria-hidden="true" (click)="c.edit = true"></i>     
+									<i class="fa fa-trash ml-3" aria-hidden="true" (click)="deleteCategory(cat, c)"></i>
+								</div>
+							</div>
+							<div *ngIf="c.edit" class="d-flex space-between">
+								<input type="text" [(ngModel)]="c.name"/>
+								<div>
+									<button class="btn" (click)="editCategory(c); c.edit=false">Сохранить</button>
+									<button class="btn" (click)="c.edit = false">Отмена</button>
+								</div>
+							</div>
+						</li>
+						<li>
+							<a *ngIf="!cat.create" (click)="cat.create = true;newCat.name=''">
+								<i class="fa fa-plus" aria-hidden="true"></i>     
+								Добавить категорию
+							</a>
+							<div *ngIf="!!cat.create" class="w-100 d-flex space-between">
+								<input type="text" [(ngModel)]="newCat.name"/>
+								<div>
+									<button class="btn" (click)="addCategory(cat)">Добавить</button>
+									<button class="btn" (click)="cat.create = false; cat.childs.length == 0 ? cat.collapsed = false:cat.collapsed = true">Отмена</button>
+								</div>
+							</div>
+						</li>
+					</ul> 
+				</div>
+			</div>
 		</div>
 
 		<!-- <p class="text-center">Ваша информация будет размещена в <b>100</b> точек категории A, <b>1000</b> точек категории B, <b>2100</b> точек категории C</p> -->
 
 		<div class="flex-container flex-center">
-			<button class="mm-btn mm-btn-primary" (click)="onSave()">Сохранить</button>
+			<button class="mm-btn mm-btn-primary justify-content-center" (click)="onSave()">Сохранить</button>
 		</div>
 	</div>
 </div>
+
+<div bsModal #modalDeleteSubcategory="bs-modal" class="modal fade modal-small" id="modalDeleteSubcategory">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content" style="background: #f2f2f2;">
+			<div class="modal-body text-center">
+				<h3 class="text-center">Вы уверены, что хотите удалить категорию</h3>
+				<p></p>
+				<div class="modal-wrapper">
+					<div class="modal-btns flex-container flex-center">
+						<button class="mm-btn mm-btn-default justify-content-center" (click)="modalDeleteSubcategory.hide()">Отмена</button>
+						<button class="mm-btn mm-btn-primary justify-content-center" (click)="confirmDeleteCategory()">Удалить</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+	

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   AuthService,
@@ -6,6 +6,7 @@ import {
   ErrorService,
   CompanyProfileService } from '../../services/index';
 import { ToastyService } from 'ng2-toasty';
+import { ModalDirective } from 'ngx-bootstrap';
 
 @Component({
   moduleId: module.id,
@@ -14,6 +15,10 @@ import { ToastyService } from 'ng2-toasty';
   styleUrls: ['company.info.css']
 })
 export class CompanyCategoryComponent implements OnInit {
+  
+  @ViewChild('modalDeleteSubcategory')
+  modalDeleteSubcategory: ModalDirective;
+
 	public errorMessage: string;
 	public categories: any[] = [];
   public companyCategories: any[] = [];
@@ -21,7 +26,13 @@ export class CompanyCategoryComponent implements OnInit {
   public staticCategories: any[] = [];
   public loading: boolean = false;
   public register: boolean = true;
-
+  public newCat = {
+    name: '',
+  }
+  public currentCat = {
+    group: null,
+    cat: null
+  };
  	constructor (
     public categoryService: CategoryService,
     public companyService: CompanyProfileService,
@@ -55,7 +66,9 @@ export class CompanyCategoryComponent implements OnInit {
           data => {
             this.companyCategories = data;
             for(let i = 0; i < this.categories.length; i++){
-                this.categories[i].selected = false;
+              this.categories[i].selected = false;
+              this.categories[i].collapsed = false;
+              
             }    
             if(this.companyCategories !== null)
               this.companyCategories.map((x:any) => {
@@ -189,5 +202,71 @@ export class CompanyCategoryComponent implements OnInit {
     let userCompany = this.auth.getUserCompany();
     userCompany.fill_status = 2;
     window.localStorage.setItem('user_company', JSON.stringify(userCompany));
+  }
+
+  // for subcategories:
+  addCategory(group){
+    let data = {
+      category_id: group.id,
+      subcategory_names: [this.newCat.name] 
+    }
+    this.categoryService.createCategory(data).
+      subscribe(
+        res=>{
+          if(res.code == 0){
+            let cat = this.categories.find(g=>g == group);
+            cat.childs.push(res.subcategories[0]);
+            this.newCat.name = "";
+            this.toastyService.success("Категория добавлено");
+            
+          }else{
+
+          }
+        },
+        error => this.toastyService.warning(this.errorService.getCodeMessage(error.code))
+      )
+  }
+  deleteCategory(group, cat){
+    this.currentCat.group = group;
+    this.currentCat.cat = cat;
+    this.modalDeleteSubcategory.show();
+  }
+  confirmDeleteCategory(){
+    let group = this.currentCat.group;
+    let cat = this.currentCat.cat;
+    this.categoryService.deleteSubcategory({ id: cat.id })
+      .subscribe(
+        res => {
+          if(res.code == 0){
+            this.categories.find(g=>g == group).childs = this.categories.find(g=>g == group).childs.filter(function(c){ return c != cat})
+            this.modalDeleteSubcategory.hide();
+            this.toastyService.success("Категория удалена");
+          }else{
+            if(res.message)
+              this.toastyService.warning(res.message);
+            else
+              this.toastyService.warning("Ошибка сервера");
+          }
+
+        },
+        error => this.toastyService.warning(this.errorService.getCodeMessage(error.code))
+      );
+  }
+  editCategory(cat){
+    this.categoryService.editSubcategory({ id: cat.id, name: cat.name })
+      .subscribe(
+        res => {
+          if(res.code == 0){
+            this.toastyService.success("Категория обновлена");
+          }else{
+            if(res.message)
+              this.toastyService.warning(res.message);
+            else
+              this.toastyService.warning("Ошибка сервера");
+          }
+
+        },
+        error => this.toastyService.warning(this.errorService.getCodeMessage(error.code))
+      );
   }
 }

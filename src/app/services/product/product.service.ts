@@ -196,6 +196,7 @@ export class ProductService {
                     })
                     .catch(handleError);
   }
+  // then removethis:
   createCategory(data: any): Observable<any> {
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
