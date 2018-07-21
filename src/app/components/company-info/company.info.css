@@ -166,13 +166,33 @@
 }
 ul.categories{
 	list-style-type: none;
+	padding-right: 16px;
+}
+ul.categories *{
+	font-size: 12px;
+}
+ul.categories i{
+	font-size: 16px;
 }
 ul.categories li{
 	list-style-type: none;
+	padding: 4px 8px;
+}
+ul.categories li:hover{
+	background: rgba(255,255,255,1);
 }
 .li-group a.create{
 	visibility: hidden;
+	font-size: 12px;
 }
 .li-group:hover a.create{
 	visibility: visible;
+}
+ul.categories .mm-btn-mini {
+	width: 80px;
+	min-width: 80px;
+	justify-content: center;
+}
+.mm-input-mini{
+	height: 22px;
 }

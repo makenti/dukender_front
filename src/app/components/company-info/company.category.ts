@@ -33,6 +33,11 @@ export class CompanyCategoryComponent implements OnInit {
     group: null,
     cat: null
   };
+  public columns = {
+    first: 0,
+    second: 0,
+    thired: 0
+  }
  	constructor (
     public categoryService: CategoryService,
     public companyService: CompanyProfileService,
@@ -121,6 +126,7 @@ export class CompanyCategoryComponent implements OnInit {
         .subscribe(
           categories => {
             this.categories = categories;
+            this.calculateColumns(this.categories.length);
             this.getCompanyCategories();
           },
           error =>  {
@@ -129,7 +135,10 @@ export class CompanyCategoryComponent implements OnInit {
           }
         );
   }
-
+  calculateColumns(n){
+    this.columns.first = Math.round(n/3);
+    this.columns.second = this.columns.first*2;
+  }
   existCategory(cat: any): boolean {
     let exist = this.companyCategories.filter((x:any) => x.category.id === cat.id)[0];
     if(exist !== undefined) {
@@ -231,6 +240,13 @@ export class CompanyCategoryComponent implements OnInit {
     this.currentCat.cat = cat;
     this.modalDeleteSubcategory.show();
   }
+  closeOtherCrateCats(group){
+    this.categories.map(g=>{
+      if(g.id != group.id){
+        g.create = false;
+      }
+    })
+  }
   confirmDeleteCategory(){
     let group = this.currentCat.group;
     let cat = this.currentCat.cat;
@@ -241,6 +257,9 @@ export class CompanyCategoryComponent implements OnInit {
             this.categories.find(g=>g == group).childs = this.categories.find(g=>g == group).childs.filter(function(c){ return c != cat})
             this.modalDeleteSubcategory.hide();
             this.toastyService.success("Категория удалена");
+            if(this.categories.find(g=>g == group).childs.length == 0){
+              this.categories.find(g=>g == group).collapsed = false;
+            }
           }else{
             if(res.message)
               this.toastyService.warning(res.message);
