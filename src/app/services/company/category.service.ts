@@ -22,7 +22,7 @@ export class CategoryService {
     let headers = new Headers({ 'Auth-Token': this.auth.getToken() });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.get(serverURL + '/products/get_categories/', options)
+    return this.http.get(serverURL + '/products/get_categories_v2/', options)
                     .map((res: Response) => {
                       let resp = res.json();
                       if (resp.code === 0) {

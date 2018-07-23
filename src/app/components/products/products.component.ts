@@ -12,6 +12,8 @@ import {
 import { ToastyService } from 'ng2-toasty';
 import { priceLimit } from '../../common/config/limits';
 import { ProductModal } from './product-modal.component';
+import {TooltipModule, TooltipContent} from "ngx-tooltip";
+
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',

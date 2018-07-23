@@ -8,204 +8,192 @@
 </div>
 
 <div class="main-container home-container">
-	<div>
-		<h3 class="text-center" *ngIf="!register">Выберите тип товара</h3>
-		<p class="text-center" *ngIf="!register">Поставьте галочку возле пунктов, которые соответствуют вашему бизнесу </p>
-		
-		<h3 class="text-center" *ngIf="register">Определите продаваемые товары</h3>
-		<p class="text-center" *ngIf="register">В целях формирования максимально точной клиентской базы, пожалуйста, выберите типы товара</p>
-
-		<div class="d-flex" *ngIf="categories.length > 0">
-			<div class="w-33">
-				<div class="mm-checkbox-group">
-					<label class="mm-control mm-control--checkbox">
-						<strong>Выбрать все</strong>
-						<input type="checkbox" name="categories" (change)="onSelectCategory(0, $event)"/>
-						<div class="mm-control__indicator"></div>
-					</label>
-				</div>
-				<div class="" *ngFor="let cat of categories.slice(0,columns.first)">
-					<div class="d-flex li-group">
-						<div class="mm-checkbox-group">
-							<label class="mm-control mm-control--checkbox">
-								{{cat.name}}
-								<input type="checkbox"
-									name="categories" 
-									(change)="onSelectCategory(cat, $event)"
-									[(ngModel)]="cat.disabled?'true':cat.selected"
-									[disabled]="cat.disabled"/>
-								<div class="mm-control__indicator"></div>
-							</label>
-						</div>
-						<i *ngIf="cat.childs.length!=0" class="fa ml-2" [class.fa-caret-down]="cat.collapsed" [class.fa-caret-right]="!cat.collapsed" aria-hidden="true" (click)="cat.collapsed=!cat.collapsed"></i>     
-						<a *ngIf="cat.childs.length == 0" class="create ml-3 cursor-pointer" (click)="cat.create=true;cat.collapsed=true;newCat.name=''">
-							Добавить категорию
-						</a>
-					</div>
-					<ul *ngIf="cat.collapsed" class="categories">
-						<li *ngFor="let c of cat.childs">
-							<div *ngIf="!c.edit" class="d-flex space-between">
-								<span style="line-height: 22px;">{{c.name}}</span>
-								<div>
-									<i class="fa fa-pencil ml-3" aria-hidden="true" (click)="c.edit = true"></i>     
-									<i class="fa fa-trash ml-3" aria-hidden="true" (click)="deleteCategory(cat, c)"></i>
-								</div>
-							</div>
-							<div *ngIf="c.edit" class="w-100 d-flex">
-								<input class="mm-input w-100 mm-input-mini" type="text" [(ngModel)]="c.name"/>
-								<div class="d-flex">
-									<!-- <button class="mm-btn mm-btn-primary mm-btn-mini" (click)="editCategory(c); c.edit=false">Сохранить</button>
-									<button class="mm-btn mm-btn-default mm-btn-mini" (click)="c.edit = false">Отмена</button> -->
-									<i class="fa fa-check-circle ml-3" aria-hidden="true" (click)="editCategory(c); c.edit=false"></i>     
-									<i class="fa fa-times-circle ml-3" aria-hidden="true" (click)="c.edit=false"></i>     
-								</div>
-							</div>
-						</li>
-						<li>
-							<a style="line-height: 22px;display: block;" class="w-100 cursor-pointer" *ngIf="!cat.create" (click)="closeOtherCrateCats(cat);cat.create = true;newCat.name=''">
-								<!-- <i class="fa fa-plus" aria-hidden="true"></i>      -->
-								Добавить категорию
-							</a>
-							<div *ngIf="!!cat.create" class="w-100 d-flex">
-								<input class="mm-input w-100 mm-input-mini" type="text" [(ngModel)]="newCat.name"/>
-								<div class="d-flex">
-									<button class="mm-btn mm-btn-primary mm-btn-mini" (click)="addCategory(cat)">Добавить</button>
-									<button class="mm-btn mm-btn-default mm-btn-mini" (click)="cat.create = false; cat.childs.length == 0 ? cat.collapsed = false:cat.collapsed = true">Отмена</button>
-								</div>
-							</div>
-						</li>
-					</ul> 
-				</div>
-			</div>
-			<div class="w-33">
-				<div class="mm-checkbox-group">
-					<label class="mm-control mm-control--checkbox">
-						<strong>Выбрать все</strong>
-						<input type="checkbox" name="categories" (change)="onSelectCategory(0, $event)"/>
-						<div class="mm-control__indicator"></div>
-					</label>
-				</div>
-				<div class="" *ngFor="let cat of categories.slice(columns.first,columns.second)">
-					<div class="d-flex li-group">
-						<div class="mm-checkbox-group">
-							<label class="mm-control mm-control--checkbox">
-								{{cat.name}}
-								<input type="checkbox"
-									name="categories" 
-									(change)="onSelectCategory(cat, $event)"
-									[(ngModel)]="cat.disabled?'true':cat.selected"
-									[disabled]="cat.disabled"/>
-								<div class="mm-control__indicator"></div>
-							</label>
-						</div>
-						<i *ngIf="cat.childs.length!=0" class="fa ml-2" [class.fa-caret-down]="cat.collapsed" [class.fa-caret-right]="!cat.collapsed" aria-hidden="true" (click)="cat.collapsed=!cat.collapsed"></i>     
-						<a *ngIf="cat.childs.length == 0" class="create ml-3 cursor-pointer" (click)="cat.create=true;cat.collapsed=true;newCat.name=''">
-							Добавить категорию
-						</a>
-					</div>
-					<ul *ngIf="cat.collapsed" class="categories">
-						<li *ngFor="let c of cat.childs">
-							<div *ngIf="!c.edit" class="d-flex space-between">
-								<span style="line-height: 22px;">{{c.name}}</span>
-								<div>
-									<i class="fa fa-pencil ml-3" aria-hidden="true" (click)="c.edit = true"></i>     
-									<i class="fa fa-trash ml-3" aria-hidden="true" (click)="deleteCategory(cat, c)"></i>
-								</div>
-							</div>
-							<div *ngIf="c.edit" class="w-100 d-flex">
-								<input class="mm-input w-100 mm-input-mini" type="text" [(ngModel)]="c.name"/>
-								<div class="d-flex">
-									<!-- <button class="mm-btn mm-btn-primary mm-btn-mini" (click)="editCategory(c); c.edit=false">Сохранить</button>
-									<button class="mm-btn mm-btn-default mm-btn-mini" (click)="c.edit = false">Отмена</button> -->
-									<i class="fa fa-check-circle ml-3" aria-hidden="true" (click)="editCategory(c); c.edit=false"></i>     
-									<i class="fa fa-times-circle ml-3" aria-hidden="true" (click)="c.edit=false"></i>     
-								</div>
-							</div>
-						</li>
-						<li>
-							<a style="line-height: 22px;display: block;" class="w-100 cursor-pointer" *ngIf="!cat.create" (click)="closeOtherCrateCats(cat);cat.create = true;newCat.name=''">
-								<!-- <i class="fa fa-plus" aria-hidden="true"></i>      -->
-								Добавить категорию
-							</a>
-							<div *ngIf="!!cat.create" class="w-100 d-flex">
-								<input class="mm-input w-100 mm-input-mini" type="text" [(ngModel)]="newCat.name"/>
-								<div class="d-flex">
-									<button class="mm-btn mm-btn-primary mm-btn-mini" (click)="addCategory(cat)">Добавить</button>
-									<button class="mm-btn mm-btn-default mm-btn-mini" (click)="cat.create = false; cat.childs.length == 0 ? cat.collapsed = false:cat.collapsed = true">Отмена</button>
-								</div>
-							</div>
-						</li>
-					</ul> 
-				</div>
-			</div>
-			<div class="w-33">
-				<div class="mm-checkbox-group">
-					<label class="mm-control mm-control--checkbox">
-						<strong>Выбрать все</strong>
-						<input type="checkbox" name="categories" (change)="onSelectCategory(0, $event)"/>
-						<div class="mm-control__indicator"></div>
-					</label>
-				</div>
-				<div class="" *ngFor="let cat of categories.slice(columns.second, categories.length)">
-					<div class="d-flex li-group">
-						<div class="mm-checkbox-group">
-							<label class="mm-control mm-control--checkbox">
-								{{cat.name}}
-								<input type="checkbox"
-									name="categories" 
-									(change)="onSelectCategory(cat, $event)"
-									[(ngModel)]="cat.disabled?'true':cat.selected"
-									[disabled]="cat.disabled"/>
-								<div class="mm-control__indicator"></div>
-							</label>
-						</div>
-						<i *ngIf="cat.childs.length!=0" class="fa ml-2" [class.fa-caret-down]="cat.collapsed" [class.fa-caret-right]="!cat.collapsed" aria-hidden="true" (click)="cat.collapsed=!cat.collapsed"></i>     
-						<a *ngIf="cat.childs.length == 0" class="create ml-3 cursor-pointer" (click)="cat.create=true;cat.collapsed=true;newCat.name=''">
-							Добавить категорию
-						</a>
-					</div>
-					<ul *ngIf="cat.collapsed" class="categories">
-						<li *ngFor="let c of cat.childs">
-							<div *ngIf="!c.edit" class="d-flex space-between">
-								<span style="line-height: 22px;">{{c.name}}</span>
-								<div>
-									<i class="fa fa-pencil ml-3" aria-hidden="true" (click)="c.edit = true"></i>     
-									<i class="fa fa-trash ml-3" aria-hidden="true" (click)="deleteCategory(cat, c)"></i>
-								</div>
-							</div>
-							<div *ngIf="c.edit" class="w-100 d-flex">
-								<input class="mm-input w-100 mm-input-mini" type="text" [(ngModel)]="c.name"/>
-								<div class="d-flex">
-									<!-- <button class="mm-btn mm-btn-primary mm-btn-mini" (click)="editCategory(c); c.edit=false">Сохранить</button>
-									<button class="mm-btn mm-btn-default mm-btn-mini" (click)="c.edit = false">Отмена</button> -->
-									<i class="fa fa-check-circle ml-3" aria-hidden="true" (click)="editCategory(c); c.edit=false"></i>     
-									<i class="fa fa-times-circle ml-3" aria-hidden="true" (click)="c.edit=false"></i>     
-								</div>
-							</div>
-						</li>
-						<li>
-							<a style="line-height: 22px;display: block;" class="w-100 cursor-pointer" *ngIf="!cat.create" (click)="closeOtherCrateCats(cat);cat.create = true;newCat.name=''">
-								<!-- <i class="fa fa-plus" aria-hidden="true"></i>      -->
-								Добавить категорию
-							</a>
-							<div *ngIf="!!cat.create" class="w-100 d-flex">
-								<input class="mm-input w-100 mm-input-mini" type="text" [(ngModel)]="newCat.name"/>
-								<div class="d-flex">
-									<button class="mm-btn mm-btn-primary mm-btn-mini" (click)="addCategory(cat)">Добавить</button>
-									<button class="mm-btn mm-btn-default mm-btn-mini" (click)="cat.create = false; cat.childs.length == 0 ? cat.collapsed = false:cat.collapsed = true">Отмена</button>
-								</div>
-							</div>
-						</li>
-					</ul> 
-				</div>
-			</div>
+	<div [class.mm-loader]="loading" class="position-relative">
+		<div *ngIf="!loading">
+			<h3 class="text-center" *ngIf="!register">Выберите тип товара</h3>
+			<p class="text-center" *ngIf="!register">Поставьте галочку возле пунктов, которые соответствуют вашему бизнесу </p>
 			
-		</div>
+			<h3 class="text-center" *ngIf="register">Определите продаваемые товары</h3>
+			<p class="text-center" *ngIf="register">В целях формирования максимально точной клиентской базы, пожалуйста, выберите типы товара</p>
 
-		<!-- <p class="text-center">Ваша информация будет размещена в <b>100</b> точек категории A, <b>1000</b> точек категории B, <b>2100</b> точек категории C</p> -->
+			<div class="d-flex" *ngIf="categories.length > 0">
+				<div class="w-33">
+					<div class="mm-checkbox-group">
+						<label class="mm-control mm-control--checkbox">
+							<strong>Выбрать все</strong>
+							<input type="checkbox" name="categories" (change)="onSelectCategory(0, $event)"/>
+							<div class="mm-control__indicator"></div>
+						</label>
+					</div>
+					<div class="" *ngFor="let cat of categories.slice(0,columns.first)">
+						<div class="d-flex li-group">
+							<div class="mm-checkbox-group">
+								<label class="mm-control mm-control--checkbox">
+									{{cat.name}}
+									<input type="checkbox"
+										name="categories" 
+										(change)="onSelectCategory(cat, $event)"
+										[(ngModel)]="cat.disabled?'true':cat.selected"
+										[disabled]="cat.disabled"/>
+									<div class="mm-control__indicator"></div>
+								</label>
+							</div>
+							<i *ngIf="cat.childs.length!=0" class="fa ml-2" [class.fa-caret-down]="cat.collapsed" [class.fa-caret-right]="!cat.collapsed" aria-hidden="true" (click)="cat.collapsed=!cat.collapsed"></i>     
+							<a *ngIf="cat.childs.length == 0" class="create ml-3 cursor-pointer" (click)="cat.create=true;cat.collapsed=true;newCat.name=''">
+								Добавить категорию
+							</a>
+						</div>
+						<ul *ngIf="cat.collapsed" class="categories">
+							<li *ngFor="let c of cat.childs">
+								<div *ngIf="!c.edit" class="d-flex space-between">
+									<span style="line-height: 22px;">{{c.name}}</span>
+									<div>
+										<i class="fa fa-pencil ml-3" aria-hidden="true" (click)="c.edit = true"></i>     
+										<i class="fa fa-trash ml-3" aria-hidden="true" (click)="deleteCategory(cat, c)"></i>
+									</div>
+								</div>
+								<div *ngIf="c.edit" class="w-100 d-flex">
+									<input class="mm-input w-100 mm-input-mini" type="text" [(ngModel)]="c.name"/>
+									<div class="d-flex">
+										<!-- <button class="mm-btn mm-btn-primary mm-btn-mini" (click)="editCategory(c); c.edit=false">Сохранить</button>
+										<button class="mm-btn mm-btn-default mm-btn-mini" (click)="c.edit = false">Отмена</button> -->
+										<i class="fa fa-check-circle ml-3" aria-hidden="true" (click)="editCategory(c); c.edit=false"></i>     
+										<i class="fa fa-times-circle ml-3" aria-hidden="true" (click)="c.edit=false"></i>     
+									</div>
+								</div>
+							</li>
+							<li>
+								<a style="line-height: 22px;display: block;" class="w-100 cursor-pointer" *ngIf="!cat.create" (click)="closeOtherCrateCats(cat);cat.create = true;newCat.name=''">
+									<!-- <i class="fa fa-plus" aria-hidden="true"></i>      -->
+									Добавить категорию
+								</a>
+								<div *ngIf="!!cat.create" class="w-100 d-flex">
+									<input class="mm-input w-100 mm-input-mini" type="text" [(ngModel)]="newCat.name"/>
+									<div class="d-flex">
+										<button class="ml-1 mm-btn mm-btn-primary mm-btn-mini" (click)="addCategory(cat)">Добавить</button>
+										<button class="ml-1 mm-btn mm-btn-default mm-btn-mini" (click)="cat.create = false; cat.childs.length == 0 ? cat.collapsed = false:cat.collapsed = true">Отмена</button>
+									</div>
+								</div>
+							</li>
+						</ul> 
+					</div>
+				</div>
+				<div class="w-33">
+					<div class="" *ngFor="let cat of categories.slice(columns.first,columns.second)">
+						<div class="d-flex li-group">
+							<div class="mm-checkbox-group">
+								<label class="mm-control mm-control--checkbox">
+									{{cat.name}}
+									<input type="checkbox"
+										name="categories" 
+										(change)="onSelectCategory(cat, $event)"
+										[(ngModel)]="cat.disabled?'true':cat.selected"
+										[disabled]="cat.disabled"/>
+									<div class="mm-control__indicator"></div>
+								</label>
+							</div>
+							<i *ngIf="cat.childs.length!=0" class="fa ml-2" [class.fa-caret-down]="cat.collapsed" [class.fa-caret-right]="!cat.collapsed" aria-hidden="true" (click)="cat.collapsed=!cat.collapsed"></i>     
+							<a *ngIf="cat.childs.length == 0" class="create ml-3 cursor-pointer" (click)="cat.create=true;cat.collapsed=true;newCat.name=''">
+								Добавить категорию
+							</a>
+						</div>
+						<ul *ngIf="cat.collapsed" class="categories">
+							<li *ngFor="let c of cat.childs">
+								<div *ngIf="!c.edit" class="d-flex space-between">
+									<span style="line-height: 22px;">{{c.name}}</span>
+									<div>
+										<i class="fa fa-pencil ml-3" aria-hidden="true" (click)="c.edit = true"></i>     
+										<i class="fa fa-trash ml-3" aria-hidden="true" (click)="deleteCategory(cat, c)"></i>
+									</div>
+								</div>
+								<div *ngIf="c.edit" class="w-100 d-flex">
+									<input class="mm-input w-100 mm-input-mini" type="text" [(ngModel)]="c.name"/>
+									<div class="d-flex">
+										<!-- <button class="mm-btn mm-btn-primary mm-btn-mini" (click)="editCategory(c); c.edit=false">Сохранить</button>
+										<button class="mm-btn mm-btn-default mm-btn-mini" (click)="c.edit = false">Отмена</button> -->
+										<i class="fa fa-check-circle ml-3" aria-hidden="true" (click)="editCategory(c); c.edit=false"></i>     
+										<i class="fa fa-times-circle ml-3" aria-hidden="true" (click)="c.edit=false"></i>     
+									</div>
+								</div>
+							</li>
+							<li>
+								<a style="line-height: 22px;display: block;" class="w-100 cursor-pointer" *ngIf="!cat.create" (click)="closeOtherCrateCats(cat);cat.create = true;newCat.name=''">
+									<!-- <i class="fa fa-plus" aria-hidden="true"></i>      -->
+									Добавить категорию
+								</a>
+								<div *ngIf="!!cat.create" class="w-100 d-flex">
+									<input class="mm-input w-100 mm-input-mini" type="text" [(ngModel)]="newCat.name"/>
+									<div class="d-flex">
+										<button class="ml-1 mm-btn mm-btn-primary mm-btn-mini" (click)="addCategory(cat)">Добавить</button>
+										<button class="ml-1 mm-btn mm-btn-default mm-btn-mini" (click)="cat.create = false; cat.childs.length == 0 ? cat.collapsed = false:cat.collapsed = true">Отмена</button>
+									</div>
+								</div>
+							</li>
+						</ul> 
+					</div>
+				</div>
+				<div class="w-33">
+					<div class="" *ngFor="let cat of categories.slice(columns.second, categories.length)">
+						<div class="d-flex li-group">
+							<div class="mm-checkbox-group">
+								<label class="mm-control mm-control--checkbox">
+									{{cat.name}}
+									<input type="checkbox"
+										name="categories" 
+										(change)="onSelectCategory(cat, $event)"
+										[(ngModel)]="cat.disabled?'true':cat.selected"
+										[disabled]="cat.disabled"/>
+									<div class="mm-control__indicator"></div>
+								</label>
+							</div>
+							<i *ngIf="cat.childs.length!=0" class="fa ml-2" [class.fa-caret-down]="cat.collapsed" [class.fa-caret-right]="!cat.collapsed" aria-hidden="true" (click)="cat.collapsed=!cat.collapsed"></i>     
+							<a *ngIf="cat.childs.length == 0" class="create ml-3 cursor-pointer" (click)="cat.create=true;cat.collapsed=true;newCat.name=''">
+								Добавить категорию
+							</a>
+						</div>
+						<ul *ngIf="cat.collapsed" class="categories">
+							<li *ngFor="let c of cat.childs">
+								<div *ngIf="!c.edit" class="d-flex space-between">
+									<span style="line-height: 22px;">{{c.name}}</span>
+									<div>
+										<i class="fa fa-pencil ml-3" aria-hidden="true" (click)="c.edit = true"></i>     
+										<i class="fa fa-trash ml-3" aria-hidden="true" (click)="deleteCategory(cat, c)"></i>
+									</div>
+								</div>
+								<div *ngIf="c.edit" class="w-100 d-flex">
+									<input class="mm-input w-100 mm-input-mini" type="text" [(ngModel)]="c.name"/>
+									<div class="d-flex">
+										<!-- <button class="mm-btn mm-btn-primary mm-btn-mini" (click)="editCategory(c); c.edit=false">Сохранить</button>
+										<button class="mm-btn mm-btn-default mm-btn-mini" (click)="c.edit = false">Отмена</button> -->
+										<i class="fa fa-check-circle ml-3" aria-hidden="true" (click)="editCategory(c); c.edit=false"></i>     
+										<i class="fa fa-times-circle ml-3" aria-hidden="true" (click)="c.edit=false"></i>     
+									</div>
+								</div>
+							</li>
+							<li>
+								<a style="line-height: 22px;display: block;" class="w-100 cursor-pointer" *ngIf="!cat.create" (click)="closeOtherCrateCats(cat);cat.create = true;newCat.name=''">
+									<!-- <i class="fa fa-plus" aria-hidden="true"></i>      -->
+									Добавить категорию
+								</a>
+								<div *ngIf="!!cat.create" class="w-100 d-flex">
+									<input class="mm-input w-100 mm-input-mini" type="text" [(ngModel)]="newCat.name"/>
+									<div class="d-flex">
+										<button class="ml-1 mm-btn mm-btn-primary mm-btn-mini" (click)="addCategory(cat)">Добавить</button>
+										<button class="ml-1 mm-btn mm-btn-default mm-btn-mini" (click)="cat.create = false; cat.childs.length == 0 ? cat.collapsed = false:cat.collapsed = true">Отмена</button>
+									</div>
+								</div>
+							</li>
+						</ul> 
+					</div>
+				</div>
+				
+			</div>
 
-		<div class="flex-container flex-center">
-			<button class="mm-btn mm-btn-primary justify-content-center" (click)="onSave()">Сохранить</button>
+			<!-- <p class="text-center">Ваша информация будет размещена в <b>100</b> точек категории A, <b>1000</b> точек категории B, <b>2100</b> точек категории C</p> -->
+
+			<div class="flex-container flex-center">
+				<button class="mm-btn mm-btn-primary justify-content-center" (click)="onSave()">Сохранить</button>
+			</div>
 		</div>
 	</div>
 </div>

@@ -67,9 +67,15 @@
 					</li>
 				</ul>
 			</div>
-			<button class="mm-btn mm-btn-default" (click)="handleCreateCatModal()" style="margin-left: 20px">
+			<div class="d-flex align-items-center ml-3 cat-tooltip">
+				<i class="fa fa-question-circle tooltip-icon" aria-hidden="true"></i>
+				<div class="tooltip-text">
+					<div>Чтобы создать новые категории, перейдите на страницу <a href="" [routerLink]="['/company_category']">категорий</a> в настройках</div>
+				</div>
+			</div>
+			<!-- <button class="mm-btn mm-btn-default" (click)="handleCreateCatModal()" style="margin-left: 20px">
 				Создать категорию
-			</button>
+			</button> -->
 		</div>
 	</div>
 	<div class="row" id="productsPrintContent">

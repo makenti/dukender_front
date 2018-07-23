@@ -196,11 +196,15 @@ export class CreateCategoryComponent implements OnInit {
             .subscribe(
                 res => {
                     if(res.code === 0){
-                        this.toastyService.success("Новая категория добавлено");
+                        this.toastyService.success("Новая категория добавлена");
                         this.handle.emit(true);
                         this.categories = [""];
-                    }else
-                        this.toastyService.warning(res.getCodeMessage);                 
+                    }else{
+                        if(res.message)
+                            this.toastyService.warning(res.message);                 
+                        else 
+                            this.toastyService.warning("Ошибка сервера");                 
+                    }
                 },
                 error =>  {
                     this.toastyService.error(this.errorService.getCodeMessage(error.code));

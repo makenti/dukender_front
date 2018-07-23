@@ -229,7 +229,10 @@ export class CompanyCategoryComponent implements OnInit {
             this.toastyService.success("Категория добавлено");
             
           }else{
-
+            if(res.message)
+              this.toastyService.warning(res.message);                 
+            else 
+              this.toastyService.warning("Ошибка сервера");  
           }
         },
         error => this.toastyService.warning(this.errorService.getCodeMessage(error.code))

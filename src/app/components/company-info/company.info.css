@@ -84,6 +84,7 @@
 .reg-cat-wrapper.loading {
     position: relative;
 }
+.mm-loader,
 .reg-cat-wrapper.loading:after {
     position: absolute;
     top: 0;
@@ -192,6 +193,7 @@ ul.categories .mm-btn-mini {
 	width: 80px;
 	min-width: 80px;
 	justify-content: center;
+	line-height: 1;
 }
 .mm-input-mini{
 	height: 22px;

@@ -236,3 +236,37 @@ table thead th.sortable-field:hover{
   align-items: center;
   margin-bottom: 20px;
 }
+.cat-tooltip{
+  position: relative;
+}
+.tooltip-text{
+  position: absolute;
+  top: -1000000px;
+  left: -100000000px;
+  background:rgba(0,0,0,.9);
+  color: #fff;
+  max-width: 180px;
+  min-width: 180px;
+  z-index: 1200;
+  font-size: 12px;
+}
+.tooltip-text div{
+  position: relative;
+  padding: 16px;
+}
+.tooltip-text div:after{
+  position: absolute;
+  content: '';
+  width: 0;
+  height: 0;
+  top: -10px;
+  left: calc(50% - 5px);
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid rgba(0,0,0,.9);
+}
+.tooltip-text:hover,
+.cat-tooltip:hover .tooltip-text{
+  top: 32px;
+  left: -90px;
+}
