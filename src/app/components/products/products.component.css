@@ -19,7 +19,11 @@ h2 {
   padding: 8px;
   margin: 0;
 }
-
+.filters{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
 .product-category-list{
   max-height: 300px;
   overflow-y: auto;
@@ -89,6 +93,22 @@ h2 {
 .products-table thead th:nth-child(3){
   width: 8%;
 }
+.products-table thead th.force-middle {
+
+}
+.products-table thead th.force-middle span{
+  display: inline-block;
+  vertical-align: middle;
+}
+.products-table thead th.force-middle input{
+  margin: 0;
+}
+.products-table thead th.force-middle label{
+  vertical-align: middle;
+}
+.products-table thead th.force-middle label div{
+  top: 0;
+}
 table thead th.sortable-field{
   cursor: pointer;
   color: #337ab7;
@@ -100,93 +120,9 @@ table thead th.sortable-field:hover{
 .show-print{
   display: none;
 }
-/* input file */
-.btn-file {
-    position: relative;
-    overflow: hidden;
-    margin: 0 20px;
-}
-
-.btn-file input[type=file] {
-    position: absolute;
-    top: 0;
-    right: 0;
-    min-width: 100%;
-    min-height: 100%;
-    font-size: 100px;
-    text-align: right;
-    filter: alpha(opacity=0);
-    opacity: 0;
-    outline: none;
-    background: white;
-    cursor: inherit;
-    display: block;
-}
-
 /* form */
-.add-product-form {
-  margin: 0;
-  width: 100%;
-  display: flex;
-  direction: row
-}
-.add-product-form .side{
-  flex: 1;
-  padding: 10px;
-  direction: column;
-}
-.form-field {
-  display: flex;
-  direction: row;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-.form-field label{
-  margin: 0;
-}
 .price-l-table th{
   font-size: 10px;
-}
-.product-preview-container{
-/*  max-height: 150px;
-  max-width: 150px;*/
-  text-align: center;
-  margin: 0 auto 10px;
-  position: relative;
-  background: #dcdcdc;
-  max-height: 320px;
-  padding: 10px;
-  /*background-color: #fff;*/
-
-}
-.product-preview{
-  max-height: 150px;
-  max-width: 150px;
-}
-
-.delete-img-btn {
-  width: 32px;
-  height: 32px;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  background-color: #000000;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
-  border-radius: 50%;
-  position: absolute;
-  right: -16px;
-  top: -16px;
-  cursor: pointer;
-}
-.delete-img-btn i{
-  color: #ddd;
 }
 .loader-component{
   padding: 40px;
@@ -204,33 +140,9 @@ table thead th.sortable-field:hover{
   background-size: 50px 50px;
   content: "";
 }
-.result img{
-  width: 100px;
-  height: 100px;
-}
-.display-none{
-  display: none;
-}
-.product-btns button{
-  margin-left: 10px;
-}
-.img-preview{
-  width: 618px;
-  height: 320px;
-}
-.img-preview img{
-  height: 100%;
-}
-.redText{
-  color: red;
-}
-.greenText{
-  color: green;
-}
 /*dropdown:*/
 .navbar-d-btn {
-  width: 300px;
-  height: 40px;
+  height: 34px;
   background-color: #fff;
   /*box-shadow: inset 0 1px 3px 0 #fff;*/
   /*border: solid 1px #eee;*/
@@ -261,7 +173,6 @@ table thead th.sortable-field:hover{
 
 .navbar-d-menu{
   margin-top: -40px;
-  width: 300px;
   min-width: 140px;
   padding: 0;
   border-radius: 17px;
@@ -296,4 +207,66 @@ table thead th.sortable-field:hover{
 .navbar-d-menu>li>a:hover{
   color: #237ee8;
   background: #f5f5f5;
+}
+
+#modalAddToCategory h3{
+  text-align: center;
+}
+#modalAddToCategory .dropdown-btn {
+  width: 240px;
+}
+#modalAddToCategory .dropdown-menu{
+  width: 240px;
+}
+#modalAddToCategory input{
+  width: 240px;
+}
+#modalAddToCategory .modal-content{
+  background: #f2f2f2;
+}
+.search-container input{
+  float: left;
+}
+.inline-filter{
+  display: flex;
+}
+.cat-main{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.cat-tooltip{
+  position: relative;
+}
+.tooltip-text{
+  position: absolute;
+  top: -1000000px;
+  left: -100000000px;
+  background:rgba(0,0,0,.9);
+  color: #fff;
+  max-width: 180px;
+  min-width: 180px;
+  z-index: 1200;
+  font-size: 12px;
+}
+.tooltip-text div{
+  position: relative;
+  padding: 16px;
+}
+.tooltip-text div:after{
+  position: absolute;
+  content: '';
+  width: 0;
+  height: 0;
+  top: -10px;
+  left: calc(50% - 5px);
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid rgba(0,0,0,.9);
+}
+.tooltip-text:hover,
+.cat-tooltip:hover .tooltip-text{
+  top: 32px;
+  left: -90px;
 }

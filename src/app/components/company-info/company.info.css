@@ -77,13 +77,14 @@
 	text-align: center;
 }
 .reg-cat-wrapper .mm-checkbox-group{
-	width: 270px;
+	/* width: 270px; */
 	text-align: left;
 	margin-bottom: 5px;
 }
 .reg-cat-wrapper.loading {
     position: relative;
 }
+.mm-loader,
 .reg-cat-wrapper.loading:after {
     position: absolute;
     top: 0;
@@ -163,4 +164,37 @@
 }
 .min_amount .mm-btn{
   cursor: default;
+}
+ul.categories{
+	list-style-type: none;
+	padding-right: 16px;
+}
+ul.categories *{
+	font-size: 12px;
+}
+ul.categories i{
+	font-size: 16px;
+}
+ul.categories li{
+	list-style-type: none;
+	padding: 4px 8px;
+}
+ul.categories li:hover{
+	background: rgba(255,255,255,1);
+}
+.li-group a.create{
+	visibility: hidden;
+	font-size: 12px;
+}
+.li-group:hover a.create{
+	visibility: visible;
+}
+ul.categories .mm-btn-mini {
+	width: 80px;
+	min-width: 80px;
+	justify-content: center;
+	line-height: 1;
+}
+.mm-input-mini{
+	height: 22px;
 }

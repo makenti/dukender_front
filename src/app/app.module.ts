@@ -30,6 +30,8 @@ import { ActivateComponent } from './components/auth/activate.component';
 
 import { EmployeesComponent } from './components/employees/employees.component';
 import { ProductsComponent } from './components/products/products.component';
+import { ProductModal } from './components/products/product-modal.component';
+import { CreateCategoryComponent } from './components/products/create-category.component';
 import { PromotionsComponent } from './components/promotions/promotions.component';
 import { PromotionProductsComponent } from './components/promotions/new.promotions';
 import { CreatePromotionsComponent } from './components/promotions/create.promotions';
@@ -126,6 +128,8 @@ const appRoutes: Routes = [
     PromotionHistoryComponent,
     RequestHistoryComponent,
     ProductsComponent,
+    ProductModal,
+    CreateCategoryComponent,
     PromotionsComponent,
   	PromotionProductsComponent,
   	CreatePromotionsComponent,

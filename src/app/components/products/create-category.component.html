@@ -1,0 +1,43 @@
+<div bsModal #modalCreateCategory="bs-modal" class="modal fade modal-small modal-delete-product" id="modalCreateCategory">
+	<div class="modal-dialog modal-sm">
+        <div class="modal-content" style="background: #f2f2f2;">
+            <div class="modal-body text-center">
+                <h3 class="text-center">Добавить новую категорию</h3>
+                <div class="w-100 d-flex justify-content-center flex-direction-column">
+                    <div class="d-flex">
+                        <label class="text-left" style="max-width: 86px">Товарная группа</label>			
+                        <div class="dropdown navbar-d mb-3 mr-3" dropdown>
+                            <button dropdownToggle class="dropdown-btn navbar-d-btn" style="width: 182px;">
+                                <span *ngIf="group !== null">{{group.name}}</span>					
+                                <span *ngIf="group == null">Товарная группа</span>					
+                                <i class="fa fa-caret-down" aria-hidden="true"></i>
+                            </button>
+                            <ul *dropdownMenu class="dropdown-menu navbar-d-menu">
+                                <li *ngFor="let g of companyCategories">
+                                    <a (click)="selectGroup(g.category)">{{g.category.name}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="d-flex space-between">
+                        <label class="text-left" style="">Название категорий</label>
+                        <input type="text" class="mm-input mb-3 mr-3" placeholder="" [(ngModel)]="temp.name" style="border: none;"/>
+                        <button class="mm-btn mm-btn-default" (click)="addNewCat()">Добавить</button>
+                    </div>
+                    <div class="cats-added">
+                        <div class="cat" *ngFor="let cat of categories; let i = index" for="">
+                            <span>{{cat.name}}</span>
+                            <i (click)="removeCat(i)" class="fa fa-minus cursor-pointer"></i>
+                        </div>
+                    </div>  
+                </div>                
+                <div class="modal-wrapper">
+                    <div class="modal-btns flex-container flex-center">
+                        <button class="mm-btn mm-btn-default" (click)="close()">Отмена</button>
+                        <button class="mm-btn mm-btn-primary" (click)="createCategory()">Сохранить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
