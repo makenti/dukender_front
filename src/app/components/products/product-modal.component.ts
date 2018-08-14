@@ -97,6 +97,8 @@ export class ProductModal implements OnInit, OnChanges {
       this.imageSelected = false;
       if(mode == 'edit'){
         this.newProduct = product;
+        if(this.newProduct.subcategory_id == null)
+          this.newProduct.subcategory_id = '';
         this.isCrop = false;      
         if(product.image_url !== null && product.image_url != "") {
           this.selectedImage = product.image_url;
@@ -172,7 +174,7 @@ export class ProductModal implements OnInit, OnChanges {
         this.toastyService.warning('Вы не заполнили название продукта');
         return false;
       } else if(this.newProduct.category_id === 0) {
-        this.toastyService.warning('Укажите категорию товара');
+        this.toastyService.warning('Укажите товарную группу');
         return false;
       } else if(this.newProduct.nomenclature === '') {
         this.toastyService.warning('Вы не заполнили ед. измерения');

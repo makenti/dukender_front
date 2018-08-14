@@ -234,16 +234,13 @@ export class ProductsComponent implements OnInit {
                   if(this.products[i].id === pl.id)
                     exist = true;
                 }
+                pl.checked = false;
+                if(pl.id_1c == null)
+                  pl.id_1c = '';
                 if(!exist)
                   this.products.push(pl);
                 this.timestamp = pl.timestamp;
               }
-              this.products.map(p => {
-                p.checked = false;
-                if(p.id_1c == null)
-                  p.id_1c = '';
-                return p;
-              });
               this.lazyLoaded = false;
               this.lazyLoad();
             }
