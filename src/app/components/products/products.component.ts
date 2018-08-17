@@ -114,16 +114,13 @@ export class ProductsComponent implements OnInit {
           }
         );
   }
-  onSelectCategory(newCategory: any) {
-    console.log(newCategory)
-    this.selectedSubCat = null;    
-    this.selectedCategory = newCategory;
-    this.limit = priceLimit;
+  onSelectCategory() {
+    if(this.selectedCategory == 'null')
+      this.selectedCategory = null;
+    this.selectedSubCat = null;
     this.getCategoryProducts();
   }
-  onSelectSubCategory(sub: any){
-    console.log(sub)
-    this.selectedSubCat = sub;
+  onSelectSubCategory(){
     this.getCategoryProducts();    
   }
   onSelectFileCategory(newCategory: any) {
@@ -173,10 +170,7 @@ export class ProductsComponent implements OnInit {
                   return;
                 }
                 this.products = resp.price_list;
-                if(this.limit < resp.price_list.length)
-                  this.timestamp = resp.price_list[this.limit-1].timestamp;
-                else
-                  this.timestamp = resp.price_list[resp.price_list.length-1].timestamp;
+                this.timestamp = resp.price_list[resp.price_list.length-1].timestamp;
                 this.products.map(p => {
                   p.checked = false;
                   if(p.id_1c == null)
@@ -234,16 +228,13 @@ export class ProductsComponent implements OnInit {
                   if(this.products[i].id === pl.id)
                     exist = true;
                 }
+                pl.checked = false;
+                if(pl.id_1c == null)
+                  pl.id_1c = '';
                 if(!exist)
                   this.products.push(pl);
                 this.timestamp = pl.timestamp;
               }
-              this.products.map(p => {
-                p.checked = false;
-                if(p.id_1c == null)
-                  p.id_1c = '';
-                return p;
-              });
               this.lazyLoaded = false;
               this.lazyLoad();
             }

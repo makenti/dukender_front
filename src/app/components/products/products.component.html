@@ -17,55 +17,23 @@
 				(click)="onSearchProduct($event)">Поиск</button> -->
 		</div>
 		<div class="inline-filter">
-			<div class="dropdown navbar-d no-print" dropdown>
-				<button dropdownToggle class="dropdown-btn navbar-d-btn">
-				<span *ngIf="selectedCategory !== null">{{selectedCategory.category.name}}</span>
-				<span *ngIf="selectedCategory == null">Все продукты</span>
-				<i class="fa fa-caret-down" aria-hidden="true"></i>
-				</button>
-				<ul *dropdownMenu class="dropdown-menu navbar-d-menu">
-				<li>
-					<button 
-						type="button" 
-						class="dropdown-btn navbar-d-btn"
-						(click)="onSelectCategory(null)"
-					>
-						<span>Все продукты</span>
-					  	<i class="fa fa-caret-up" aria-hidden="true"></i>
-					</button>
-				</li>
-				<li *ngFor="let cat of companyCategories">
-					<button type="button" class="list-group-item"
-						[class.active]="selectedCategory !== null && selectedCategory.category.id === cat.category.id"
-					name="categories"
-					(click)="onSelectCategory(cat)">{{cat.category.name}}</button>
-				</li>
-				</ul>
+			<div class="mm-select mr-3">
+				<select [(ngModel)]="selectedCategory" (change)="onSelectCategory()" [disabled]="loading">
+					<option value="null">Все группы товаров</option>
+					<option *ngFor="let cat of companyCategories" [ngValue]="cat">
+						<span class="badge">{{cat.category.name}}</span>
+					</option>
+				</select>
+				<div class="select__arrow"></div>
 			</div>
-			<div class="dropdown navbar-d no-print" dropdown style="margin-left: 20px;">
-				<button dropdownToggle class="dropdown-btn navbar-d-btn">
-					<span *ngIf="selectedSubCat">{{selectedSubCat.name}}</span>
-					<span *ngIf="selectedSubCat == null">Все категории</span>
-					<i class="fa fa-caret-down" aria-hidden="true"></i>
-				</button>
-				<ul *dropdownMenu class="dropdown-menu navbar-d-menu">
-					<li>
-						<button 
-							type="button" 
-							class="dropdown-btn navbar-d-btn"
-							(click)="onSelectSubCategory(null)"
-						>
-							<span>Все категории</span>
-							<i class="fa fa-caret-up" aria-hidden="true"></i>
-						</button>
-					</li>
-					<li *ngFor="let cat of selectedCategory?.category.childs">
-						<button type="button" class="list-group-item"
-							[class.active]="selectedSubCat !== null && selectedSubCat.id === cat.id"
-						name="categories"
-						(click)="onSelectSubCategory(cat)">{{cat.name}}</button>
-					</li>
-				</ul>
+			<div class="mm-select">
+				<select [(ngModel)]="selectedSubCat" (change)="onSelectSubCategory()" [disabled]="loading">
+					<option value="null">Все категории</option>
+					<option *ngFor="let cat of selectedCategory?.category.childs" [ngValue]="cat">
+						<span class="badge">{{cat.name}}</span>
+					</option>
+				</select>
+				<div class="select__arrow"></div>
 			</div>
 			<div class="d-flex align-items-center ml-3 cat-tooltip">
 				<i class="fa fa-question-circle tooltip-icon" aria-hidden="true"></i>
