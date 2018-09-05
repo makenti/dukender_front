@@ -51,7 +51,7 @@
         </ul>
     	</div>
 
-    	<div class="dropdown navbar-d" dropdown
+    	<div class="dropdown navbar-d mr-4" dropdown
         *ngIf="this.auth.perms.settings">
         <button dropdownToggle class="dropdown-btn navbar-d-btn">
           <span>Настройки</span>
@@ -75,7 +75,7 @@
           <li><a [routerLink]="['/request_history']">В заявках</a></li>
         </ul>
     	</div>
-
+      <app-entries-dropdown></app-entries-dropdown>
 		</div>
 	</div>
 </div>

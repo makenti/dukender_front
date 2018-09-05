@@ -8,6 +8,7 @@ import 'rxjs/add/operator/catch';
 import { serverURL } from '../../common/config/server';
 import { transformRequest } from '../../common/config/transformRequest';
 import { handleError } from '../../common/config/errorHandler';
+import { Entry } from '../../common/models/Entry';
 
 @Injectable()
 export class AuthService {
@@ -19,14 +20,30 @@ export class AuthService {
     pricelist: false,
     staff: false,
     company: false,
-    settings: false
+    settings: false,
+    branches: false,// Филиалы
   };
-
+  public currentEntry_: Entry = null;
   constructor(
     public http: Http,
     public router: Router,
-    public toasty: ToastyService) {}
+    public toasty: ToastyService
+  ) {}
 
+  get currentEntry() {
+    if(window.localStorage.getItem('current_entry')) {
+      return JSON.parse(window.localStorage.getItem('current_entry'));
+    }
+    return this.currentEntry_;
+  }
+  set currentEntry(entry){
+    console.log(entry)
+    let e = new Entry();
+    e.id = entry.entry_id;
+    e.name = entry.company.name;
+    this.currentEntry_ = e;
+    window.localStorage.setItem('current_entry', JSON.stringify(e));
+  }
   authenticate(data:any): Observable<any> {
 
     let headers = new Headers({
@@ -44,6 +61,8 @@ export class AuthService {
           if(resj.token !== undefined) {
             window.localStorage.setItem('auth_key', res.json().token);
             window.localStorage.setItem('user', JSON.stringify(resj.user));
+            if(this.currentEntry == null)
+              this.currentEntry = resj.user.entries[0];
             this.setPermissions(resj.user);
             if(resj.user.entry === null) {
               window.localStorage.setItem('user_company', JSON.stringify(''));
@@ -213,9 +232,14 @@ export class AuthService {
       pricelist: false,
       staff: false,
       company: false,
-      settings: false
+      settings: false,
+      branches: false,
     };
     if(user !== null && user.entry !== null) {
+      //Access for branches list if user has no more 1 entries
+      if(user.entries !== null)
+        if(user.entries.length > 1)
+          this.perms.branches = true;
       if(user.entry.profile_type === 1) {
         this.perms.requests = true;
         this.perms.discounts = true;

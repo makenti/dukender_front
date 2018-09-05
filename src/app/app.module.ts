@@ -73,6 +73,7 @@ import {
   ErrorService,
   ToolbarService
    } from './services/index';
+import { EntriesDropdownComponent } from './common/entries-dropdown/entries-dropdown.component';
 
 const appRoutes: Routes = [
   { path: 'landing', component: LandingComponent, canActivate: [AuthManager] },
@@ -147,6 +148,7 @@ const appRoutes: Routes = [
     SortPipe,
     SearchDeepPipe,
     ReadPipe,
+    EntriesDropdownComponent,
     // ProposalPrintComponent
   ],
   imports: [

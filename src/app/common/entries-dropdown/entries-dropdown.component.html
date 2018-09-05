@@ -1,0 +1,16 @@
+<div class="dropdown navbar-d" dropdown
+  *ngIf="this.auth.perms.settings">
+  <button dropdownToggle class="dropdown-btn navbar-d-btn">
+    <span>{{auth.currentEntry?auth.currentEntry.name:'Филиалы'}}</span>
+    <i class="fa fa-caret-down" aria-hidden="true"></i>
+  </button>
+  <ul *dropdownMenu class="dropdown-menu navbar-d-menu">
+    <li>
+      <button class="dropdown-btn navbar-d-btn">
+        <span>Филиалы</span>
+        <i class="fa fa-caret-up" aria-hidden="true"></i>
+      </button>
+    </li>
+    <li *ngFor="let e of entries"><a (click)="changeEntry(e)">{{e.company.name}}</a></li>
+  </ul>
+</div>
