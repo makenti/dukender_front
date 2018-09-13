@@ -9,6 +9,7 @@ import { serverURL } from '../../common/config/server';
 import { transformRequest } from '../../common/config/transformRequest';
 import { handleError } from '../../common/config/errorHandler';
 import { Entry } from '../../common/models/Entry';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class AuthService {
@@ -23,13 +24,14 @@ export class AuthService {
     settings: false,
     branches: false,// Филиалы
   };
-  public currentEntry_: Entry = null;
+  public currentEntry_: Entry;
+
   constructor(
     public http: Http,
     public router: Router,
     public toasty: ToastyService
   ) {}
-
+  
   get currentEntry() {
     if(window.localStorage.getItem('current_entry')) {
       return JSON.parse(window.localStorage.getItem('current_entry'));
@@ -63,6 +65,7 @@ export class AuthService {
             window.localStorage.setItem('user', JSON.stringify(resj.user));
             if(this.currentEntry == null)
               this.currentEntry = resj.user.entries[0];
+              
             this.setPermissions(resj.user);
             if(resj.user.entry === null) {
               window.localStorage.setItem('user_company', JSON.stringify(''));
@@ -226,6 +229,7 @@ export class AuthService {
   }
 
   setPermissions(user: any) {
+    // console.log(user);
     this.perms = {
       requests: false,
       discounts: false,
@@ -237,9 +241,12 @@ export class AuthService {
     };
     if(user !== null && user.entry !== null) {
       //Access for branches list if user has no more 1 entries
-      if(user.entries !== null)
+      if(user.entries !== null&&user.entries !== undefined){
         if(user.entries.length > 1)
           this.perms.branches = true;
+        else
+          this.currentEntry = user.entry;
+      }
       if(user.entry.profile_type === 1) {
         this.perms.requests = true;
         this.perms.discounts = true;

@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  serverUrl: 'https://api.dukender.org.kz'
+  serverUrl: 'http://api.dukender.org.kz/'
 };

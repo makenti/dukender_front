@@ -19,7 +19,10 @@ export class CategoryService {
   ) { }
 
   getCategories(): Observable<any[]> {
-    let headers = new Headers({ 'Auth-Token': this.auth.getToken() });
+    let headers = new Headers({ 
+      'Auth-Token': this.auth.getToken(),
+      'Entry-ID': this.auth.currentEntry.id
+     });
     let options = new RequestOptions({ headers: headers });
 
     return this.http.get(serverURL + '/products/get_categories_v2/', options)

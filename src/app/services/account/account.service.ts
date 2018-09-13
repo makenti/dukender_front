@@ -21,7 +21,8 @@ export class AccountService {
 
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
 
     let options = new RequestOptions({ headers: headers });

@@ -9,7 +9,7 @@
 	<div class="header-inner main-container">
 		<div>
 			<img [routerLink]="['/']" src="./assets/images/logo.png" class="header-logo">
-			<div class="header-text text-center" *ngIf="this.auth.getUserCompany() !== null">{{this.auth.getUserCompany().short_name}} </div>
+			<div class="header-text text-center" *ngIf="this.auth.currentEntry !== null">{{this.auth.currentEntry.name}} </div>
 		</div>
 
 		<!-- <div class="header-lang-container flex-vertical">

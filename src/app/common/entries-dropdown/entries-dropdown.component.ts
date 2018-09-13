@@ -17,9 +17,14 @@ export class EntriesDropdownComponent implements OnInit {
   }
 
   ngOnInit() {}
+  
   changeEntry(e){
-    console.log(e)
     this.auth.currentEntry = e;
     window.location.reload();
+  }
+  updateEntries(){
+    this.auth.updateUserInfo().subscribe(res=>{
+      console.log(res);
+    })
   }
 }
