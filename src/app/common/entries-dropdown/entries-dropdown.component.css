@@ -1,4 +1,13 @@
 /* Same as navbar css */
+.dropdown-menu{
+  width: 160px;
+}
+.dropdown-menu>li>a{
+  word-spacing: normal;
+  white-space: normal;
+  padding-right: 8px;
+  padding-left: 8px;
+}
 .navbar-container{
     justify-content: space-between;
   }
@@ -115,19 +124,33 @@
     text-transform: uppercase;
     color: #4a4a4a;
     font-size: 11px;
-    height: 40px;
     display: flex;
     align-items: center;
     font-weight: 600;
   }
   .navbar-d-menu>li>a {
     font-size: 13px;
-    height: 40px;
+    min-height: 40px;
+    cursor: pointer;
     display: flex;
     align-items:center;
+    justify-content: space-between;
   }
   .navbar-d-menu>li>a:hover{
     color: #237ee8;
     background: #f5f5f5;
   }
-  
+
+.rounded-badge{
+  margin-left: 8px;
+  padding: 0 2px;
+  height: 16px;
+  padding: 0 6px;
+  background-color: #237ee8;
+  border-radius: 8px;
+  font-size: 12px;
+  color: #fff;
+  text-align: center;
+  line-height: 16px;
+  font-weight: 700;
+}

@@ -25,6 +25,7 @@ export class EntriesDropdownComponent implements OnInit {
   updateEntries(){
     this.auth.updateUserInfo().subscribe(res=>{
       console.log(res);
+      this.entries = this.auth.getUser().entries;
     })
   }
 }
