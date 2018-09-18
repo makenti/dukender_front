@@ -28,11 +28,6 @@ export class ProposalService {
   };
   public refresh:boolean = true;
   public proposals;
-  public headers = new Headers({
-    'Auth-Token': this.auth.getToken(),
-    'Content-Type': 'application/x-www-form-urlencoded',
-    // 'Entry-ID': 12
-  });
 
   constructor(
     public http: Http,
@@ -70,11 +65,8 @@ export class ProposalService {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Entry-ID': this.auth.currentEntry.id
     });
-    // if(this.auth.currentEntry != null)
-      // this.headers.append('Entry-ID', this.auth.currentEntry.id);
-    this.headers.append('Access-Control-Allow-Headers', 'Content-type');
 
-    let options = new RequestOptions({ headers: this.headers });
+    let options = new RequestOptions({ headers: headers });
     let bodyString = transformRequest(data);
 
     return this.http.post(serverURL + '/sellers/requests/get/', bodyString, options)
@@ -95,11 +87,8 @@ export class ProposalService {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Entry-ID': this.auth.currentEntry.id
     });
-    // if(this.auth.currentEntry != null)
-      // this.headers.append('Entry-ID', this.auth.currentEntry.id);
-    this.headers.append('Access-Control-Allow-Headers', 'Content-type');
 
-    let options = new RequestOptions({ headers: this.headers });
+    let options = new RequestOptions({ headers: headers });
     let bodyString = {};
     return this.http.post(serverURL + '/sellers/requests/get/' + data.key + '/', bodyString, options)
                     .map((res: Response) => {
@@ -120,11 +109,8 @@ export class ProposalService {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Entry-ID': this.auth.currentEntry.id
     });
-    // if(this.auth.currentEntry != null)
-      // this.headers.append('Entry-ID', this.auth.currentEntry.id);
-    this.headers.append('Access-Control-Allow-Headers', 'Content-type');
 
-    let options = new RequestOptions({ headers: this.headers });
+    let options = new RequestOptions({ headers: headers });
     let bodyString = 'request=' + JSON.stringify(data);
 
     return this.http.post(serverURL + '/sellers/requests/edit_request/', bodyString, options)
@@ -145,11 +131,8 @@ export class ProposalService {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Entry-ID': this.auth.currentEntry.id
     });
-    // if(this.auth.currentEntry != null)
-      // this.headers.append('Entry-ID', this.auth.currentEntry.id);
-    this.headers.append('Access-Control-Allow-Headers', 'Content-type');
 
-    let options = new RequestOptions({ headers: this.headers });
+    let options = new RequestOptions({ headers: headers });
     let bodyString = transformRequest(data);
 
     return this.http.post(serverURL + '/products/create_request_comment/', bodyString, options)
@@ -170,11 +153,8 @@ export class ProposalService {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Entry-ID': this.auth.currentEntry.id
     });
-    // if(this.auth.currentEntry != null)
-      // this.headers.append('Entry-ID', this.auth.currentEntry.id);
-    this.headers.append('Access-Control-Allow-Headers', 'Content-type');
 
-    let options = new RequestOptions({ headers: this.headers });
+    let options = new RequestOptions({ headers: headers });
     let bodyString = transformRequest(data);
 
     return this.http.post(serverURL + '/products/get_request_comments/', bodyString, options)
@@ -195,11 +175,8 @@ export class ProposalService {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Entry-ID': this.auth.currentEntry.id
     });
-    // if(this.auth.currentEntry != null)
-      // this.headers.append('Entry-ID', this.auth.currentEntry.id);
-    this.headers.append('Access-Control-Allow-Headers', 'Content-type');
 
-    let options = new RequestOptions({ headers: this.headers });
+    let options = new RequestOptions({ headers: headers });
     let bodyString = transformRequest(data);
 
     return this.http.post(serverURL + '/sellers/requests/set_status/', bodyString, options)
@@ -220,11 +197,8 @@ export class ProposalService {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Entry-ID': this.auth.currentEntry.id
     });
-    // if(this.auth.currentEntry != null)
-      // this.headers.append('Entry-ID', this.auth.currentEntry.id);
-    this.headers.append('Access-Control-Allow-Headers', 'Content-type');
 
-    let options = new RequestOptions({ headers: this.headers });
+    let options = new RequestOptions({ headers: headers });
     let bodyString = transformRequest(data);
 
     return this.http.post(serverURL + '/sellers/requests/send_request_by_email_v2/', bodyString, options)
@@ -268,11 +242,8 @@ export class ProposalService {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Entry-ID': this.auth.currentEntry.id
     });
-    // if(this.auth.currentEntry != null)
-      // this.headers.append('Entry-ID', this.auth.currentEntry.id);
-    this.headers.append('Access-Control-Allow-Headers', 'Content-type');
 
-    let options = new RequestOptions({ headers: this.headers });
+    let options = new RequestOptions({ headers: headers });
     let bodyString = transformRequest(data);
 
     return this.http.post(serverURL + '/sellers/requests/cancel/', bodyString, options)
@@ -292,11 +263,8 @@ export class ProposalService {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Entry-ID': this.auth.currentEntry.id
     });
-    // if(this.auth.currentEntry != null)
-      // this.headers.append('Entry-ID', this.auth.currentEntry.id);
-    this.headers.append('Access-Control-Allow-Headers', 'Content-type');
 
-    let options = new RequestOptions({ headers: this.headers });
+    let options = new RequestOptions({ headers: headers });
     let bodyString = transformRequest(data);
 
     return this.http.post(serverURL + '/sellers/requests/accept/', bodyString, options)

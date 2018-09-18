@@ -27,7 +27,7 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
 	public proposals: any;
 	public errorMessage: any;
 	public selectedFilter = '';
-  public selectedDistricts: any;
+  public selectedDistricts: any[] = [];
   public currUser: any;
   public companyRegions: any[] = [];
   public loading: boolean = false;
@@ -360,7 +360,8 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
   }
 
   selectCheckedDistricts() {
-    this.getProposals('');
+    this.clearSessionData();
+    this.getProposals(this.selectedFilter);
     // window.localStorage.setItem('user_districts', this.selectedDistricts);
   }
   mouseDown(event){

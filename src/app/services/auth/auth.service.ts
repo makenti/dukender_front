@@ -106,7 +106,10 @@ export class AuthService {
   }
 
   getPermissions(): Observable<any[]> {
-    let headers = new Headers({ 'Auth-Token': this.getToken() });
+    let headers = new Headers({ 
+      'Auth-Token': this.getToken(),
+      'Entry-ID': this.currentEntry.id
+    });
     let options = new RequestOptions({ headers: headers });
     return this.http.get(serverURL + '/sellers/users/get_permission/', options)
                     .map((res: Response) => {
@@ -120,9 +123,11 @@ export class AuthService {
   }
 
   changePassword(password: any): Observable<any> {
-    var headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    headers.append('Auth-Token', this.getToken());
+    let headers = new Headers({ 
+      'Auth-Token': this.getToken(),
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.currentEntry.id
+    });
     var pass1 = 'old_password=' + password.oldPassword;
     var pass2 = 'new_password1=' + password.newPassword;
     var pass3 = 'new_password2=' + password.retryPassword;
@@ -136,7 +141,10 @@ export class AuthService {
   }
 
   updateUserInfo(): Observable<any[]> {
-    let headers = new Headers({ 'Auth-Token': this.getToken() });
+    let headers = new Headers({ 
+      'Auth-Token': this.getToken(), 
+      'Entry-ID': this.currentEntry.id
+    });
     let options = new RequestOptions({ headers: headers });
     return this.http.get(serverURL + '/sellers/users/get_user/', options)
               .map((res: Response) => {
@@ -156,7 +164,10 @@ export class AuthService {
               .catch(handleError);
   }
   updateUser(): Observable<any>{
-    let headers = new Headers({'Auth-Token': this.getToken() });
+    let headers = new Headers({
+      'Auth-Token': this.getToken(),
+      'Entry-ID': this.currentEntry.id
+    });
     let options = new RequestOptions({ headers: headers });
     return this.http.post(serverURL + '/auth/get_user/', {}, options)
                     .map((res: Response) => {
