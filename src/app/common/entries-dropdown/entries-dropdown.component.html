@@ -1,5 +1,5 @@
 <div class="dropdown navbar-d" dropdown
-  *ngIf="this.auth.perms.settings">
+  *ngIf="this.auth.perms.branches">
   <button dropdownToggle class="dropdown-btn navbar-d-btn" (click)="updateEntries()">
     <span>{{auth.currentEntry?auth.currentEntry.name:'Филиалы'}}</span>
     <i class="fa fa-caret-down" aria-hidden="true"></i>
