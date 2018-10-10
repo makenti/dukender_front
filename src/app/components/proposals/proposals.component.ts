@@ -27,7 +27,7 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
 	public proposals: any;
 	public errorMessage: any;
 	public selectedFilter = '';
-  public selectedDistricts: any;
+  public selectedDistricts: any[] = [];
   public currUser: any;
   public companyRegions: any[] = [];
   public loading: boolean = false;
@@ -169,13 +169,14 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
   getProposals(id: any) {
     this.selectedFilter = id;
     this.scrolled = false;
-    if(sessionStorage.getItem("proposals")){
-      this.proposals = JSON.parse(sessionStorage.getItem("proposals"));
-      this.proposalStats = JSON.parse(sessionStorage.getItem("proposalStats"));
-      this.last_timestamp = JSON.parse(sessionStorage.getItem("last_timestamp"));
-      this.getLocalFilter();
-      return;
-    } 
+    // ToDO: use session storage, to save and retrive data;
+    // if(sessionStorage.getItem("proposals")){
+    //   this.proposals = JSON.parse(sessionStorage.getItem("proposals"));
+    //   this.proposalStats = JSON.parse(sessionStorage.getItem("proposalStats"));
+    //   this.last_timestamp = JSON.parse(sessionStorage.getItem("last_timestamp"));
+    //   this.getLocalFilter();
+    //   return;
+    // } 
     this.proposals = [];
     this.loading = true;
     //scroll:
@@ -360,7 +361,8 @@ export class ProposalsComponent implements OnInit, AfterViewChecked {
   }
 
   selectCheckedDistricts() {
-    this.getProposals('');
+    this.clearSessionData();
+    this.getProposals(this.selectedFilter);
     // window.localStorage.setItem('user_districts', this.selectedDistricts);
   }
   mouseDown(event){

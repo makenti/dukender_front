@@ -28,7 +28,7 @@ export class ProposalService {
   };
   public refresh:boolean = true;
   public proposals;
-  
+
   constructor(
     public http: Http,
     public auth: AuthService
@@ -41,9 +41,9 @@ export class ProposalService {
   getProposals(data: any): Observable<any> {
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
-
     let options = new RequestOptions({ headers: headers });
     let bodyString = transformRequest(data);
 
@@ -62,7 +62,8 @@ export class ProposalService {
   getProposal(data: any): Observable<any> {
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
 
     let options = new RequestOptions({ headers: headers });
@@ -83,7 +84,8 @@ export class ProposalService {
   getProposalByKey(data: any): Observable<any> {
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
 
     let options = new RequestOptions({ headers: headers });
@@ -104,7 +106,8 @@ export class ProposalService {
 
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
 
     let options = new RequestOptions({ headers: headers });
@@ -125,7 +128,8 @@ export class ProposalService {
   addProposalComment(data: any): Observable<any> {
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
 
     let options = new RequestOptions({ headers: headers });
@@ -146,7 +150,8 @@ export class ProposalService {
   updateComments(data: any): Observable<any> {
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
 
     let options = new RequestOptions({ headers: headers });
@@ -167,7 +172,8 @@ export class ProposalService {
   setProposalStatus(data: any): Observable<any> {
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
 
     let options = new RequestOptions({ headers: headers });
@@ -188,7 +194,8 @@ export class ProposalService {
   sendProposalToEmail(data: any): Observable<any> {
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
 
     let options = new RequestOptions({ headers: headers });
@@ -210,7 +217,8 @@ export class ProposalService {
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Accept': 'application/vnd.ms-excel'
+      'Accept': 'application/vnd.ms-excel',
+      'Entry-ID': this.auth.currentEntry.id
     });
 
     let options = new RequestOptions({ headers: headers, responseType: ResponseContentType.Blob });
@@ -231,7 +239,8 @@ export class ProposalService {
   revokeProposals(data: any): Observable<any> {
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
 
     let options = new RequestOptions({ headers: headers });
@@ -251,7 +260,8 @@ export class ProposalService {
   performProposal(data: any): Observable<any> {
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
 
     let options = new RequestOptions({ headers: headers });
@@ -297,7 +307,8 @@ export class ProposalService {
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Accept': 'application/vnd.ms-excel'
+      'Accept': 'application/vnd.ms-excel',
+      'Entry-ID': this.auth.currentEntry.id
     });
 
     let options = new RequestOptions({ headers: headers, responseType: ResponseContentType.Blob });
@@ -318,7 +329,8 @@ export class ProposalService {
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Accept': 'application/vnd.ms-excel'
+      'Accept': 'application/vnd.ms-excel',
+      'Entry-ID': this.auth.currentEntry.id
     });
 
     let options = new RequestOptions({ headers: headers, responseType: ResponseContentType.Blob });

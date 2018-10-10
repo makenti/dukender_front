@@ -18,7 +18,10 @@ export class EmployeeService {
   ) { }
 
   getStaff(): Observable<any> {
-    let headers = new Headers({ 'Auth-Token': this.auth.getToken() });
+    let headers = new Headers({ 
+      'Auth-Token': this.auth.getToken(),
+      'Entry-ID': this.auth.currentEntry.id
+    });
     let options = new RequestOptions({ headers: headers });
 
     return this.http.get(serverURL + '/sellers/staff/', options)
@@ -36,7 +39,8 @@ export class EmployeeService {
   addEmployee(body: any): Observable<any> {
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
 
     let options = new RequestOptions({ headers: headers });
@@ -68,7 +72,8 @@ export class EmployeeService {
   deleteEmployee(body: any): Observable<any> {
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
     let options = new RequestOptions({ headers: headers });
     let bodyString = transformRequest(body);
@@ -87,7 +92,8 @@ export class EmployeeService {
   delegateAuthority(user: any): Observable<any> {
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
     let options = new RequestOptions({ headers: headers });
     let bodyString = transformRequest(user);
@@ -106,7 +112,8 @@ export class EmployeeService {
   inviteEmployee(body: any): Observable<any> {
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
 
     let options = new RequestOptions({ headers: headers });

@@ -19,7 +19,10 @@ export class CompanyRegionsService {
   ) { }
 
   getCountries(): Observable<any[]> {
-    let headers = new Headers({ 'Auth-Token': this.auth.getToken() });
+    let headers = new Headers({
+      'Auth-Token': this.auth.getToken(),
+      'Entry-ID': this.auth.currentEntry.id
+    });
     let options = new RequestOptions({ headers: headers });
 
     return this.http.get(serverURL + '/sellers/countries/', options)
@@ -37,7 +40,8 @@ export class CompanyRegionsService {
   getRegionsByCountry(data: any): Observable<any[]> {
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
     let options = new RequestOptions({ headers: headers });
     let bodyString = 'country_id=' + data.country_id;
@@ -55,7 +59,10 @@ export class CompanyRegionsService {
   }
 
   getRegions(): Observable<any[]> {
-    let headers = new Headers({ 'Auth-Token': this.auth.getToken() });
+    let headers = new Headers({ 
+      'Auth-Token': this.auth.getToken(),
+      'Entry-ID': this.auth.currentEntry.id
+    });
     let options = new RequestOptions({ headers: headers });
 
     return this.http.get(serverURL + '/sellers/regions/', options)
@@ -73,7 +80,8 @@ export class CompanyRegionsService {
   getRegionDistricts(body: any): Observable<Object[]> {
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
     let options = new RequestOptions({ headers: headers });
     let bodyString = 'region_id=' + body.region_id;

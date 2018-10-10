@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Renderer2, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, Renderer2, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap';
 import { Router } from '@angular/router';
 import {
@@ -66,7 +66,7 @@ export class ProductsComponent implements OnInit {
   }
   public afterView:boolean = false;
   public lazyLoaded:boolean = false;
-
+  public entry_id;
   constructor (
     public categoryService: CategoryService,
     public companyService: CompanyProfileService,
@@ -76,8 +76,7 @@ export class ProductsComponent implements OnInit {
     public router: Router,
     public toastyService: ToastyService,
     public errorService: ErrorService,
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     // this.auth.updateUserInfo().subscribe(null, null);
@@ -85,6 +84,13 @@ export class ProductsComponent implements OnInit {
     this.getCategoryProducts();
     this.getCompanyCategories();
   }
+  // ngDoCheck(){ //TODO: change branch without reload page
+  //   if(this.entry_id != this.auth.currentEntry.id){
+  //     // this.getCategoryProducts();
+  //     // this.getCompanyCategories();
+  //     this.entry_id = this.auth.currentEntry.id;
+  //   }
+  // }
   ngAfterViewInit(){
     this.afterView = true;
   }
@@ -101,6 +107,7 @@ export class ProductsComponent implements OnInit {
     this.companyService.getCompanyCategories()
         .subscribe(
           data => {
+            console.log(data)
             this.companyCategories = data;
             this.newCat = {
               group: null,
@@ -284,6 +291,7 @@ export class ProductsComponent implements OnInit {
   }
   //Add product:
   handleProductModal(state, product){
+    console.log(state, product)
     this.productModal.handleOpen(state, product);
   }
   //upload price list:

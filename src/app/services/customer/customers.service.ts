@@ -18,7 +18,10 @@ export class CustomersService {
   ) { }
 
   getCustomers(): Observable<any> {
-    let headers = new Headers({ 'Auth-Token': this.auth.getToken() });
+    let headers = new Headers({ 
+      'Auth-Token': this.auth.getToken(),
+      'Entry-ID': this.auth.currentEntry.id
+    });
     let options = new RequestOptions({ headers: headers });
 
     return this.http.get(serverURL + '/sellers/requests/matching_shops/', options)
@@ -34,7 +37,10 @@ export class CustomersService {
   }
 
   getBannedCustomers(): Observable<any> {
-    let headers = new Headers({ 'Auth-Token': this.auth.getToken() });
+    let headers = new Headers({ 
+      'Auth-Token': this.auth.getToken(),
+      'Entry-ID': this.auth.currentEntry.id
+    });
     let options = new RequestOptions({ headers: headers });
 
     return this.http.get(serverURL + '/sellers/ban/get_banned_shops/', options)
@@ -54,7 +60,8 @@ export class CustomersService {
 
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
     let options    = new RequestOptions({ headers: headers });
 
@@ -75,7 +82,8 @@ export class CustomersService {
 
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
     let options    = new RequestOptions({ headers: headers });
 
@@ -96,7 +104,8 @@ export class CustomersService {
 
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
     let options    = new RequestOptions({ headers: headers });
 

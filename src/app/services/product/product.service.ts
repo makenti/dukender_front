@@ -23,7 +23,8 @@ export class ProductService {
   addProduct(product: any): Observable<any> {
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
 
     let options = new RequestOptions({ headers: headers });
@@ -46,6 +47,8 @@ export class ProductService {
 
       xhr.open('POST', serverURL + '/products/create_edit_item_v2/', true);
       xhr.setRequestHeader('Auth-Token', this.auth.getToken());
+      xhr.setRequestHeader('Entry-ID', this.auth.currentEntry.id);
+      
 
       formData.append('id', product.id);
       formData.append('category_id', product.category_id);
@@ -102,7 +105,8 @@ export class ProductService {
   removeProducts(products: any): Observable<any> {
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
     let options = new RequestOptions({ headers: headers });
     let bodyString = 'item_ids=' + JSON.stringify(products);
@@ -121,7 +125,8 @@ export class ProductService {
   getCategoryProducts(data: any): Observable<any> {
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
     let options = new RequestOptions({ headers: headers });
     let bodyString = transformRequest(data);
@@ -143,7 +148,8 @@ export class ProductService {
   changeProductSale(data: any): Observable<any> {
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
     let options = new RequestOptions({ headers: headers });
     let bodyString = transformRequest(data);
@@ -163,7 +169,8 @@ export class ProductService {
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Accept': 'application/vnd.ms-excel'
+      'Accept': 'application/vnd.ms-excel',
+      'Entry-ID': this.auth.currentEntry.id
     });
 
     let options = new RequestOptions({ headers: headers, responseType: ResponseContentType.Blob });
@@ -184,7 +191,8 @@ export class ProductService {
   addToCategory(data: any): Observable<any> {
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
 
     let options = new RequestOptions({ headers: headers });
@@ -200,7 +208,8 @@ export class ProductService {
   createCategory(data: any): Observable<any> {
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
     let options = new RequestOptions({ headers: headers });
     let bodyString = transformRequest(data);

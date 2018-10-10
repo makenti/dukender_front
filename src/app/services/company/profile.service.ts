@@ -29,7 +29,8 @@ export class CompanyProfileService {
 
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
     let options    = new RequestOptions({ headers: headers });
 
@@ -46,7 +47,8 @@ export class CompanyProfileService {
 
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
     let options = new RequestOptions({ headers: headers });
 
@@ -65,7 +67,8 @@ export class CompanyProfileService {
     let bodyString = transformRequest(body);
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
     let options    = new RequestOptions({ headers: headers });
 
@@ -81,7 +84,10 @@ export class CompanyProfileService {
   }
 
   getCompanyProfile(): Observable<any> {
-    let headers = new Headers({'Auth-Token': this.auth.getToken() });
+    let headers = new Headers({
+      'Auth-Token': this.auth.getToken(),
+      'Entry-ID': this.auth.currentEntry.id
+    });
     let options = new RequestOptions({ headers: headers });
 
     return this.http.get(serverURL + '/sellers/company/profile/get/', options)
@@ -96,7 +102,10 @@ export class CompanyProfileService {
                     .catch(handleError);
   }
   getCompanyRegions(): Observable<any> {
-    let headers = new Headers({'Auth-Token': this.auth.getToken() });
+    let headers = new Headers({
+      'Auth-Token': this.auth.getToken(),
+      'Entry-ID': this.auth.currentEntry.id
+    });
     let options = new RequestOptions({ headers: headers });
 
     return this.http.get(serverURL + '/sellers/company/profile/sell_regions/get/', options)
@@ -112,7 +121,10 @@ export class CompanyProfileService {
   }
 
   getCompanyCategories(): Observable<any> {
-    let headers = new Headers({'Auth-Token': this.auth.getToken() });
+    let headers = new Headers({
+      'Auth-Token': this.auth.getToken(),
+      'Entry-ID': this.auth.currentEntry.id
+     });
     let options = new RequestOptions({ headers: headers });
 
     return this.http.get(serverURL + '/sellers/company/profile/categories/get/', options)
@@ -131,7 +143,8 @@ export class CompanyProfileService {
 
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
     let options    = new RequestOptions({ headers: headers });
     let bodyString = transformRequest(body);
@@ -153,7 +166,8 @@ export class CompanyProfileService {
 
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
     let options = new RequestOptions({ headers: headers });
 
@@ -170,7 +184,8 @@ export class CompanyProfileService {
   readNotifications(data: Object): Observable<any> {
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
     let options = new RequestOptions({ headers: headers });
     let bodyString = transformRequest(data);
