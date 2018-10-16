@@ -1,0 +1,21 @@
+<div class="dropdown navbar-d" dropdown
+  *ngIf="this.auth.perms.branches">
+  <button dropdownToggle class="dropdown-btn navbar-d-btn" (click)="updateEntries()">
+    <span>{{auth.currentEntry?auth.currentEntry.name:'Филиалы'}}</span>
+    <i class="fa fa-caret-down" aria-hidden="true"></i>
+  </button>
+  <ul *dropdownMenu class="dropdown-menu navbar-d-menu">
+    <li>
+      <button class="dropdown-btn navbar-d-btn">
+        <span>Филиалы</span>
+        <i class="fa fa-caret-up" aria-hidden="true"></i>
+      </button>
+    </li>
+    <li *ngFor="let e of entries" style="max-width: 100%">
+      <a (click)="changeEntry(e)">
+        <span>{{e.company.name}}</span>
+        <span class="rounded-badge" *ngIf="e.company.new_requests>0">{{e.company.new_requests}}</span>
+      </a>
+    </li>
+  </ul>
+</div>

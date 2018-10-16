@@ -111,7 +111,9 @@ export class ProductModal implements OnInit, OnChanges {
         this.newProduct = Object.assign({}, EMPTY_PRODUCT);
         this.selectedImage = null;
       }
-      let cat = this.companyCategories.find(cc=>cc.category.id === this.newProduct.category_id);
+      let cat;
+      if(this.companyCategories != undefined)
+        cat = this.companyCategories.find(cc=>cc.category.id === this.newProduct.category_id);
       this.subcategories = cat?cat.category.childs:[];
       this.modalAddProduct.show();
     }

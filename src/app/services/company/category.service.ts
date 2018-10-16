@@ -19,7 +19,10 @@ export class CategoryService {
   ) { }
 
   getCategories(): Observable<any[]> {
-    let headers = new Headers({ 'Auth-Token': this.auth.getToken() });
+    let headers = new Headers({ 
+      'Auth-Token': this.auth.getToken(),
+      'Entry-ID': this.auth.currentEntry.id
+     });
     let options = new RequestOptions({ headers: headers });
 
     return this.http.get(serverURL + '/products/get_categories_v2/', options)
@@ -36,7 +39,8 @@ export class CategoryService {
   deleteSubcategory(data): Observable<any> {
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
     let options    = new RequestOptions({ headers: headers });
     let bodyString = transformRequest(data);
@@ -50,7 +54,8 @@ export class CategoryService {
   editSubcategory(data): Observable<any> {
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
     let options    = new RequestOptions({ headers: headers });
     let bodyString = transformRequest(data);
@@ -64,7 +69,8 @@ export class CategoryService {
   createCategory(data: any): Observable<any> {
     let headers = new Headers({
       'Auth-Token': this.auth.getToken(),
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Entry-ID': this.auth.currentEntry.id
     });
     let options = new RequestOptions({ headers: headers });
     let bodyString = transformRequest(data);

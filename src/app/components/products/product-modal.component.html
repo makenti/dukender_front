@@ -43,6 +43,7 @@
                 <label>Категория</label>
                 <div class="mm-select">
                   <select [(ngModel)]="newProduct.subcategory_id">
+										<option value="">Без категории</option>
                     <option *ngFor="let cat of subcategories" [ngValue]="cat.id">
                       <span class="badge">{{cat.name}}</span>
                     </option>
