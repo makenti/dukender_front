@@ -14,7 +14,7 @@
 				style="width: 300px;border: none;"/>
 			<!-- <button
 				class="mm-btn mm-btn-default"
-				(click)="onSearchProduct($event)">Поиск</button> -->
+				(click)="onSearchProduct()">Поиск</button> -->
 		</div>
 		<div class="inline-filter">
 			<div class="mm-select mr-3">
@@ -41,7 +41,7 @@
 					<div>Чтобы создать новые категории, перейдите на страницу <a href="" [routerLink]="['/company_category']">категорий</a> в настройках</div>
 				</div>
 			</div>
-			<!-- <button class="mm-btn mm-btn-default" (click)="handleCreateCatModal()" style="margin-left: 20px">
+			<!-- <button class="mm-btn mm-btn-default" (click)="handleCreateCatModal(true)" style="margin-left: 20px">
 				Создать категорию
 			</button> -->
 		</div>
@@ -211,7 +211,7 @@
 							</ul>
 						</div>
 						<label for="" class="label-cat">
-							Если не нашли нужную, то <a (click)="handleCreateCatModal()">создайте новую</a>
+							Если не нашли нужную, то <a (click)="handleCreateCatModal(false)">создайте новую</a>
 						</label>
 					</div>
 				</div>

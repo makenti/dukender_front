@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Renderer2, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, ViewChild, Renderer2, ElementRef, OnChanges, SimpleChanges, AfterViewInit } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap';
 import { Router } from '@angular/router';
 import {
@@ -28,7 +28,7 @@ import {TooltipModule, TooltipContent} from "ngx-tooltip";
     PromotionService
   ]
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent implements OnInit, AfterViewInit {
 
   @ViewChild('modalDeleteProduct')
   modalDeleteProduct: ModalDirective;
