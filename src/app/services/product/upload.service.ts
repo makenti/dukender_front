@@ -33,6 +33,8 @@ export class UploadService {
 
       xhr.open('POST', serverURL + '/products/upload_price/', true);
       xhr.setRequestHeader('Auth-Token', this.auth.getToken());
+      xhr.setRequestHeader('Entry-ID', this.auth.currentEntry.id);
+      
       let priceFile = data.files[0];
       formData.append('price', priceFile);
       formData.append('category_id', data.category_id);
